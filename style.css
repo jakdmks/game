@@ -1,0 +1,874 @@
+body {
+	color: black;
+	font-family: Verdana;
+	background-color: black;
+}
+
+input[type="radio"] {
+  width: 2.2em; /* Increase width for larger size */
+  height: 2.2em; /* Increase height for larger size */
+  vertical-align: middle; /* Align with surrounding text/content */
+  cursor: pointer; /* Pointer reflects interactivity */
+}
+
+/* Optional: Add spacing and scale labels */
+input[type="radio"] + label {
+  margin-left: 0.5em; /* Space between radio button and label */
+  font-size: 1.2em; /* Adjust label font size */
+}
+
+input[type="checkbox"] {
+  width: 2.2em; /* Increase width for larger size */
+  height: 2.2em; /* Increase height for larger size */
+  vertical-align: middle; /* Align with surrounding text/content */
+  cursor: pointer; /* Pointer reflects interactivity */
+}
+
+
+
+button:hover {
+	cursor: pointer;
+}
+
+input[type="checkbox"]:hover {
+	cursor: pointer;
+}
+
+h2 {
+	margin: 2px;
+	font-size: 1.1em
+}
+
+/*
+THREE COLUMN TESTING
+*/
+
+.column {
+  flex: 1; /* Each column takes equal width */
+  display: block; /* Inline-flex for items inside */
+  flex-wrap: wrap; /* Wrap items if necessary */
+  gap: 10px; /* Space between items inside the column */
+  padding: 10px; /* Add padding for visual separation */
+  border: 1px solid #ccc; /* Optional border for visualization */
+  background-color: #f9f9f9; /* Light background for columns */
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.flex-column {
+  flex: 1; /* Each column takes equal width */
+  display: inline-flex; /* Inline-flex for items inside */
+  flex-wrap: wrap; /* Wrap items if necessary */
+  gap: 10px; /* Space between items inside the column */
+  padding: 10px; /* Add padding for visual separation */
+  border: 1px solid #ccc; /* Optional border for visualization */
+  background-color: #f9f9f9; /* Light background for columns */
+}
+
+.column.dark,
+.flex-column.dark {
+  background-color: #2d2d2d; /* Dark grey background */
+  border: 1px solid #444; /* Subtle dark border */
+  color: #f1f1f1; /* Light text for contrast */
+}
+
+.one-column-container {
+  display: flex;
+  gap: 10px; /* Space between columns */
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.two-column-container {
+  display: flex;
+  gap: 10px; /* Space between columns */
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.three-column-container {
+  display: flex;
+  gap: 10px; /* Space between columns */
+}
+
+/*
+PAYOUT SPLIT TESTING
+*/
+/* Base styling (no flashing) */
+.payout-split-bar {
+  width: 100%; /* Total width */
+  height: 70px; /* Adjust height as needed */
+  background-color: #facc15; /* Base yellow for gaps */
+  display: flex; /* Use flexbox for layout */
+  border: 1px solid #4b5563; /* Dark border for definition */
+  border-radius: 8px; /* Smooth rounded edges */
+  overflow: hidden; /* Ensures child elements stay within rounded edges */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle depth */
+  margin-bottom: 20px;
+}
+
+/* Section styles (no flashing) */
+.green-bar {
+  width: 69%; /* Exact width for the green section */
+  height: 100%; /* Match parent height */
+  background-color: #0f6b36; /* Rich dark green */
+}
+
+.green-bar-boost {
+  height: 100%; /* Match parent height */
+  background-color: #67c887; /* Softer light green for boost */
+}
+
+.red-bar {
+  width: 17%; /* Exact width for the red section */
+  height: 100%; /* Match parent height */
+  background-color: #b91c1c; /* Rich dark red */
+}
+
+.red-bar-boost {
+  height: 100%; /* Match parent height */
+  background-color: #f87171; /* Softer light red for boost */
+}
+
+/* Flashing animations (only when .selected is added) */
+@keyframes flash-yellow-gold-split {
+  0% {
+    background-color: #facc15; /* Bright yellow */
+  }
+  50% {
+    background-color: #d4af37; /* Rich gold */
+  }
+  100% {
+    background-color: #facc15; /* Bright yellow */
+  }
+}
+
+@keyframes flash-green-split {
+  0% {
+    background-color: #0f6b36; /* Rich dark green */
+  }
+  50% {
+    background-color: #0d5930; /* Slightly darker green */
+  }
+  100% {
+    background-color: #0f6b36;
+  }
+}
+
+@keyframes flash-green-boost-split {
+  0% {
+    background-color: #67c887;
+  }
+  50% {
+    background-color: #33b25c;
+  }
+  100% {
+    background-color: #67c887;
+  }
+}
+
+@keyframes flash-red-split {
+  0% {
+    background-color: #b91c1c; /* Rich dark red */
+  }
+  50% {
+    background-color: #a31414; /* Slightly darker red */
+  }
+  100% {
+    background-color: #b91c1c;
+  }
+}
+
+@keyframes flash-red-boost-split {
+  0% {
+    background-color: #f87171; /* Soft light red */
+  }
+  50% {
+    background-color: #d85d5d; /* More vibrant, stronger red */
+  }
+  100% {
+    background-color: #f87171; /* Back to soft light red */
+  }
+}
+
+/* Flashing styles for .selected */
+.payout-split-bar {
+  animation: flash-yellow-gold-split 0.7s infinite; /* Flash yellow to orange */
+}
+
+.payout-split-bar.selected {
+  border: 4px solid #999999;
+}
+
+.payout-split-bar.selected .green-bar {
+  animation: flash-green-split 1s infinite;
+}
+
+.payout-split-bar.selected .green-bar-boost {
+  animation: flash-green-boost-split 1s infinite;
+}
+
+.payout-split-bar.selected .red-bar {
+  animation: flash-red-split 1s infinite;
+}
+
+.payout-split-bar.selected .red-bar-boost {
+  animation: flash-red-boost-split 1s infinite;
+}
+
+
+.boost-insurance-div {
+  width: 100%;
+  padding: 3px;
+  color: white; /* White text for contrast */
+  background-color: #4b5563; /* Neutral grey to match the overall style */
+  font-weight: 600; /* Consistent typography */
+  border: 1px solid #121a26; /* Dark border consistent with other elements */
+  border-radius: 7px; /* Rounded corners for a polished look */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+.credit-button-div button {
+	width: 100%;
+	height: 40px;
+	font-size: 1.1em;
+	font-family: Verdana;
+	font-weight: bold;
+	padding: 5px;
+	border-radius: 7px;
+	margin-bottom: 10px;
+	background-color: yellow;
+	border-width: 2px;
+	animation: flash-credit 0.7s infinite, pulse-credit 1s infinite; /* Flash yellow to orange */
+}
+
+/* Pulse Animation */
+@keyframes pulse-credit {
+  0%, 100% {
+    transform: scale(1); /* Normal size */
+  }
+  50% {
+    transform: scale(0.95); /* Slightly larger */
+  }
+}
+
+/* Flashing animations (only when .selected is added) */
+@keyframes flash-credit {
+  0% {
+    background-color: #facc15; /* Bright yellow */
+  }
+  50% {
+    background-color: #d4af37; /* Rich gold */
+  }
+  100% {
+    background-color: #facc15; /* Bright yellow */
+  }
+}
+
+.credit-button-div button:hover {
+	background-color: green;
+	color: white !important;
+	border: 2px solid black !important;
+	animation: flash-credit-hover 0.7s infinite, pulse-credit 1s infinite; /* Flash yellow to orange */
+}
+
+/* Flashing animations (only when .selected is added) */
+@keyframes flash-credit-hover {
+  0% {
+    background-color: #0b6f37;
+  }
+  50% {
+    background-color: #094b26;
+  }
+  100% {
+    background-color: #0b6f37;
+  }
+}
+
+/* ROBOT */
+/* General button styling */
+.game-button-div {
+	vertical-align: top;
+	display: inline-flex;
+}
+
+.game-button-div button {
+  width: 300px;
+  height: 90px;
+  font-size: 1.4em;
+  font-family: Verdana, sans-serif;
+  padding: 5px;
+  border-radius: 10px; /* Slightly rounded for a polished look */
+  vertical-align: top;
+  border-width: 4px;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold; /* Emphasize button text */
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  animation: pulse 2s infinite; /* Pulsing effect */
+}
+
+/* Cherry buttons */
+.game-button-div.cherry button {
+  background: linear-gradient(to bottom, #ff586b, #ff8fa6); /* Rich red to pink */
+  color: #a91e1e; /* Bright white text */
+  border-color: #ff1e4e; /* Vibrant red border */
+  animation: pulse 2s infinite, wobble 1.5s infinite; /* Pulse and wobble */
+}
+
+/* Cola buttons */
+.game-button-div.cola button {
+  background: linear-gradient(to bottom, #5c1717, #8b0000); /* Dark red to brown */
+  color: #ffffff; /* Bright white text */
+  border-color: #772020; /* Dark red border */
+  animation: pulse 2s infinite, wobble 1.5s infinite; /* Pulse and wobble */
+}
+
+/* Large bet buttons */
+.game-button-div.cherry.large-bet button,
+.game-button-div.cola.large-bet button {
+  font-size: 3em;
+  height: 200px;
+  width: 300px;
+}
+
+/* Hover Effects */
+.game-button-div.cherry button:hover {
+  background: linear-gradient(to bottom, #ff1e4e, #ff586b); /* Brighter red to pink */
+  box-shadow: 0 6px 8px rgba(255, 30, 78, 0.5); /* Stronger shadow on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  color: white; /* Bright white text */
+}
+
+.game-button-div.cola button:hover {
+  background: linear-gradient(to bottom, #772020, #5c1717); /* Brighter dark red to brown */
+  box-shadow: 0 6px 8px rgba(119, 32, 32, 0.5); /* Stronger shadow on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  color: #d4af37;
+}
+
+/* Flashing Border Animations */
+@keyframes flash-border-cherry {
+  0%, 100% {
+    border-color: #ff1e4e; /* Vibrant red */
+  }
+  50% {
+    border-color: #ffc1d1; /* Soft pink */
+  }
+}
+
+@keyframes flash-border-cola {
+  0%, 100% {
+    border-color: #772020; /* Dark red */
+  }
+  50% {
+    border-color: #8b4513; /* Deep brown */
+  }
+}
+
+/* Apply flashing border */
+.game-button-div.cherry button {
+  animation: pulse 1.5s infinite, wobble 0.8s infinite, flash-border-cherry 1.5s infinite;
+}
+
+.game-button-div.cola button {
+  animation: pulse 1.5s infinite, wobble 0.8s infinite, flash-border-cola 1.5s infinite;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1); /* Normal size */
+  }
+  50% {
+    transform: scale(1.1); /* Slightly larger */
+  }
+}
+
+/* Wobble Animation */
+@keyframes wobble {
+  0%, 100% {
+    transform: rotate(0deg); /* Neutral */
+  }
+  25% {
+    transform: rotate(1deg); /* Slight tilt right */
+  }
+  75% {
+    transform: rotate(-1deg); /* Slight tilt left */
+  }
+}
+
+/* Disabled Buttons */
+.game-button-div button:disabled {
+  background: linear-gradient(to bottom, #4b5563, #374151); /* Muted gradient */
+  color: #9ca3af; /* Muted text */
+  border-color: #1f2937; /* Muted border */
+  box-shadow: none;
+  cursor: not-allowed;
+  animation: none; /* Disable animations */
+  transform: none; /* No scaling or wobbling */
+}
+
+
+/* ROBOT */
+
+.stake-div {
+  width: 245px;
+  height: 28px;
+  background-color: #4b5563; /* Neutral grey */
+  color: white;
+  font-size: 1.3em;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #121a26; /* Dark, consistent border */
+  margin-bottom: 5px;
+  border-radius: 7px; /* Matches original, smaller radius */
+  font-weight: 600; /* Enhanced typography */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle depth */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: none;
+}
+
+.bet-div {
+  width: 245px;
+  height: 28px;
+  background-color: #4b5563; /* Neutral grey */
+  font-size: 1.3em;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #121a26; /* Dark, consistent border */
+  color: white;
+  margin-bottom: 5px;
+  border-radius: 7px; /* Matches original, smaller radius */
+  font-weight: 600; /* Enhanced typography */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle depth */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: none;
+}
+
+.panel {
+  display: inline-block;
+  border: 1px solid #121a26; /* Very dark border for contrast */
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  background-color: #182232; /* Slightly darker blue */
+  color: white;
+  font-weight: 600;
+  font-size: 0.9em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* More pronounced shadow on hover */
+}
+
+.panel.debug {
+  background-color: #3d3d3d; /* Slightly darker grey */
+  color: #e0e0e0; /* Soft grey text for contrast */
+  border: 1px solid #1e1e1e; /* Very dark grey border */
+}
+
+.panel.debug:hover {
+  background-color: #333333; /* Darker grey on hover */
+}
+
+.panel.green {
+  background-color: #0b6f37; /* Deeper green */
+  color: white;
+  font-style: normal;
+  border: 1px solid #094e27; /* Very dark green border */
+}
+
+.panel.green:hover {
+  background-color: #094b26; /* Even darker green on hover */
+}
+
+.panel.red {
+  background-color: #8b1a1a; /* Deeper red */
+  color: white;
+  font-style: normal;
+  border: 1px solid #6f1212; /* Very dark red border */
+}
+
+.panel.red:hover {
+  background-color: #6f0f0f; /* Even darker red on hover */
+}
+
+.result-div {
+  width: 500px;
+  height: 60px;
+  background-color: #4b5563; /* Neutral grey */
+  font-size: 3em;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  border: 1px solid #121a26; /* Dark, consistent border with .result-div */
+  margin-bottom: 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: none;
+}
+
+/* Flashing effects */
+@keyframes flash-green {
+  0% {
+    background-color: #16a34a; /* Rich green */
+  }
+  50% {
+    background-color: #d1fae5; /* Light green */
+  }
+  100% {
+    background-color: #16a34a;
+  }
+}
+
+@keyframes flash-red {
+  0% {
+    background-color: #dc2626; /* Strong red */
+  }
+  50% {
+    background-color: #fca5a5; /* Light red */
+  }
+  100% {
+    background-color: #dc2626;
+  }
+}
+
+@keyframes flash-orange {
+  0% {
+    background-color: #ea580c; /* Deep orange */
+  }
+  50% {
+    background-color: #fef08a; /* Soft yellow-orange */
+  }
+  100% {
+    background-color: #ea580c;
+  }
+}
+
+/* Win result */
+.result-div.win {
+  background-color: #16a34a;
+  animation: flash-green 1s infinite;
+}
+
+/* Lose result */
+.result-div.lose {
+  background-color: #dc2626;
+  animation: flash-red 1s infinite;
+}
+
+/* Insurance result */
+.result-div.insurance {
+  background-color: #ea580c;
+  animation: flash-orange 1s infinite;
+}
+
+.payout-div {
+  width: 500px;
+  height: 40px;
+  background-color: #4b5563; /* Neutral grey */
+  font-size: 2em;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  border: 1px solid #121a26; /* Dark, consistent border with .result-div */
+  border-radius: 12px;
+  font-weight: 600;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: none
+}
+
+/* Flashing animations */
+@keyframes flash-green {
+  0% {
+    background-color: #0a6a32; /* Dark green */
+  }
+  50% {
+    background-color: #8fd4ac; /* Light green */
+  }
+  100% {
+    background-color: #0a6a32;
+  }
+}
+
+@keyframes flash-red {
+  0% {
+    background-color: #a91e1e; /* Dark red */
+  }
+  50% {
+    background-color: #f36d6d; /* Light red */
+  }
+  100% {
+    background-color: #a91e1e;
+  }
+}
+
+@keyframes flash-orange {
+  0% {
+    background-color: #b8470c; /* Deep orange */
+  }
+  50% {
+    background-color: #f9a85b; /* Lighter orange */
+  }
+  100% {
+    background-color: #b8470c;
+  }
+}
+
+/* Win payout */
+.payout-div.win {
+  background-color: #0a6a32; /* Rich green */
+  animation: flash-green 1s infinite;
+  border: 1px solid #074d24; /* Very dark green border */
+}
+
+/* Lose payout */
+.payout-div.lose {
+  background-color: #a91e1e; /* Rich red */
+  animation: flash-red 1s infinite;
+  border: 1px solid #701414; /* Very dark red border */
+}
+
+/* Insurance payout */
+.payout-div.insurance {
+  background-color: #b8470c; /* Deep orange */
+  animation: flash-orange 1s infinite;
+  border: 1px solid #7a2f08; /* Very dark orange border */
+}
+
+.boost-small {
+	font-size: 4em;
+	font-weight: bold;
+	-webkit-text-stroke: 1px white; /* White outline */
+	/*animation: flickerText 1.5s infinite alternate;*/
+	/*animation: sweepingTextGlow 3s infinite ease-in-out;*/
+}
+
+.boost-medium {
+	font-size: 5em;
+	font-weight: bold;
+	-webkit-text-stroke: 1px white; /* White outline */
+	/*animation: flickerText 1.5s infinite alternate;*/
+	/*animation: sweepingTextGlow 3s infinite ease-in-out;*/
+}
+
+.boost-large {
+	font-size: 6em;
+	font-weight: bold;
+	-webkit-text-stroke: 1px white; /* White outline */
+	/*animation: flickerText 1.5s infinite alternate;*/
+	/*animation: sweepingTextGlow 3s infinite ease-in-out;*/
+}
+
+.boost-small.selected {
+  background: linear-gradient(to right, green, yellow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent; /* For Safari */
+  animation: sweepingTextGlow 3s infinite ease-in-out;
+}
+
+.boost-medium.selected {
+  background: linear-gradient(to right, yellow, orange);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent; /* For Safari */
+  animation: sweepingTextGlow 3s infinite ease-in-out;
+}
+
+.boost-large.selected {
+  background: linear-gradient(to right, orange, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent; /* For Safari */
+  animation: sweepingTextGlow 3s infinite ease-in-out
+}
+
+@keyframes flickerText {
+  0%, 100% { text-shadow: 0 0 1px rgba(255, 255, 255, 0.5); }
+  20% { text-shadow: 0 0 15px rgba(255, 255, 255, 1); }
+  40% { text-shadow: 0 0 25px rgba(255, 255, 255, 1); }
+  60% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
+  80% { text-shadow: 0 0 30px rgba(255, 255, 255, 1); }
+}
+
+@keyframes sweepingTextGlow {
+  0% { text-shadow: 0 0 5px rgba(255, 255, 0, 0.3); }
+  50% { text-shadow: 0 0 15px rgba(255, 255, 0, 1); }
+  100% { text-shadow: 0 0 5px rgba(255, 255, 0, 0.3); }
+}
+
+/*
+1
+3
+5
+2
+6
+
+*/
+
+
+.grey {
+	color: grey;
+}
+
+.red {
+	color: red;
+}
+
+.orange {
+	color: orange;
+}
+
+.yellow {
+	color: yellow;
+}
+
+.glowing {
+  animation: sweepingTextGlow 3s infinite ease-in-out
+}
+
+#error-content {
+	animation: flash-yellow-gold-split 0.7s infinite; /* Flash yellow to orange */
+	color: #b91c1c;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+/* Overlay Style */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 60px;
+  text-align: center;
+  z-index: 9999;
+  visibility: hidden;
+  flex-direction: column;
+}
+
+.overlay-images {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping to multiple rows */
+  gap: 10px; /* Space between images */
+  justify-content: center;
+}
+
+.overlay-image {
+  max-width: 100px;
+  max-height: 100px;
+  transition: opacity 0.5s ease;
+}
+
+#overlay-text {
+  margin-bottom: 20px;
+}
+
+/* NEW BONUSES */
+/* Slide-In and Swing Animation */
+.slide-in-scale {
+  display: inline-block;
+  transform: translateX(100%); /* Start off-screen */
+  opacity: 0; /* Start transparent */
+  transform-origin: top center; /* Pivot point for swinging */
+  animation: slideIn 1.5s ease-out forwards, growShrink 1.5s ease-in-out 1.5s infinite;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(200%); /* Start far left */
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0); /* End in position */
+    opacity: 1;
+  }
+}
+
+@keyframes growShrink {
+0%, 100% { transform: scale(1); }
+50% { transform: scale(1.2); }
+}
+
+@keyframes swingPendulum {
+  0% { transform: rotate(10deg); }
+  50% { transform: rotate(-10deg); }
+  100% { transform: rotate(10deg); }
+}
+
+.sweet-image {
+  transform-origin: center; /* Animation grows from the center */
+  animation: spin-grow 0.7s ease-out, bounce 1s ease infinite 1s; /* start spinning and growing first, then bounce infinitely */
+}
+
+@keyframes spin-grow {
+  0% {
+    transform: scale(0) rotate(0deg); /* Start with no size and no rotation */
+    opacity: 0; /* Fully transparent */
+  }
+  40% {
+    transform: scale(0.8) rotate(90deg); /* Gradual growth and rotation to 90 degrees */
+    opacity: 0.5; /* Half opacity */
+  }
+  60% {
+    transform: scale(1.2) rotate(180deg); /* Grow past full size, rotate halfway */
+    opacity: 1; /* Fully opaque */
+  }
+  100% {
+    transform: scale(1) rotate(360deg); /* Full size and complete rotation */
+    opacity: 1; /* Fully opaque */
+  }
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0); /* Default position */
+  }
+  50% {
+    transform: translateY(-10px); /* Move up during bounce */
+  }
+}
+.payout-boost-text {
+  position: absolute; /* Position the text absolutely within the parent container */
+  top: 80%; /* Vertically center the text */
+  left: 70%; /* Horizontally center the text */
+  transform: translate(-10%, -10%); /* Adjust the position to exactly center it */
+  color: white; /* Set text color (change as needed) */
+  font-size: 1.5rem; /* Adjust size as needed */
+  font-weight: bold; /* Make the text stand out */
+  z-index: 1; /* Ensure the text is on top of the image */
+}
+
+.payout-boost-text.small {
+	font-size: 1.2em;
+}
+
+.payout-boost-text.medium {
+	font-size: 1.6em;
+}
+
+.payout-boost-text.large {
+	font-size: 2.3em;
+}
+
+.strikethrough {
+	text-decoration: line-through;
+	text-decoration-color: red;
+	text-decoration-thickness: 3px;
+}

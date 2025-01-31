@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sweet bro.</title>
+    <link rel="stylesheet" href="./style.css">
+    <!--<link rel="icon" href="./favicon.ico" type="image/x-icon">-->
+  </head>
+  <body>
+    <main>
+	
+		<!--OVERLAY-->
+		<div id="overlay" class="overlay">
+			<div style="width: 700px;">
+				<div id="overlay-text">Picking sweets...</div>
+				<div id="overlay-images" class="overlay-images"></div>
+			</div>
+		</div>
+
+		<!--3 COLUMNS-->
+		<div class="three-column-container">
+		  <div class="column dark" style="text-align: right">
+			<!--COLUMN 1-->
+			<!--ADD CREDIT-->
+			<div>
+				<h2 style="text-align: center">Add Credit</h2>
+				<div>
+					<div class="credit-button-div">
+						<button type="button" onclick="console.info(addCredit(20000))">Add 20,000 Tokens for only £20</button>
+					</div>
+				</div>
+			</div>
+			
+			<!--CREDIT-->
+			<div>
+				<h2>Credit</h2>
+				<div class="panel green">
+					<div id="cust-credit">Credit: X Tokens</div>
+					<div id="cust-winnings">Winnings: X Tokens</div>
+				</div>
+			</div>
+			
+			<!--PAYOUT-SPLIT STATS-->
+			<div>
+				<h2>Split</h2>
+				<div class="panel">
+					<div id="payout-pct">Return Pct: X%</div>
+					<div id="insurance-pct">Insurance Pct: X%</div>
+				</div>
+			</div>
+		  </div>
+		  <div class="column dark" style="text-align: center">
+			<!--COLUMN 2-->
+			<!--PAYOUT-SPLIT OPTIONS-->
+			<div>
+				<h2>Payout Split</h2>
+				<div class="radio-group" style="display: block; font-size: 1.5em; text-align: left">
+					<label class="radio-item">
+					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.5, 0, 'SPLIT01')">
+						<strong>BIGGEST PAYOUT!</strong>
+						<div style="font-size: 0.5em;">250% Payout (with upto +40% bonus option!)</div>
+						<div style="font-size: 0.5em;">100% Insurance Excess</div>
+						<div id="payout-split-bar-250-0" class="payout-split-bar">
+							<div class="green-bar" style="width: 86%;"></div>
+							<div id="payout-split-bar-250-0-green-boost" class="green-bar-boost"></div>
+							<div class="red-bar" style="width: 0px;"></div>
+						</div>
+
+					</label>
+					
+					<label class="radio-item">
+					<input type="radio" name="payout" value="option1" checked onchange="updatePayoutSplit(2, 0.5, 'SPLIT02')">
+						<strong>ON THE FENCE!</strong>
+						<div style="font-size: 0.5em;">200% Payout Rate (with upto +40% bonus payout option!)</div>
+						<div style="font-size: 0.5em;">50% Insurance Excess (with upto +40% bonus payout option!)</div>
+						<div id="payout-split-bar-200-50" class="payout-split-bar selected">
+							<div class="green-bar"></div>
+							<div id="payout-split-bar-200-50-green-boost" class="green-bar-boost"></div>
+							<div id="payout-split-bar-200-50-red-boost" class="red-bar-boost"></div>
+							<div class="red-bar"></div>
+						</div>
+					</label>
+					
+					<label class="radio-item">
+					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 1, 'SPLIT03')">
+						<strong>MOST INSURANCE!</strong>
+						<div style="font-size: 0.5em;">150% Payout Rate (with upto +40% bonus payout option!)</div>
+						<div style="font-size: 0.5em;">0% Insurance Excess (with upto +40% bonus payout option!)</div>
+						<div id="payout-split-bar-150-100" class="payout-split-bar">
+							<div class="green-bar" style="width: 52%;"></div>
+							<div id="payout-split-bar-150-100-green-boost" class="green-bar-boost"></div>
+							<div id="payout-split-bar-150-100-red-boost" class="red-bar-boost"></div>
+							<div class="red-bar" style="width: 34%;"></div>
+						</div>
+					</label>
+				</div>
+			</div>
+			<!--/PAYOUT-SPLIT-->
+			
+		  </div>
+		  <div class="column dark">
+			<!--COLUMN 3-->
+			
+			<!--
+			<h2>Last Bet</h2>
+			<div style="font-size: 0.7em">
+				<ul>
+					<li>TODO: Boost applied - perhaps display this in the centre column though?</li>
+					<li>TODO: Win streak before bet</li>
+					<li>TODO: UPDATE AUDIT RECORDS...</li>
+				</ul>
+			</div>
+			
+			<h2>Rules</h2>
+			<div style="font-size: 0.7em">
+				<ul>
+					<li>Correct matching pair pays Payout Rate</li>
+					<li>Other matching pair pays Insurance Rate</li>
+					<li>Mixed pays nothing</li>
+					<li>Win streak and subsequently Boost increase on correct guesses</li>
+					<li>Win streak and Boost reset on incorrect guess*</li>
+					<li><em>(* = unless "Boost Insurance" is added. Then other matching pair will maintain boost level and not reset)</em></li>
+				</ul>
+				
+				<div class="two-column-container">
+			-->
+					<!--WIN STREAK GRAPHICAL DISPLAY-->
+					<div style="display: inline-block">
+						<span id="win-streak-text" class="boost-medium grey">streak x</span><span id="win-streak-num" class="boost-large grey">X</span>
+					</div>
+					<!--BOOST GRAPHICAL DISPLAY-->
+					<div style="display: inline-block">
+						&nbsp;&nbsp;&nbsp;
+						<span id="boost-graphic-1" class="boost-small grey">BO</span><span id="boost-graphic-2" class="boost-medium grey">OS</span><span id="boost-graphic-3" class="boost-large grey">T!!!</span>
+					</div>
+			
+					<!--Payout Boost-->
+					<div style="height: 150px; border: none">
+						<div class="radio-group" id="payout-boost-icons" style="display: none; font-size: 1.5em; text-align: left">
+							<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
+						</div>
+						<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-left: 15px;">
+							<img src="images/flame-png.png" height="80px" alt="Flame Icon">
+							<div id="payout-boost-pct-1" class="payout-boost-text small">20%</div>
+						</div>
+						<div class="slide-in-scale" id="payout-boost-icon-2" style="margin-left: 30px;">
+							<img src="images/flame-png.png" height="90px" alt="Flame Icon">
+							<div id="payout-boost-pct-2" class="payout-boost-text medium">30%</div>
+						</div>
+						<div class="slide-in-scale" id="payout-boost-icon-3" style="margin-left: 45px;">
+							<img src="images/flame-png.png" height="100px" alt="Flame Icon">
+							<div id="payout-boost-pct-3" class="payout-boost-text large">40%</div>
+						</div>
+					</div>
+					<!--Insurance Boost-->
+					<div style="height: 120px; border: none">
+						<div class="radio-group" id="insurance-boost-icons" style="display: none; font-size: 1.5em; text-align: left">
+							<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked)">
+						</div>
+						<div class="slide-in-scale" id="insurance-boost-icon-1" style="margin-left: 15px;">
+							<img src="images/green-cross-png.png" height="60px" alt="Insurance Boost 1">
+							<div id="insurance-boost-pct-1" class="payout-boost-text small">20%</div>
+						</div>
+						<div class="slide-in-scale" id="insurance-boost-icon-2" style="margin-left: 30px;">
+							<img src="images/green-cross-png.png" height="70px" alt="Insurance Boost 2">
+							<div id="insurance-boost-pct-2" class="payout-boost-text medium">30%</div>
+						</div>
+						<div class="slide-in-scale" id="insurance-boost-icon-3" style="margin-left: 45px;">
+							<img src="images/green-cross-png.png" height="80px" alt="Insurance Boost 3">
+							<div id="insurance-boost-pct-3" class="payout-boost-text large">40%</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		  </div>
+		</div>
+		<!--/3 COLUMNS-->
+		
+		<!--ERROR SINGLE COLUMN-->
+		<div class="one-column-container" id="error-container" style="display: none">
+			<div class="column" id="error-content" style="text-align: center">
+			</div>
+		</div>
+		
+		<!--2 COLUMNS-->
+		<div class="two-column-container">
+		  <div class="column dark" style="text-align: right">
+			<div class="cherry-bets">
+				<div class="game-button-div cherry">
+					<button type="button" onclick="pickSweets(100, 'Cherry')">BET 100 CHERRY</button>
+				</div>
+				<div class="game-button-div cherry large-bet">
+					<button type="button" onclick="pickSweets(500, 'Cherry')">BET 500 CHERRY</button>
+				</div>
+				<!--SMALL CHERRY BET-->
+				<!--
+				<div class="game-button-div cherry">
+					<div class="bonus insurance right" style="display: none" id="cherry-insurance-bonus-small">
+						<button id="cherry-insurance-bonus-small-btn" type="button" onclick="console.info(pickSweets(100, 'Cherry', false, true))"><strong>BOOST!</strong></button>
+					</div>
+					<div class="bonus payout right" style="display: none" id="cherry-payout-bonus-small">
+						<button id="cherry-payout-bonus-small-btn" type="button" onclick="console.info(pickSweets(100, 'Cherry', true, false))"><strong>BOOST!</strong></button>
+					</div>
+					<div style="display: inline-block">
+						<button type="button" onclick="console.info(pickSweets(100, 'Cherry', false, false))">BET 100 CHERRY</button>
+					</div>
+				</div>
+				-->
+				
+				<!--LARGE CHERRY BET-->
+				<!--
+				<div class="game-button-div cherry large-bet">
+					<div class="bonus insurance large right" style="display: none" id="cherry-insurance-bonus-large">
+						<button id="cherry-insurance-bonus-large-btn" type="button" onclick="console.info(pickSweets(500, 'Cherry', false, true))"><strong>BOOST!</strong></button>
+					</div>
+					<div class="bonus payout large right" style="display: none;" id="cherry-payout-bonus-large">
+						<button id="cherry-payout-bonus-large-btn" type="button" onclick="console.info(pickSweets(500, 'Cherry', true, false))"><strong>BOOST!</strong></button>
+					</div>
+					<div style="display: inline-block">
+						<button type="button" onclick="console.info(pickSweets(500, 'Cherry', false, false))">BET 500 CHERRY</button>
+					</div>
+				</div>
+				-->
+			</div>
+		  </div>
+		  <div class="column dark">
+			<div class="cola-bets">
+				<div class="game-button-div cola large-bet">
+					<button type="button" onclick="pickSweets(500, 'Cola')">BET 500 COLA</button>
+				</div>
+				<div class="game-button-div cola">
+					<button type="button" onclick="pickSweets(100, 'Cola')">BET 100 COLA</button>
+				</div>
+				<!--SMALL COLA BET-->
+				<!--
+				<div class="game-button-div cola">
+					<div style="display: inline-block">
+						<button type="button" onclick="console.info(pickSweets(100, 'Cola', false, false))">BET 100 COLA</button>
+					</div>
+					<div class="bonus payout left" style="display: none" id="cola-payout-bonus-small">
+						<button id="cola-payout-bonus-small-btn" type="button" onclick="console.info(pickSweets(100, 'Cola', true, false))"><strong>BOOST!</strong></button>
+					</div>
+					<div class="bonus insurance left" style="display: none" id="cola-insurance-bonus-small">
+						<button id="cola-insurance-bonus-small-btn" type="button" onclick="console.info(pickSweets(100, 'Cola', false, true))"><strong>BOOST!</strong></button>
+					</div>
+				</div>
+				-->
+				
+				<!--LARGE COLA BET-->
+				<!--
+				<div class="game-button-div cola large-bet">
+					<div style="display: inline-block">
+						<button type="button" onclick="console.info(pickSweets(500, 'Cola', 2, false, 0.5, false))">BET 500 COLA</button>
+					</div>
+					<div class="bonus payout large left" style="display: none" id="cola-payout-bonus-large">
+						<button id="cola-payout-bonus-large-btn" type="button" onclick="console.info(pickSweets(500, 'Cola', 2, true, 0.5, false))"><strong>BOOST!</strong></button>
+					</div>
+					<div class="bonus insurance large left" style="display: none" id="cola-insurance-bonus-large">
+						<button id="cola-insurance-bonus-large-btn" type="button" onclick="console.info(pickSweets(500, 'Cola', 2, false, 0.5, true))"><strong>BOOST!</strong></button>
+					</div>
+				</div>
+				-->
+			
+			</div>
+		  </div>
+		</div>
+		<!--/2 COLUMNS-->
+		
+		<!--OUTCOME THREE COLUMN SETUP-->
+		<div class="three-column-container">
+			<!--COLUMN 1-->
+			<div class="column dark" style="text-align: right;">
+				<div class="panel">
+					TODO: Return Pct and Insurance Pct nice display here...
+				</div>
+			</div>
+			<!--COLUMN 2-->
+			<div class="column dark" style="text-align: center;">
+				<div style="min-height: 160px;">
+					<div>
+						<div class="stake-div" id="stake"></div>
+						<div class="bet-div" id="bet"></div>
+					</div>
+					<div>
+						<div class="result-div" id="result"></div>
+					</div>
+					<div>
+						<div class="payout-div" id="payout"></div>
+					</div>
+				</div>
+			</div>
+			<!--COLUMN 3-->
+			<div class="column dark">
+				<div id="outcome-images" class="panel green" style="display: none">
+					<div id="sweet1" style="display: inline-flex;">
+						<h2 style="font-size: 1.5em">Pick 1</h2>
+						<div id="sweet-image1"></div>
+					</div>
+					<div id="sweet2" style="display: inline-flex;">
+						<h2 style="font-size: 1.5em">Pick 2</h2>
+						<div id="sweet-image2"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--BET OPTIONS ONE COLUMN SETUP-->
+		<div class="one-column-container">
+			<div class="column dark" style="text-align: center;">
+				<div class="boost-insurance-div">
+					<input type="checkbox" id="boost-insurance-checkbox" name="boost-insurance-checkbox" onchange="insuranceSwitch(this.checked)" checked />
+					<label for="checkbox" style="font-size: 0.9em">Boost Insurance? <em>(Pays out 10% less but your boost maintains on non-bet matching pair)</em></label><br>
+				</div>
+				<div style="font-size: 0.8em;"><em>(Can only change once win streak returns to 0)</em></div>
+			</div>
+		</div>
+		
+		<!--DEBUG ONE COLUMN SETUP-->
+		<div class="one-column-container">
+			<div class="flex-column dark">
+				<!--COLUMN 1-->
+				<!--DEBUG-->
+				<div>
+					<h2>Debug</h2>
+					<div class="panel debug">
+						<div id="house-balance-debug">House Balance: X Tokens</div>
+						<div id="house-cash-debug">House Balance: £XX.XX</div>
+					</div>
+					<div class="panel debug">
+						<div id="cust-balance-debug">Cust' Balance: X Tokens</div>
+						<div id="cust-cash-debug">Cust' Balance: £XX.XX</div>
+					</div>
+					<div class="panel debug">
+						<div id="boost-insurance">Boost Insurance: X</div>
+						<div id="boost-insurance-multiplier">Boost Insurance Multiplier: X</div>
+					</div>
+					<div class="panel debug">
+						<div id="payout-multiplier">Win Multiplier: X</div>
+						<div id="insurance-multiplier">Insurance Multiplier: X</div>
+					</div>
+					<div class="panel debug">
+						<div id="win-streak">Win Streak: X</div>
+						<div id="boost-avail">Boost Available: X</div>
+					</div>
+					<div class="panel debug">
+						<div id="boost-level">Boost Level: X</div>
+						<div id="boost-pct">Boost Pct: X%</div>
+					</div>
+					<div class="panel debug">
+						<div id="payout-bonus">Last Bet Return Bonus Rate: X%</div>
+						<div id="insurance-bonus">Last Bet Insurance Bonus Rate: X%</div>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+		<!--/DEBUG ONE COLUMN SETUP-->
+    </main>
+    <script>
+		//TODO: If Boost Insurance is switched on... it can only be switched off when they're back to 0?
+	
+		function updateStatisticsDivs() {
+			custCreditDiv.innerHTML = "Credit: " + playerCredit + " Tokens";
+			custWinningsDiv.innerHTML = "Winnings: " + statistics.playerWinnings + " Tokens";
+			houseBalanceDebugDiv.innerHTML = "House Balance: " + statistics.houseBalance + " Tokens";
+			houseCashDebugDiv.innerHTML = "House Balance: " + (statistics.houseBalance / tokenRateToGBP) + " GBP";
+			custBalanceDebugDiv.innerHTML = "Cust' Balance: " + statistics.playerBalance + " Tokens";
+			custCashDebugDiv.innerHTML = "Cust' Balance: " + (statistics.playerBalance / tokenRateToGBP) + " GBP";
+			
+			winStreakDiv.innerHTML = "Win Streak: " + winStreak;
+			boostAvailDiv.innerHTML = "Boost Available: " + boostAvailable;
+			boostLevelDiv.innerHTML = "Boost Level: " + boostLevel;
+			boostPctDiv.innerHTML = "Boost Pct: " + (boostRate * 100).toFixed(0) + "%";
+			boostInsuranceDiv.innerHTML = "Boost Insurance: " + boostInsurance;
+			boostInsuranceMultiplierDiv.innerHTML = "Rate: " + boostInsuranceRate;
+			
+			payoutPctDiv.innerHTML = "Return Pct: " + (payoutRate * 100).toFixed(0) + "%";
+			insurancePctDiv.innerHTML = "Insurance Pct: " + (insuranceRate * 100).toFixed(0) + "%";
+			payoutMultiplierDiv.innerHTML = "Win Multiplier: " + payoutRate;
+			insuranceMultiplierDiv.innerHTML = "Insurance Multiplier: " + insuranceRate;
+			
+			payoutBonusDiv.innerHTML = "Last Bet Return Bonus Rate:  " + (payoutBoostRate * 100).toFixed(0) + "%";
+			insuranceBonusDiv.innerHTML = "Last Bet Insurance Bonus Rate: " + (insuranceBoostRate * 100).toFixed(0) + "%";
+			
+			//Player Credit Panel Colour
+			var playerCreditParentDiv = custCreditDiv.parentNode;
+			if (playerCredit <= 0) {
+				playerCreditParentDiv.classList.remove("green");
+				playerCreditParentDiv.classList.add("red");
+			} else {
+				playerCreditParentDiv.classList.add("green");
+				playerCreditParentDiv.classList.remove("red");
+			}
+			
+			//Displaying Bonus Buttons - move to another function?
+			console.info("boostAvailable", boostAvailable);
+			
+			if (boostAvailable) {
+				//cherryPayoutBonusSmallDiv.style.display = "inline-block";
+				//cherryPayoutBonusLargeDiv.style.display = "inline-block";
+				//colaPayoutBonusSmallDiv.style.display = "inline-block";
+				//colaPayoutBonusLargeDiv.style.display = "inline-block";
+				
+				//cherryInsuranceBonusSmallBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
+				//cherryPayoutBonusSmallBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
+				//cherryInsuranceBonusLargeBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
+				//cherryPayoutBonusLargeBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
+				
+				//colaInsuranceBonusSmallBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
+				//colaPayoutBonusSmallBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
+				//colaInsuranceBonusLargeBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
+				//colaPayoutBonusLargeBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
+				
+				console.info("######boostRate", boostRate);
+				
+				if (insuranceRate > 0) {
+					//cherryInsuranceBonusSmallDiv.style.display = "inline-block";
+					//cherryInsuranceBonusLargeDiv.style.display = "inline-block";
+					//colaInsuranceBonusSmallDiv.style.display = "inline-block";
+					//colaInsuranceBonusLargeDiv.style.display = "inline-block";
+				} else {
+					//cherryInsuranceBonusSmallDiv.style.display = "none";
+					//cherryInsuranceBonusLargeDiv.style.display = "none";
+					//colaInsuranceBonusSmallDiv.style.display = "none";
+					//colaInsuranceBonusLargeDiv.style.display = "none";
+				}
+				
+				if (boostLevel >= 1) {
+					boostGraphic1Span.classList.add("selected");
+					payoutBoostIconsDiv.style.display = "inline-block";
+					payoutBoostIcon1Div.style.display = "inline-block";
+					payoutBoostPct1Div.innerHTML = "+" + ((boostBonusLevelOne - boostInsuranceRate) * 100).toFixed(0) + "%";
+					
+					if (insuranceRate > 0) {
+						insuranceBoostIconsDiv.style.display = "inline-block";
+						insuranceBoostIcon1Div.style.display = "inline-block";
+						insuranceBoostPct1Div.innerHTML = "+" + ((boostBonusLevelOne - boostInsuranceRate) * 100).toFixed(0) + "%";
+					} else {
+						insuranceBoostIconsDiv.style.display = "none";
+						insuranceBoostIcon1Div.style.display = "none";
+					}
+					
+				}
+				if (boostLevel >= 2) {
+					boostGraphic2Span.classList.add("selected");
+					payoutBoostIcon2Div.style.display = "inline-block";
+					payoutBoostPct2Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop - boostInsuranceRate) * 100).toFixed(0) + "%";
+					payoutBoostPct1Div.classList.add("strikethrough");
+					
+					if (insuranceRate > 0) {
+						insuranceBoostIcon2Div.style.display = "inline-block";
+						insuranceBoostPct2Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop - boostInsuranceRate) * 100).toFixed(0) + "%";
+						insuranceBoostPct1Div.classList.add("strikethrough");
+					} else {
+						insuranceBoostIcon2Div.style.display = "none";
+					}
+				}
+				if (boostLevel === 3) {
+					boostGraphic3Span.classList.add("selected");
+					payoutBoostIcon3Div.style.display = "inline-block";
+					payoutBoostPct3Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop + boostBonusLevelThreeHop - boostInsuranceRate) * 100).toFixed(0) + "%";
+					payoutBoostPct2Div.classList.add("strikethrough");
+					
+					if (insuranceRate > 0) {
+						insuranceBoostIcon3Div.style.display = "inline-block";
+						insuranceBoostPct3Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop + boostBonusLevelThreeHop - boostInsuranceRate) * 100).toFixed(0) + "%";
+						insuranceBoostPct2Div.classList.add("strikethrough");
+					} else {
+						insuranceBoostIcon3Div.style.display = "none";
+					}
+				}
+			} else {
+				payoutBoostIconsDiv.style.display = "none";
+				payoutBoostIcon1Div.style.display = "none";
+				payoutBoostIcon2Div.style.display = "none";
+				payoutBoostIcon3Div.style.display = "none";
+				
+				insuranceBoostIconsDiv.style.display = "none";
+				insuranceBoostIcon1Div.style.display = "none";
+				insuranceBoostIcon2Div.style.display = "none";
+				insuranceBoostIcon3Div.style.display = "none";
+				
+				payoutBoostPct1Div.classList.remove("strikethrough");
+				insuranceBoostPct1Div.classList.remove("strikethrough");
+				payoutBoostPct2Div.classList.remove("strikethrough");
+				insuranceBoostPct2Div.classList.remove("strikethrough");
+			
+				//cherryPayoutBonusSmallDiv.style.display = "none";
+				//cherryInsuranceBonusSmallDiv.style.display = "none";
+				//cherryPayoutBonusLargeDiv.style.display = "none";
+				//cherryInsuranceBonusLargeDiv.style.display = "none";
+				//colaPayoutBonusSmallDiv.style.display = "none";
+				//colaInsuranceBonusSmallDiv.style.display = "none";
+				//colaPayoutBonusLargeDiv.style.display = "none";
+				//colaInsuranceBonusLargeDiv.style.display = "none";
+				
+				boostGraphic1Span.classList.remove("selected");
+				boostGraphic2Span.classList.remove("selected");
+				boostGraphic3Span.classList.remove("selected");
+			}
+			
+			winStreakNumSpan.innerHTML = winStreak;
+			
+			if (boostLevel >= 3) {
+				//winStreakNumSpan.style.color = "red";
+				//winStreakTextSpan.style.color = "red";
+				winStreakNumSpan.classList.add("red", "glowing");
+			} else if (boostLevel >= 2) {
+				//winStreakNumSpan.style.color = "orange";
+				//winStreakTextSpan.style.color = "orange";
+				winStreakNumSpan.classList.add("orange", "glowing");
+			} else if (boostLevel >= 1) {
+				//winStreakNumSpan.style.color = "yellow";
+				//winStreakTextSpan.style.color = "yellow";
+				winStreakNumSpan.classList.add("yellow", "glowing");
+			} else {
+				//winStreakNumSpan.style.color = "";
+				//winStreakTextSpan.style.color = "";
+				winStreakNumSpan.classList.remove("red", "glowing");
+				winStreakNumSpan.classList.remove("orange", "glowing");
+				winStreakNumSpan.classList.remove("yellow", "glowing");
+			}
+		}
+		
+		function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="") {
+			console.info("Running updatePayoutSplit()");
+			console.info("newPayoutRate", newPayoutRate);
+			console.info("newInsuranceRate", newInsuranceRate);
+
+			var split01Div = document.getElementById("payout-split-bar-250-0");
+			var split02Div = document.getElementById("payout-split-bar-200-50");
+			var split03Div = document.getElementById("payout-split-bar-150-100");
+			
+			if (option === "SPLIT01") {
+				split01Div.classList.add("selected");
+				split02Div.classList.remove("selected");
+				split03Div.classList.remove("selected");
+			} else if (option === "SPLIT02") {
+				split01Div.classList.remove("selected");
+				split02Div.classList.add("selected");
+				split03Div.classList.remove("selected");
+			} else if (option === "SPLIT03") {
+				split01Div.classList.remove("selected");
+				split02Div.classList.remove("selected");
+				split03Div.classList.add("selected");
+			}
+			
+			console.info("Check", 2.5 - newPayoutRate - newInsuranceRate);
+			
+			if (2.5 - newPayoutRate - newInsuranceRate === 0) {
+				payoutRate = newPayoutRate;
+				insuranceRate = newInsuranceRate;
+			} else {
+				payoutRate = 0;
+				insuranceRate = 0;
+			}
+			console.info("payoutRate", payoutRate);
+			console.info("insuranceRate", insuranceRate);
+			
+			applyBoost("both", false);
+			updateStatisticsDivs();
+		}
+		
+		function calculateBoost() {
+			console.info("Running calculateBoost()");
+			
+			boostAvailable = false;
+			boostLevel = 0;
+			boostRate = 0;
+			
+			//FORCE WIN STREAK
+			//winStreak = 99;
+			
+			if (winStreak >= boostStreakLevelOne) {
+				boostRate = boostBonusLevelOne - boostInsuranceRate;
+				boostLevel = 1;
+				boostAvailable = true;
+				
+				if (winStreak >= boostStreakLevelTwo) {
+					boostRate = boostRate + boostBonusLevelTwoHop;
+					boostLevel = 2;
+				}
+				
+				if (winStreak >= boostStreakLevelThree) {
+					boostRate = boostRate + boostBonusLevelThreeHop;
+					boostLevel = 3;
+				}
+			} else {
+				boostAvailable = false;
+			}
+			console.info("boostRate", boostRate);
+		}
+	
+		//TODO: Dom Loaded
+		var tokenRateToGBP = 1000;
+		var playerCredit = 0;
+		var payoutRate = 2;
+		var insuranceRate = 0.5;
+		var winStreak = 0;
+		
+		//Boost
+		var boostAvailable = false;
+		var boostLevel = 0;
+		var boostRate = 0;
+		var boostInsurance = false;
+		var boostInsuranceRateAvailable = 0.1;
+		var boostInsuranceRate = 0;
+		var boostStreakLevelOne = 3;
+		var boostBonusLevelOne = 0.2;
+		var boostStreakLevelTwo = 4;
+		var boostBonusLevelTwoHop = 0.1;
+		var boostStreakLevelThree = 5;
+		var boostBonusLevelThreeHop = 0.1;
+		
+		var payoutBoostRate = 0;
+		var insuranceBoostRate = 0;
+		
+		//Bag size (should be an even number)
+		var bagSize = 24;
+		
+		var errors = [];
+		
+		var payoutBoost = false;
+		var insuranceBoost = false;
+		
+		//TESTING
+		//boostStreakLevelOne = 0;
+			
+		var statistics = {
+			gamesPlayed: 0,
+			totalStake: 0,
+			houseBalance: 0,
+			playerWinnings: 0,
+			playerBalance: 0,
+			audit: [] 
+		}
+		
+		var custCreditDiv = document.getElementById("cust-credit");
+		var custWinningsDiv = document.getElementById("cust-winnings");			
+		var houseBalanceDebugDiv = document.getElementById("house-balance-debug");
+		var houseCashDebugDiv = document.getElementById("house-cash-debug");
+		var custBalanceDebugDiv = document.getElementById("cust-balance-debug");
+		var custCashDebugDiv = document.getElementById("cust-cash-debug");
+		
+		var winStreakDiv = document.getElementById("win-streak");
+		var boostAvailDiv = document.getElementById("boost-avail");
+		var boostLevelDiv = document.getElementById("boost-level");
+		var boostPctDiv = document.getElementById("boost-pct");
+		var boostInsuranceDiv = document.getElementById("boost-insurance");
+		var boostInsuranceMultiplierDiv = document.getElementById("boost-insurance-multiplier");
+		
+		var payoutPctDiv = document.getElementById("payout-pct");
+		var insurancePctDiv = document.getElementById("insurance-pct");
+		var payoutMultiplierDiv = document.getElementById("payout-multiplier");
+		var insuranceMultiplierDiv = document.getElementById("insurance-multiplier");
+		
+		var payoutBonusDiv = document.getElementById("payout-bonus");
+		var insuranceBonusDiv = document.getElementById("insurance-bonus");
+		
+		var payoutBoostIconsDiv = document.getElementById("payout-boost-icons");
+		var payoutBoostIcon1Div = document.getElementById("payout-boost-icon-1");
+		var payoutBoostIcon2Div = document.getElementById("payout-boost-icon-2");
+		var payoutBoostIcon3Div = document.getElementById("payout-boost-icon-3");
+		
+		var insuranceBoostIconsDiv = document.getElementById("insurance-boost-icons");
+		var insuranceBoostIcon1Div = document.getElementById("insurance-boost-icon-1");
+		var insuranceBoostIcon2Div = document.getElementById("insurance-boost-icon-2");
+		var insuranceBoostIcon3Div = document.getElementById("insurance-boost-icon-3");
+		
+		//var cherryPayoutBonusSmallDiv = document.getElementById("cherry-payout-bonus-small");
+		//var cherryInsuranceBonusSmallDiv = document.getElementById("cherry-insurance-bonus-small");
+		//var cherryPayoutBonusLargeDiv = document.getElementById("cherry-payout-bonus-large");
+		//var cherryInsuranceBonusLargeDiv = document.getElementById("cherry-insurance-bonus-large");
+		
+		//var cherryInsuranceBonusSmallBtn = document.getElementById("cherry-insurance-bonus-small-btn");
+		//var cherryPayoutBonusSmallBtn = document.getElementById("cherry-payout-bonus-small-btn");
+		//var cherryInsuranceBonusLargeBtn = document.getElementById("cherry-insurance-bonus-large-btn");
+		//var cherryPayoutBonusLargeBtn = document.getElementById("cherry-payout-bonus-large-btn");
+		
+		var colaInsuranceBonusSmallBtn = document.getElementById("cola-insurance-bonus-small-btn");
+		var colaPayoutBonusSmallBtn = document.getElementById("cola-payout-bonus-small-btn");
+		var colaInsuranceBonusLargeBtn = document.getElementById("cola-insurance-bonus-large-btn");
+		var colaPayoutBonusLargeBtn = document.getElementById("cola-payout-bonus-large-btn");
+		
+		var colaPayoutBonusSmallDiv = document.getElementById("cola-payout-bonus-small");
+		var colaInsuranceBonusSmallDiv = document.getElementById("cola-insurance-bonus-small");
+		var colaPayoutBonusLargeDiv = document.getElementById("cola-payout-bonus-large");
+		var colaInsuranceBonusLargeDiv = document.getElementById("cola-insurance-bonus-large");
+		
+		var boostGraphic1Span = document.getElementById("boost-graphic-1");
+		var boostGraphic2Span = document.getElementById("boost-graphic-2");
+		var boostGraphic3Span = document.getElementById("boost-graphic-3");
+		
+		var winStreakNumSpan = document.getElementById("win-streak-num");
+		var winStreakTextSpan = document.getElementById("win-streak-text");
+		
+		var errorContainerDiv = document.getElementById("error-container");
+		var errorContentDiv = document.getElementById("error-content");
+		
+		var outcomeImages = document.getElementById("outcome-images");
+		var sweetImage1Div = document.getElementById("sweet-image1");
+		var sweetImage2Div = document.getElementById("sweet-image2");
+		
+		var payoutBoostPct1Div = document.getElementById("payout-boost-pct-1");
+		var payoutBoostPct2Div = document.getElementById("payout-boost-pct-2");
+		var payoutBoostPct3Div = document.getElementById("payout-boost-pct-3");
+		var insuranceBoostPct1Div = document.getElementById("insurance-boost-pct-1");
+		var insuranceBoostPct2Div = document.getElementById("insurance-boost-pct-2");
+		var insuranceBoostPct3Div = document.getElementById("insurance-boost-pct-3");
+		
+		insuranceSwitch(true);
+		updateStatisticsDivs();
+		
+		var betId = 0;
+		
+		function addCredit(credit=0) {
+			clearErrors(errorContainerDiv, errorContentDiv);
+			playerCredit = (playerCredit * 1) + (credit * 1);
+			updateStatisticsDivs();
+			return playerCredit;
+		}
+		
+		function insuranceSwitch(checked=true) {
+			//We always want to let them switch it on... but only off if the winstreak is 0
+			if ((winStreak === 0 && !checked) || checked) {
+				boostInsurance = checked;
+				boostInsuranceRate = boostInsurance ? boostInsuranceRate = boostInsuranceRateAvailable : 0;
+				calculateBoost();
+				updateStatisticsDivs();
+			} else {
+				console.info("Not allowed...");
+				//Forcing the box back to old state...
+				var boostInsuranceCheckbox = document.getElementById("boost-insurance-checkbox");
+				boostInsuranceCheckbox.checked = !checked;
+			}
+		}
+		
+		function applyBoost(type="", outcome=false) {
+		
+			var payoutSplitBar250GreenBoostDiv = document.getElementById("payout-split-bar-250-0-green-boost");
+			var payoutSplitBar200GreenBoostDiv = document.getElementById("payout-split-bar-200-50-green-boost");
+			var payoutSplitBar200RedBoostDiv = document.getElementById("payout-split-bar-200-50-red-boost");
+			var payoutSplitBar150GreenBoostDiv = document.getElementById("payout-split-bar-150-100-green-boost");
+			var payoutSplitBar150RedBoostDiv = document.getElementById("payout-split-bar-150-100-red-boost");
+		
+			if (type === "payout") {
+				console.info("BOOSTING PAYOUT TO", boostRate);
+				payoutBoost = outcome;
+				insuranceBoost = false;
+				
+				payoutSplitBar250GreenBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
+				payoutSplitBar200GreenBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
+				payoutSplitBar150GreenBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
+				payoutSplitBar200RedBoostDiv.style.width = 0 + "%";
+				payoutSplitBar150RedBoostDiv.style.width = 0 + "%";
+				
+			} else if (type === "insurance") {
+				console.info("BOOSTING INSURANCE TO", boostRate);
+				payoutBoost = false;
+				insuranceBoost = outcome;
+				
+				payoutSplitBar250GreenBoostDiv.style.width = 0 + "%";
+				payoutSplitBar200GreenBoostDiv.style.width = 0 + "%";
+				payoutSplitBar150GreenBoostDiv.style.width = 0 + "%";
+				payoutSplitBar200RedBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
+				payoutSplitBar150RedBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
+				
+				
+			} else if (type === "both" && outcome === false) {
+				payoutBoost = outcome;
+				insuranceBoost = outcome;
+				
+				var boostPayoutDivLocal = document.getElementById("boost-payout");
+				var insurancePayoutDivLocal = document.getElementById("insurance-payout");
+				boostPayoutDivLocal.checked = false;
+				insurancePayoutDivLocal.checked = false;
+				
+				payoutSplitBar200RedBoostDiv.style.width = 0 + "%";
+				payoutSplitBar150RedBoostDiv.style.width = 0 + "%";
+				payoutSplitBar250GreenBoostDiv.style.width = 0 + "%";
+				payoutSplitBar200GreenBoostDiv.style.width = 0 + "%";
+				payoutSplitBar150GreenBoostDiv.style.width = 0 + "%";
+			} else {
+				payoutSplitBar200RedBoostDiv.style.width = 0 + "%";
+				payoutSplitBar150RedBoostDiv.style.width = 0 + "%";
+				payoutSplitBar250GreenBoostDiv.style.width = 0 + "%";
+				payoutSplitBar200GreenBoostDiv.style.width = 0 + "%";
+				payoutSplitBar150GreenBoostDiv.style.width = 0 + "%";
+			}
+		}
+		
+		function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/) {
+		
+			console.info("stake", stake);
+			console.info("bet", bet);
+			console.info("payoutBoost", payoutBoost);
+			console.info("insuranceRate", insuranceRate);
+			console.info("insuranceBoost", insuranceBoost);
+			
+			var payout = 0;
+			var housePayout = 0;
+			var outcome = "";
+			
+			if (payoutBoost && !insuranceBoost) {
+				payoutBoostRate = boostRate;
+				insuranceBoostRate = 0;
+			} else if (!payoutBoost && insuranceBoost) {
+				payoutBoostRate = 0;
+				insuranceBoostRate = boostRate;
+			} else {
+				payoutBoostRate = 0;
+				insuranceBoostRate = 0;
+			}
+			
+			//Clear Errors
+			clearErrors(errorContainerDiv, errorContentDiv);
+			
+			var stakeDiv = document.getElementById("stake");
+			var betDiv = document.getElementById("bet");			
+			var resultDiv = document.getElementById("result");
+			var payoutDiv = document.getElementById("payout");
+
+			if ((bet === "Cola" || bet === "Cherry") && stake !== 0 && (playerCredit - stake >= 0))
+			{
+				resultDiv.style.display = "none";
+				resultDiv.innerHTML = "";
+				resultDiv.classList.remove("win");
+				resultDiv.classList.remove("lose");
+				resultDiv.classList.remove("insurance");
+				
+				payoutDiv.style.display = "none";
+				payoutDiv.innerHTML = "";
+				payoutDiv.classList.remove("win");
+				payoutDiv.classList.remove("lose");
+				payoutDiv.classList.remove("insurance");
+				
+				stakeDiv.style.display = "inline-block";
+				stakeDiv.innerHTML = "Stake: " + stake;
+				
+				betDiv.style.display = "inline-block";
+				betDiv.innerHTML = "Bet: " + bet;
+				
+				outcomeImages.style.display = "none"
+				
+				var delayInMs = 700; //1500 Default (1.5s) seems good...
+				
+				//TODO: At the start of the timer, add a "Betting" overlay...
+				showOverlay();
+				
+				setTimeout(() => {
+					hideOverlay();
+				
+					//Start of Delay...
+					betId = betId++;
+				
+					playerCredit = playerCredit - stake;
+					console.info("Updating player credit", playerCredit);
+				
+					//playerCredit = playerCredit - stake;
+					custCreditDiv.innerHTML = "Credit: " + playerCredit + " Tokens";
+				
+					//Consider how to randomize (or not randomize) the sweets going in. Pattern may be important
+					//Do we make the names even more similar so people maybe think they've won for a sec when they haven't?
+					var sweets = [];
+					
+					for (var i = 0; i < bagSize; i++) {
+						if (((i+1) % 2) != 0) {
+							sweets.push("Cola");
+						} else {
+							sweets.push("Cherry");
+						}
+					}
+					
+					//Pick first sweet
+					var pickIndex1 = Math.floor(Math.random() * sweets.length);
+					var pickElement1 = sweets[pickIndex1];
+					
+					//Remove first sweet
+					sweets.splice(pickIndex1, 1);
+					
+					//Pick first sweet
+					var pickIndex2 = Math.floor(Math.random() * sweets.length);
+					var pickElement2 = sweets[pickIndex2];
+					
+					//Remove second sweet
+					sweets.splice(pickIndex1, 1);
+					
+					//pickedSweets object
+					var pickedSweets = {
+						"Sweet1": pickElement1,
+						"Sweet2": pickElement2
+					}
+					
+					//FORCE CHERRY
+					/*
+					var pickedSweets = {
+						"Sweet1": "Cherry",
+						"Sweet2": "Cherry"
+					};
+					*/
+					
+					//FORCE COLA
+					/*
+					var pickedSweets = {
+						"Sweet1": "Cola",
+						"Sweet2": "Cola"
+					};
+					*/
+					
+					//FORCE CORRECT
+					/*
+					var pickedSweets = {
+						"Sweet1": bet,
+						"Sweet2": bet
+					}
+					*/
+					
+					renderSweets(pickedSweets.Sweet1, pickedSweets.Sweet2);
+					
+					//TODO: Try: 2 and 0 (with the option for the person to change to 1.5 / 0.5 or whatever slider they fancy?)
+					//TODO: Try: 2.0 and 0.1 to 0.2
+					//TODO: Just give them 2.2 in total to play with, they can split it how they want (within reason... win must be higher than insurance)
+					//TODO: Have I misunderstood... it's fine if the customer balance is higher than the house balance because they put ALL the money in...
+					//TODO: ...the problem is when the house balance drops below 0
+					
+					if (pickedSweets.Sweet1 === pickedSweets.Sweet2) {
+						console.info("Matching");
+						if (pickedSweets.Sweet1 === bet) {
+							outcome = "win";
+							payout = stake * (payoutRate + payoutBoostRate), 2;
+							housePayout = stake - payout, 2;
+							winStreak++;
+							console.info("Bet wins!");
+							console.info("payoutRate", payoutRate);
+							console.info("payout", payout);
+							
+							resultDiv.classList.add("win");
+							resultDiv.style.display = "inline-block";
+							resultDiv.innerHTML = "Won!";
+							
+							payoutDiv.classList.add("win");
+							payoutDiv.style.display = "inline-block";
+							payoutDiv.innerHTML = "+" + payout + " Tokens";
+							
+						} else {
+							//We don't even display this as a loss... even if they don't have insurance... perhaps they should have done.
+							outcome = "insurance";
+							payout = stake * (insuranceRate + insuranceBoostRate), 2;
+							housePayout = stake - payout, 2;
+							winStreak = insuranceRate != 0 ? winStreak : 0;
+							console.info("Bet loses.");
+							console.info("insuranceRate", insuranceRate);
+							console.info("payout", payout);
+							
+							resultDiv.classList.add("insurance");
+							resultDiv.style.display = "inline-block";
+							resultDiv.innerHTML = insuranceRate != 0 ? "Insurance" : "Unlucky";
+							
+							payoutDiv.classList.add("insurance");
+							payoutDiv.style.display = "inline-block";
+							payoutDiv.innerHTML = "+" + payout + " Tokens";
+						}
+					} else {
+							outcome = "loss";
+							housePayout = stake;
+							winStreak = 0;
+							console.info("Bet loses.");
+							console.info("payoutRate", payoutRate);
+							console.info("payout", payout);
+							
+							resultDiv.classList.add("lose");
+							resultDiv.style.display = "inline-block";
+							resultDiv.innerHTML = "Unlucky";
+							
+							payoutDiv.classList.add("lose");
+							payoutDiv.style.display = "inline-block";
+							payoutDiv.innerHTML = "+" + payout + " Tokens";
+					}
+					
+					//Statistics
+					var auditObject = {
+						"id": betId,
+						"bet": bet,
+						"stake": stake,
+						"payoutRate": payoutRate,
+						"insuranceRate": insuranceRate,
+						"pickedSweets": pickedSweets,
+						"outcome": outcome,
+						"payout": payout,
+						"housePayout": housePayout
+					}
+					statistics.audit.push(auditObject);
+					
+					statistics.gamesPlayed++;
+					statistics.totalStake = statistics.totalStake + stake;
+					statistics.houseBalance = statistics.houseBalance + housePayout;
+					statistics.playerWinnings = statistics.playerWinnings + payout;
+					statistics.playerBalance = statistics.playerBalance + payout - stake;
+					
+					console.info('auditObject', auditObject);
+					console.info('statistics', statistics);
+					
+					//Cheeky - unselect their boost each time...
+					applyBoost("both", false);
+					
+					calculateBoost();
+					updateStatisticsDivs();
+					
+					return pickedSweets;
+					//End of Delay
+				}, delayInMs);
+			} else {
+				errorContainerDiv.style.display = "block";
+				
+				if (bet !== "Cola" && bet !== "Cherry") {
+					errors.push("Invalid bet, option must be 'Cola' or 'Cherry'...");
+				}
+				
+				if (stake === 0) {
+					errors.push("No stake provided with bet...");
+				}
+				
+				if (playerCredit - stake < 0) {
+					errors.push("Insufficient Credit! Please add more to play or choose a lower stake...");
+				}
+				
+				errorContentDiv.innerHTML = "<h1 style='margin-bottom: 0px; margin-top: 0px; font-size: 4em'>ATTENTION!</h1>";
+				
+				if (errors.length > 0) {
+					for (var i = 0; i < errors.length; i++) {
+						var errorText = errors[i];
+						
+						errorContentDiv.innerHTML = errorContentDiv.innerHTML + "<div>" + errorText.toUpperCase() + "</div>";
+					}
+				}
+			
+				console.info("Error.");
+				return false;
+			}
+		}
+		
+		function renderSweets(sweet1="", sweet2="") {
+			if ((sweet1 === "Cherry" || sweet1 === "Cola") && (sweet2 === "Cherry" || sweet2 === "Cola")) {
+				outcomeImages.style.display = "block"
+				sweetImage1Div.innerHTML = "<div class='sweet-image' id='sweet-image1'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='120px'></div>";
+				sweetImage2Div.innerHTML = "<div class='sweet-image' id='sweet-image2'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='120px'></div>";
+			}
+		}
+		
+		function clearErrors(errorContainerDiv=null, errorContentDiv=null) {
+			console.info("Running clearErrors");
+			errors = [];
+			errorContentDiv.innerHTML = "";
+			errorContainerDiv.style.display = "none";
+		}
+		
+		function showOverlay() {
+			console.info("Running showOverlay()");
+			
+			var overlay = document.getElementById("overlay");
+			var imagesContainer = document.getElementById("overlay-images");
+			var images = ["images/Cherry.png", "images/Cola.png"];
+			var totalInstances = bagSize;
+			var iteration = 0;
+			
+			// Clear any existing images (if this is called multiple times)
+			imagesContainer.innerHTML = "";
+			
+			// Create and append the image elements dynamically
+			for (let i = 0; i < totalInstances; i++) {
+				var img = document.createElement('img');
+				img.src = images[i % images.length]; // Alternate between image1 and image2
+				img.className = 'overlay-image';
+				imagesContainer.appendChild(img);
+			}
+
+			// Show the overlay
+			overlay.style.visibility = 'visible';
+			
+			// Start the image update loop
+			var intervalId = setInterval(() => {
+				var imgElements = document.querySelectorAll('.overlay-image');
+				imgElements.forEach((img, index) => {
+					// Alternate images based on the iteration
+					var newIndex = (iteration + index) % images.length;
+					img.src = images[newIndex];
+				});
+				iteration++;
+			}, 200); // Change images every 500ms
+
+			// Save the interval ID so we can clear it when hiding the overlay
+			overlay.dataset.intervalId = intervalId;
+		}
+		
+		function hideOverlay() {
+			console.info("Running hideOverlay()");
+			
+			var overlay = document.getElementById("overlay");
+			overlay.style.visibility = "hidden";
+			
+			// Clear the interval for image updates
+			var intervalId = overlay.dataset.intervalId;
+			if (intervalId) {
+				clearInterval(intervalId);
+				delete overlay.dataset.intervalId;
+			}
+		}
+	</script>
+  </body>
+</html>
