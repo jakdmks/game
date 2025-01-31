@@ -504,20 +504,21 @@
 			winStreakNumSpan.innerHTML = winStreak;
 			
 			if (boostLevel >= 3) {
-				//winStreakNumSpan.style.color = "red";
-				//winStreakTextSpan.style.color = "red";
-				winStreakNumSpan.classList.add("red", "glowing");
+				winStreakNumSpan.classList.add("red");
+				winStreakNumSpan.classList.add("glowing");
+				winStreakNumSpan.classList.remove("orange");
+				winStreakNumSpan.classList.remove("yellow");
 			} else if (boostLevel >= 2) {
-				//winStreakNumSpan.style.color = "orange";
-				//winStreakTextSpan.style.color = "orange";
-				winStreakNumSpan.classList.add("orange", "glowing");
+				winStreakNumSpan.classList.remove("red");
+				winStreakNumSpan.classList.add("orange");
+				winStreakNumSpan.classList.add("glowing");
+				winStreakNumSpan.classList.remove("yellow");
 			} else if (boostLevel >= 1) {
-				//winStreakNumSpan.style.color = "yellow";
-				//winStreakTextSpan.style.color = "yellow";
-				winStreakNumSpan.classList.add("yellow", "glowing");
+				winStreakNumSpan.classList.remove("red");
+				winStreakNumSpan.classList.remove("orange");
+				winStreakNumSpan.classList.add("yellow");
+				winStreakNumSpan.classList.add("glowing");
 			} else {
-				//winStreakNumSpan.style.color = "";
-				//winStreakTextSpan.style.color = "";
 				winStreakNumSpan.classList.remove("red", "glowing");
 				winStreakNumSpan.classList.remove("orange", "glowing");
 				winStreakNumSpan.classList.remove("yellow", "glowing");
@@ -904,10 +905,12 @@
 					*/
 					
 					//FORCE COLA
+					/*
 					var pickedSweets = {
 						"Sweet1": "Cola",
 						"Sweet2": "Cola"
 					};
+					*/
 					
 					//FORCE MIXED
 					/*
