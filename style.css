@@ -1,5 +1,5 @@
 body {
-	color: black;
+	color: white;
 	font-family: Verdana;
 	background-color: black;
 	font-size: 14px;
@@ -73,6 +73,32 @@ display: grid;
   background-color: #2d2d2d; /* Dark grey background */
   border: 1px solid #444; /* Subtle dark border */
   color: #f1f1f1; /* Light text for contrast */
+}
+
+.column.vivid {
+	border-color: #d4af37;
+	animation: flash-vivid 1s infinite, pulse-vivid 0.7s infinite; /* Flash yellow to orange */
+}
+
+@keyframes flash-vivid {
+  0% {
+    background-color: #facc15; /* Bright yellow */
+  }
+  50% {
+    background-color: #d4af37; /* Rich gold */
+  }
+  100% {
+    background-color: #facc15; /* Bright yellow */
+  }
+}
+
+@keyframes pulse-vivid {
+  0%, 100% {
+    transform: scale(1); /* Normal size */
+  }
+  50% {
+    transform: scale(1.01); /* Slightly larger */
+  }
 }
 
 /*
@@ -272,6 +298,7 @@ PAYOUT SPLIT TESTING
 	border-width: 2px;
 	animation: flash-credit 0.7s infinite, pulse-credit 1s infinite; /* Flash yellow to orange */
 	word-wrap: break-word;
+	color: black;
 }
 
 /* Pulse Animation */
@@ -931,6 +958,7 @@ PAYOUT SPLIT TESTING
 	gap: 2px;
 	max-width: 100%;
 	display: hidden;
+	vertical-align: middle;
 }
 .last-picks-entry {
 	display: flex;
@@ -938,7 +966,6 @@ PAYOUT SPLIT TESTING
 	padding: 1px;
 	border: 1px solid #ddd;
 	border-radius: 5px;
-	font-family: Arial, sans-serif;
 }
 .last-picks-cola { background-color: brown; color: white; padding: 10px; border-radius: 3px; margin: 1px; }
 .last-picks-cherry { background-color: pink; color: black; padding: 10px; border-radius: 3px; margin: 1px; }
@@ -957,4 +984,30 @@ PAYOUT SPLIT TESTING
 	box-shadow: 0px 0px 10px rgba(253, 126, 20, 0.5); /* Orange glow effect */
 	border: 2px solid #fd7e14; /* Orange border for insurance */
 }
+
+.latest-entry {
+	padding: 12px;
+}
+
+.last-picks-entry.latest {
+	border-width: 3px;
+	animation: slideInLastPick 1.5s ease-out forwards, growShrinkLastPick 1.5s ease-in-out 1.5s infinite;
+}
+
+@keyframes slideInLastPick {
+  0% {
+    transform: translateX(-100%); /* Start far left */
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0); /* End in position */
+    opacity: 1;
+  }
+}
+
+@keyframes growShrinkLastPick {
+0%, 100% { transform: scale(1); }
+50% { transform: scale(1.05); }
+}
+
 
