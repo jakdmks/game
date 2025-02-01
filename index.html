@@ -18,11 +18,10 @@
 				<div id="overlay-images" class="overlay-images"></div>
 			</div>
 		</div>
-
-		<!--3 COLUMNS-->
-		<div class="three-column-container">
-		  <div class="column dark" style="text-align: right">
-			<!--COLUMN 1-->
+		
+		<div class="grid-container">
+		  <!-- First Row of 3 Columns -->
+		  <div class="grid-item" style="text-align: right">
 			<!--ADD CREDIT-->
 			<div>
 				<!--<h2 style="text-align: center">Add Credit</h2>-->
@@ -52,9 +51,7 @@
 				</div>
 			</div>
 		  </div>
-		  <div class="column dark" style="text-align: center">
-			<!--COLUMN 2-->
-			<!--PAYOUT-SPLIT OPTIONS-->
+		  <div class="grid-item">
 			<div>
 				<!--<h2>Payout Split</h2>-->
 				<div class="radio-group" style="display: block; font-size: 1.5em; text-align: left">
@@ -98,72 +95,65 @@
 					</label>
 				</div>
 			</div>
-			<!--/PAYOUT-SPLIT-->
 		  </div>
-		  <div class="column dark">
-			<!--COLUMN 3-->
+		  <div class="grid-item" style="text-align: left">
+			<!--WIN STREAK GRAPHICAL DISPLAY-->
+			<div style="display: inline-block">
+				<span id="win-streak-text" class="boost-medium grey">streak x</span><span id="win-streak-num" class="boost-large grey">X</span>
+			</div>
+			<!--BOOST GRAPHICAL DISPLAY-->
+			<div style="display: inline-block">
+				&nbsp;&nbsp;&nbsp;
+				<span id="boost-graphic-1" class="boost-small grey">BO</span><span id="boost-graphic-2" class="boost-medium grey">OS</span><span id="boost-graphic-3" class="boost-large grey">T!!!</span>
+			</div>
 
-					<!--WIN STREAK GRAPHICAL DISPLAY-->
-					<div style="display: inline-block">
-						<span id="win-streak-text" class="boost-medium grey">streak x</span><span id="win-streak-num" class="boost-large grey">X</span>
-					</div>
-					<!--BOOST GRAPHICAL DISPLAY-->
-					<div style="display: inline-block">
-						&nbsp;&nbsp;&nbsp;
-						<span id="boost-graphic-1" class="boost-small grey">BO</span><span id="boost-graphic-2" class="boost-medium grey">OS</span><span id="boost-graphic-3" class="boost-large grey">T!!!</span>
-					</div>
-			
-					<!--Payout Boost-->
-					<div style="border: none">
-						<div class="radio-group" id="payout-boost-icons" style="display: none; font-size: 1.5em; text-align: left">
-							<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
-						</div>
-						<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-left: 10px;">
-							<img src="images/flame-png.png" height="30px" alt="Flame Icon">
-							<div id="payout-boost-pct-1" class="payout-boost-text small">20%</div>
-						</div>
-						<div class="slide-in-scale" id="payout-boost-icon-2" style="margin-left: 10px;">
-							<img src="images/flame-png.png" height="40px" alt="Flame Icon">
-							<div id="payout-boost-pct-2" class="payout-boost-text medium">30%</div>
-						</div>
-						<div class="slide-in-scale" id="payout-boost-icon-3" style="margin-left: 10px;">
-							<img src="images/flame-png.png" height="50px" alt="Flame Icon">
-							<div id="payout-boost-pct-3" class="payout-boost-text large">40%</div>
-						</div>
-					</div>
-					<!--Insurance Boost-->
-					<div style="border: none">
-						<div class="radio-group" id="insurance-boost-icons" style="display: none; font-size: 1.5em; text-align: left">
-							<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked)">
-						</div>
-						<div class="slide-in-scale" id="insurance-boost-icon-1" style="margin-left: 10px;">
-							<img src="images/green-cross-png.png" height="30px" alt="Insurance Boost 1">
-							<div id="insurance-boost-pct-1" class="payout-boost-text small">20%</div>
-						</div>
-						<div class="slide-in-scale" id="insurance-boost-icon-2" style="margin-left: 10px;">
-							<img src="images/green-cross-png.png" height="40px" alt="Insurance Boost 2">
-							<div id="insurance-boost-pct-2" class="payout-boost-text medium">30%</div>
-						</div>
-						<div class="slide-in-scale" id="insurance-boost-icon-3" style="margin-left: 10px;">
-							<img src="images/green-cross-png.png" height="50px" alt="Insurance Boost 3">
-							<div id="insurance-boost-pct-3" class="payout-boost-text large">40%</div>
-						</div>
-					</div>
+			<!--Payout Boost-->
+			<div style="border: none">
+				<div class="radio-group" id="payout-boost-icons" style="display: none; font-size: 1.5em; text-align: left">
+					<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
+				</div>
+				<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-left: 10px;">
+					<img src="images/flame-png.png" height="30px" alt="Flame Icon">
+					<div id="payout-boost-pct-1" class="payout-boost-text small">20%</div>
+				</div>
+				<div class="slide-in-scale" id="payout-boost-icon-2" style="margin-left: 10px;">
+					<img src="images/flame-png.png" height="40px" alt="Flame Icon">
+					<div id="payout-boost-pct-2" class="payout-boost-text medium">30%</div>
+				</div>
+				<div class="slide-in-scale" id="payout-boost-icon-3" style="margin-left: 10px;">
+					<img src="images/flame-png.png" height="50px" alt="Flame Icon">
+					<div id="payout-boost-pct-3" class="payout-boost-text large">40%</div>
+				</div>
+			</div>
+			<!--Insurance Boost-->
+			<div style="border: none">
+				<div class="radio-group" id="insurance-boost-icons" style="display: none; font-size: 1.5em; text-align: left">
+					<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked)">
+				</div>
+				<div class="slide-in-scale" id="insurance-boost-icon-1" style="margin-left: 10px;">
+					<img src="images/green-cross-png.png" height="30px" alt="Insurance Boost 1">
+					<div id="insurance-boost-pct-1" class="payout-boost-text small">20%</div>
+				</div>
+				<div class="slide-in-scale" id="insurance-boost-icon-2" style="margin-left: 10px;">
+					<img src="images/green-cross-png.png" height="40px" alt="Insurance Boost 2">
+					<div id="insurance-boost-pct-2" class="payout-boost-text medium">30%</div>
+				</div>
+				<div class="slide-in-scale" id="insurance-boost-icon-3" style="margin-left: 10px;">
+					<img src="images/green-cross-png.png" height="50px" alt="Insurance Boost 3">
+					<div id="insurance-boost-pct-3" class="payout-boost-text large">40%</div>
 				</div>
 			</div>
 		  </div>
-		</div>
-		<!--/3 COLUMNS-->
-		
-		<!--ERROR SINGLE COLUMN-->
-		<div class="one-column-container" id="error-container" style="display: none">
-			<div class="column" id="error-content" style="text-align: center">
+		  
+		  <!-- Error Column -->
+		  <div class="grid-item full-width">
+			<div id="error-container" style="display: none">
+				<div class="column" id="error-content" style="text-align: center"></div>
 			</div>
-		</div>
-		
-		<!--3 COLUMNS-->
-		<div class="three-column-container">
-			<div class="column vivid" style="text-align: right;">
+		  </div>
+
+		  <!-- Second Row of 3 Columns -->
+		  <div class="grid-item" style="text-align: right">
 				<div class="cherry-cola-bets-container">
 					<div class="cherry-cola-bets">
 						<div class="game-button-div cherry">
@@ -182,22 +172,22 @@
 						</div>	
 					</div>
 				</div>
-			</div>
-			<div class="column dark" style="text-align: center">
-				<div style="">
-					<div class="stake-bet-container">
-						<div class="stake-bet-div" id="stake"></div>
-						<div class="stake-bet-div" id="bet"></div>
-					</div>
+		  </div>
+		  <div class="grid-item">
+			<div style="">
+				<div class="stake-bet-container">
+					<div class="stake-bet-div" id="stake"></div>
+					<div class="stake-bet-div" id="bet"></div>
+				</div>
 				<div>
 					<div class="result-div" id="result"></div>
 				</div>
 				<div>
 					<div class="payout-div" id="payout"></div>
 				</div>
-				</div>
 			</div>
-		  <div class="column dark" style="text-align: left">
+		  </div>
+		  <div class="grid-item">  
 			<!--SWEET BAG NEW SPOT-->
 			<div id="outcome-images" class="panel" style="display: none">
 				<div id="sweet1" style="display: inline-block;">
@@ -211,57 +201,40 @@
 			</div>
 			<!--SWEET BAG NEW SPOT-->
 		  </div>
-		</div>
-		<!--/3 COLUMNS-->
-		
-		<div class="one-column-container">
-			<div class="column dark" style="text-align: center;">
+
+			<!-- Single Column Rows -->
+			<div class="grid-item full-width">
 				<div>
-					<div class="last-picks-container latest" id="last-picks-display-latest"></div>
 					<div class="last-picks-container" id="last-picks-display"></div>
+					<div class="last-picks-container latest" id="last-picks-display-latest"></div>
 				</div>
-			</div>	
-		</div>
-		
-		<!--BET OPTIONS ONE COLUMN SETUP-->
-		<div class="one-column-container">
-			<div class="column dark" style="text-align: center;">
+			</div>
+			<div class="grid-item full-width">
 				<div class="boost-insurance-div">
 					<input type="checkbox" id="boost-insurance-checkbox" name="boost-insurance-checkbox" onchange="insuranceSwitch(this.checked)" checked />
 					<label for="checkbox" style="font-size: 0.9em">Boost Insurance? <em>(Pays out 10% less but your boost maintains on non-bet matching pair)</em></label><br>
 				</div>
 				<!--<div style="font-size: 0.8em;"><em>(Can only change once win streak returns to 0)</em></div>-->
 			</div>
-		</div>
-		
-		<!--DEBUG ONE COLUMN SETUP-->
-		<div class="one-column-container">
-			<div class="column dark">
-				<!--COLUMN 1-->
-				<!--DEBUG-->
-				<div>
-					<!--<h2>Debug</h2>-->
-					<div class="panel debug">
-						<div id="house-balance-debug">House Balance: X Tokens</div>
-						<div id="house-cash-debug">House Balance: £XX.XX</div>
-						<div id="cust-balance-debug">Cust' Balance: X Tokens</div>
-						<div id="cust-cash-debug">Cust' Balance: £XX.XX</div>
-						<div id="boost-insurance">Boost Insurance: X</div>
-						<div id="boost-insurance-multiplier">Boost Insurance Multiplier: X</div>
-						<div id="payout-multiplier">Win Multiplier: X</div>
-						<div id="insurance-multiplier">Insurance Multiplier: X</div>
-						<div id="win-streak">Win Streak: X</div>
-						<div id="boost-avail">Boost Available: X</div>
-						<div id="boost-level">Boost Level: X</div>
-						<div id="boost-pct">Boost Pct: X%</div>
-						<div id="payout-bonus">Last Bet Return Bonus Rate: X%</div>
-						<div id="insurance-bonus">Last Bet Insurance Bonus Rate: X%</div>
-					</div>
+			<div class="grid-item full-width" style="text-align: left">
+				<div class="panel debug">
+					<div id="house-balance-debug">House Balance: X Tokens</div>
+					<div id="house-cash-debug">House Balance: £XX.XX</div>
+					<div id="cust-balance-debug">Cust' Balance: X Tokens</div>
+					<div id="cust-cash-debug">Cust' Balance: £XX.XX</div>
+					<div id="boost-insurance">Boost Insurance: X</div>
+					<div id="boost-insurance-multiplier">Boost Insurance Multiplier: X</div>
+					<div id="payout-multiplier">Win Multiplier: X</div>
+					<div id="insurance-multiplier">Insurance Multiplier: X</div>
+					<div id="win-streak">Win Streak: X</div>
+					<div id="boost-avail">Boost Available: X</div>
+					<div id="boost-level">Boost Level: X</div>
+					<div id="boost-pct">Boost Pct: X%</div>
+					<div id="payout-bonus">Last Bet Return Bonus Rate: X%</div>
+					<div id="insurance-bonus">Last Bet Insurance Bonus Rate: X%</div>
 				</div>
-			
 			</div>
 		</div>
-		<!--/DEBUG ONE COLUMN SETUP-->
     </main>
     <script>
 		//TODO: If Boost Insurance is switched on... it can only be switched off when they're back to 0?
@@ -972,23 +945,22 @@
 			container.innerHTML = ""; // Clear previous content
 			
 			//Reverse the array before rendering
-			var reversedPicks = [...lastPicks].reverse();
+			//var reversedPicks = [...lastPicks].reverse();
 			
-			reversedPicks.forEach((pick, index) => {
-				//Previous Sweets
-				if (index !== 0)
-				{
+			lastPicks.forEach((pick, index) => {
+				const isLast = index === lastPicks.length - 1; // Check if it's the last pick
+
+				if (!isLast) {
+					// Previous Sweets
 					const entry = document.createElement("div");
 					entry.classList.add("last-picks-entry");
-					
+
 					const sweet1 = document.createElement("span");
-					sweet1.classList.add(`last-picks-${pick.Sweet1.toLowerCase()}`); // Add class based on name
-					//sweet1.textContent = pick.Sweet1;
-					
+					sweet1.classList.add(`last-picks-${pick.Sweet1.toLowerCase()}`);
+
 					const sweet2 = document.createElement("span");
 					sweet2.classList.add(`last-picks-${pick.Sweet2.toLowerCase()}`);
-					//sweet2.textContent = pick.Sweet2;
-					
+
 					// Add outcome-based class to apply highlighting
 					if (pick.Outcome === "win") {
 						entry.classList.add("last-picks-win");
@@ -997,27 +969,24 @@
 					} else if (pick.Outcome === "insurance") {
 						entry.classList.add("last-picks-insurance");
 					}
-					
-					entry.appendChild(sweet1);
-					entry.appendChild(sweet2);
+
+					entry.prepend(sweet1);
+					entry.prepend(sweet2);
 					container.appendChild(entry);
-				}
-				
-				//Latest
-				if (index === 0) {
+				} else {
+					// Latest Pick (Last Element)
 					const containerLatest = document.getElementById("last-picks-display-latest");
 					containerLatest.innerHTML = ""; // Clear previous content
-					
+
 					const entryLatest = document.createElement("div");
-					entryLatest.classList.add("last-picks-entry");
-					entryLatest.classList.add("latest");
-					
+					entryLatest.classList.add("last-picks-entry", "latest");
+
 					const sweet1 = document.createElement("span");
-					sweet1.classList.add(`last-picks-${pick.Sweet1.toLowerCase()}`); // Add class based on name
-					
+					sweet1.classList.add(`last-picks-${pick.Sweet1.toLowerCase()}`);
+
 					const sweet2 = document.createElement("span");
 					sweet2.classList.add(`last-picks-${pick.Sweet2.toLowerCase()}`);
-					
+
 					// Add outcome-based class to apply highlighting
 					if (pick.Outcome === "win") {
 						entryLatest.classList.add("last-picks-win");
@@ -1026,15 +995,16 @@
 					} else if (pick.Outcome === "insurance") {
 						entryLatest.classList.add("last-picks-insurance");
 					}
+
 					sweet1.classList.add("latest-entry");
-                    sweet2.classList.add("latest-entry");
-					
+					sweet2.classList.add("latest-entry");
+
 					entryLatest.appendChild(sweet1);
 					entryLatest.appendChild(sweet2);
 					containerLatest.appendChild(entryLatest);
-					
-                }
+				}
 			});
+
 		}
 		
 		function renderSweets(sweet1="", sweet2="") {
