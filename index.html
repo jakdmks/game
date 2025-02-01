@@ -27,7 +27,7 @@
 			<div>
 				<!--<h2 style="text-align: center">Add Credit</h2>-->
 				<div>
-					<div class="credit-button-div">
+					<div id="credit-button" class="credit-button-div">
 						<button type="button" onclick="console.info(addCredit(20000))">Add 20,000 Tokens for only £20</button>
 					</div>
 				</div>
@@ -39,6 +39,7 @@
 				<div class="panel green">
 					<div id="cust-credit">Credit: X Tokens</div>
 					<div id="cust-winnings">Winnings: X Tokens</div>
+					<div id="cust-total-winnings">Total Winnings: X Tokens</div>
 				</div>
 			</div>
 			
@@ -118,15 +119,15 @@
 							<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
 						</div>
 						<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-left: 10px;">
-							<img src="images/flame-png.png" height="20px" alt="Flame Icon">
+							<img src="images/flame-png.png" height="30px" alt="Flame Icon">
 							<div id="payout-boost-pct-1" class="payout-boost-text small">20%</div>
 						</div>
 						<div class="slide-in-scale" id="payout-boost-icon-2" style="margin-left: 10px;">
-							<img src="images/flame-png.png" height="30px" alt="Flame Icon">
+							<img src="images/flame-png.png" height="40px" alt="Flame Icon">
 							<div id="payout-boost-pct-2" class="payout-boost-text medium">30%</div>
 						</div>
 						<div class="slide-in-scale" id="payout-boost-icon-3" style="margin-left: 10px;">
-							<img src="images/flame-png.png" height="40px" alt="Flame Icon">
+							<img src="images/flame-png.png" height="50px" alt="Flame Icon">
 							<div id="payout-boost-pct-3" class="payout-boost-text large">40%</div>
 						</div>
 					</div>
@@ -136,15 +137,15 @@
 							<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked)">
 						</div>
 						<div class="slide-in-scale" id="insurance-boost-icon-1" style="margin-left: 10px;">
-							<img src="images/green-cross-png.png" height="20px" alt="Insurance Boost 1">
+							<img src="images/green-cross-png.png" height="30px" alt="Insurance Boost 1">
 							<div id="insurance-boost-pct-1" class="payout-boost-text small">20%</div>
 						</div>
 						<div class="slide-in-scale" id="insurance-boost-icon-2" style="margin-left: 10px;">
-							<img src="images/green-cross-png.png" height="30px" alt="Insurance Boost 2">
+							<img src="images/green-cross-png.png" height="40px" alt="Insurance Boost 2">
 							<div id="insurance-boost-pct-2" class="payout-boost-text medium">30%</div>
 						</div>
 						<div class="slide-in-scale" id="insurance-boost-icon-3" style="margin-left: 10px;">
-							<img src="images/green-cross-png.png" height="40px" alt="Insurance Boost 3">
+							<img src="images/green-cross-png.png" height="50px" alt="Insurance Boost 3">
 							<div id="insurance-boost-pct-3" class="payout-boost-text large">40%</div>
 						</div>
 					</div>
@@ -213,6 +214,14 @@
 		</div>
 		<!--/3 COLUMNS-->
 		
+		<div class="one-column-container">
+			<div class="column dark" style="text-align: center;">
+				<div>
+					<div class="last-picks-container" id="lastPicksDisplay"></div>
+				</div>
+			</div>	
+		</div>
+		
 		<!--BET OPTIONS ONE COLUMN SETUP-->
 		<div class="one-column-container">
 			<div class="column dark" style="text-align: center;">
@@ -259,6 +268,7 @@
 		function updateStatisticsDivs() {
 			custCreditDiv.innerHTML = "Credit: " + playerCredit + " Tokens";
 			custWinningsDiv.innerHTML = "Winnings: " + statistics.playerWinnings + " Tokens";
+			custTotalWinningsDiv.innerHTML = "Total Winnings: " + statistics.playerTotalWinnings + " Tokens";
 			houseBalanceDebugDiv.innerHTML = "House Balance: " + statistics.houseBalance + " Tokens";
 			houseCashDebugDiv.innerHTML = "House Balance: " + (statistics.houseBalance / tokenRateToGBP) + " GBP";
 			custBalanceDebugDiv.innerHTML = "Cust' Balance: " + statistics.playerBalance + " Tokens";
@@ -283,10 +293,14 @@
 			var playerCreditParentDiv = custCreditDiv.parentNode;
 			if (playerCredit <= 0) {
 				playerCreditParentDiv.classList.remove("green");
-				playerCreditParentDiv.classList.add("red");
+				playerCreditParentDiv.classList.add("red");		
+				creditButtonDiv.style.pointerEvents = "auto";
+				creditButtonDiv.style.opacity = "1";
 			} else {
 				playerCreditParentDiv.classList.add("green");
 				playerCreditParentDiv.classList.remove("red");
+				creditButtonDiv.style.pointerEvents = "none";
+				creditButtonDiv.style.opacity = "0.2";
 			}
 			
 			//Displaying Bonus Buttons - move to another function?
@@ -432,7 +446,7 @@
 			boostRate = 0;
 			
 			//FORCE WIN STREAK
-			//winStreak = 99;
+			winStreak = 99;
 			
 			if (winStreak >= boostStreakLevelOne) {
 				boostRate = boostBonusLevelOne - boostInsuranceRate;
@@ -494,12 +508,16 @@
 			totalStake: 0,
 			houseBalance: 0,
 			playerWinnings: 0,
+			playerTotalWinnings: 0,
 			playerBalance: 0,
 			audit: [] 
 		}
 		
+		var lastPicks = [];
+		
 		var custCreditDiv = document.getElementById("cust-credit");
-		var custWinningsDiv = document.getElementById("cust-winnings");			
+		var custWinningsDiv = document.getElementById("cust-winnings");
+		var custTotalWinningsDiv = document.getElementById("cust-total-winnings");
 		var houseBalanceDebugDiv = document.getElementById("house-balance-debug");
 		var houseCashDebugDiv = document.getElementById("house-cash-debug");
 		var custBalanceDebugDiv = document.getElementById("cust-balance-debug");
@@ -561,16 +579,53 @@
 		var insuranceBoostPct2Div = document.getElementById("insurance-boost-pct-2");
 		var insuranceBoostPct3Div = document.getElementById("insurance-boost-pct-3");
 		
+		var creditButtonDiv = document.getElementById("credit-button");
+		
 		insuranceSwitch(true);
 		updateStatisticsDivs();
 		
 		var betId = 0;
 		
 		function addCredit(credit=0) {
-			clearErrors(errorContainerDiv, errorContentDiv);
+		
+			//Add Credit
 			playerCredit = (playerCredit * 1) + (credit * 1);
+			
+			//Setup Messages
+			var creditErrors = [];
+			creditErrors.push("Added " + credit + " Tokens...");
+			
+			displayErrors(errorContainerDiv, errorContentDiv, "DEPOSIT SUCCESS!", creditErrors, 3000);
 			updateStatisticsDivs();
 			return playerCredit;
+		}
+		
+		function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages, displayForMS) {
+		
+			console.info("Running displayErrors...");
+			console.info("errorHeaderText", errorHeaderText);
+			console.info("errorMessages", errorMessages);
+			console.info("displayForMS", displayForMS);
+		
+			//Set HTML for Header
+			contentDiv.innerHTML = "<h1>" + errorHeaderText + "</h1>";
+			
+			//Set HTML for Messages
+			if (errorMessages.length > 0) {
+				for (var i = 0; i < errorMessages.length; i++) {
+					var errorText = errorMessages[i];
+					
+					contentDiv.innerHTML = contentDiv.innerHTML + "<div>" + errorText.toUpperCase() + "</div>";
+				}
+			}
+			
+			//Display Container
+			containerDiv.style.display = "block";
+			
+			setTimeout(() => {
+				containerDiv.style.display = "none";
+			}, displayForMS);
+			
 		}
 		
 		function insuranceSwitch(checked=true) {
@@ -646,6 +701,9 @@
 		
 		function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/) {
 		
+			//Clear Errors
+			clearErrors(errorContainerDiv, errorContentDiv);
+		
 			console.info("stake", stake);
 			console.info("bet", bet);
 			console.info("payoutBoost", payoutBoost);
@@ -666,9 +724,6 @@
 				payoutBoostRate = 0;
 				insuranceBoostRate = 0;
 			}
-			
-			//Clear Errors
-			clearErrors(errorContainerDiv, errorContentDiv);
 			
 			var stakeDiv = document.getElementById("stake");
 			var betDiv = document.getElementById("bet");			
@@ -826,20 +881,18 @@
 							outcome = "insurance";
 							payout = stake * (insuranceRate + insuranceBoostRate), 2;
 							housePayout = stake - payout, 2;
-							winStreak = insuranceRate != 0 ? winStreak : 0;
+							winStreak = boostInsurance ? winStreak : 0;
 							console.info("Bet loses.");
 							console.info("insuranceRate", insuranceRate);
 							console.info("payout", payout);
 							
 							resultDiv.classList.add("insurance");
 							resultDiv.style.display = "flex";
-							resultDiv.innerHTML = insuranceRate != 0 ? "Insurance" : "No Insurance Cover";
+							resultDiv.innerHTML = insuranceRate != 0 ? "Insurance" : "Insurance*";
 							
 							payoutDiv.classList.add("insurance");
 							payoutDiv.style.display = "flex";
 							payoutDiv.innerHTML = "+" + payout + " Tokens";
-							
-							winStreak = boostInsurance ? winstreak : 0;
 					}
 					
 					//Statistics
@@ -848,60 +901,103 @@
 						"bet": bet,
 						"stake": stake,
 						"payoutRate": payoutRate,
+						"payoutBoostRate": payoutBoostRate,
 						"insuranceRate": insuranceRate,
+						"insuranceBoostRate": insuranceBoostRate,
 						"pickedSweets": pickedSweets,
 						"outcome": outcome,
 						"payout": payout,
-						"housePayout": housePayout
+						"housePayout": housePayout,
+						"boostInsurance": boostInsurance
 					}
+					
 					statistics.audit.push(auditObject);
 					
 					statistics.gamesPlayed++;
 					statistics.totalStake = statistics.totalStake + stake;
 					statistics.houseBalance = statistics.houseBalance + housePayout;
 					statistics.playerWinnings = statistics.playerWinnings + payout;
+					statistics.playerTotalWinnings = statistics.playerTotalWinnings + payout;
 					statistics.playerBalance = statistics.playerBalance + payout - stake;
 					
-					console.info('auditObject', auditObject);
-					console.info('statistics', statistics);
+					//Last picks Array
+					var lastPicksMaxSize = 6;
+					var lastPickRecord = JSON.parse(JSON.stringify(pickedSweets));
+					lastPickRecord.Outcome = outcome;
+					
+					if (lastPicks.length >= lastPicksMaxSize) {
+						lastPicks.shift();
+					}
+					lastPicks.push(lastPickRecord);
+					
+					//Console output
+					console.info("auditObject", auditObject);
+					console.info("statistics", statistics);
+					console.info("lastPicks", lastPicks);
 					
 					//Cheeky - unselect their boost each time...
 					applyBoost("both", false);
 					
 					calculateBoost();
 					updateStatisticsDivs();
+					renderLastPicks();
 					
 					return pickedSweets;
 					//End of Delay
 				}, delayInMs);
 			} else {
-				errorContainerDiv.style.display = "block";
+				
+				var pickSweetsErrors = [];
 				
 				if (bet !== "Cola" && bet !== "Cherry") {
-					errors.push("Invalid bet, option must be 'Cola' or 'Cherry'...");
+					pickSweetsErrors.push("Invalid bet, option must be 'Cola' or 'Cherry'...");
 				}
 				
 				if (stake === 0) {
-					errors.push("No stake provided with bet...");
+					pickSweetsErrors.push("No stake provided with bet...");
 				}
 				
 				if (playerCredit - stake < 0) {
-					errors.push("Insufficient Credit! Please add more to play or choose a lower stake...");
+					pickSweetsErrors.push("Insufficient Credit! Please add more to play or choose a lower stake...");
 				}
 				
-				errorContentDiv.innerHTML = "<h1 style='margin-bottom: 0px; margin-top: 0px; font-size: 2em'>ATTENTION!</h1>";
-				
-				if (errors.length > 0) {
-					for (var i = 0; i < errors.length; i++) {
-						var errorText = errors[i];
-						
-						errorContentDiv.innerHTML = errorContentDiv.innerHTML + "<div>" + errorText.toUpperCase() + "</div>";
-					}
-				}
-			
-				console.info("Error.");
+				displayErrors(errorContainerDiv, errorContentDiv, "ATTENTION!", pickSweetsErrors, 3000);
 				return false;
 			}
+		}
+		
+		function renderLastPicks() {
+			const container = document.getElementById("lastPicksDisplay");
+			container.innerHTML = ""; // Clear previous content
+			
+			//Reverse the array before rendering
+			var reversedPicks = [...lastPicks].reverse();
+			
+			reversedPicks.forEach((pick, index) => {
+				const entry = document.createElement("div");
+				entry.classList.add("last-picks-entry");
+				
+				const sweet1 = document.createElement("span");
+				sweet1.classList.add(`last-picks-${pick.Sweet1.toLowerCase()}`); // Add class based on name
+				//sweet1.textContent = pick.Sweet1;
+				
+				const sweet2 = document.createElement("span");
+				sweet2.classList.add(`last-picks-${pick.Sweet2.toLowerCase()}`);
+				//sweet2.textContent = pick.Sweet2;
+				
+                // Add outcome-based class to apply highlighting
+                if (pick.Outcome === "win") {
+                    entry.classList.add("last-picks-win");
+                } else if (pick.Outcome === "loss") {
+                    entry.classList.add("last-picks-loss");
+                } else if (pick.Outcome === "insurance") {
+                    entry.classList.add("last-picks-insurance");
+                }
+				
+				entry.appendChild(sweet1);
+				entry.appendChild(sweet2);
+				container.appendChild(entry);
+			});
 		}
 		
 		function renderSweets(sweet1="", sweet2="") {
@@ -912,11 +1008,11 @@
 			}
 		}
 		
-		function clearErrors(errorContainerDiv=null, errorContentDiv=null) {
+		function clearErrors(containerDiv=null, contentDiv=null) {
 			console.info("Running clearErrors");
-			errors = [];
-			errorContentDiv.innerHTML = "";
-			errorContainerDiv.style.display = "none";
+			//errors = [];
+			contentDiv.innerHTML = "";
+			containerDiv.style.display = "none";
 		}
 		
 		function showOverlay() {
