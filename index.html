@@ -25,7 +25,7 @@
 			<!--COLUMN 1-->
 			<!--ADD CREDIT-->
 			<div>
-				<h2 style="text-align: center">Add Credit</h2>
+				<!--<h2 style="text-align: center">Add Credit</h2>-->
 				<div>
 					<div class="credit-button-div">
 						<button type="button" onclick="console.info(addCredit(20000))">Add 20,000 Tokens for only £20</button>
@@ -35,7 +35,7 @@
 			
 			<!--CREDIT-->
 			<div>
-				<h2>Credit</h2>
+				<!--<h2>Credit</h2>-->
 				<div class="panel green">
 					<div id="cust-credit">Credit: X Tokens</div>
 					<div id="cust-winnings">Winnings: X Tokens</div>
@@ -44,7 +44,7 @@
 			
 			<!--PAYOUT-SPLIT STATS-->
 			<div>
-				<h2>Split</h2>
+				<!--<h2>Split</h2>-->
 				<div class="panel">
 					<div id="payout-pct">Return Pct: X%</div>
 					<div id="insurance-pct">Insurance Pct: X%</div>
@@ -55,77 +55,53 @@
 			<!--COLUMN 2-->
 			<!--PAYOUT-SPLIT OPTIONS-->
 			<div>
-				<h2>Payout Split</h2>
+				<!--<h2>Payout Split</h2>-->
 				<div class="radio-group" style="display: block; font-size: 1.5em; text-align: left">
 					<label class="radio-item">
 					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.5, 0, 'SPLIT01')">
-						<strong>BIGGEST PAYOUT!</strong>
-						<div style="font-size: 0.5em;">250% Win Payout Rate (with upto +40% bonus!)</div>
-						<div style="font-size: 0.5em;">0% Insurance Payout Rate</div>
+						<strong>PAYOUT+</strong>
+						<!--<div style="font-size: 0.5em;">250% Win Payout Rate (with upto +40% bonus!)</div>
+						<div style="font-size: 0.5em;">0% Insurance Payout Rate</div>-->
 						<div id="payout-split-bar-250-0" class="payout-split-bar">
 							<div class="green-bar" style="width: 86%;"></div>
 							<div id="payout-split-bar-250-0-green-boost" class="green-bar-boost"></div>
-							<div class="red-bar" style="width: 0px;"></div>
+							<div class="blue-bar" style="width: 0px;"></div>
 						</div>
 
 					</label>
 					
 					<label class="radio-item">
 					<input type="radio" name="payout" value="option1" checked onchange="updatePayoutSplit(2, 0.5, 'SPLIT02')">
-						<strong>ON THE FENCE!</strong>
-						<div style="font-size: 0.5em;">200% Win Payout Rate (with upto +40% boost!)</div>
-						<div style="font-size: 0.5em;">50% Insurance Payout Rate (with upto +40% boost!)</div>
+						<strong>VANILLA</strong>
+						<!--<div style="font-size: 0.5em;">200% Win Payout Rate (with upto +40% boost!)</div>
+						<div style="font-size: 0.5em;">50% Insurance Payout Rate (with upto +40% boost!)</div>-->
 						<div id="payout-split-bar-200-50" class="payout-split-bar selected">
 							<div class="green-bar"></div>
 							<div id="payout-split-bar-200-50-green-boost" class="green-bar-boost"></div>
-							<div id="payout-split-bar-200-50-red-boost" class="red-bar-boost"></div>
-							<div class="red-bar"></div>
+							<div id="payout-split-bar-200-50-red-boost" class="blue-bar-boost"></div>
+							<div class="blue-bar"></div>
 						</div>
 					</label>
 					
 					<label class="radio-item">
 					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 1, 'SPLIT03')">
-						<strong>MOST INSURANCE!</strong>
-						<div style="font-size: 0.5em;">150% Win Payout Rate (with upto +40% boost!)</div>
-						<div style="font-size: 0.5em;">0% Insurance Payout Rate (with upto +40% boost!)</div>
+						<strong>INSURANCE+</strong>
+						<!--<div style="font-size: 0.5em;">150% Win Payout Rate (with upto +40% boost!)</div>
+						<div style="font-size: 0.5em;">100% Insurance Payout Rate (with upto +40% boost!)</div>-->
 						<div id="payout-split-bar-150-100" class="payout-split-bar">
 							<div class="green-bar" style="width: 52%;"></div>
 							<div id="payout-split-bar-150-100-green-boost" class="green-bar-boost"></div>
-							<div id="payout-split-bar-150-100-red-boost" class="red-bar-boost"></div>
-							<div class="red-bar" style="width: 34%;"></div>
+							<div id="payout-split-bar-150-100-red-boost" class="blue-bar-boost"></div>
+							<div class="blue-bar" style="width: 34%;"></div>
 						</div>
 					</label>
 				</div>
 			</div>
 			<!--/PAYOUT-SPLIT-->
-			
 		  </div>
 		  <div class="column dark">
 			<!--COLUMN 3-->
-			
-			<!--
-			<h2>Last Bet</h2>
-			<div style="font-size: 0.7em">
-				<ul>
-					<li>TODO: Boost applied - perhaps display this in the centre column though?</li>
-					<li>TODO: Win streak before bet</li>
-					<li>TODO: UPDATE AUDIT RECORDS...</li>
-				</ul>
-			</div>
-			
-			<h2>Rules</h2>
-			<div style="font-size: 0.7em">
-				<ul>
-					<li>Correct matching pair pays Payout Rate</li>
-					<li>Other matching pair pays Insurance Rate</li>
-					<li>Mixed pays nothing</li>
-					<li>Win streak and subsequently Boost increase on correct guesses</li>
-					<li>Win streak and Boost reset on incorrect guess*</li>
-					<li><em>(* = unless "Boost Insurance" is added. Then other matching pair will maintain boost level and not reset)</em></li>
-				</ul>
-				
-				<div class="two-column-container">
-			-->
+
 					<!--WIN STREAK GRAPHICAL DISPLAY-->
 					<div style="display: inline-block">
 						<span id="win-streak-text" class="boost-medium grey">streak x</span><span id="win-streak-num" class="boost-large grey">X</span>
@@ -137,38 +113,38 @@
 					</div>
 			
 					<!--Payout Boost-->
-					<div style="height: 150px; border: none">
+					<div style="border: none">
 						<div class="radio-group" id="payout-boost-icons" style="display: none; font-size: 1.5em; text-align: left">
 							<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
 						</div>
-						<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-left: 15px;">
-							<img src="images/flame-png.png" height="80px" alt="Flame Icon">
+						<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-left: 10px;">
+							<img src="images/flame-png.png" height="20px" alt="Flame Icon">
 							<div id="payout-boost-pct-1" class="payout-boost-text small">20%</div>
 						</div>
-						<div class="slide-in-scale" id="payout-boost-icon-2" style="margin-left: 30px;">
-							<img src="images/flame-png.png" height="90px" alt="Flame Icon">
+						<div class="slide-in-scale" id="payout-boost-icon-2" style="margin-left: 10px;">
+							<img src="images/flame-png.png" height="30px" alt="Flame Icon">
 							<div id="payout-boost-pct-2" class="payout-boost-text medium">30%</div>
 						</div>
-						<div class="slide-in-scale" id="payout-boost-icon-3" style="margin-left: 45px;">
-							<img src="images/flame-png.png" height="100px" alt="Flame Icon">
+						<div class="slide-in-scale" id="payout-boost-icon-3" style="margin-left: 10px;">
+							<img src="images/flame-png.png" height="40px" alt="Flame Icon">
 							<div id="payout-boost-pct-3" class="payout-boost-text large">40%</div>
 						</div>
 					</div>
 					<!--Insurance Boost-->
-					<div style="height: 120px; border: none">
+					<div style="border: none">
 						<div class="radio-group" id="insurance-boost-icons" style="display: none; font-size: 1.5em; text-align: left">
 							<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked)">
 						</div>
-						<div class="slide-in-scale" id="insurance-boost-icon-1" style="margin-left: 15px;">
-							<img src="images/green-cross-png.png" height="60px" alt="Insurance Boost 1">
+						<div class="slide-in-scale" id="insurance-boost-icon-1" style="margin-left: 10px;">
+							<img src="images/green-cross-png.png" height="20px" alt="Insurance Boost 1">
 							<div id="insurance-boost-pct-1" class="payout-boost-text small">20%</div>
 						</div>
-						<div class="slide-in-scale" id="insurance-boost-icon-2" style="margin-left: 30px;">
-							<img src="images/green-cross-png.png" height="70px" alt="Insurance Boost 2">
+						<div class="slide-in-scale" id="insurance-boost-icon-2" style="margin-left: 10px;">
+							<img src="images/green-cross-png.png" height="30px" alt="Insurance Boost 2">
 							<div id="insurance-boost-pct-2" class="payout-boost-text medium">30%</div>
 						</div>
-						<div class="slide-in-scale" id="insurance-boost-icon-3" style="margin-left: 45px;">
-							<img src="images/green-cross-png.png" height="80px" alt="Insurance Boost 3">
+						<div class="slide-in-scale" id="insurance-boost-icon-3" style="margin-left: 10px;">
+							<img src="images/green-cross-png.png" height="40px" alt="Insurance Boost 3">
 							<div id="insurance-boost-pct-3" class="payout-boost-text large">40%</div>
 						</div>
 					</div>
@@ -184,127 +160,58 @@
 			</div>
 		</div>
 		
-		<!--2 COLUMNS-->
-		<div class="two-column-container">
-		  <div class="column dark" style="text-align: right">
-			<div class="cherry-bets">
-				<div class="game-button-div cherry">
-					<button type="button" onclick="pickSweets(100, 'Cherry')">BET 100 CHERRY</button>
-				</div>
-				<div class="game-button-div cherry large-bet">
-					<button type="button" onclick="pickSweets(500, 'Cherry')">BET 500 CHERRY</button>
-				</div>
-				<!--SMALL CHERRY BET-->
-				<!--
-				<div class="game-button-div cherry">
-					<div class="bonus insurance right" style="display: none" id="cherry-insurance-bonus-small">
-						<button id="cherry-insurance-bonus-small-btn" type="button" onclick="console.info(pickSweets(100, 'Cherry', false, true))"><strong>BOOST!</strong></button>
-					</div>
-					<div class="bonus payout right" style="display: none" id="cherry-payout-bonus-small">
-						<button id="cherry-payout-bonus-small-btn" type="button" onclick="console.info(pickSweets(100, 'Cherry', true, false))"><strong>BOOST!</strong></button>
-					</div>
-					<div style="display: inline-block">
-						<button type="button" onclick="console.info(pickSweets(100, 'Cherry', false, false))">BET 100 CHERRY</button>
-					</div>
-				</div>
-				-->
-				
-				<!--LARGE CHERRY BET-->
-				<!--
-				<div class="game-button-div cherry large-bet">
-					<div class="bonus insurance large right" style="display: none" id="cherry-insurance-bonus-large">
-						<button id="cherry-insurance-bonus-large-btn" type="button" onclick="console.info(pickSweets(500, 'Cherry', false, true))"><strong>BOOST!</strong></button>
-					</div>
-					<div class="bonus payout large right" style="display: none;" id="cherry-payout-bonus-large">
-						<button id="cherry-payout-bonus-large-btn" type="button" onclick="console.info(pickSweets(500, 'Cherry', true, false))"><strong>BOOST!</strong></button>
-					</div>
-					<div style="display: inline-block">
-						<button type="button" onclick="console.info(pickSweets(500, 'Cherry', false, false))">BET 500 CHERRY</button>
-					</div>
-				</div>
-				-->
-			</div>
-		  </div>
-		  <div class="column dark">
-			<div class="cola-bets">
-				<div class="game-button-div cola large-bet">
-					<button type="button" onclick="pickSweets(500, 'Cola')">BET 500 COLA</button>
-				</div>
-				<div class="game-button-div cola">
-					<button type="button" onclick="pickSweets(100, 'Cola')">BET 100 COLA</button>
-				</div>
-				<!--SMALL COLA BET-->
-				<!--
-				<div class="game-button-div cola">
-					<div style="display: inline-block">
-						<button type="button" onclick="console.info(pickSweets(100, 'Cola', false, false))">BET 100 COLA</button>
-					</div>
-					<div class="bonus payout left" style="display: none" id="cola-payout-bonus-small">
-						<button id="cola-payout-bonus-small-btn" type="button" onclick="console.info(pickSweets(100, 'Cola', true, false))"><strong>BOOST!</strong></button>
-					</div>
-					<div class="bonus insurance left" style="display: none" id="cola-insurance-bonus-small">
-						<button id="cola-insurance-bonus-small-btn" type="button" onclick="console.info(pickSweets(100, 'Cola', false, true))"><strong>BOOST!</strong></button>
-					</div>
-				</div>
-				-->
-				
-				<!--LARGE COLA BET-->
-				<!--
-				<div class="game-button-div cola large-bet">
-					<div style="display: inline-block">
-						<button type="button" onclick="console.info(pickSweets(500, 'Cola', 2, false, 0.5, false))">BET 500 COLA</button>
-					</div>
-					<div class="bonus payout large left" style="display: none" id="cola-payout-bonus-large">
-						<button id="cola-payout-bonus-large-btn" type="button" onclick="console.info(pickSweets(500, 'Cola', 2, true, 0.5, false))"><strong>BOOST!</strong></button>
-					</div>
-					<div class="bonus insurance large left" style="display: none" id="cola-insurance-bonus-large">
-						<button id="cola-insurance-bonus-large-btn" type="button" onclick="console.info(pickSweets(500, 'Cola', 2, false, 0.5, true))"><strong>BOOST!</strong></button>
-					</div>
-				</div>
-				-->
-			
-			</div>
-		  </div>
-		</div>
-		<!--/2 COLUMNS-->
-		
-		<!--OUTCOME THREE COLUMN SETUP-->
+		<!--3 COLUMNS-->
 		<div class="three-column-container">
-			<!--COLUMN 1-->
-			<div class="column dark" style="text-align: right;">
-				<div class="panel">
-					TODO: Return Pct and Insurance Pct nice display here...
-				</div>
-			</div>
-			<!--COLUMN 2-->
-			<div class="column dark" style="text-align: center;">
-				<div style="min-height: 160px;">
-					<div>
-						<div class="stake-div" id="stake"></div>
-						<div class="bet-div" id="bet"></div>
+			<div class="column dark" style="text-align: right">
+				<div class="cherry-cola-bets-container">
+					<div class="cherry-cola-bets">
+						<div class="game-button-div cherry">
+							<button type="button" onclick="pickSweets(100, 'Cherry')">BET 100 CHERRY</button>
+						</div>
+						<div class="game-button-div cherry large-bet">
+							<button type="button" onclick="pickSweets(500, 'Cherry')">BET 500 CHERRY</button>
+						</div>
 					</div>
-					<div>
-						<div class="result-div" id="result"></div>
-					</div>
-					<div>
-						<div class="payout-div" id="payout"></div>
-					</div>
-				</div>
-			</div>
-			<!--COLUMN 3-->
-			<div class="column dark">
-				<div id="outcome-images" class="panel" style="display: none">
-					<div id="sweet1" style="display: inline-flex;">
-						<h2 style="font-size: 1.5em">Pick 1</h2>
-						<div id="sweet-image1"></div>
-					</div>
-					<div id="sweet2" style="display: inline-flex;">
-						<h2 style="font-size: 1.5em">Pick 2</h2>
-						<div id="sweet-image2"></div>
+					<div class="cherry-cola-bets">
+						<div class="game-button-div cola">
+							<button type="button" onclick="pickSweets(100, 'Cola')">BET 100 COLA</button>
+						</div>
+						<div class="game-button-div cola large-bet">
+							<button type="button" onclick="pickSweets(500, 'Cola')">BET 500 COLA</button>
+						</div>	
 					</div>
 				</div>
 			</div>
+			<div class="column dark" style="text-align: center">
+				<div style="">
+					<div class="stake-bet-container">
+						<div class="stake-bet-div" id="stake"></div>
+						<div class="stake-bet-div" id="bet"></div>
+					</div>
+				<div>
+					<div class="result-div" id="result"></div>
+				</div>
+				<div>
+					<div class="payout-div" id="payout"></div>
+				</div>
+				</div>
+			</div>
+		  <div class="column dark" style="text-align: left">
+			<!--SWEET BAG NEW SPOT-->
+			<div id="outcome-images" class="panel" style="display: none">
+				<div id="sweet1" style="display: inline-block;">
+					<h2 style="font-size: 0.9em; margin-bottom: 7px;">Pick 1</h2>
+					<div id="sweet-image1"></div>
+				</div>
+				<div id="sweet2" style="display: inline-block;">
+					<h2 style="font-size: 0.9em; margin-bottom: 7px;">Pick 2</h2>
+					<div id="sweet-image2"></div>
+				</div>
+			</div>
+			<!--SWEET BAG NEW SPOT-->
+		  </div>
 		</div>
+		<!--/3 COLUMNS-->
 		
 		<!--BET OPTIONS ONE COLUMN SETUP-->
 		<div class="one-column-container">
@@ -313,42 +220,30 @@
 					<input type="checkbox" id="boost-insurance-checkbox" name="boost-insurance-checkbox" onchange="insuranceSwitch(this.checked)" checked />
 					<label for="checkbox" style="font-size: 0.9em">Boost Insurance? <em>(Pays out 10% less but your boost maintains on non-bet matching pair)</em></label><br>
 				</div>
-				<div style="font-size: 0.8em;"><em>(Can only change once win streak returns to 0)</em></div>
+				<!--<div style="font-size: 0.8em;"><em>(Can only change once win streak returns to 0)</em></div>-->
 			</div>
 		</div>
 		
 		<!--DEBUG ONE COLUMN SETUP-->
 		<div class="one-column-container">
-			<div class="flex-column dark">
+			<div class="column dark">
 				<!--COLUMN 1-->
 				<!--DEBUG-->
 				<div>
-					<h2>Debug</h2>
+					<!--<h2>Debug</h2>-->
 					<div class="panel debug">
 						<div id="house-balance-debug">House Balance: X Tokens</div>
 						<div id="house-cash-debug">House Balance: £XX.XX</div>
-					</div>
-					<div class="panel debug">
 						<div id="cust-balance-debug">Cust' Balance: X Tokens</div>
 						<div id="cust-cash-debug">Cust' Balance: £XX.XX</div>
-					</div>
-					<div class="panel debug">
 						<div id="boost-insurance">Boost Insurance: X</div>
 						<div id="boost-insurance-multiplier">Boost Insurance Multiplier: X</div>
-					</div>
-					<div class="panel debug">
 						<div id="payout-multiplier">Win Multiplier: X</div>
 						<div id="insurance-multiplier">Insurance Multiplier: X</div>
-					</div>
-					<div class="panel debug">
 						<div id="win-streak">Win Streak: X</div>
 						<div id="boost-avail">Boost Available: X</div>
-					</div>
-					<div class="panel debug">
 						<div id="boost-level">Boost Level: X</div>
 						<div id="boost-pct">Boost Pct: X%</div>
-					</div>
-					<div class="panel debug">
 						<div id="payout-bonus">Last Bet Return Bonus Rate: X%</div>
 						<div id="insurance-bonus">Last Bet Insurance Bonus Rate: X%</div>
 					</div>
@@ -398,34 +293,8 @@
 			console.info("boostAvailable", boostAvailable);
 			
 			if (boostAvailable) {
-				//cherryPayoutBonusSmallDiv.style.display = "inline-block";
-				//cherryPayoutBonusLargeDiv.style.display = "inline-block";
-				//colaPayoutBonusSmallDiv.style.display = "inline-block";
-				//colaPayoutBonusLargeDiv.style.display = "inline-block";
-				
-				//cherryInsuranceBonusSmallBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
-				//cherryPayoutBonusSmallBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
-				//cherryInsuranceBonusLargeBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
-				//cherryPayoutBonusLargeBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
-				
-				//colaInsuranceBonusSmallBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
-				//colaPayoutBonusSmallBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
-				//colaInsuranceBonusLargeBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
-				//colaPayoutBonusLargeBtn.innerHTML = "+" + (boostRate * 100).toFixed(0) + "%";
 				
 				console.info("######boostRate", boostRate);
-				
-				if (insuranceRate > 0) {
-					//cherryInsuranceBonusSmallDiv.style.display = "inline-block";
-					//cherryInsuranceBonusLargeDiv.style.display = "inline-block";
-					//colaInsuranceBonusSmallDiv.style.display = "inline-block";
-					//colaInsuranceBonusLargeDiv.style.display = "inline-block";
-				} else {
-					//cherryInsuranceBonusSmallDiv.style.display = "none";
-					//cherryInsuranceBonusLargeDiv.style.display = "none";
-					//colaInsuranceBonusSmallDiv.style.display = "none";
-					//colaInsuranceBonusLargeDiv.style.display = "none";
-				}
 				
 				if (boostLevel >= 1) {
 					boostGraphic1Span.classList.add("selected");
@@ -486,15 +355,6 @@
 				insuranceBoostPct1Div.classList.remove("strikethrough");
 				payoutBoostPct2Div.classList.remove("strikethrough");
 				insuranceBoostPct2Div.classList.remove("strikethrough");
-			
-				//cherryPayoutBonusSmallDiv.style.display = "none";
-				//cherryInsuranceBonusSmallDiv.style.display = "none";
-				//cherryPayoutBonusLargeDiv.style.display = "none";
-				//cherryInsuranceBonusLargeDiv.style.display = "none";
-				//colaPayoutBonusSmallDiv.style.display = "none";
-				//colaInsuranceBonusSmallDiv.style.display = "none";
-				//colaPayoutBonusLargeDiv.style.display = "none";
-				//colaInsuranceBonusLargeDiv.style.display = "none";
 				
 				boostGraphic1Span.classList.remove("selected");
 				boostGraphic2Span.classList.remove("selected");
@@ -670,16 +530,6 @@
 		var insuranceBoostIcon2Div = document.getElementById("insurance-boost-icon-2");
 		var insuranceBoostIcon3Div = document.getElementById("insurance-boost-icon-3");
 		
-		//var cherryPayoutBonusSmallDiv = document.getElementById("cherry-payout-bonus-small");
-		//var cherryInsuranceBonusSmallDiv = document.getElementById("cherry-insurance-bonus-small");
-		//var cherryPayoutBonusLargeDiv = document.getElementById("cherry-payout-bonus-large");
-		//var cherryInsuranceBonusLargeDiv = document.getElementById("cherry-insurance-bonus-large");
-		
-		//var cherryInsuranceBonusSmallBtn = document.getElementById("cherry-insurance-bonus-small-btn");
-		//var cherryPayoutBonusSmallBtn = document.getElementById("cherry-payout-bonus-small-btn");
-		//var cherryInsuranceBonusLargeBtn = document.getElementById("cherry-insurance-bonus-large-btn");
-		//var cherryPayoutBonusLargeBtn = document.getElementById("cherry-payout-bonus-large-btn");
-		
 		var colaInsuranceBonusSmallBtn = document.getElementById("cola-insurance-bonus-small-btn");
 		var colaPayoutBonusSmallBtn = document.getElementById("cola-payout-bonus-small-btn");
 		var colaInsuranceBonusLargeBtn = document.getElementById("cola-insurance-bonus-large-btn");
@@ -839,10 +689,10 @@
 				payoutDiv.classList.remove("lose");
 				payoutDiv.classList.remove("insurance");
 				
-				stakeDiv.style.display = "inline-block";
+				stakeDiv.style.display = "flex";
 				stakeDiv.innerHTML = "Stake: " + stake;
 				
-				betDiv.style.display = "inline-block";
+				betDiv.style.display = "flex";
 				betDiv.innerHTML = "Bet: " + bet;
 				
 				outcomeImages.style.display = "none"
@@ -948,11 +798,11 @@
 							console.info("payout", payout);
 							
 							resultDiv.classList.add("win");
-							resultDiv.style.display = "inline-block";
+							resultDiv.style.display = "flex";
 							resultDiv.innerHTML = "Won!";
 							
 							payoutDiv.classList.add("win");
-							payoutDiv.style.display = "inline-block";
+							payoutDiv.style.display = "flex";
 							payoutDiv.innerHTML = "+" + payout + " Tokens";
 							
 						} else {
@@ -964,11 +814,11 @@
 							console.info("payout", payout);
 							
 							resultDiv.classList.add("lose");
-							resultDiv.style.display = "inline-block";
+							resultDiv.style.display = "flex";
 							resultDiv.innerHTML = "Unlucky";
 							
 							payoutDiv.classList.add("lose");
-							payoutDiv.style.display = "inline-block";
+							payoutDiv.style.display = "flex";
 							payoutDiv.innerHTML = "+" + payout + " Tokens";
 						}
 					} else {	
@@ -982,14 +832,14 @@
 							console.info("payout", payout);
 							
 							resultDiv.classList.add("insurance");
-							resultDiv.style.display = "inline-block";
-							resultDiv.innerHTML = insuranceRate != 0 ? "Insurance" : "Unlucky";
+							resultDiv.style.display = "flex";
+							resultDiv.innerHTML = insuranceRate != 0 ? "Insurance" : "No Insurance Cover";
 							
 							payoutDiv.classList.add("insurance");
-							payoutDiv.style.display = "inline-block";
+							payoutDiv.style.display = "flex";
 							payoutDiv.innerHTML = "+" + payout + " Tokens";
 							
-							
+							winStreak = boostInsurance ? winstreak : 0;
 					}
 					
 					//Statistics
@@ -1039,7 +889,7 @@
 					errors.push("Insufficient Credit! Please add more to play or choose a lower stake...");
 				}
 				
-				errorContentDiv.innerHTML = "<h1 style='margin-bottom: 0px; margin-top: 0px; font-size: 4em'>ATTENTION!</h1>";
+				errorContentDiv.innerHTML = "<h1 style='margin-bottom: 0px; margin-top: 0px; font-size: 2em'>ATTENTION!</h1>";
 				
 				if (errors.length > 0) {
 					for (var i = 0; i < errors.length; i++) {
@@ -1057,8 +907,8 @@
 		function renderSweets(sweet1="", sweet2="") {
 			if ((sweet1 === "Cherry" || sweet1 === "Cola") && (sweet2 === "Cherry" || sweet2 === "Cola")) {
 				outcomeImages.style.display = "block"
-				sweetImage1Div.innerHTML = "<div class='sweet-image' id='sweet-image1'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='120px'></div>";
-				sweetImage2Div.innerHTML = "<div class='sweet-image' id='sweet-image2'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='120px'></div>";
+				sweetImage1Div.innerHTML = "<div class='sweet-image' id='sweet-image1'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='80px'></div>";
+				sweetImage2Div.innerHTML = "<div class='sweet-image' id='sweet-image2'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='80px'></div>";
 			}
 		}
 		
@@ -1075,7 +925,8 @@
 			var overlay = document.getElementById("overlay");
 			var imagesContainer = document.getElementById("overlay-images");
 			var images = ["images/cherry.png", "images/cola.png"];
-			var totalInstances = bagSize;
+			//var totalInstances = bagSize;
+			var totalInstances = 4;
 			var iteration = 0;
 			
 			// Clear any existing images (if this is called multiple times)
@@ -1101,7 +952,7 @@
 					img.src = images[newIndex];
 				});
 				iteration++;
-			}, 200); // Change images every 500ms
+			}, 150);
 
 			// Save the interval ID so we can clear it when hiding the overlay
 			overlay.dataset.intervalId = intervalId;
