@@ -2,6 +2,7 @@ body {
 	color: black;
 	font-family: Verdana;
 	background-color: black;
+	font-size: 14px;
 }
 
 input[type="radio"] {
@@ -43,11 +44,24 @@ h2 {
 THREE COLUMN TESTING
 */
 
+
+
+
+.one-column-container {
+display: grid;
+  grid-template-columns: repeat(1, 1fr); /* 2 equal-width columns */
+  gap: 10px; /* Space between columns */
+}
+
+.three-column-container {
+display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 2 equal-width columns */
+  gap: 10px; /* Space between columns */
+}
+
 .column {
-  flex: 1; /* Each column takes equal width */
-  display: block; /* Inline-flex for items inside */
-  flex-wrap: wrap; /* Wrap items if necessary */
-  gap: 10px; /* Space between items inside the column */
+  padding: 10px;
+  box-sizing: border-box; /* Ensures padding is included in width */
   padding: 10px; /* Add padding for visual separation */
   border: 1px solid #ccc; /* Optional border for visualization */
   background-color: #f9f9f9; /* Light background for columns */
@@ -55,40 +69,10 @@ THREE COLUMN TESTING
   margin-bottom: 5px;
 }
 
-.flex-column {
-  flex: 1; /* Each column takes equal width */
-  display: inline-flex; /* Inline-flex for items inside */
-  flex-wrap: wrap; /* Wrap items if necessary */
-  gap: 10px; /* Space between items inside the column */
-  padding: 10px; /* Add padding for visual separation */
-  border: 1px solid #ccc; /* Optional border for visualization */
-  background-color: #f9f9f9; /* Light background for columns */
-}
-
-.column.dark,
-.flex-column.dark {
+.column.dark {
   background-color: #2d2d2d; /* Dark grey background */
   border: 1px solid #444; /* Subtle dark border */
   color: #f1f1f1; /* Light text for contrast */
-}
-
-.one-column-container {
-  display: flex;
-  gap: 10px; /* Space between columns */
-  margin-top: 5px;
-  margin-bottom: 0px;
-}
-
-.two-column-container {
-  display: flex;
-  gap: 10px; /* Space between columns */
-  margin-top: 5px;
-  margin-bottom: 0px;
-}
-
-.three-column-container {
-  display: flex;
-  gap: 10px; /* Space between columns */
 }
 
 /*
@@ -97,14 +81,15 @@ PAYOUT SPLIT TESTING
 /* Base styling (no flashing) */
 .payout-split-bar {
   width: 100%; /* Total width */
-  height: 40px; /* Adjust height as needed */
+  height: 25px; /* Adjust height as needed */
   background-color: #facc15; /* Base yellow for gaps */
   display: flex; /* Use flexbox for layout */
   border: 1px solid #4b5563; /* Dark border for definition */
   border-radius: 8px; /* Smooth rounded edges */
   overflow: hidden; /* Ensures child elements stay within rounded edges */
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle depth */
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /* Section styles (no flashing) */
@@ -129,6 +114,42 @@ PAYOUT SPLIT TESTING
   height: 100%; /* Match parent height */
   background-color: #f87171; /* Softer light red for boost */
 }
+
+.blue-bar {
+  width: 17%; /* Exact width for the blue section */
+  height: 100%; /* Match parent height */
+  background-color: #1c3db9; /* Rich dark blue */
+}
+
+.blue-bar-boost {
+  height: 100%; /* Match parent height */
+  background-color: #71aef8; /* Softer light blue for boost */
+}
+
+@keyframes flash-blue-split {
+  0% {
+    background-color: #1c3db9; /* Rich dark blue */
+  }
+  50% {
+    background-color: #1430a3; /* Slightly darker blue */
+  }
+  100% {
+    background-color: #1c3db9;
+  }
+}
+
+@keyframes flash-blue-boost-split {
+  0% {
+    background-color: #71aef8; /* Soft light blue */
+  }
+  50% {
+    background-color: #5d8fd8; /* More vibrant, stronger blue */
+  }
+  100% {
+    background-color: #71aef8; /* Back to soft light blue */
+  }
+}
+
 
 /* Flashing animations (only when .selected is added) */
 @keyframes flash-yellow-gold-split {
@@ -216,6 +237,15 @@ PAYOUT SPLIT TESTING
   animation: flash-red-boost-split 1s infinite;
 }
 
+.payout-split-bar.selected .blue-bar {
+  animation: flash-blue-split 1s infinite;
+}
+
+.payout-split-bar.selected .blue-bar-boost {
+  animation: flash-blue-boost-split 1s infinite;
+}
+
+
 
 .boost-insurance-div {
   width: 100%;
@@ -291,13 +321,15 @@ PAYOUT SPLIT TESTING
 /* General button styling */
 .game-button-div {
 	vertical-align: top;
-	display: inline-flex;
+	display: flex-column;
+	margin-bottom: 5px;
+	margin-top: 5px;
 }
 
 .game-button-div button {
   width: 150px;
-  height: 90px;
-  font-size: 1.4em;
+  height: 40px;
+  font-size: 0.8em;
   font-family: Verdana, sans-serif;
   padding: 5px;
   border-radius: 10px; /* Slightly rounded for a polished look */
@@ -331,9 +363,9 @@ PAYOUT SPLIT TESTING
 /* Large bet buttons */
 .game-button-div.cherry.large-bet button,
 .game-button-div.cola.large-bet button {
-  font-size: 2.3em;
-  height: 200px;
-  width: 200px;
+  font-size: 1.6em;
+  height: 80px;
+  width: 150px;
 }
 
 /* Hover Effects */
@@ -416,38 +448,34 @@ PAYOUT SPLIT TESTING
 
 /* ROBOT */
 
-.stake-div {
-  width: 245px;
-  height: 28px;
-  background-color: #4b5563; /* Neutral grey */
-  color: white;
-  font-size: 1.3em;
-  text-align: center;
-  vertical-align: middle;
-  border: 1px solid #121a26; /* Dark, consistent border */
-  margin-bottom: 5px;
-  border-radius: 7px; /* Matches original, smaller radius */
-  font-weight: 600; /* Enhanced typography */
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle depth */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  display: none;
+.stake-bet-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Adds space between the divs */
 }
 
-.bet-div {
-  width: 245px;
-  height: 28px;
+.stake-bet-div {
   background-color: #4b5563; /* Neutral grey */
-  font-size: 1.3em;
-  text-align: center;
-  vertical-align: middle;
-  border: 1px solid #121a26; /* Dark, consistent border */
   color: white;
+  font-size: 0.8em;
+  text-align: center;
+  border: 1px solid #121a26; /* Dark, consistent border */
   margin-bottom: 5px;
-  border-radius: 7px; /* Matches original, smaller radius */
-  font-weight: 600; /* Enhanced typography */
+  border-radius: 7px; /* Smaller radius */
+  font-weight: 600;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle depth */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.5s ease, box-shadow 0.3s ease;
   display: none;
+  align-items: center;
+  justify-content: center;
+  width: 45%; /* 50% width for each div */
+  box-sizing: border-box; /* Ensures padding is included in width */
+  padding: 3px; /* Adds internal spacing */
+  flex-grow: 1; /* Ensures the divs can grow if content overflows */
+}
+
+.stake-bet-div:hover {
+  background-color: #3b4a58; /* Slightly darker grey when hovered */
 }
 
 .panel {
@@ -459,9 +487,10 @@ PAYOUT SPLIT TESTING
   background-color: #182232; /* Slightly darker blue */
   color: white;
   font-weight: 600;
-  font-size: 0.9em;
+  font-size: 0.em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Stronger shadow */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-size: 0.8em;
 }
 
 .panel:hover {
@@ -502,12 +531,10 @@ PAYOUT SPLIT TESTING
 }
 
 .result-div {
-  width: 500px;
-  height: 60px;
+  width: 100%;
   background-color: #4b5563; /* Neutral grey */
-  font-size: 3em;
+  font-size: 1.6em;
   text-align: center;
-  vertical-align: middle;
   color: white;
   border: 1px solid #121a26; /* Dark, consistent border with .result-div */
   margin-bottom: 10px;
@@ -515,7 +542,10 @@ PAYOUT SPLIT TESTING
   font-weight: 600;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
   display: none;
+  min-height: 50px;
 }
 
 /* Flashing effects */
@@ -574,19 +604,20 @@ PAYOUT SPLIT TESTING
 }
 
 .payout-div {
-  width: 500px;
-  height: 40px;
+  width: 100%;
   background-color: #4b5563; /* Neutral grey */
-  font-size: 2em;
+  font-size: 1.3em;
   text-align: center;
-  vertical-align: middle;
   color: white;
   border: 1px solid #121a26; /* Dark, consistent border with .result-div */
   border-radius: 12px;
   font-weight: 600;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  display: none
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  display: none;
+  min-height: 30px;
 }
 
 /* Flashing animations */
@@ -743,7 +774,7 @@ PAYOUT SPLIT TESTING
 	animation: flash-yellow-gold-split 0.7s infinite; /* Flash yellow to orange */
 	color: #b91c1c;
 	font-weight: bold;
-	font-size: 1.1em;
+	font-size: 0.9em;
 }
 
 /* Overlay Style */
@@ -753,12 +784,12 @@ PAYOUT SPLIT TESTING
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.85);
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 60px;
+  font-size: 1.4em;
   text-align: center;
   z-index: 9999;
   visibility: hidden;
@@ -849,27 +880,41 @@ PAYOUT SPLIT TESTING
   position: absolute; /* Position the text absolutely within the parent container */
   top: 80%; /* Vertically center the text */
   left: 70%; /* Horizontally center the text */
-  transform: translate(-10%, -10%); /* Adjust the position to exactly center it */
+  transform: translate(-40%, -30%); /* Adjust the position to exactly center it */
   color: white; /* Set text color (change as needed) */
   font-size: 1.5rem; /* Adjust size as needed */
   font-weight: bold; /* Make the text stand out */
   z-index: 1; /* Ensure the text is on top of the image */
+	text-shadow: 
+		-1px -1px 0 black,  
+		 1px -1px 0 black,
+		-1px  1px 0 black,
+		 1px  1px 0 black;
 }
 
 .payout-boost-text.small {
-	font-size: 1.2em;
+	font-size: 0.8em;
 }
 
 .payout-boost-text.medium {
-	font-size: 1.6em;
+	font-size: 1em;
 }
 
 .payout-boost-text.large {
-	font-size: 2.3em;
+	font-size: 1.2em;
 }
 
 .strikethrough {
 	text-decoration: line-through;
 	text-decoration-color: red;
 	text-decoration-thickness: 3px;
+}
+
+.cherry-cola-bets {
+	display: inline-block;
+	margin-left: 5px;
+}
+
+.cherry-cola-bets-container {
+	display: inline-flex;
 }
