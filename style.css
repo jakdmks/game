@@ -777,6 +777,12 @@ PAYOUT SPLIT TESTING
 	font-size: 0.9em;
 }
 
+#error-content h1 {
+	margin-bottom: 0px;
+	margin-top: 0px;
+	font-size: 1.7em;
+}
+
 /* Overlay Style */
 .overlay {
   position: fixed;
@@ -918,3 +924,37 @@ PAYOUT SPLIT TESTING
 .cherry-cola-bets-container {
 	display: inline-flex;
 }
+
+.last-picks-container {
+	display: inline-flex;
+	flex-direction: row;
+	gap: 2px;
+	max-width: 100%;
+	display: hidden;
+}
+.last-picks-entry {
+	display: flex;
+	justify-content: space-between;
+	padding: 1px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	font-family: Arial, sans-serif;
+}
+.last-picks-cola { background-color: brown; color: white; padding: 10px; border-radius: 3px; margin: 1px; }
+.last-picks-cherry { background-color: pink; color: black; padding: 10px; border-radius: 3px; margin: 1px; }
+
+.last-picks-win {
+	box-shadow: 0px 0px 10px rgba(40, 167, 69, 0.5); /* Green glow effect */
+	border: 2px solid #28a745; /* Green border for win */
+}
+
+.last-picks-loss {
+	box-shadow: 0px 0px 10px rgba(220, 53, 69, 0.5); /* Red glow effect */
+	border: 2px solid #dc3545; /* Red border for loss */
+}
+
+.last-picks-insurance {
+	box-shadow: 0px 0px 10px rgba(253, 126, 20, 0.5); /* Orange glow effect */
+	border: 2px solid #fd7e14; /* Orange border for insurance */
+}
+
