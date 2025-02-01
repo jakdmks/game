@@ -949,7 +949,7 @@ PAYOUT SPLIT TESTING
 }
 
 .cherry-cola-bets-container {
-	display: inline-flex;
+	display: inline-block;
 }
 
 .last-picks-container {
@@ -996,7 +996,7 @@ PAYOUT SPLIT TESTING
 
 @keyframes slideInLastPick {
   0% {
-    transform: translateX(-100%); /* Start far left */
+    transform: translateX(+100%); /* Start far left */
     opacity: 0;
   }
   100% {
@@ -1011,3 +1011,50 @@ PAYOUT SPLIT TESTING
 }
 
 
+/* ROBOT GRID */
+/* Grid container */
+/* Dark Theme */
+body {
+  background: #121212;
+  color: #e0e0e0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Grid container */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Ensures columns stay aligned */
+  grid-auto-rows: auto; /* Rows will grow independently */
+  gap: 10px; /* Reduced gap for a tighter layout */
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto; /* Centering */
+}
+
+/* Grid item styling */
+.grid-item {
+  background: #1e1e1e;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border: 1px solid #333;
+}
+
+/* Full-width items */
+.full-width {
+  grid-column: span 3; /* Makes these elements take the full width */
+}
+
+/* Responsive: Stack on smaller screens */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* Stack items */
+  }
+
+  .full-width {
+    grid-column: span 1;
+  }
+}
