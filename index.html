@@ -163,7 +163,7 @@
 		
 		<!--3 COLUMNS-->
 		<div class="three-column-container">
-			<div class="column dark" style="text-align: right">
+			<div class="column vivid" style="text-align: right;">
 				<div class="cherry-cola-bets-container">
 					<div class="cherry-cola-bets">
 						<div class="game-button-div cherry">
@@ -217,7 +217,8 @@
 		<div class="one-column-container">
 			<div class="column dark" style="text-align: center;">
 				<div>
-					<div class="last-picks-container" id="lastPicksDisplay"></div>
+					<div class="last-picks-container latest" id="last-picks-display-latest"></div>
+					<div class="last-picks-container" id="last-picks-display"></div>
 				</div>
 			</div>	
 		</div>
@@ -921,7 +922,7 @@
 					statistics.playerBalance = statistics.playerBalance + payout - stake;
 					
 					//Last picks Array
-					var lastPicksMaxSize = 6;
+					var lastPicksMaxSize = 7;
 					var lastPickRecord = JSON.parse(JSON.stringify(pickedSweets));
 					lastPickRecord.Outcome = outcome;
 					
@@ -967,36 +968,72 @@
 		}
 		
 		function renderLastPicks() {
-			const container = document.getElementById("lastPicksDisplay");
+			const container = document.getElementById("last-picks-display");
 			container.innerHTML = ""; // Clear previous content
 			
 			//Reverse the array before rendering
 			var reversedPicks = [...lastPicks].reverse();
 			
 			reversedPicks.forEach((pick, index) => {
-				const entry = document.createElement("div");
-				entry.classList.add("last-picks-entry");
+				//Previous Sweets
+				if (index !== 0)
+				{
+					const entry = document.createElement("div");
+					entry.classList.add("last-picks-entry");
+					
+					const sweet1 = document.createElement("span");
+					sweet1.classList.add(`last-picks-${pick.Sweet1.toLowerCase()}`); // Add class based on name
+					//sweet1.textContent = pick.Sweet1;
+					
+					const sweet2 = document.createElement("span");
+					sweet2.classList.add(`last-picks-${pick.Sweet2.toLowerCase()}`);
+					//sweet2.textContent = pick.Sweet2;
+					
+					// Add outcome-based class to apply highlighting
+					if (pick.Outcome === "win") {
+						entry.classList.add("last-picks-win");
+					} else if (pick.Outcome === "loss") {
+						entry.classList.add("last-picks-loss");
+					} else if (pick.Outcome === "insurance") {
+						entry.classList.add("last-picks-insurance");
+					}
+					
+					entry.appendChild(sweet1);
+					entry.appendChild(sweet2);
+					container.appendChild(entry);
+				}
 				
-				const sweet1 = document.createElement("span");
-				sweet1.classList.add(`last-picks-${pick.Sweet1.toLowerCase()}`); // Add class based on name
-				//sweet1.textContent = pick.Sweet1;
-				
-				const sweet2 = document.createElement("span");
-				sweet2.classList.add(`last-picks-${pick.Sweet2.toLowerCase()}`);
-				//sweet2.textContent = pick.Sweet2;
-				
-                // Add outcome-based class to apply highlighting
-                if (pick.Outcome === "win") {
-                    entry.classList.add("last-picks-win");
-                } else if (pick.Outcome === "loss") {
-                    entry.classList.add("last-picks-loss");
-                } else if (pick.Outcome === "insurance") {
-                    entry.classList.add("last-picks-insurance");
+				//Latest
+				if (index === 0) {
+					const containerLatest = document.getElementById("last-picks-display-latest");
+					containerLatest.innerHTML = ""; // Clear previous content
+					
+					const entryLatest = document.createElement("div");
+					entryLatest.classList.add("last-picks-entry");
+					entryLatest.classList.add("latest");
+					
+					const sweet1 = document.createElement("span");
+					sweet1.classList.add(`last-picks-${pick.Sweet1.toLowerCase()}`); // Add class based on name
+					
+					const sweet2 = document.createElement("span");
+					sweet2.classList.add(`last-picks-${pick.Sweet2.toLowerCase()}`);
+					
+					// Add outcome-based class to apply highlighting
+					if (pick.Outcome === "win") {
+						entryLatest.classList.add("last-picks-win");
+					} else if (pick.Outcome === "loss") {
+						entryLatest.classList.add("last-picks-loss");
+					} else if (pick.Outcome === "insurance") {
+						entryLatest.classList.add("last-picks-insurance");
+					}
+					sweet1.classList.add("latest-entry");
+                    sweet2.classList.add("latest-entry");
+					
+					entryLatest.appendChild(sweet1);
+					entryLatest.appendChild(sweet2);
+					containerLatest.appendChild(entryLatest);
+					
                 }
-				
-				entry.appendChild(sweet1);
-				entry.appendChild(sweet2);
-				container.appendChild(entry);
 			});
 		}
 		
