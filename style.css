@@ -1246,21 +1246,22 @@ body {
 }
 
 /* Grid container */
+/* Grid container */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns by default */
-  grid-auto-rows: auto;
+  grid-template-columns: repeat(3, 1fr); /* Ensures columns stay aligned */
+  grid-auto-rows: auto; /* Rows will grow independently */
   gap: 8px; /* Reduced gap for a tighter layout */
   width: 90%;
   max-width: 1200px;
-  margin: 40px auto;
+  margin: 40px auto; /* Centering */
   transition: transform 0.3s ease-in-out;
 }
 
 /* Grid item styling */
 .grid-item {
   background: #1e1e1e;
-  padding: 5px;
+  padding: 15px;
   border-radius: 8px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   text-align: center;
@@ -1276,15 +1277,17 @@ body {
   grid-column: span 2; /* This makes the item span 2 columns */
 }
 
+/* Zoom out on smaller screens instead of stacking */
 @media (max-width: 768px) {
   .grid-container {
-    grid-template-columns: repeat(3, 1fr); /* Keep 3 columns */
+    transform: scale(0.8); /* Zooms out grid */
+    width: 100vw; /* Ensures it still fills screen */
   }
 }
 
 @media (max-width: 480px) {
   .grid-container {
-    grid-template-columns: repeat(3, 1fr); /* Keep 3 columns */
+    transform: scale(0.7); /* Zooms out further */
   }
 }
 
