@@ -1,13 +1,3 @@
-body {
-	color: white;
-	font-family: Verdana;
-	background-color: black;
-	font-size: 14px;
-	margin: 0;
-	padding: 0;
-	overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
-}
-
 input[type="radio"] {
   width: 2.2em; /* Increase width for larger size */
   height: 2.2em; /* Increase height for larger size */
@@ -247,8 +237,56 @@ PAYOUT SPLIT TESTING
 }
 
 .payout-split-bar.selected {
-  border: 4px solid #999999;
+  border: 4px solid #999999; /* Default border */
+  animation: sweepingGlowGrey 1.5s infinite alternate;
 }
+
+@keyframes sweepingGlowGrey {
+  0% { 
+    box-shadow: 0 0 5px rgba(153, 153, 153, 0.3), 0 0 10px rgba(153, 153, 153, 0.5); 
+  }
+  50% { 
+    box-shadow: 0 0 15px rgba(153, 153, 153, 1), 0 0 20px rgba(153, 153, 153, 0.7); 
+  }
+  100% { 
+    box-shadow: 0 0 5px rgba(153, 153, 153, 0.3), 0 0 10px rgba(153, 153, 153, 0.5); 
+  }
+}
+
+/* Yellow Glow */
+.payout-split-bar.selected.yellow-glow {
+  animation: sweepingGlowYellow 1.5s infinite; /* Add the glow animation */
+}
+
+/* Orange Glow */
+.payout-split-bar.selected.orange-glow {
+  animation: sweepingGlowOrange 1.5s infinite; /* Add the glow animation */
+}
+
+/* Red Glow */
+.payout-split-bar.selected.red-glow {
+  animation: sweepingGlowRed 1.5s infinite; /* Add the glow animation */
+}
+
+/* Sweeping Glow Animations */
+@keyframes sweepingGlowYellow {
+  0% { box-shadow: 0 0 5px rgba(255, 255, 0, 0.3), 0 0 10px rgba(255, 255, 0, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(255, 255, 0, 1), 0 0 15px rgba(255, 255, 0, 0.7); }
+  100% { box-shadow: 0 0 5px rgba(255, 255, 0, 0.3), 0 0 10px rgba(255, 255, 0, 0.5); }
+}
+
+@keyframes sweepingGlowOrange {
+  0% { box-shadow: 0 0 5px rgba(255, 130, 0, 0.3), 0 0 10px rgba(255, 130, 0, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(255, 130, 0, 1), 0 0 30px rgba(255, 130, 0, 0.7); }
+  100% { box-shadow: 0 0 5px rgba(255, 130, 0, 0.3), 0 0 10px rgba(255, 130, 0, 0.5); }
+}
+
+@keyframes sweepingGlowRed {
+  0% { box-shadow: 0 0 5px rgba(255, 40, 0, 0.3), 0 0 10px rgba(255, 40, 0, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(255, 40, 0, 1), 0 0 50px rgba(255, 40, 0, 0.7); }
+  100% { box-shadow: 0 0 5px rgba(255, 40, 0, 0.3), 0 0 10px rgba(255, 40, 0, 0.5); }
+}
+
 
 .payout-split-bar.selected .green-bar {
   animation: flash-green-split 1s infinite;
@@ -274,19 +312,33 @@ PAYOUT SPLIT TESTING
   animation: flash-blue-boost-split 1s infinite;
 }
 
-
-
 .boost-insurance-div {
   width: 100%;
-  padding: 3px;
+  padding: 5px; /* Increased padding for a more spacious look */
   color: white; /* White text for contrast */
-  background-color: #4b5563; /* Neutral grey to match the overall style */
-  font-weight: 600; /* Consistent typography */
-  border: 1px solid #121a26; /* Dark border consistent with other elements */
-  border-radius: 7px; /* Rounded corners for a polished look */
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  background-color: #2d3748; /* Darker, more polished background to match your theme */
+  font-weight: bold; /* Consistent typography */
+  border: 1px solid #4a5568; /* Slightly lighter border for subtle contrast */
+  border-radius: 10px; /* Rounded corners for a more modern, polished look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* A more prominent shadow for depth */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transitions for hover */
+  display: flex; /* Flexbox for content alignment */
+  margin: 0 auto; /* Centers the div horizontally */
+  box-sizing: border-box;
 }
+
+.boost-insurance-div:hover {
+  background-color: #3182ce; /* Blue background on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+  transform: translateY(-3px); /* Slight lift effect on hover for added interactivity */
+}
+
+/* Optional: Add a subtle blue glow effect when focused or interacted */
+.boost-insurance-div:focus, .boost-insurance-div:hover {
+  outline: none;
+  box-shadow: 0 0 10px rgba(56, 161, 255, 0.7); /* Soft blue glow effect */
+}
+
 
 .credit-button-div button {
 	width: 100%;
@@ -299,7 +351,7 @@ PAYOUT SPLIT TESTING
 	margin-bottom: 10px;
 	background-color: yellow;
 	border-width: 2px;
-	animation: flash-credit 0.7s infinite, pulse-credit 1s infinite; /* Flash yellow to orange */
+	animation: flash-credit 0.7s infinite, pulse-credit 1s infinite;
 	word-wrap: break-word;
 	color: black;
 }
@@ -307,110 +359,182 @@ PAYOUT SPLIT TESTING
 /* Pulse Animation */
 @keyframes pulse-credit {
   0%, 100% {
-    transform: scale(1); /* Normal size */
+    transform: scale(1);
   }
   50% {
-    transform: scale(0.95); /* Slightly larger */
+    transform: scale(0.95);
   }
 }
 
-/* Flashing animations (only when .selected is added) */
+/* Flashing animation */
 @keyframes flash-credit {
   0% {
-    background-color: #facc15; /* Bright yellow */
+    background-color: #ffeb3b; /* Bright Yellow */
   }
   50% {
-    background-color: #d4af37; /* Rich gold */
+    background-color: #ffb300; /* Deep Golden Orange */
   }
   100% {
-    background-color: #facc15; /* Bright yellow */
+    background-color: #ffeb3b;
   }
 }
 
 .credit-button-div button:hover {
-	background-color: green;
-	color: white !important;
+	background-color: #ff8c00; /* Strong Orange-Gold */
+	color: black !important;
 	border: 2px solid black !important;
-	animation: flash-credit-hover 0.7s infinite, pulse-credit 1s infinite; /* Flash yellow to orange */
+	animation: flash-credit-hover 0.7s infinite, pulse-credit 1s infinite;
 }
 
-/* Flashing animations (only when .selected is added) */
+/* Hover flashing animation */
 @keyframes flash-credit-hover {
   0% {
-    background-color: #0b6f37;
+    background-color: #ffae00; /* Vibrant Gold */
   }
   50% {
-    background-color: #094b26;
+    background-color: #ff7b00; /* Bold Amber Orange */
   }
   100% {
-    background-color: #0b6f37;
+    background-color: #ffae00;
   }
 }
+
+.convert-button-div button {
+	width: 100%;
+	min-height: 40px;
+	font-size: 1.1em;
+	font-family: Verdana;
+	font-weight: bold;
+	padding: 5px;
+	border-radius: 7px;
+	margin-bottom: 10px;
+	background-color: #0f6b36; /* Deep Green */
+	border-width: 2px;
+	animation: flash-convert 0.7s infinite, pulse-convert 1s infinite;
+	word-wrap: break-word;
+	color: white;
+}
+
+/* Pulse Animation */
+@keyframes pulse-convert {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+}
+
+/* Flashing animation */
+@keyframes flash-convert {
+  0% {
+    background-color: #0f6b36; /* Deep Green */
+  }
+  50% {
+    background-color: #149347; /* Brighter Green */
+  }
+  100% {
+    background-color: #0f6b36;
+  }
+}
+
+.convert-button-div button:hover {
+	background-color: #1db954; /* Noticeably Brighter Green */
+	color: black !important;
+	border: 2px solid black !important;
+	animation: flash-convert-hover 0.7s infinite, pulse-convert 1s infinite;
+}
+
+/* Hover flashing animation */
+@keyframes flash-convert-hover {
+  0% {
+    background-color: #1faa5c; /* Vibrant Green */
+  }
+  50% {
+    background-color: #24c96b; /* Bright Fresh Green */
+  }
+  100% {
+    background-color: #1faa5c;
+  }
+}
+
 
 /* ROBOT */
 /* General button styling */
-.game-button-div {
-	vertical-align: top;
-	display: flex-column;
-	margin-bottom: 5px;
-	margin-top: 5px;
+/* Container for each button (this is where animations and effects are applied) */
+.game-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  position: relative; /* To allow for text overlay */
+  border-radius: 10px;
+  width: 100%;
 }
 
-.game-button-div button {
-  width: 150px;
+.game-button-container button {
+  width: 100%; /* Make the button fill the container width */
+  min-width: 150px; /* Prevent the button from shrinking below 150px */
   height: 40px;
   font-size: 0.8em;
   font-family: Verdana, sans-serif;
   padding: 5px;
-  border-radius: 10px; /* Slightly rounded for a polished look */
-  vertical-align: top;
+  border-radius: 10px;
   border-width: 4px;
-  display: inline-block;
   text-align: center;
-  font-weight: bold; /* Emphasize button text */
+  font-weight: bold;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   animation: pulse 2s infinite; /* Pulsing effect */
+  background: linear-gradient(to bottom, #ff586b, #ff8fa6); /* Default Cherry color */
+  color: #a91e1e; /* Bright red text for Cherry */
+  border-color: #ff1e4e; /* Red border for Cherry */
+}
+
+.game-button-container.cherry  {
+  animation: pulse 1.5s infinite, wobble 0.8s infinite, flash-border-cherry 1.5s infinite;
+}
+
+.game-button-container.cola {
+  animation: pulse 2s infinite, wobble 1.5s infinite, flash-border-cola 1.5s infinite;
 }
 
 /* Cherry buttons */
-.game-button-div.cherry button {
+.game-button-container.cherry button {
   background: linear-gradient(to bottom, #ff586b, #ff8fa6); /* Rich red to pink */
-  color: #a91e1e; /* Bright white text */
+  color: #a91e1e; /* Bright red text */
   border-color: #ff1e4e; /* Vibrant red border */
-  animation: pulse 2s infinite, wobble 1.5s infinite; /* Pulse and wobble */
 }
 
 /* Cola buttons */
-.game-button-div.cola button {
+.game-button-container.cola button {
   background: linear-gradient(to bottom, #5c1717, #8b0000); /* Dark red to brown */
   color: #ffffff; /* Bright white text */
   border-color: #772020; /* Dark red border */
-  animation: pulse 2s infinite, wobble 1.5s infinite; /* Pulse and wobble */
 }
 
 /* Large bet buttons */
-.game-button-div.cherry.large-bet button,
-.game-button-div.cola.large-bet button {
+.game-button-container.cherry.large-bet button,
+.game-button-container.cola.large-bet button {
   font-size: 1.6em;
   height: 80px;
-  width: 150px;
 }
 
 /* Hover Effects */
-.game-button-div.cherry button:hover {
+.game-button-container.cherry:hover button {
   background: linear-gradient(to bottom, #ff1e4e, #ff586b); /* Brighter red to pink */
   box-shadow: 0 6px 8px rgba(255, 30, 78, 0.5); /* Stronger shadow on hover */
   transform: scale(1.05); /* Slightly enlarge on hover */
   color: white; /* Bright white text */
 }
 
-.game-button-div.cola button:hover {
+.game-button-container.cola:hover button {
   background: linear-gradient(to bottom, #772020, #5c1717); /* Brighter dark red to brown */
   box-shadow: 0 6px 8px rgba(119, 32, 32, 0.5); /* Stronger shadow on hover */
   transform: scale(1.05); /* Slightly enlarge on hover */
-  color: #d4af37;
+  color: #d4af37; /* Gold color for Cola */
 }
 
 /* Flashing Border Animations */
@@ -430,15 +554,6 @@ PAYOUT SPLIT TESTING
   50% {
     border-color: #8b4513; /* Deep brown */
   }
-}
-
-/* Apply flashing border */
-.game-button-div.cherry button {
-  animation: pulse 1.5s infinite, wobble 0.8s infinite, flash-border-cherry 1.5s infinite;
-}
-
-.game-button-div.cola button {
-  animation: pulse 1.5s infinite, wobble 0.8s infinite, flash-border-cola 1.5s infinite;
 }
 
 /* Pulse Animation */
@@ -465,7 +580,7 @@ PAYOUT SPLIT TESTING
 }
 
 /* Disabled Buttons */
-.game-button-div button:disabled {
+.game-button-container button:disabled {
   background: linear-gradient(to bottom, #4b5563, #374151); /* Muted gradient */
   color: #9ca3af; /* Muted text */
   border-color: #1f2937; /* Muted border */
@@ -473,6 +588,18 @@ PAYOUT SPLIT TESTING
   cursor: not-allowed;
   animation: none; /* Disable animations */
   transform: none; /* No scaling or wobbling */
+}
+
+/* Optional: Add your overlay text inside the container */
+.game-button-container .overlay-text {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: white;
+  font-size: 0.8em;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 3px 6px;
+  border-radius: 5px;
 }
 
 
@@ -490,7 +617,7 @@ PAYOUT SPLIT TESTING
   font-size: 0.8em;
   text-align: center;
   border: 1px solid #121a26; /* Dark, consistent border */
-  margin-bottom: 5px;
+  margin-top: 5px;
   border-radius: 7px; /* Smaller radius */
   font-weight: 600;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle depth */
@@ -563,19 +690,19 @@ PAYOUT SPLIT TESTING
 .result-div {
   width: 100%;
   background-color: #4b5563; /* Neutral grey */
-  font-size: 1.6em;
+  font-size: 4.2em;
   text-align: center;
   color: white;
-  border: 1px solid #121a26; /* Dark, consistent border with .result-div */
+  border: 2px solid #121a26; /* Dark, consistent border with .result-div */
   margin-bottom: 10px;
   border-radius: 12px;
-  font-weight: 600;
+  font-weight: bold;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
   display: none;
-  min-height: 50px;
+  min-height: 10px;
 }
 
 /* Flashing effects */
@@ -618,28 +745,31 @@ PAYOUT SPLIT TESTING
 /* Win result */
 .result-div.win {
   background-color: #16a34a;
-  animation: flash-green 1s infinite;
+  border-color: #074d24; /* Very dark green border */
+  animation: flash-green 1s infinite, pulse-credit 1s infinite;
 }
 
 /* Lose result */
 .result-div.lose {
   background-color: #dc2626;
-  animation: flash-red 1s infinite;
+  border-color: #701414; /* Very dark red border */
+  animation: flash-red 1s infinite, pulse-credit 1s infinite;
 }
 
 /* Insurance result */
 .result-div.insurance {
   background-color: #ea580c;
-  animation: flash-orange 1s infinite;
+  border-color: #7a2f08; /* Very dark orange border */
+  animation: flash-orange 1s infinite, pulse-credit 1s infinite;
 }
 
 .payout-div {
   width: 100%;
   background-color: #4b5563; /* Neutral grey */
-  font-size: 1.3em;
+  font-size: 3em;
   text-align: center;
   color: white;
-  border: 1px solid #121a26; /* Dark, consistent border with .result-div */
+  border: 2px solid #121a26; /* Dark, consistent border with .result-div */
   border-radius: 12px;
   font-weight: 600;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
@@ -647,7 +777,7 @@ PAYOUT SPLIT TESTING
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
   display: none;
-  min-height: 30px;
+  min-height: 80px;
 }
 
 /* Flashing animations */
@@ -690,22 +820,22 @@ PAYOUT SPLIT TESTING
 /* Win payout */
 .payout-div.win {
   background-color: #0a6a32; /* Rich green */
-  animation: flash-green 1s infinite;
-  border: 1px solid #074d24; /* Very dark green border */
+  animation: flash-green 1s infinite, pulse-credit 1s infinite;
+  border-color: #074d24; /* Very dark green border */
 }
 
 /* Lose payout */
 .payout-div.lose {
   background-color: #a91e1e; /* Rich red */
-  animation: flash-red 1s infinite;
-  border: 1px solid #701414; /* Very dark red border */
+  animation: flash-red 1s infinite, pulse-credit 1s infinite;
+  border-color: #701414; /* Very dark red border */
 }
 
 /* Insurance payout */
 .payout-div.insurance {
   background-color: #b8470c; /* Deep orange */
-  animation: flash-orange 1s infinite;
-  border: 1px solid #7a2f08; /* Very dark orange border */
+  animation: flash-orange 1s infinite, pulse-credit 1s infinite;
+  border-color: #7a2f08; /* Very dark orange border */
 }
 
 .boost-small {
@@ -800,18 +930,62 @@ PAYOUT SPLIT TESTING
   animation: sweepingTextGlow 1s infinite ease-in-out
 }
 
+/* Main Error Content */
+/* Main Error Content */
 #error-content {
-	animation: flash-yellow-gold-split 0.7s infinite; /* Flash yellow to orange */
-	color: #b91c1c;
-	font-weight: bold;
-	font-size: 0.9em;
+  color: #f1f1f1; /* Light text for better contrast against the red background */
+  background-color: #8b0000; /* Deep, rich red background */
+  font-weight: bold;
+  font-size: 1em; /* Slightly larger for readability */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners for a polished look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Soft shadow for depth */
+  text-align: center; /* Center the message */
+  max-width: 100%; /* Full width of its parent container */
+  width: 100%; /* Ensure it takes up the full width */
+  height: 100%; /* Ensure it takes up the full height of the cell */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  animation: pulseError 1s ease-in-out infinite; /* Subtle pulsing effect */
+  transition: all 0.3s ease-in-out; /* Smooth transitions for changes */
+  box-sizing: border-box; /* Makes sure padding doesn't affect width/height */
 }
 
+/* Error Heading */
 #error-content h1 {
-	margin-bottom: 0px;
-	margin-top: 0px;
-	font-size: 1.7em;
+  font-size: 1.8em;
+  margin: 0;
+  color: #ff4d41; /* Red-orange color for the heading */
+  text-transform: uppercase; /* Make the heading stand out */
+  letter-spacing: 1px; /* Adds a bit of space between the letters */
+  margin-bottom: 10px;
 }
+
+/* Error Message Text */
+#error-content p {
+  font-size: 1em;
+  color: #f1f1f1; /* Lighter text for better contrast */
+  margin-top: 5px;
+}
+
+/* Pulse Animation for Error */
+@keyframes pulseError {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 77, 65, 0.6), 0 0 15px rgba(255, 77, 65, 0.4); /* Red glow */
+  }
+  50% {
+    transform: scale(0.97); /* Slightly enlarge */
+    box-shadow: 0 0 20px rgba(255, 77, 65, 0.8), 0 0 30px rgba(255, 77, 65, 0.6); /* Brighter red glow */
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 77, 65, 0.6), 0 0 15px rgba(255, 77, 65, 0.4); /* Return to initial */
+  }
+}
+
 
 /* Overlay Style */
 .overlay {
@@ -849,6 +1023,45 @@ PAYOUT SPLIT TESTING
   margin-bottom: 20px;
 }
 
+.overlay-dismiss {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.4em;
+  text-align: center;
+  z-index: 9999;
+  visibility: hidden;
+  flex-direction: column;
+}
+
+.overlay-dismiss .dismiss-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #0077cc; /* Blue color */
+  color: white;
+  font-size: 1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.overlay-dismiss .dismiss-button:hover {
+  background-color: #005fa3; /* Slightly darker blue on hover */
+}
+
+.overlay-dismiss.active {
+  visibility: visible;
+}
+
 /* NEW BONUSES */
 /* Slide-In and Swing Animation */
 .slide-in-scale {
@@ -884,7 +1097,12 @@ PAYOUT SPLIT TESTING
 .sweet-image {
   transform-origin: center; /* Animation grows from the center */
   animation: spin-grow 0.7s ease-out, bounce 1s ease infinite 1s; /* start spinning and growing first, then bounce infinitely */
+  min-width: 70px;
+  min-height: 70px;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; /* Black outline effect for text */
+  font-size: 3em;
 }
+
 
 @keyframes spin-grow {
   0% {
@@ -1020,27 +1238,29 @@ PAYOUT SPLIT TESTING
 body {
   background: #121212;
   color: #e0e0e0;
-  font-family: Arial, sans-serif;
+  font-family: Verdana;
   margin: 0;
   padding: 0;
+  overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+  font-size: 14px;
 }
 
 /* Grid container */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Ensures columns stay aligned */
-  grid-auto-rows: auto; /* Rows will grow independently */
+  grid-template-columns: repeat(3, 1fr); /* Three columns by default */
+  grid-auto-rows: auto;
   gap: 8px; /* Reduced gap for a tighter layout */
   width: 90%;
   max-width: 1200px;
-  margin: 40px auto; /* Centering */
+  margin: 40px auto;
   transition: transform 0.3s ease-in-out;
 }
 
 /* Grid item styling */
 .grid-item {
   background: #1e1e1e;
-  padding: 15px;
+  padding: 5px;
   border-radius: 8px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   text-align: center;
@@ -1051,16 +1271,100 @@ body {
   grid-column: span 3; /* Makes these elements take the full width */
 }
 
-/* Zoom out on smaller screens instead of stacking */
+/* New grid item that spans 2 columns */
+.two-column-span {
+  grid-column: span 2; /* This makes the item span 2 columns */
+}
+
+/* Responsive grid layout for smaller screens */
 @media (max-width: 768px) {
   .grid-container {
-    transform: scale(0.8); /* Zooms out grid */
-    width: 100vw; /* Ensures it still fills screen */
+    width: 100%;
+    gap: 6px;
+    margin: 20px auto;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
   }
 }
 
 @media (max-width: 480px) {
   .grid-container {
-    transform: scale(0.7); /* Zooms out further */
+    width: 100%;
+    margin: 10px auto;
+    gap: 4px;
+    grid-template-columns: 1fr; /* 1 column on small screens */
   }
+}
+
+/* Base animation for flashing background */
+@keyframes flashBackgroundGreen {
+  0% { background-color: #008000; } /* Green */
+  50% { background-color: #00FF00; } /* Lighter green */
+  100% { background-color: #008000; } /* Green again */
+}
+
+@keyframes flashBackgroundRed {
+  0% { background-color: #8B0000; } /* Dark Red */
+  50% { background-color: #FF0000; } /* Bright Red */
+  100% { background-color: #8B0000; } /* Dark Red again */
+}
+
+@keyframes flashBackgroundOrange {
+  0% { background-color: #FF4500; } /* Orange-Red */
+  50% { background-color: #FF8C00; } /* Dark Orange */
+  100% { background-color: #FF4500; } /* Orange-Red again */
+}
+
+/* Class for flashing green */
+.flash-green {
+  animation: flashBackgroundGreen 2s infinite;
+}
+
+/* Class for flashing red */
+.flash-red {
+  animation: flashBackgroundRed 2s infinite;
+}
+
+/* Class for flashing orange */
+.flash-orange {
+  animation: flashBackgroundOrange 2s infinite;
+}
+
+
+/* FLYING POINTS */
+.flying-text-container {
+    position: relative;
+    width: 100%;  /* Set width of the container */
+    height: 100px; /* Set height of the container */
+    overflow: hidden; /* Hide any text flying out of the container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.flying-text {
+    position: absolute;
+    font-size: 1.8em;
+    font-weight: bold;
+    opacity: 1;
+    pointer-events: none; /* Ensures no interaction with the flying text */
+    background: transparent; /* Transparent background */
+    color: white; /* Default text color */
+    text-shadow: 1px 1px 0px black, 
+                 -1px -1px 0px black,  
+                 1px -1px 0px black, 
+                 -1px 1px 0px black;
+    animation: flyOut 3s ease-out forwards;
+}
+
+/* Animation to make the text fly out in random directions */
+@keyframes flyOut {
+    0% {
+        transform: translate(0, 0); /* Start from the center of the div */
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x), var(--y)); /* Move in random direction */
+        opacity: 0; /* Fade out as they move away */
+    }
 }
