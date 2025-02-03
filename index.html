@@ -21,8 +21,8 @@
 		
 		<!--END OF CREDIT OVERLAY-->
 		<div class="overlay-dismiss" id="overlay-end-of-credit">
-			<div>
-				<div id="overlay-end-of-credit-content" style="text-align: left"></div>
+			<div class="panel">
+				<div id="overlay-end-of-credit-content"></div>
 				<button class="dismiss-button" id="overlay-end-of-credit-dismiss-button" onclick="hideOverlayDismiss()">Dismiss</button>
 			</div>
 		</div>
@@ -132,15 +132,15 @@
 					<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
 				</div>
 				<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-left: 10px;">
-					<img src="images/flame-png.png" height="30px" alt="Flame Icon">
+					<img src="images/flame-png.png" height="30px" alt="Payout Boost 1">
 					<div id="payout-boost-pct-1" class="payout-boost-text small">20%</div>
 				</div>
 				<div class="slide-in-scale" id="payout-boost-icon-2" style="margin-left: 10px;">
-					<img src="images/flame-png.png" height="40px" alt="Flame Icon">
+					<img src="images/flame-png.png" height="40px" alt="Payout Boost 2">
 					<div id="payout-boost-pct-2" class="payout-boost-text medium">30%</div>
 				</div>
 				<div class="slide-in-scale" id="payout-boost-icon-3" style="margin-left: 10px;">
-					<img src="images/flame-png.png" height="50px" alt="Flame Icon">
+					<img src="images/flame-png.png" height="50px" alt="Payout Boost 3">
 					<div id="payout-boost-pct-3" class="payout-boost-text large">40%</div>
 				</div>
 			</div>
@@ -216,7 +216,7 @@
 				
 				<!--FLYING POINTS-->
 				<div>
-					<div class="flying-text-container">
+					<div id="flying-points" class="flying-text-container">
 						<!-- Flying text will be added here dynamically -->
 					</div>
 				</div>
@@ -252,11 +252,14 @@
 			</div>
 			
 			<div class="grid-item full-width" style="text-align: left;">
-				<div class="panel debug" id="debug">
+				<div class="panel debug" id="debug" style="display: none">
 					<div id="house-balance-debug">House Balance: X Tokens</div>
 					<div id="house-cash-debug">House Balance: £XX.XX</div>
 					<div id="cust-balance-debug">Cust' Balance: X Tokens</div>
 					<div id="cust-cash-debug">Cust' Balance: £XX.XX</div>
+					
+					<br />
+					
 					<div id="boost-insurance">Boost Insurance: X</div>
 					<div id="boost-insurance-multiplier">Boost Insurance Multiplier: X</div>
 					<div id="payout-multiplier">Win Multiplier: X</div>
@@ -538,9 +541,13 @@
 			gamesPlayed: 0,
 			totalStake: 0,
 			houseBalance: 0,
-			playerWinnings: 0,
-			playerTotalWinnings: 0,
+			houseBalanceGBP: 0,
 			playerBalance: 0,
+			playerBalanceGBP: 0,
+			playerWinnings: 0,
+			playerWinningsGBP: 0,
+			playerTotalWinnings: 0,
+			playerTotalWinningsGBP: 0,
 			audit: [] 
 		}
 		
@@ -617,6 +624,8 @@
 		var split01Div = document.getElementById("payout-split-bar-250-0");
 		var split02Div = document.getElementById("payout-split-bar-200-50");
 		var split03Div = document.getElementById("payout-split-bar-150-100");
+		
+		var flyingPointsDiv = document.getElementById("flying-points");
 		
 		updatePayoutSplit(1.9, 0.5, "SPLIT02"); //2, 0.5
 		insuranceSwitch(false);
@@ -817,11 +826,13 @@
 				payoutDiv.classList.remove("lose");
 				payoutDiv.classList.remove("insurance");
 				
-				stakeDiv.style.display = "flex";
-				stakeDiv.innerHTML = "Stake: " + stake;
+				stakeDiv.style.display = "none";
+				stakeDiv.innerHTML = "";
+				betDiv.style.display = "none";
+				betDiv.innerHTML = "";
 				
-				betDiv.style.display = "flex";
-				betDiv.innerHTML = "Bet: " + bet;
+				flyingPointsDiv.style.display = "none";
+				flyingPointsDiv.innerHTML = "";
 				
 				outcomeImages.style.display = "none"
 				
@@ -831,6 +842,15 @@
 				showOverlay();
 				
 				setTimeout(() => {
+				
+					stakeDiv.style.display = "flex";
+					stakeDiv.innerHTML = "Stake: " + stake;
+					
+					betDiv.style.display = "flex";
+					betDiv.innerHTML = "Bet: " + bet;
+					
+					flyingPointsDiv.style.display = "flex";
+				
 					hideOverlay();
 				
 					//Start of Delay...
@@ -927,7 +947,7 @@
 							
 							resultDiv.classList.add("win");
 							resultDiv.style.display = "flex";
-							resultDiv.innerHTML = "Won!";
+							resultDiv.innerHTML = "WON!";
 							
 							resultDescriptionDiv.classList.add("win");
 							resultDescriptionDiv.style.display = "flex";
@@ -935,11 +955,11 @@
 							
 							payoutDiv.classList.add("win");
 							payoutDiv.style.display = "flex";
-							payoutDiv.innerHTML = "+" + payout + " Tokens";
+							payoutDiv.innerHTML = "+" + payout.toFixed(0) + " TOKENS";
 							
 							//Animate Points
 							animatePoints(stake, payoutRate, 100, "white");
-							animatePoints(stake, payoutBoostRate, 100, (boostLevel == 1 ? "yellow" : boostLevel == 2 ? "orange" : boostLevel == 3 ? "red" : "white"));
+							animatePoints(stake, payoutBoostRate, 100, (boostLevel == 1 ? "yellow" : boostLevel == 2 ? "orange" : boostLevel == 3 ? "red" : "white"), "payout");
 							
 						} else {
 							outcome = "loss";
@@ -951,7 +971,7 @@
 							
 							resultDiv.classList.add("lose");
 							resultDiv.style.display = "flex";
-							resultDiv.innerHTML = "Unlucky";
+							resultDiv.innerHTML = "UNLUCKY";
 							
 							resultDescriptionDiv.classList.add("lose");
 							resultDescriptionDiv.style.display = "flex";
@@ -959,7 +979,7 @@
 							
 							payoutDiv.classList.add("lose");
 							payoutDiv.style.display = "flex";
-							payoutDiv.innerHTML = "+" + payout + " Tokens";
+							payoutDiv.innerHTML = "+" + payout.toFixed(0) + " TOKENS";
 						}
 					} else {	
 							//We don't even display this as a loss... even if they don't have insurance... perhaps they should have done.
@@ -973,7 +993,7 @@
 							
 							resultDiv.classList.add("insurance");
 							resultDiv.style.display = "flex";
-							resultDiv.innerHTML = insuranceRate != 0 ? "Insurance" : "Insurance*";
+							resultDiv.innerHTML = insuranceRate != 0 ? "INSURANCE" : "INSURANCE*";
 							
 							resultDescriptionDiv.classList.add("insurance");
 							resultDescriptionDiv.style.display = "flex";
@@ -981,11 +1001,11 @@
 							
 							payoutDiv.classList.add("insurance");
 							payoutDiv.style.display = "flex";
-							payoutDiv.innerHTML = "+" + payout + " Tokens";
+							payoutDiv.innerHTML = "+" + payout.toFixed(0) + " TOKENS";
 							
 							//Animate Points
 							animatePoints(stake, insuranceRate, 50, "white");
-							animatePoints(stake, insuranceBoostRate, 50, (boostLevel == 1 ? "yellow" : boostLevel == 2 ? "orange" : boostLevel == 3 ? "red" : "white"));
+							animatePoints(stake, insuranceBoostRate, 50, (boostLevel == 1 ? "yellow" : boostLevel == 2 ? "orange" : boostLevel == 3 ? "red" : "white"), "insurance");
 					}
 					
 					//Statistics
@@ -1006,15 +1026,17 @@
 					
 					statistics.audit.push(auditObject);
 					
+					//Statistics
 					statistics.gamesPlayed++;
 					statistics.totalStake = statistics.totalStake + stake;
 					statistics.houseBalance = statistics.houseBalance + housePayout;
-					statistics.playerWinnings = statistics.playerWinnings + payout;
-					console.info("###### statistics.playerWinnings", statistics.playerWinnings);
-					console.info("###### payout", payout);
-					
-					statistics.playerTotalWinnings = statistics.playerTotalWinnings + payout;
+					statistics.houseBalanceGBP = statistics.houseBalance / tokenRateToGBP;
 					statistics.playerBalance = statistics.playerBalance + payout - stake;
+					statistics.playerBalanceGBP = statistics.playerBalance / tokenRateToGBP;
+					statistics.playerWinnings = statistics.playerWinnings + payout;
+					statistics.playerWinningsGBP = statistics.playerWinnings / tokenRateToGBP;
+					statistics.playerTotalWinnings = statistics.playerTotalWinnings + payout;
+					statistics.playerTotalWinningsGBP = statistics.playerTotalWinnings / tokenRateToGBP;
 					
 					//Last picks Array
 					var lastPicksMaxSize = 7;
@@ -1048,7 +1070,8 @@
 				console.info("statistics.gamesPlayed", statistics.gamesPlayed);
 				console.info("lastShowOverlayEndOfCreditBetId", lastShowOverlayEndOfCreditBetId);
 				console.info("betId", betId);
-				if (playerCredit <= 0 && statistics.gamesPlayed > 0) {
+				
+				if (playerCredit - stake <= 0 && statistics.gamesPlayed > 0) {
 					showOverlayEndOfCredit();
 				}
 				
@@ -1153,8 +1176,37 @@
 			containerDiv.style.display = "none";
 		}
 		
+		function renderJson(jsonData, displayContainerId) {
+			var displayContainer = document.getElementById(displayContainerId);
+			displayContainer.innerHTML = "";
+			
+			Object.entries(jsonData).forEach(([key, value]) => {
+				var item = document.createElement("div");
+				item.className = "json-item";
+				
+				var propKey = document.createElement("div");
+				propKey.innerHTML = key;
+				propKey.className = "json-item-cell key";
+				item.appendChild(propKey);
+				
+				var propValue = document.createElement("div");
+				propValue.innerHTML = value;
+				propValue.className = "json-item-cell value";
+				item.appendChild(propValue);
+				
+				displayContainer.appendChild(item);
+			});
+		}
+		
 		function showOverlayEndOfCredit() {
-			copyDivContent("debug", "overlay-end-of-credit-content");
+			//copyDivContent("debug", "overlay-end-of-credit-content");
+			var overlayStatistics = JSON.parse(JSON.stringify(statistics));
+			console.info("overlayStatistics", overlayStatistics);
+			
+			delete overlayStatistics.audit;
+			console.info("overlayStatistics", overlayStatistics);
+			
+			renderJson(overlayStatistics, "overlay-end-of-credit-content");
 			
 			var overlayEndOfCredit = document.getElementById("overlay-end-of-credit");
 			overlayEndOfCredit.style.visibility = "visible";
@@ -1250,10 +1302,10 @@
 		}
 		
 		function createFlyingText(content, textColor) {
-			const container = document.querySelector('.flying-text-container');
-			const flyingText = document.createElement('div');
-			flyingText.classList.add('flying-text');
-			flyingText.textContent = content;
+			const container = document.querySelector(".flying-text-container");
+			const flyingText = document.createElement("div");
+			flyingText.classList.add("flying-text");
+			flyingText.innerHTML = content;
 			flyingText.style.color = textColor;
 
 			// Randomize the X and Y direction for the flying text
@@ -1261,19 +1313,19 @@
 			const randomY = (Math.random() - 0.5) * 300; // Random Y direction (further distance)
 
 			// Set the random values to CSS custom properties for animation
-			flyingText.style.setProperty('--x', `${randomX}px`);
-			flyingText.style.setProperty('--y', `${randomY}px`);
+			flyingText.style.setProperty("--x", `${randomX}px`);
+			flyingText.style.setProperty("--y", `${randomY}px`);
 
 			// Append the flying text to the container
 			container.appendChild(flyingText);
 
 			// Remove the element after animation ends
-			flyingText.addEventListener('animationend', () => {
+			flyingText.addEventListener("animationend", () => {
 				flyingText.remove();
 			});
 		}
 		
-		function animatePoints(stake, rate, splitPointsAt, textColor) {
+		function animatePoints(stake, rate, splitPointsAt, textColor, boostType="") {
 		
 			//Animate Points
 			var tempPayout = stake * rate;
@@ -1284,6 +1336,16 @@
 				
 				for (var i = 0; i < tempPayoutChunks; i++) {
 					createFlyingText("+" + splitPointsAt, textColor);
+				}
+				
+				//Render Icons too if boostType is set
+				for (var i = 0; i < tempPayoutChunks; i++) {
+					if (boostType === "payout") {
+						createFlyingText("<img src='images/flame-png.png' height='30px' alt='Flame Icon' style='opacity: 0.5'>", textColor);
+					} else if (boostType === "insurance") {
+					createFlyingText("+" + splitPointsAt, textColor);
+						createFlyingText("<img src='images/green-cross-png.png' height='30px' alt='Green Cross Icon' style='opacity: 0.5'>", textColor);
+					}
 				}
 				
 				var remainder = ((tempPayout % splitPointsAt).toFixed(0) * 1);
