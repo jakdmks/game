@@ -2,10 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sweet bro.</title>
     <link rel="stylesheet" href="./style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <!--<link rel="icon" href="./favicon.ico" type="image/x-icon">-->
   </head>
   <body>
@@ -14,11 +15,19 @@
 		<!--OVERLAY-->
 		<div id="overlay" class="overlay">
 			<div style="width: 700px;">
-				<div id="overlay-text">Picking sweets...</div>
+				<div id="overlay-text">Picking 2 sweets at random...</div>
 				<div id="overlay-images" class="overlay-images"></div>
 			</div>
 		</div>
 		
+		<!--END OF CREDIT OVERLAY-->
+		<div class="overlay-dismiss" id="overlay-end-of-credit">
+			<div>
+				<div id="overlay-end-of-credit-content" style="text-align: left"></div>
+				<button class="dismiss-button" id="overlay-end-of-credit-dismiss-button" onclick="hideOverlayDismiss()">Dismiss</button>
+			</div>
+		</div>
+				
 		<div class="grid-container">
 		  <!-- First Row of 3 Columns -->
 		  <div class="grid-item" style="text-align: right">
@@ -26,8 +35,16 @@
 			<div>
 				<!--<h2 style="text-align: center">Add Credit</h2>-->
 				<div>
+					<!--
 					<div id="credit-button" class="credit-button-div">
 						<button type="button" onclick="console.info(addCredit(20000))">Add 20,000 Tokens for only £20</button>
+					</div>
+					-->
+					<div id="credit-button" class="credit-button-div">
+						<button type="button" onclick="console.info(addCredit(10000))">Add 10,000 Tokens for only £10</button>
+					</div>
+					<div id="convert-winnings-to-credit-button" class="convert-button-div">
+						<button type="button"  onclick="console.info(convertWinnings())">Convert Winnings to Credit</button>
 					</div>
 				</div>
 			</div>
@@ -38,7 +55,7 @@
 				<div class="panel green">
 					<div id="cust-credit">Credit: X Tokens</div>
 					<div id="cust-winnings">Winnings: X Tokens</div>
-					<div id="cust-total-winnings">Total Winnings: X Tokens</div>
+					<div id="cust-total-winnings">Overall Winnings: X Tokens</div>
 				</div>
 			</div>
 			
@@ -51,13 +68,14 @@
 				</div>
 			</div>
 		  </div>
-		  <div class="grid-item">
+		  <div class="grid-item" style="padding-right: 15px;">
 			<div>
 				<!--<h2>Payout Split</h2>-->
 				<div class="radio-group" style="display: block; font-size: 1.5em; text-align: left">
 					<label class="radio-item">
-					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.5, 0, 'SPLIT01')">
-						<strong>PAYOUT+</strong>
+					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.5, 0, 'SPLIT01')">-->
+					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.4, 0, 'SPLIT01')">
+						<strong>HIGHER PAYOUT</strong>
 						<!--<div style="font-size: 0.5em;">250% Win Payout Rate (with upto +40% bonus!)</div>
 						<div style="font-size: 0.5em;">0% Insurance Payout Rate</div>-->
 						<div id="payout-split-bar-250-0" class="payout-split-bar">
@@ -69,7 +87,8 @@
 					</label>
 					
 					<label class="radio-item">
-					<input type="radio" name="payout" value="option1" checked onchange="updatePayoutSplit(2, 0.5, 'SPLIT02')">
+					<!--<input type="radio" name="payout" value="option1" checked onchange="updatePayoutSplit(2, 0.5, 'SPLIT02')">-->
+					<input type="radio" name="payout" value="option1" checked onchange="updatePayoutSplit(1.9, 0.5, 'SPLIT02')">
 						<strong>VANILLA</strong>
 						<!--<div style="font-size: 0.5em;">200% Win Payout Rate (with upto +40% boost!)</div>
 						<div style="font-size: 0.5em;">50% Insurance Payout Rate (with upto +40% boost!)</div>-->
@@ -82,8 +101,9 @@
 					</label>
 					
 					<label class="radio-item">
-					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 1, 'SPLIT03')">
-						<strong>INSURANCE+</strong>
+					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 1, 'SPLIT03')">-->
+					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 0.9, 'SPLIT03')">
+						<strong>HIGHER INSURANCE</strong>
 						<!--<div style="font-size: 0.5em;">150% Win Payout Rate (with upto +40% boost!)</div>
 						<div style="font-size: 0.5em;">100% Insurance Payout Rate (with upto +40% boost!)</div>-->
 						<div id="payout-split-bar-150-100" class="payout-split-bar">
@@ -146,59 +166,79 @@
 		  </div>
 		  
 		  <!-- Error Column -->
-		  <div class="grid-item full-width">
-			<div id="error-container" style="display: none">
+		  <div class="grid-item two-column-span">
+			<div id="error-container" style="display: none; text-align: center">
 				<div class="column" id="error-content" style="text-align: center"></div>
 			</div>
+		  </div>
+		  
+		  <div class="grid-item" style="text-align: left">
+				<div class="boost-insurance-div" style="display: inline-block">
+					<input type="checkbox" id="boost-insurance-checkbox" name="boost-insurance-checkbox" onchange="insuranceSwitch(this.checked)" />
+					<label for="boost-insurance-checkbox">Streak Protection?</label>
+					<div style="font-size: 0.65em; font-style: italic">Pays out 20% less on boosts but your streak maintains on mixed pair</div>
+				</div>
+				<!--<div style="font-size: 0.8em;"><em>(Can only change once win streak returns to 0)</em></div>-->
 		  </div>
 
 		  <!-- Second Row of 3 Columns -->
 		  <div class="grid-item" style="text-align: right">
-				<div class="cherry-cola-bets-container">
-					<div class="cherry-cola-bets">
-						<div class="game-button-div cherry">
-							<button type="button" onclick="pickSweets(100, 'Cherry')">BET 100 CHERRY</button>
-						</div>
-						<div class="game-button-div cherry large-bet">
-							<button type="button" onclick="pickSweets(500, 'Cherry')">BET 500 CHERRY</button>
-						</div>
+			<div class="cherry-cola-bets-container">
+				<div class="cherry-cola-bets">
+					<div class="game-button-container cherry">
+						<button type="button" onclick="pickSweets(100, 'Cherry')">BET 100 CHERRY</button>
 					</div>
-					<div class="cherry-cola-bets">
-						<div class="game-button-div cola">
-							<button type="button" onclick="pickSweets(100, 'Cola')">BET 100 COLA</button>
-						</div>
-						<div class="game-button-div cola large-bet">
-							<button type="button" onclick="pickSweets(500, 'Cola')">BET 500 COLA</button>
-						</div>	
+					<div class="game-button-container cherry large-bet">
+						<button type="button" onclick="pickSweets(500, 'Cherry')">BET 500<br />CHERRY</button>
+					</div>
+					<div class="game-button-container cola">
+						<button type="button" onclick="pickSweets(100, 'Cola')">BET 100 COLA</button>
+					</div>
+					<div class="game-button-container cola large-bet">
+						<button type="button" onclick="pickSweets(500, 'Cola')">BET 500 COLA</button>
 					</div>
 				</div>
+			</div>
 		  </div>
 		  <div class="grid-item">
 			<div style="">
-				<div class="stake-bet-container">
-					<div class="stake-bet-div" id="stake"></div>
-					<div class="stake-bet-div" id="bet"></div>
-				</div>
 				<div>
 					<div class="result-div" id="result"></div>
 				</div>
 				<div>
 					<div class="payout-div" id="payout"></div>
 				</div>
+				<div class="stake-bet-container">
+					<div class="stake-bet-div" id="stake"></div>
+					<div class="stake-bet-div" id="bet"></div>
+				</div>
+				
+				<!--FLYING POINTS-->
+				<div>
+					<div class="flying-text-container">
+						<!-- Flying text will be added here dynamically -->
+					</div>
+				</div>
+				
 			</div>
 		  </div>
 		  <div class="grid-item">  
 			<!--SWEET BAG NEW SPOT-->
 			<div id="outcome-images" class="panel" style="display: none">
-				<div id="sweet1" style="display: inline-block;">
-					<h2 style="font-size: 0.9em; margin-bottom: 7px;">Pick 1</h2>
+				<div id="sweet1" class="sweet-image" style="display: inline-flex; margin-right: 10px">
+					<h2 style="margin-bottom: 7px;">1st</h2>
 					<div id="sweet-image1"></div>
 				</div>
-				<div id="sweet2" style="display: inline-block;">
-					<h2 style="font-size: 0.9em; margin-bottom: 7px;">Pick 2</h2>
+				<div id="sweet2" class="sweet-image" style="display: inline-flex;">
+					<h2 style="margin-bottom: 7px;">2nd</h2>
 					<div id="sweet-image2"></div>
 				</div>
 			</div>
+			
+			<div>
+				<div class="panel" style="display: none" id="result-description"></div>
+			</div>
+			
 			<!--SWEET BAG NEW SPOT-->
 		  </div>
 
@@ -209,15 +249,9 @@
 					<div class="last-picks-container latest" id="last-picks-display-latest"></div>
 				</div>
 			</div>
-			<div class="grid-item full-width">
-				<div class="boost-insurance-div">
-					<input type="checkbox" id="boost-insurance-checkbox" name="boost-insurance-checkbox" onchange="insuranceSwitch(this.checked)" checked />
-					<label for="checkbox" style="font-size: 0.9em">Boost Insurance? <em>(Pays out 10% less but your boost maintains on non-bet matching pair)</em></label><br>
-				</div>
-				<!--<div style="font-size: 0.8em;"><em>(Can only change once win streak returns to 0)</em></div>-->
-			</div>
-			<div class="grid-item full-width" style="text-align: left">
-				<div class="panel debug">
+			
+			<div class="grid-item full-width" style="text-align: left;">
+				<div class="panel debug" id="debug">
 					<div id="house-balance-debug">House Balance: X Tokens</div>
 					<div id="house-cash-debug">House Balance: £XX.XX</div>
 					<div id="cust-balance-debug">Cust' Balance: X Tokens</div>
@@ -242,7 +276,7 @@
 		function updateStatisticsDivs() {
 			custCreditDiv.innerHTML = "Credit: " + playerCredit + " Tokens";
 			custWinningsDiv.innerHTML = "Winnings: " + statistics.playerWinnings + " Tokens";
-			custTotalWinningsDiv.innerHTML = "Total Winnings: " + statistics.playerTotalWinnings + " Tokens";
+			custTotalWinningsDiv.innerHTML = "Overall Winnings: " + statistics.playerTotalWinnings + " Tokens";
 			houseBalanceDebugDiv.innerHTML = "House Balance: " + statistics.houseBalance + " Tokens";
 			houseCashDebugDiv.innerHTML = "House Balance: " + (statistics.houseBalance / tokenRateToGBP) + " GBP";
 			custBalanceDebugDiv.innerHTML = "Cust' Balance: " + statistics.playerBalance + " Tokens";
@@ -263,7 +297,7 @@
 			payoutBonusDiv.innerHTML = "Last Bet Return Bonus Rate:  " + (payoutBoostRate * 100).toFixed(0) + "%";
 			insuranceBonusDiv.innerHTML = "Last Bet Insurance Bonus Rate: " + (insuranceBoostRate * 100).toFixed(0) + "%";
 			
-			//Player Credit Panel Colour
+			//Player Credit Panel Colour (TODO: Re-implement this...)
 			var playerCreditParentDiv = custCreditDiv.parentNode;
 			if (playerCredit <= 0) {
 				playerCreditParentDiv.classList.remove("green");
@@ -275,6 +309,16 @@
 				playerCreditParentDiv.classList.remove("red");
 				creditButtonDiv.style.pointerEvents = "none";
 				creditButtonDiv.style.opacity = "0.2";
+			}
+			
+			//Convert Winnings to Credit 
+			//convertWinningsToCreditButtonDiv
+			if (statistics.playerWinnings > 0) {			
+				convertWinningsToCreditButtonDiv.style.pointerEvents = "auto";
+				convertWinningsToCreditButtonDiv.style.opacity = "1";
+			} else {
+				convertWinningsToCreditButtonDiv.style.pointerEvents = "none";
+				convertWinningsToCreditButtonDiv.style.opacity = "0.2";
 			}
 			
 			//Displaying Bonus Buttons - move to another function?
@@ -386,19 +430,59 @@
 				split01Div.classList.add("selected");
 				split02Div.classList.remove("selected");
 				split03Div.classList.remove("selected");
+				
+				if (boostLevel == 1) {
+					split01Div.classList.add("yellow-glow");
+				} else if (boostLevel == 2) {
+					split01Div.classList.add("orange-glow");
+				} else if (boostLevel == 3) {
+					split01Div.classList.add("red-glow");
+				} else {
+					split01Div.classList.remove("yellow-glow");
+					split01Div.classList.remove("orange-glow");
+					split01Div.classList.remove("red-glow");
+				}
+				
 			} else if (option === "SPLIT02") {
 				split01Div.classList.remove("selected");
 				split02Div.classList.add("selected");
 				split03Div.classList.remove("selected");
+				
+				if (boostLevel == 1) {
+					split02Div.classList.add("yellow-glow");
+				} else if (boostLevel == 2) {
+					split02Div.classList.add("orange-glow");
+				} else if (boostLevel == 3) {
+					split02Div.classList.add("red-glow");
+				} else {
+					split02Div.classList.remove("yellow-glow");
+					split02Div.classList.remove("orange-glow");
+					split02Div.classList.remove("red-glow");
+				}
+				
 			} else if (option === "SPLIT03") {
 				split01Div.classList.remove("selected");
 				split02Div.classList.remove("selected");
 				split03Div.classList.add("selected");
+				
+				if (boostLevel == 1) {
+					split03Div.classList.add("yellow-glow");
+				} else if (boostLevel == 2) {
+					split03Div.classList.add("orange-glow");
+				} else if (boostLevel == 3) {
+					split03Div.classList.add("red-glow");
+				} else {
+					split03Div.classList.remove("yellow-glow");
+					split03Div.classList.remove("orange-glow");
+					split03Div.classList.remove("red-glow");
+				}
 			}
 			
-			console.info("Check", 2.5 - newPayoutRate - newInsuranceRate);
+			var totalPayoutCheck = 2.4;
+			var check = parseFloat((totalPayoutCheck - newPayoutRate - newInsuranceRate).toFixed(2));
+			console.info("Check", check);
 			
-			if (2.5 - newPayoutRate - newInsuranceRate === 0) {
+			if (check === 0) {
 				payoutRate = newPayoutRate;
 				insuranceRate = newInsuranceRate;
 			} else {
@@ -445,7 +529,7 @@
 		//TODO: Dom Loaded
 		var tokenRateToGBP = 1000;
 		var playerCredit = 0;
-		var payoutRate = 2;
+		var payoutRate = 1.9; //2
 		var insuranceRate = 0.5;
 		var winStreak = 0;
 		
@@ -454,10 +538,10 @@
 		var boostLevel = 0;
 		var boostRate = 0;
 		var boostInsurance = false;
-		var boostInsuranceRateAvailable = 0.1;
+		var boostInsuranceRateAvailable = 0.1; //0.2
 		var boostInsuranceRate = 0;
 		var boostStreakLevelOne = 1;
-		var boostBonusLevelOne = 0.2;
+		var boostBonusLevelOne = 0.3; //0.2
 		var boostStreakLevelTwo = 2;
 		var boostBonusLevelTwoHop = 0.1;
 		var boostStreakLevelThree = 3;
@@ -473,6 +557,9 @@
 		
 		var payoutBoost = false;
 		var insuranceBoost = false;
+		
+		//When did we last show the end of credit message?
+		var lastShowOverlayEndOfCreditBetId = 0;
 		
 		//TESTING
 		//boostStreakLevelOne = 0;
@@ -554,8 +641,11 @@
 		var insuranceBoostPct3Div = document.getElementById("insurance-boost-pct-3");
 		
 		var creditButtonDiv = document.getElementById("credit-button");
+		var convertWinningsToCreditButtonDiv = document.getElementById("convert-winnings-to-credit-button");
 		
-		insuranceSwitch(true);
+		calculateBoost();
+		updatePayoutSplit(1.9, 0.5, "SPLIT02"); //2, 0.5
+		insuranceSwitch(false);
 		updateStatisticsDivs();
 		
 		var betId = 0;
@@ -572,6 +662,27 @@
 			displayErrors(errorContainerDiv, errorContentDiv, "DEPOSIT SUCCESS!", creditErrors, 3000);
 			updateStatisticsDivs();
 			return playerCredit;
+		}
+		
+		function convertWinnings() {
+		
+			var additionalCredit = statistics.playerWinnings;;
+		
+			playerCredit = playerCredit + additionalCredit;
+			console.info("increased playerCredit by ", additionalCredit);
+			
+			statistics.playerWinnings = 0;
+			console.info("Reset playerWinnings to ", statistics.playerWinnings);
+			
+			//Setup Messages
+			var convertErrors = [];
+			convertErrors.push("Converted " + additionalCredit + " Tokens to Credits...");
+			
+			displayErrors(errorContainerDiv, errorContentDiv, "CONGRATULATIONS!", convertErrors, 3000);
+			
+			updateStatisticsDivs();
+			
+			return statistics.playerWinnings;
 		}
 		
 		function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages, displayForMS) {
@@ -703,6 +814,7 @@
 			var betDiv = document.getElementById("bet");			
 			var resultDiv = document.getElementById("result");
 			var payoutDiv = document.getElementById("payout");
+			var resultDescriptionDiv = document.getElementById("result-description");
 
 			if ((bet === "Cola" || bet === "Cherry") && stake !== 0 && (playerCredit - stake >= 0))
 			{
@@ -711,6 +823,12 @@
 				resultDiv.classList.remove("win");
 				resultDiv.classList.remove("lose");
 				resultDiv.classList.remove("insurance");
+				
+				resultDescriptionDiv.style.display = "none";
+				resultDescriptionDiv.innerHTML = "";
+				resultDescriptionDiv.classList.remove("win");
+				resultDescriptionDiv.classList.remove("lose");
+				resultDescriptionDiv.classList.remove("insurance");
 				
 				payoutDiv.style.display = "none";
 				payoutDiv.innerHTML = "";
@@ -735,7 +853,7 @@
 					hideOverlay();
 				
 					//Start of Delay...
-					betId = betId++;
+					betId++;
 				
 					playerCredit = playerCredit - stake;
 					console.info("Updating player credit", playerCredit);
@@ -830,9 +948,17 @@
 							resultDiv.style.display = "flex";
 							resultDiv.innerHTML = "Won!";
 							
+							resultDescriptionDiv.classList.add("win");
+							resultDescriptionDiv.style.display = "flex";
+							resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you won " + payout + " Tokens this time.";
+							
 							payoutDiv.classList.add("win");
 							payoutDiv.style.display = "flex";
 							payoutDiv.innerHTML = "+" + payout + " Tokens";
+							
+							//Animate Points
+							animatePoints(stake, payoutRate, 100, "white");
+							animatePoints(stake, payoutBoostRate, 100, (boostLevel == 1 ? "yellow" : boostLevel == 2 ? "orange" : boostLevel == 3 ? "red" : "white"));
 							
 						} else {
 							outcome = "loss";
@@ -845,6 +971,10 @@
 							resultDiv.classList.add("lose");
 							resultDiv.style.display = "flex";
 							resultDiv.innerHTML = "Unlucky";
+							
+							resultDescriptionDiv.classList.add("lose");
+							resultDescriptionDiv.style.display = "flex";
+							resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you didn't win any tokens this time.";
 							
 							payoutDiv.classList.add("lose");
 							payoutDiv.style.display = "flex";
@@ -864,9 +994,17 @@
 							resultDiv.style.display = "flex";
 							resultDiv.innerHTML = insuranceRate != 0 ? "Insurance" : "Insurance*";
 							
+							resultDescriptionDiv.classList.add("insurance");
+							resultDescriptionDiv.style.display = "flex";
+							resultDescriptionDiv.innerHTML = insuranceRate != 0 ? "You backed " + bet + ". Picked sweets were mixed, so insurance paid out " + payout + " Tokens." : "You backed " + bet + ". Picked sweets were mixed. Whilst insurance would have paid here, there was no cover included in the selected payout split.";
+							
 							payoutDiv.classList.add("insurance");
 							payoutDiv.style.display = "flex";
 							payoutDiv.innerHTML = "+" + payout + " Tokens";
+							
+							//Animate Points
+							animatePoints(stake, insuranceRate, 50, "white");
+							animatePoints(stake, insuranceBoostRate, 50, (boostLevel == 1 ? "yellow" : boostLevel == 2 ? "orange" : boostLevel == 3 ? "red" : "white"));
 					}
 					
 					//Statistics
@@ -891,6 +1029,9 @@
 					statistics.totalStake = statistics.totalStake + stake;
 					statistics.houseBalance = statistics.houseBalance + housePayout;
 					statistics.playerWinnings = statistics.playerWinnings + payout;
+					console.info("###### statistics.playerWinnings", statistics.playerWinnings);
+					console.info("###### payout", payout);
+					
 					statistics.playerTotalWinnings = statistics.playerTotalWinnings + payout;
 					statistics.playerBalance = statistics.playerBalance + payout - stake;
 					
@@ -920,6 +1061,15 @@
 					//End of Delay
 				}, delayInMs);
 			} else {
+			
+				//End of game stats overlay...
+				console.info("playerCredit", playerCredit);
+				console.info("statistics.gamesPlayed", statistics.gamesPlayed);
+				console.info("lastShowOverlayEndOfCreditBetId", lastShowOverlayEndOfCreditBetId);
+				console.info("betId", betId);
+				if (playerCredit <= 0 && statistics.gamesPlayed > 0) {
+					showOverlayEndOfCredit();
+				}
 				
 				var pickSweetsErrors = [];
 				
@@ -970,8 +1120,8 @@
 						entry.classList.add("last-picks-insurance");
 					}
 
-					entry.prepend(sweet1);
-					entry.prepend(sweet2);
+					entry.append(sweet1);
+					entry.append(sweet2);
 					container.appendChild(entry);
 				} else {
 					// Latest Pick (Last Element)
@@ -1010,8 +1160,8 @@
 		function renderSweets(sweet1="", sweet2="") {
 			if ((sweet1 === "Cherry" || sweet1 === "Cola") && (sweet2 === "Cherry" || sweet2 === "Cola")) {
 				outcomeImages.style.display = "block"
-				sweetImage1Div.innerHTML = "<div class='sweet-image' id='sweet-image1'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='80px'></div>";
-				sweetImage2Div.innerHTML = "<div class='sweet-image' id='sweet-image2'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='80px'></div>";
+				sweetImage1Div.innerHTML = "<div class='sweet-image' style='display: inline-flex' id='sweet-image1'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='80px'></div>";
+				sweetImage2Div.innerHTML = "<div class='sweet-image' style='display: inline-flex' id='sweet-image2'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='80px'></div>";
 			}
 		}
 		
@@ -1021,6 +1171,21 @@
 			contentDiv.innerHTML = "";
 			containerDiv.style.display = "none";
 		}
+		
+		function showOverlayEndOfCredit() {
+			copyDivContent("debug", "overlay-end-of-credit-content");
+			
+			var overlayEndOfCredit = document.getElementById("overlay-end-of-credit");
+			overlayEndOfCredit.style.visibility = "visible";
+		}
+		
+		function hideOverlayDismiss() {
+			console.info("Running hideOverlayDismiss()");
+			
+			var overlayEndOfCredit = document.getElementById("overlay-end-of-credit");
+			overlayEndOfCredit.style.visibility = "hidden";
+		}
+
 		
 		function showOverlay() {
 			console.info("Running showOverlay()");
@@ -1037,18 +1202,18 @@
 			
 			// Create and append the image elements dynamically
 			for (let i = 0; i < totalInstances; i++) {
-				var img = document.createElement('img');
+				var img = document.createElement("img");
 				img.src = images[i % images.length]; // Alternate between image1 and image2
-				img.className = 'overlay-image';
+				img.className = "overlay-image";
 				imagesContainer.appendChild(img);
 			}
 
 			// Show the overlay
-			overlay.style.visibility = 'visible';
+			overlay.style.visibility = "visible";
 			
 			// Start the image update loop
 			var intervalId = setInterval(() => {
-				var imgElements = document.querySelectorAll('.overlay-image');
+				var imgElements = document.querySelectorAll(".overlay-image");
 				imgElements.forEach((img, index) => {
 					// Alternate images based on the iteration
 					var newIndex = (iteration + index) % images.length;
@@ -1074,6 +1239,77 @@
 				delete overlay.dataset.intervalId;
 			}
 		}
+		
+		function copyDivContent(originalId, newParentId) {
+			// Get the original div by its ID
+			const originalDiv = document.getElementById(originalId);
+			if (!originalDiv) {
+				console.error("Original div not found!");
+				return;
+			}
+
+			// Clone the original div, including all child nodes
+			const clonedDiv = originalDiv.cloneNode(true);
+
+			// Generate a new ID for the cloned div to prevent duplication of IDs
+			clonedDiv.id = originalId + "-clone"; // You can customize the new ID pattern
+
+			// Get the new parent element where the cloned div will be placed
+			const newParent = document.getElementById(newParentId);
+			if (!newParent) {
+				console.error("New parent div not found!");
+				return;
+			}
+
+			// Append the cloned div to the new parent
+			newParent.appendChild(clonedDiv);
+		}
+		
+		function createFlyingText(content, textColor) {
+			const container = document.querySelector('.flying-text-container');
+			const flyingText = document.createElement('div');
+			flyingText.classList.add('flying-text');
+			flyingText.textContent = content;
+			flyingText.style.color = textColor;
+
+			// Randomize the X and Y direction for the flying text
+			const randomX = (Math.random() - 0.5) * 300; // Random X direction (further distance)
+			const randomY = (Math.random() - 0.5) * 300; // Random Y direction (further distance)
+
+			// Set the random values to CSS custom properties for animation
+			flyingText.style.setProperty('--x', `${randomX}px`);
+			flyingText.style.setProperty('--y', `${randomY}px`);
+
+			// Append the flying text to the container
+			container.appendChild(flyingText);
+
+			// Remove the element after animation ends
+			flyingText.addEventListener('animationend', () => {
+				flyingText.remove();
+			});
+		}
+		
+		function animatePoints(stake, rate, splitPointsAt, textColor) {
+		
+			//Animate Points
+			var tempPayout = stake * rate;
+			if (tempPayout > 0) {
+				
+				var tempPayoutChunks = ((tempPayout / splitPointsAt).toFixed(0) * 1);
+				console.info(">> tempPayoutChunks", tempPayoutChunks);
+				
+				for (var i = 0; i < tempPayoutChunks; i++) {
+					createFlyingText("+" + splitPointsAt, textColor);
+				}
+				
+				var remainder = ((tempPayout % splitPointsAt).toFixed(0) * 1);
+				if (remainder !== 0) {
+					createFlyingText("+" + remainder, textColor);
+				}
+			}
+		
+		}
+		
 	</script>
   </body>
 </html>
