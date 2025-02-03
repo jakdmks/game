@@ -261,6 +261,7 @@
 					<div id="insurance-multiplier">Insurance Multiplier: X</div>
 					<div id="win-streak">Win Streak: X</div>
 					<div id="boost-avail">Boost Available: X</div>
+					<div id="boost-applied">Boost Applied: X</div>
 					<div id="boost-level">Boost Level: X</div>
 					<div id="boost-pct">Boost Pct: X%</div>
 					<div id="payout-bonus">Last Bet Return Bonus Rate: X%</div>
@@ -283,6 +284,7 @@
 			
 			winStreakDiv.innerHTML = "Win Streak: " + winStreak;
 			boostAvailDiv.innerHTML = "Boost Available: " + boostAvailable;
+			boostAppliedDiv.innerHTML = "Boost Applied: " + boostApplied;
 			boostLevelDiv.innerHTML = "Boost Level: " + boostLevel;
 			boostPctDiv.innerHTML = "Boost Pct: " + (boostRate * 100).toFixed(0) + "%";
 			boostInsuranceDiv.innerHTML = "Boost Insurance: " + boostInsurance;
@@ -420,62 +422,25 @@
 			console.info("Running updatePayoutSplit()");
 			console.info("newPayoutRate", newPayoutRate);
 			console.info("newInsuranceRate", newInsuranceRate);
-
-			var split01Div = document.getElementById("payout-split-bar-250-0");
-			var split02Div = document.getElementById("payout-split-bar-200-50");
-			var split03Div = document.getElementById("payout-split-bar-150-100");
+			
+			payoutSplitCode = option;
+			console.info("payoutSplitCode", payoutSplitCode);
 			
 			if (option === "SPLIT01") {
 				split01Div.classList.add("selected");
 				split02Div.classList.remove("selected");
 				split03Div.classList.remove("selected");
-				
-				if (boostLevel == 1) {
-					split01Div.classList.add("yellow-glow");
-				} else if (boostLevel == 2) {
-					split01Div.classList.add("orange-glow");
-				} else if (boostLevel == 3) {
-					split01Div.classList.add("red-glow");
-				} else {
-					split01Div.classList.remove("yellow-glow");
-					split01Div.classList.remove("orange-glow");
-					split01Div.classList.remove("red-glow");
-				}
-				
 			} else if (option === "SPLIT02") {
 				split01Div.classList.remove("selected");
 				split02Div.classList.add("selected");
 				split03Div.classList.remove("selected");
-				
-				if (boostLevel == 1) {
-					split02Div.classList.add("yellow-glow");
-				} else if (boostLevel == 2) {
-					split02Div.classList.add("orange-glow");
-				} else if (boostLevel == 3) {
-					split02Div.classList.add("red-glow");
-				} else {
-					split02Div.classList.remove("yellow-glow");
-					split02Div.classList.remove("orange-glow");
-					split02Div.classList.remove("red-glow");
-				}
-				
 			} else if (option === "SPLIT03") {
 				split01Div.classList.remove("selected");
 				split02Div.classList.remove("selected");
 				split03Div.classList.add("selected");
-				
-				if (boostLevel == 1) {
-					split03Div.classList.add("yellow-glow");
-				} else if (boostLevel == 2) {
-					split03Div.classList.add("orange-glow");
-				} else if (boostLevel == 3) {
-					split03Div.classList.add("red-glow");
-				} else {
-					split03Div.classList.remove("yellow-glow");
-					split03Div.classList.remove("orange-glow");
-					split03Div.classList.remove("red-glow");
-				}
 			}
+			
+			setPayoutSplitGlow();
 			
 			var totalPayoutCheck = 2.4;
 			var check = parseFloat((totalPayoutCheck - newPayoutRate - newInsuranceRate).toFixed(2));
@@ -499,6 +464,7 @@
 			console.info("Running calculateBoost()");
 			
 			boostAvailable = false;
+			boostApplied = false;
 			boostLevel = 0;
 			boostRate = 0;
 			
@@ -534,10 +500,11 @@
 		
 		//Boost
 		var boostAvailable = false;
+		var boostApplied = false;
 		var boostLevel = 0;
 		var boostRate = 0;
 		var boostInsurance = false;
-		var boostInsuranceRateAvailable = 0.1; //0.2
+		var boostInsuranceRateAvailable = 0.2; //0.1
 		var boostInsuranceRate = 0;
 		var boostStreakLevelOne = 1;
 		var boostBonusLevelOne = 0.3; //0.2
@@ -548,6 +515,8 @@
 		
 		var payoutBoostRate = 0;
 		var insuranceBoostRate = 0;
+		
+		var payoutSplitCode = "SPLIT02";
 		
 		//Bag size (should be an even number)
 		var bagSize = 24;
@@ -585,6 +554,7 @@
 		
 		var winStreakDiv = document.getElementById("win-streak");
 		var boostAvailDiv = document.getElementById("boost-avail");
+		var boostAppliedDiv = document.getElementById("boost-applied");
 		var boostLevelDiv = document.getElementById("boost-level");
 		var boostPctDiv = document.getElementById("boost-pct");
 		var boostInsuranceDiv = document.getElementById("boost-insurance");
@@ -642,9 +612,13 @@
 		var creditButtonDiv = document.getElementById("credit-button");
 		var convertWinningsToCreditButtonDiv = document.getElementById("convert-winnings-to-credit-button");
 		
-		calculateBoost();
+		var split01Div = document.getElementById("payout-split-bar-250-0");
+		var split02Div = document.getElementById("payout-split-bar-200-50");
+		var split03Div = document.getElementById("payout-split-bar-150-100");
+		
 		updatePayoutSplit(1.9, 0.5, "SPLIT02"); //2, 0.5
 		insuranceSwitch(false);
+		calculateBoost();
 		updateStatisticsDivs();
 		
 		var betId = 0;
@@ -738,6 +712,7 @@
 			if (type === "payout") {
 				console.info("BOOSTING PAYOUT TO", boostRate);
 				payoutBoost = outcome;
+				boostApplied = true;
 				insuranceBoost = false;
 				
 				payoutSplitBar250GreenBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
@@ -748,6 +723,7 @@
 				
 			} else if (type === "insurance") {
 				console.info("BOOSTING INSURANCE TO", boostRate);
+				boostApplied = true;
 				payoutBoost = false;
 				insuranceBoost = outcome;
 				
@@ -759,6 +735,7 @@
 				
 				
 			} else if (type === "both" && outcome === false) {
+				boostApplied = false;
 				payoutBoost = outcome;
 				insuranceBoost = outcome;
 				
@@ -780,6 +757,9 @@
 				payoutSplitBar150GreenBoostDiv.style.width = 0 + "%";
 			}
 			
+			
+			//HERE do the glowing bits?
+			setPayoutSplitGlow();
 			updateStatisticsDivs();
 		}
 		
@@ -1259,6 +1239,9 @@
 				console.error("New parent div not found!");
 				return;
 			}
+			
+			// Clear existing content
+			newParent.innerHTML = "";
 
 			// Append the cloned div to the new parent
 			newParent.appendChild(clonedDiv);
@@ -1307,6 +1290,67 @@
 				}
 			}
 		
+		}
+		
+		function setPayoutSplitGlow() {
+			console.info("Running setPayoutSplitGlow");
+			console.info("boostRate", boostRate);
+			console.info("payoutBoostRate", payoutBoostRate);
+			console.info("insuranceBoostRate", insuranceBoostRate);
+			console.info("payoutSplitCode", payoutSplitCode);
+			console.info("boostLevel", boostLevel);
+			
+			if (boostRate > 0) {
+				if (payoutSplitCode === "SPLIT01") {
+					if (boostLevel == 1 && boostApplied) {
+						split01Div.classList.add("yellow-glow");
+					} else if (boostLevel == 2 && boostApplied) {
+						split01Div.classList.add("orange-glow");
+					} else if (boostLevel == 3 && boostApplied) {
+						split01Div.classList.add("red-glow");
+					} else {
+						split01Div.classList.remove("yellow-glow");
+						split01Div.classList.remove("orange-glow");
+						split01Div.classList.remove("red-glow");
+					}
+				} else if (payoutSplitCode === "SPLIT02") {
+					if (boostLevel == 1 && boostApplied) {
+						split02Div.classList.add("yellow-glow");
+					} else if (boostLevel == 2 && boostApplied) {
+						split02Div.classList.add("orange-glow");
+					} else if (boostLevel == 3 && boostApplied) {
+						split02Div.classList.add("red-glow");
+					} else {
+						split02Div.classList.remove("yellow-glow");
+						split02Div.classList.remove("orange-glow");
+						split02Div.classList.remove("red-glow");
+					}
+				} else if (payoutSplitCode === "SPLIT03") {
+					if (boostLevel == 1 && boostApplied) {
+						split03Div.classList.add("yellow-glow");
+					} else if (boostLevel == 2 && boostApplied) {
+						split03Div.classList.add("orange-glow");
+					} else if (boostLevel == 3 && boostApplied) {
+						split03Div.classList.add("red-glow");
+					} else {
+						split03Div.classList.remove("yellow-glow");
+						split03Div.classList.remove("orange-glow");
+						split03Div.classList.remove("red-glow");
+					}
+				}
+			} else {
+				split01Div.classList.remove("yellow-glow");
+				split01Div.classList.remove("orange-glow");
+				split01Div.classList.remove("red-glow");
+				
+				split02Div.classList.remove("yellow-glow");
+				split02Div.classList.remove("orange-glow");
+				split02Div.classList.remove("red-glow");
+				
+				split03Div.classList.remove("yellow-glow");
+				split03Div.classList.remove("orange-glow");
+				split03Div.classList.remove("red-glow");
+			}
 		}
 		
 	</script>
