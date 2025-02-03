@@ -612,11 +612,11 @@ PAYOUT SPLIT TESTING
 }
 
 .stake-bet-div {
-  background-color: #4b5563; /* Neutral grey */
+  background-color: #101824; /* Neutral grey */
   color: white;
   font-size: 0.7em;
   text-align: center;
-  border: 1px solid #121a26; /* Dark, consistent border */
+  border: 1px solid black; /* Dark, consistent border */
   margin-top: 5px;
   border-radius: 7px; /* Smaller radius */
   font-weight: 600;
@@ -703,7 +703,7 @@ PAYOUT SPLIT TESTING
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
   display: none;
-  min-height: 120px;
+  min-height: 80px;
   vertical-align: middle;
 }
 
@@ -779,7 +779,7 @@ PAYOUT SPLIT TESTING
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
   display: none;
-  min-height: 70px;
+  min-height: 50px;
   vertical-align: middle;
 }
 
@@ -940,12 +940,13 @@ PAYOUT SPLIT TESTING
   background-color: #8b0000; /* Deep, rich red background */
   font-weight: bold;
   font-size: 1em; /* Slightly larger for readability */
-  padding: 20px;
+  padding: 5px;
   border-radius: 8px; /* Rounded corners for a polished look */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Soft shadow for depth */
   text-align: center; /* Center the message */
   max-width: 100%; /* Full width of its parent container */
   width: 100%; /* Ensure it takes up the full width */
+  min-height: 65px;
   height: 100%; /* Ensure it takes up the full height of the cell */
   display: flex;
   justify-content: center;
@@ -959,11 +960,10 @@ PAYOUT SPLIT TESTING
 /* Error Heading */
 #error-content h1 {
   font-size: 1.8em;
-  margin: 0;
+  margin: 0px;
   color: #ff4d41; /* Red-orange color for the heading */
   text-transform: uppercase; /* Make the heading stand out */
   letter-spacing: 1px; /* Adds a bit of space between the letters */
-  margin-bottom: 10px;
 }
 
 /* Error Message Text */
@@ -1095,6 +1095,20 @@ PAYOUT SPLIT TESTING
   0% { transform: rotate(10deg); }
   50% { transform: rotate(-10deg); }
   100% { transform: rotate(10deg); }
+}
+
+.sweet-image-text {
+	transform: scaleY(1.3);
+	font-size: 9em;
+	font-weight: bold;
+	margin-bottom: -100px;
+	margin-left: -70px;
+	color: #101824;
+	text-shadow: 
+		-1px -1px 0 black,  
+		 1px -1px 0 black,
+		-1px  1px 0 black,
+		 1px  1px 0 black;
 }
 
 .sweet-image {
@@ -1333,12 +1347,12 @@ body {
 .flying-text-container {
     position: relative;
     width: 100%;  /* Set width of the container */
-    height: 100px; /* Set height of the container */
+    height: 110px; /* Set height of the container */
     overflow: hidden; /* Hide any text flying out of the container */
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 10px
 }
 
 .flying-text {
