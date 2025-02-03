@@ -1,1314 +1,1363 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=1200, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sweet bro.</title>
-    <link rel="stylesheet" href="./style.css">
-    <!--<link rel="icon" href="./favicon.ico" type="image/x-icon">-->
-  </head>
-  <body>
-    <main>
-	
-		<!--OVERLAY-->
-		<div id="overlay" class="overlay">
-			<div style="width: 700px;">
-				<div id="overlay-text">Picking 2 sweets at random...</div>
-				<div id="overlay-images" class="overlay-images"></div>
-			</div>
-		</div>
-		
-		<!--END OF CREDIT OVERLAY-->
-		<div class="overlay-dismiss" id="overlay-end-of-credit">
-			<div>
-				<div id="overlay-end-of-credit-content" style="text-align: left"></div>
-				<button class="dismiss-button" id="overlay-end-of-credit-dismiss-button" onclick="hideOverlayDismiss()">Dismiss</button>
-			</div>
-		</div>
-				
-		<div class="grid-container">
-		  <!-- First Row of 3 Columns -->
-		  <div class="grid-item" style="text-align: right">
-			<!--ADD CREDIT-->
-			<div>
-				<!--<h2 style="text-align: center">Add Credit</h2>-->
-				<div>
-					<!--
-					<div id="credit-button" class="credit-button-div">
-						<button type="button" onclick="console.info(addCredit(20000))">Add 20,000 Tokens for only £20</button>
-					</div>
-					-->
-					<div id="credit-button" class="credit-button-div">
-						<button type="button" onclick="console.info(addCredit(10000))">Add 10,000 Tokens for only £10</button>
-					</div>
-					<div id="convert-winnings-to-credit-button" class="convert-button-div">
-						<button type="button"  onclick="console.info(convertWinnings())">Convert Winnings to Credit</button>
-					</div>
-				</div>
-			</div>
-			
-			<!--CREDIT-->
-			<div>
-				<!--<h2>Credit</h2>-->
-				<div class="panel green">
-					<div id="cust-credit">Credit: X Tokens</div>
-					<div id="cust-winnings">Winnings: X Tokens</div>
-					<div id="cust-total-winnings">Overall Winnings: X Tokens</div>
-				</div>
-			</div>
-			
-			<!--PAYOUT-SPLIT STATS-->
-			<div>
-				<!--<h2>Split</h2>-->
-				<div class="panel">
-					<div id="payout-pct">Return Pct: X%</div>
-					<div id="insurance-pct">Insurance Pct: X%</div>
-				</div>
-			</div>
-		  </div>
-		  <div class="grid-item" style="padding-right: 15px;">
-			<div>
-				<!--<h2>Payout Split</h2>-->
-				<div class="radio-group" style="display: block; font-size: 1.5em; text-align: left">
-					<label class="radio-item">
-					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.5, 0, 'SPLIT01')">-->
-					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.4, 0, 'SPLIT01')">
-						<strong>HIGHER PAYOUT</strong>
-						<!--<div style="font-size: 0.5em;">250% Win Payout Rate (with upto +40% bonus!)</div>
-						<div style="font-size: 0.5em;">0% Insurance Payout Rate</div>-->
-						<div id="payout-split-bar-250-0" class="payout-split-bar">
-							<div class="green-bar" style="width: 86%;"></div>
-							<div id="payout-split-bar-250-0-green-boost" class="green-bar-boost"></div>
-							<div class="blue-bar" style="width: 0px;"></div>
-						</div>
+input[type="radio"] {
+  width: 2.2em; /* Increase width for larger size */
+  height: 2.2em; /* Increase height for larger size */
+  vertical-align: middle; /* Align with surrounding text/content */
+  cursor: pointer; /* Pointer reflects interactivity */
+}
 
-					</label>
-					
-					<label class="radio-item">
-					<!--<input type="radio" name="payout" value="option1" checked onchange="updatePayoutSplit(2, 0.5, 'SPLIT02')">-->
-					<input type="radio" name="payout" value="option1" checked onchange="updatePayoutSplit(1.9, 0.5, 'SPLIT02')">
-						<strong>VANILLA</strong>
-						<!--<div style="font-size: 0.5em;">200% Win Payout Rate (with upto +40% boost!)</div>
-						<div style="font-size: 0.5em;">50% Insurance Payout Rate (with upto +40% boost!)</div>-->
-						<div id="payout-split-bar-200-50" class="payout-split-bar selected">
-							<div class="green-bar"></div>
-							<div id="payout-split-bar-200-50-green-boost" class="green-bar-boost"></div>
-							<div id="payout-split-bar-200-50-red-boost" class="blue-bar-boost"></div>
-							<div class="blue-bar"></div>
-						</div>
-					</label>
-					
-					<label class="radio-item">
-					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 1, 'SPLIT03')">-->
-					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 0.9, 'SPLIT03')">
-						<strong>HIGHER INSURANCE</strong>
-						<!--<div style="font-size: 0.5em;">150% Win Payout Rate (with upto +40% boost!)</div>
-						<div style="font-size: 0.5em;">100% Insurance Payout Rate (with upto +40% boost!)</div>-->
-						<div id="payout-split-bar-150-100" class="payout-split-bar">
-							<div class="green-bar" style="width: 52%;"></div>
-							<div id="payout-split-bar-150-100-green-boost" class="green-bar-boost"></div>
-							<div id="payout-split-bar-150-100-red-boost" class="blue-bar-boost"></div>
-							<div class="blue-bar" style="width: 34%;"></div>
-						</div>
-					</label>
-				</div>
-			</div>
-		  </div>
-		  <div class="grid-item" style="text-align: left">
-			<!--WIN STREAK GRAPHICAL DISPLAY-->
-			<div style="display: inline-block">
-				<span id="win-streak-text" class="boost-medium grey">streak x</span><span id="win-streak-num" class="boost-large grey">X</span>
-			</div>
-			<!--BOOST GRAPHICAL DISPLAY-->
-			<div style="display: inline-block">
-				&nbsp;&nbsp;&nbsp;
-				<span id="boost-graphic-1" class="boost-small grey">BO</span><span id="boost-graphic-2" class="boost-medium grey">OS</span><span id="boost-graphic-3" class="boost-large grey">T!!!</span>
-			</div>
+/* Optional: Add spacing and scale labels */
+input[type="radio"] + label {
+  margin-left: 0.5em; /* Space between radio button and label */
+  font-size: 1.2em; /* Adjust label font size */
+}
 
-			<!--Payout Boost-->
-			<div style="border: none">
-				<div class="radio-group" id="payout-boost-icons" style="display: none; font-size: 1.5em; text-align: left">
-					<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
-				</div>
-				<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-left: 10px;">
-					<img src="images/flame-png.png" height="30px" alt="Flame Icon">
-					<div id="payout-boost-pct-1" class="payout-boost-text small">20%</div>
-				</div>
-				<div class="slide-in-scale" id="payout-boost-icon-2" style="margin-left: 10px;">
-					<img src="images/flame-png.png" height="40px" alt="Flame Icon">
-					<div id="payout-boost-pct-2" class="payout-boost-text medium">30%</div>
-				</div>
-				<div class="slide-in-scale" id="payout-boost-icon-3" style="margin-left: 10px;">
-					<img src="images/flame-png.png" height="50px" alt="Flame Icon">
-					<div id="payout-boost-pct-3" class="payout-boost-text large">40%</div>
-				</div>
-			</div>
-			<!--Insurance Boost-->
-			<div style="border: none">
-				<div class="radio-group" id="insurance-boost-icons" style="display: none; font-size: 1.5em; text-align: left">
-					<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked)">
-				</div>
-				<div class="slide-in-scale" id="insurance-boost-icon-1" style="margin-left: 10px;">
-					<img src="images/green-cross-png.png" height="30px" alt="Insurance Boost 1">
-					<div id="insurance-boost-pct-1" class="payout-boost-text small">20%</div>
-				</div>
-				<div class="slide-in-scale" id="insurance-boost-icon-2" style="margin-left: 10px;">
-					<img src="images/green-cross-png.png" height="40px" alt="Insurance Boost 2">
-					<div id="insurance-boost-pct-2" class="payout-boost-text medium">30%</div>
-				</div>
-				<div class="slide-in-scale" id="insurance-boost-icon-3" style="margin-left: 10px;">
-					<img src="images/green-cross-png.png" height="50px" alt="Insurance Boost 3">
-					<div id="insurance-boost-pct-3" class="payout-boost-text large">40%</div>
-				</div>
-			</div>
-		  </div>
-		  
-		  <!-- Error Column -->
-		  <div class="grid-item two-column-span">
-			<div id="error-container" style="display: none; text-align: center">
-				<div class="column" id="error-content" style="text-align: center"></div>
-			</div>
-		  </div>
-		  
-		  <div class="grid-item" style="text-align: left">
-				<div class="boost-insurance-div" style="display: inline-block">
-					<input type="checkbox" id="boost-insurance-checkbox" name="boost-insurance-checkbox" onchange="insuranceSwitch(this.checked)" />
-					<label for="boost-insurance-checkbox">Streak Protection?</label>
-					<div style="font-size: 0.65em; font-style: italic">Pays out 20% less on boosts but your streak maintains on mixed pair</div>
-				</div>
-				<!--<div style="font-size: 0.8em;"><em>(Can only change once win streak returns to 0)</em></div>-->
-		  </div>
+input[type="checkbox"] {
+  width: 2.2em; /* Increase width for larger size */
+  height: 2.2em; /* Increase height for larger size */
+  vertical-align: middle; /* Align with surrounding text/content */
+  cursor: pointer; /* Pointer reflects interactivity */
+}
 
-		  <!-- Second Row of 3 Columns -->
-		  <div class="grid-item" style="text-align: right">
-			<div class="cherry-cola-bets-container">
-				<div class="cherry-cola-bets">
-					<div class="game-button-container cherry">
-						<button type="button" onclick="pickSweets(100, 'Cherry')">BET 100 CHERRY</button>
-					</div>
-					<div class="game-button-container cherry large-bet">
-						<button type="button" onclick="pickSweets(500, 'Cherry')">BET 500<br />CHERRY</button>
-					</div>
-					<div class="game-button-container cola">
-						<button type="button" onclick="pickSweets(100, 'Cola')">BET 100 COLA</button>
-					</div>
-					<div class="game-button-container cola large-bet">
-						<button type="button" onclick="pickSweets(500, 'Cola')">BET 500 COLA</button>
-					</div>
-				</div>
-			</div>
-		  </div>
-		  <div class="grid-item">
-			<div style="">
-				<div>
-					<div class="result-div" id="result"></div>
-				</div>
-				<div>
-					<div class="payout-div" id="payout"></div>
-				</div>
-				<div class="stake-bet-container">
-					<div class="stake-bet-div" id="stake"></div>
-					<div class="stake-bet-div" id="bet"></div>
-				</div>
-				
-				<!--FLYING POINTS-->
-				<div>
-					<div class="flying-text-container">
-						<!-- Flying text will be added here dynamically -->
-					</div>
-				</div>
-				
-			</div>
-		  </div>
-		  <div class="grid-item">  
-			<!--SWEET BAG NEW SPOT-->
-			<div id="outcome-images" class="panel" style="display: none">
-				<div id="sweet1" class="sweet-image" style="display: inline-flex; margin-right: 10px">
-					<h2 style="margin-bottom: 7px;">1st</h2>
-					<div id="sweet-image1"></div>
-				</div>
-				<div id="sweet2" class="sweet-image" style="display: inline-flex;">
-					<h2 style="margin-bottom: 7px;">2nd</h2>
-					<div id="sweet-image2"></div>
-				</div>
-			</div>
-			
-			<div>
-				<div class="panel" style="display: none" id="result-description"></div>
-			</div>
-			
-			<!--SWEET BAG NEW SPOT-->
-		  </div>
 
-			<!-- Single Column Rows -->
-			<div class="grid-item full-width">
-				<div>
-					<div class="last-picks-container" id="last-picks-display"></div>
-					<div class="last-picks-container latest" id="last-picks-display-latest"></div>
-				</div>
-			</div>
-			
-			<div class="grid-item full-width" style="text-align: left; display: none">
-				<div class="panel debug" id="debug">
-					<div id="house-balance-debug">House Balance: X Tokens</div>
-					<div id="house-cash-debug">House Balance: £XX.XX</div>
-					<div id="cust-balance-debug">Cust' Balance: X Tokens</div>
-					<div id="cust-cash-debug">Cust' Balance: £XX.XX</div>
-					<div id="boost-insurance">Boost Insurance: X</div>
-					<div id="boost-insurance-multiplier">Boost Insurance Multiplier: X</div>
-					<div id="payout-multiplier">Win Multiplier: X</div>
-					<div id="insurance-multiplier">Insurance Multiplier: X</div>
-					<div id="win-streak">Win Streak: X</div>
-					<div id="boost-avail">Boost Available: X</div>
-					<div id="boost-level">Boost Level: X</div>
-					<div id="boost-pct">Boost Pct: X%</div>
-					<div id="payout-bonus">Last Bet Return Bonus Rate: X%</div>
-					<div id="insurance-bonus">Last Bet Insurance Bonus Rate: X%</div>
-				</div>
-			</div>
-		</div>
-    </main>
-    <script>
-		//TODO: If Boost Insurance is switched on... it can only be switched off when they're back to 0?
-	
-		function updateStatisticsDivs() {
-			custCreditDiv.innerHTML = "Credit: " + playerCredit + " Tokens";
-			custWinningsDiv.innerHTML = "Winnings: " + statistics.playerWinnings + " Tokens";
-			custTotalWinningsDiv.innerHTML = "Overall Winnings: " + statistics.playerTotalWinnings + " Tokens";
-			houseBalanceDebugDiv.innerHTML = "House Balance: " + statistics.houseBalance + " Tokens";
-			houseCashDebugDiv.innerHTML = "House Balance: " + (statistics.houseBalance / tokenRateToGBP) + " GBP";
-			custBalanceDebugDiv.innerHTML = "Cust' Balance: " + statistics.playerBalance + " Tokens";
-			custCashDebugDiv.innerHTML = "Cust' Balance: " + (statistics.playerBalance / tokenRateToGBP) + " GBP";
-			
-			winStreakDiv.innerHTML = "Win Streak: " + winStreak;
-			boostAvailDiv.innerHTML = "Boost Available: " + boostAvailable;
-			boostLevelDiv.innerHTML = "Boost Level: " + boostLevel;
-			boostPctDiv.innerHTML = "Boost Pct: " + (boostRate * 100).toFixed(0) + "%";
-			boostInsuranceDiv.innerHTML = "Boost Insurance: " + boostInsurance;
-			boostInsuranceMultiplierDiv.innerHTML = "Rate: " + boostInsuranceRate;
-			
-			payoutPctDiv.innerHTML = "Return Pct: " + (payoutRate * 100).toFixed(0) + "%" + (payoutBoost === true ? " (+" + (boostRate * 100).toFixed(0) + "% boost)" : "");
-			insurancePctDiv.innerHTML = "Insurance Pct: " + (insuranceRate * 100).toFixed(0) + "%" + (insuranceBoost === true ? " (+" + (boostRate * 100).toFixed(0) + "% boost)" : "");
-			payoutMultiplierDiv.innerHTML = "Win Multiplier: " + payoutRate;
-			insuranceMultiplierDiv.innerHTML = "Insurance Multiplier: " + insuranceRate;
-			
-			payoutBonusDiv.innerHTML = "Last Bet Return Bonus Rate:  " + (payoutBoostRate * 100).toFixed(0) + "%";
-			insuranceBonusDiv.innerHTML = "Last Bet Insurance Bonus Rate: " + (insuranceBoostRate * 100).toFixed(0) + "%";
-			
-			//Player Credit Panel Colour (TODO: Re-implement this...)
-			var playerCreditParentDiv = custCreditDiv.parentNode;
-			if (playerCredit <= 0) {
-				playerCreditParentDiv.classList.remove("green");
-				playerCreditParentDiv.classList.add("red");		
-				creditButtonDiv.style.pointerEvents = "auto";
-				creditButtonDiv.style.opacity = "1";
-			} else {
-				playerCreditParentDiv.classList.add("green");
-				playerCreditParentDiv.classList.remove("red");
-				creditButtonDiv.style.pointerEvents = "none";
-				creditButtonDiv.style.opacity = "0.2";
-			}
-			
-			//Convert Winnings to Credit 
-			//convertWinningsToCreditButtonDiv
-			if (statistics.playerWinnings > 0) {			
-				convertWinningsToCreditButtonDiv.style.pointerEvents = "auto";
-				convertWinningsToCreditButtonDiv.style.opacity = "1";
-			} else {
-				convertWinningsToCreditButtonDiv.style.pointerEvents = "none";
-				convertWinningsToCreditButtonDiv.style.opacity = "0.2";
-			}
-			
-			//Displaying Bonus Buttons - move to another function?
-			console.info("boostAvailable", boostAvailable);
-			
-			if (boostAvailable) {
-				
-				console.info("######boostRate", boostRate);
-				
-				if (boostLevel >= 1) {
-					boostGraphic1Span.classList.add("selected");
-					payoutBoostIconsDiv.style.display = "inline-block";
-					payoutBoostIcon1Div.style.display = "inline-block";
-					payoutBoostPct1Div.innerHTML = "+" + ((boostBonusLevelOne - boostInsuranceRate) * 100).toFixed(0) + "%";
-					
-					if (insuranceRate > 0) {
-						insuranceBoostIconsDiv.style.display = "inline-block";
-						insuranceBoostIcon1Div.style.display = "inline-block";
-						insuranceBoostPct1Div.innerHTML = "+" + ((boostBonusLevelOne - boostInsuranceRate) * 100).toFixed(0) + "%";
-					} else {
-						insuranceBoostIconsDiv.style.display = "none";
-						insuranceBoostIcon1Div.style.display = "none";
-					}
-					
-				}
-				if (boostLevel >= 2) {
-					boostGraphic2Span.classList.add("selected");
-					payoutBoostIcon2Div.style.display = "inline-block";
-					payoutBoostPct2Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop - boostInsuranceRate) * 100).toFixed(0) + "%";
-					payoutBoostPct1Div.classList.add("strikethrough");
-					
-					if (insuranceRate > 0) {
-						insuranceBoostIcon2Div.style.display = "inline-block";
-						insuranceBoostPct2Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop - boostInsuranceRate) * 100).toFixed(0) + "%";
-						insuranceBoostPct1Div.classList.add("strikethrough");
-					} else {
-						insuranceBoostIcon2Div.style.display = "none";
-					}
-				}
-				if (boostLevel === 3) {
-					boostGraphic3Span.classList.add("selected");
-					payoutBoostIcon3Div.style.display = "inline-block";
-					payoutBoostPct3Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop + boostBonusLevelThreeHop - boostInsuranceRate) * 100).toFixed(0) + "%";
-					payoutBoostPct2Div.classList.add("strikethrough");
-					
-					if (insuranceRate > 0) {
-						insuranceBoostIcon3Div.style.display = "inline-block";
-						insuranceBoostPct3Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop + boostBonusLevelThreeHop - boostInsuranceRate) * 100).toFixed(0) + "%";
-						insuranceBoostPct2Div.classList.add("strikethrough");
-					} else {
-						insuranceBoostIcon3Div.style.display = "none";
-					}
-				}
-			} else {
-				payoutBoostIconsDiv.style.display = "none";
-				payoutBoostIcon1Div.style.display = "none";
-				payoutBoostIcon2Div.style.display = "none";
-				payoutBoostIcon3Div.style.display = "none";
-				
-				insuranceBoostIconsDiv.style.display = "none";
-				insuranceBoostIcon1Div.style.display = "none";
-				insuranceBoostIcon2Div.style.display = "none";
-				insuranceBoostIcon3Div.style.display = "none";
-				
-				payoutBoostPct1Div.classList.remove("strikethrough");
-				insuranceBoostPct1Div.classList.remove("strikethrough");
-				payoutBoostPct2Div.classList.remove("strikethrough");
-				insuranceBoostPct2Div.classList.remove("strikethrough");
-				
-				boostGraphic1Span.classList.remove("selected");
-				boostGraphic2Span.classList.remove("selected");
-				boostGraphic3Span.classList.remove("selected");
-			}
-			
-			winStreakNumSpan.innerHTML = winStreak;
-			
-			if (boostLevel >= 3) {
-				winStreakNumSpan.classList.add("red");
-				winStreakNumSpan.classList.add("glowing");
-				winStreakNumSpan.classList.remove("orange");
-				winStreakNumSpan.classList.remove("yellow");
-			} else if (boostLevel >= 2) {
-				winStreakNumSpan.classList.remove("red");
-				winStreakNumSpan.classList.add("orange");
-				winStreakNumSpan.classList.add("glowing");
-				winStreakNumSpan.classList.remove("yellow");
-			} else if (boostLevel >= 1) {
-				winStreakNumSpan.classList.remove("red");
-				winStreakNumSpan.classList.remove("orange");
-				winStreakNumSpan.classList.add("yellow");
-				winStreakNumSpan.classList.add("glowing");
-			} else {
-				winStreakNumSpan.classList.remove("red", "glowing");
-				winStreakNumSpan.classList.remove("orange", "glowing");
-				winStreakNumSpan.classList.remove("yellow", "glowing");
-			}
-		}
-		
-		function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="") {
-			console.info("Running updatePayoutSplit()");
-			console.info("newPayoutRate", newPayoutRate);
-			console.info("newInsuranceRate", newInsuranceRate);
 
-			var split01Div = document.getElementById("payout-split-bar-250-0");
-			var split02Div = document.getElementById("payout-split-bar-200-50");
-			var split03Div = document.getElementById("payout-split-bar-150-100");
-			
-			if (option === "SPLIT01") {
-				split01Div.classList.add("selected");
-				split02Div.classList.remove("selected");
-				split03Div.classList.remove("selected");
-				
-				if (boostLevel == 1) {
-					split01Div.classList.add("yellow-glow");
-				} else if (boostLevel == 2) {
-					split01Div.classList.add("orange-glow");
-				} else if (boostLevel == 3) {
-					split01Div.classList.add("red-glow");
-				} else {
-					split01Div.classList.remove("yellow-glow");
-					split01Div.classList.remove("orange-glow");
-					split01Div.classList.remove("red-glow");
-				}
-				
-			} else if (option === "SPLIT02") {
-				split01Div.classList.remove("selected");
-				split02Div.classList.add("selected");
-				split03Div.classList.remove("selected");
-				
-				if (boostLevel == 1) {
-					split02Div.classList.add("yellow-glow");
-				} else if (boostLevel == 2) {
-					split02Div.classList.add("orange-glow");
-				} else if (boostLevel == 3) {
-					split02Div.classList.add("red-glow");
-				} else {
-					split02Div.classList.remove("yellow-glow");
-					split02Div.classList.remove("orange-glow");
-					split02Div.classList.remove("red-glow");
-				}
-				
-			} else if (option === "SPLIT03") {
-				split01Div.classList.remove("selected");
-				split02Div.classList.remove("selected");
-				split03Div.classList.add("selected");
-				
-				if (boostLevel == 1) {
-					split03Div.classList.add("yellow-glow");
-				} else if (boostLevel == 2) {
-					split03Div.classList.add("orange-glow");
-				} else if (boostLevel == 3) {
-					split03Div.classList.add("red-glow");
-				} else {
-					split03Div.classList.remove("yellow-glow");
-					split03Div.classList.remove("orange-glow");
-					split03Div.classList.remove("red-glow");
-				}
-			}
-			
-			var totalPayoutCheck = 2.4;
-			var check = parseFloat((totalPayoutCheck - newPayoutRate - newInsuranceRate).toFixed(2));
-			console.info("Check", check);
-			
-			if (check === 0) {
-				payoutRate = newPayoutRate;
-				insuranceRate = newInsuranceRate;
-			} else {
-				payoutRate = 0;
-				insuranceRate = 0;
-			}
-			console.info("payoutRate", payoutRate);
-			console.info("insuranceRate", insuranceRate);
-			
-			applyBoost("both", false);
-			updateStatisticsDivs();
-		}
-		
-		function calculateBoost() {
-			console.info("Running calculateBoost()");
-			
-			boostAvailable = false;
-			boostLevel = 0;
-			boostRate = 0;
-			
-			//FORCE WIN STREAK
-			winStreak = 99;
-			
-			if (winStreak >= boostStreakLevelOne) {
-				boostRate = boostBonusLevelOne - boostInsuranceRate;
-				boostLevel = 1;
-				boostAvailable = true;
-				
-				if (winStreak >= boostStreakLevelTwo) {
-					boostRate = boostRate + boostBonusLevelTwoHop;
-					boostLevel = 2;
-				}
-				
-				if (winStreak >= boostStreakLevelThree) {
-					boostRate = boostRate + boostBonusLevelThreeHop;
-					boostLevel = 3;
-				}
-			} else {
-				boostAvailable = false;
-			}
-			console.info("boostRate", boostRate);
-		}
-	
-		//TODO: Dom Loaded
-		var tokenRateToGBP = 1000;
-		var playerCredit = 0;
-		var payoutRate = 1.9; //2
-		var insuranceRate = 0.5;
-		var winStreak = 0;
-		
-		//Boost
-		var boostAvailable = false;
-		var boostLevel = 0;
-		var boostRate = 0;
-		var boostInsurance = false;
-		var boostInsuranceRateAvailable = 0.1; //0.2
-		var boostInsuranceRate = 0;
-		var boostStreakLevelOne = 1;
-		var boostBonusLevelOne = 0.3; //0.2
-		var boostStreakLevelTwo = 2;
-		var boostBonusLevelTwoHop = 0.1;
-		var boostStreakLevelThree = 3;
-		var boostBonusLevelThreeHop = 0.1;
-		
-		var payoutBoostRate = 0;
-		var insuranceBoostRate = 0;
-		
-		//Bag size (should be an even number)
-		var bagSize = 24;
-		
-		var errors = [];
-		
-		var payoutBoost = false;
-		var insuranceBoost = false;
-		
-		//When did we last show the end of credit message?
-		var lastShowOverlayEndOfCreditBetId = 0;
-		
-		//TESTING
-		//boostStreakLevelOne = 0;
-			
-		var statistics = {
-			gamesPlayed: 0,
-			totalStake: 0,
-			houseBalance: 0,
-			playerWinnings: 0,
-			playerTotalWinnings: 0,
-			playerBalance: 0,
-			audit: [] 
-		}
-		
-		var lastPicks = [];
-		
-		var custCreditDiv = document.getElementById("cust-credit");
-		var custWinningsDiv = document.getElementById("cust-winnings");
-		var custTotalWinningsDiv = document.getElementById("cust-total-winnings");
-		var houseBalanceDebugDiv = document.getElementById("house-balance-debug");
-		var houseCashDebugDiv = document.getElementById("house-cash-debug");
-		var custBalanceDebugDiv = document.getElementById("cust-balance-debug");
-		var custCashDebugDiv = document.getElementById("cust-cash-debug");
-		
-		var winStreakDiv = document.getElementById("win-streak");
-		var boostAvailDiv = document.getElementById("boost-avail");
-		var boostLevelDiv = document.getElementById("boost-level");
-		var boostPctDiv = document.getElementById("boost-pct");
-		var boostInsuranceDiv = document.getElementById("boost-insurance");
-		var boostInsuranceMultiplierDiv = document.getElementById("boost-insurance-multiplier");
-		
-		var payoutPctDiv = document.getElementById("payout-pct");
-		var insurancePctDiv = document.getElementById("insurance-pct");
-		var payoutMultiplierDiv = document.getElementById("payout-multiplier");
-		var insuranceMultiplierDiv = document.getElementById("insurance-multiplier");
-		
-		var payoutBonusDiv = document.getElementById("payout-bonus");
-		var insuranceBonusDiv = document.getElementById("insurance-bonus");
-		
-		var payoutBoostIconsDiv = document.getElementById("payout-boost-icons");
-		var payoutBoostIcon1Div = document.getElementById("payout-boost-icon-1");
-		var payoutBoostIcon2Div = document.getElementById("payout-boost-icon-2");
-		var payoutBoostIcon3Div = document.getElementById("payout-boost-icon-3");
-		
-		var insuranceBoostIconsDiv = document.getElementById("insurance-boost-icons");
-		var insuranceBoostIcon1Div = document.getElementById("insurance-boost-icon-1");
-		var insuranceBoostIcon2Div = document.getElementById("insurance-boost-icon-2");
-		var insuranceBoostIcon3Div = document.getElementById("insurance-boost-icon-3");
-		
-		var colaInsuranceBonusSmallBtn = document.getElementById("cola-insurance-bonus-small-btn");
-		var colaPayoutBonusSmallBtn = document.getElementById("cola-payout-bonus-small-btn");
-		var colaInsuranceBonusLargeBtn = document.getElementById("cola-insurance-bonus-large-btn");
-		var colaPayoutBonusLargeBtn = document.getElementById("cola-payout-bonus-large-btn");
-		
-		var colaPayoutBonusSmallDiv = document.getElementById("cola-payout-bonus-small");
-		var colaInsuranceBonusSmallDiv = document.getElementById("cola-insurance-bonus-small");
-		var colaPayoutBonusLargeDiv = document.getElementById("cola-payout-bonus-large");
-		var colaInsuranceBonusLargeDiv = document.getElementById("cola-insurance-bonus-large");
-		
-		var boostGraphic1Span = document.getElementById("boost-graphic-1");
-		var boostGraphic2Span = document.getElementById("boost-graphic-2");
-		var boostGraphic3Span = document.getElementById("boost-graphic-3");
-		
-		var winStreakNumSpan = document.getElementById("win-streak-num");
-		var winStreakTextSpan = document.getElementById("win-streak-text");
-		
-		var errorContainerDiv = document.getElementById("error-container");
-		var errorContentDiv = document.getElementById("error-content");
-		
-		var outcomeImages = document.getElementById("outcome-images");
-		var sweetImage1Div = document.getElementById("sweet-image1");
-		var sweetImage2Div = document.getElementById("sweet-image2");
-		
-		var payoutBoostPct1Div = document.getElementById("payout-boost-pct-1");
-		var payoutBoostPct2Div = document.getElementById("payout-boost-pct-2");
-		var payoutBoostPct3Div = document.getElementById("payout-boost-pct-3");
-		var insuranceBoostPct1Div = document.getElementById("insurance-boost-pct-1");
-		var insuranceBoostPct2Div = document.getElementById("insurance-boost-pct-2");
-		var insuranceBoostPct3Div = document.getElementById("insurance-boost-pct-3");
-		
-		var creditButtonDiv = document.getElementById("credit-button");
-		var convertWinningsToCreditButtonDiv = document.getElementById("convert-winnings-to-credit-button");
-		
-		calculateBoost();
-		updatePayoutSplit(1.9, 0.5, "SPLIT02"); //2, 0.5
-		insuranceSwitch(false);
-		updateStatisticsDivs();
-		
-		var betId = 0;
-		
-		function addCredit(credit=0) {
-		
-			//Add Credit
-			playerCredit = (playerCredit * 1) + (credit * 1);
-			
-			//Setup Messages
-			var creditErrors = [];
-			creditErrors.push("Added " + credit + " Tokens...");
-			
-			displayErrors(errorContainerDiv, errorContentDiv, "DEPOSIT SUCCESS!", creditErrors, 3000);
-			updateStatisticsDivs();
-			return playerCredit;
-		}
-		
-		function convertWinnings() {
-		
-			var additionalCredit = statistics.playerWinnings;;
-		
-			playerCredit = playerCredit + additionalCredit;
-			console.info("increased playerCredit by ", additionalCredit);
-			
-			statistics.playerWinnings = 0;
-			console.info("Reset playerWinnings to ", statistics.playerWinnings);
-			
-			//Setup Messages
-			var convertErrors = [];
-			convertErrors.push("Converted " + additionalCredit + " Tokens to Credits...");
-			
-			displayErrors(errorContainerDiv, errorContentDiv, "CONGRATULATIONS!", convertErrors, 3000);
-			
-			updateStatisticsDivs();
-			
-			return statistics.playerWinnings;
-		}
-		
-		function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages, displayForMS) {
-		
-			console.info("Running displayErrors...");
-			console.info("errorHeaderText", errorHeaderText);
-			console.info("errorMessages", errorMessages);
-			console.info("displayForMS", displayForMS);
-		
-			//Set HTML for Header
-			contentDiv.innerHTML = "<h1>" + errorHeaderText + "</h1>";
-			
-			//Set HTML for Messages
-			if (errorMessages.length > 0) {
-				for (var i = 0; i < errorMessages.length; i++) {
-					var errorText = errorMessages[i];
-					
-					contentDiv.innerHTML = contentDiv.innerHTML + "<div>" + errorText.toUpperCase() + "</div>";
-				}
-			}
-			
-			//Display Container
-			containerDiv.style.display = "block";
-			
-			setTimeout(() => {
-				containerDiv.style.display = "none";
-			}, displayForMS);
-			
-		}
-		
-		function insuranceSwitch(checked=true) {
-			//We always want to let them switch it on... but only off if the winstreak is 0
-			if ((winStreak === 0 && !checked) || checked) {
-				boostInsurance = checked;
-				boostInsuranceRate = boostInsurance ? boostInsuranceRate = boostInsuranceRateAvailable : 0;
-				calculateBoost();
-				updateStatisticsDivs();
-			} else {
-				console.info("Not allowed...");
-				//Forcing the box back to old state...
-				var boostInsuranceCheckbox = document.getElementById("boost-insurance-checkbox");
-				boostInsuranceCheckbox.checked = !checked;
-			}
-		}
-		
-		function applyBoost(type="", outcome=false) {
-		
-			var payoutSplitBar250GreenBoostDiv = document.getElementById("payout-split-bar-250-0-green-boost");
-			var payoutSplitBar200GreenBoostDiv = document.getElementById("payout-split-bar-200-50-green-boost");
-			var payoutSplitBar200RedBoostDiv = document.getElementById("payout-split-bar-200-50-red-boost");
-			var payoutSplitBar150GreenBoostDiv = document.getElementById("payout-split-bar-150-100-green-boost");
-			var payoutSplitBar150RedBoostDiv = document.getElementById("payout-split-bar-150-100-red-boost");
-		
-			if (type === "payout") {
-				console.info("BOOSTING PAYOUT TO", boostRate);
-				payoutBoost = outcome;
-				insuranceBoost = false;
-				
-				payoutSplitBar250GreenBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
-				payoutSplitBar200GreenBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
-				payoutSplitBar150GreenBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
-				payoutSplitBar200RedBoostDiv.style.width = 0 + "%";
-				payoutSplitBar150RedBoostDiv.style.width = 0 + "%";
-				
-			} else if (type === "insurance") {
-				console.info("BOOSTING INSURANCE TO", boostRate);
-				payoutBoost = false;
-				insuranceBoost = outcome;
-				
-				payoutSplitBar250GreenBoostDiv.style.width = 0 + "%";
-				payoutSplitBar200GreenBoostDiv.style.width = 0 + "%";
-				payoutSplitBar150GreenBoostDiv.style.width = 0 + "%";
-				payoutSplitBar200RedBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
-				payoutSplitBar150RedBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
-				
-				
-			} else if (type === "both" && outcome === false) {
-				payoutBoost = outcome;
-				insuranceBoost = outcome;
-				
-				var boostPayoutDivLocal = document.getElementById("boost-payout");
-				var insurancePayoutDivLocal = document.getElementById("insurance-payout");
-				boostPayoutDivLocal.checked = false;
-				insurancePayoutDivLocal.checked = false;
-				
-				payoutSplitBar200RedBoostDiv.style.width = 0 + "%";
-				payoutSplitBar150RedBoostDiv.style.width = 0 + "%";
-				payoutSplitBar250GreenBoostDiv.style.width = 0 + "%";
-				payoutSplitBar200GreenBoostDiv.style.width = 0 + "%";
-				payoutSplitBar150GreenBoostDiv.style.width = 0 + "%";
-			} else {
-				payoutSplitBar200RedBoostDiv.style.width = 0 + "%";
-				payoutSplitBar150RedBoostDiv.style.width = 0 + "%";
-				payoutSplitBar250GreenBoostDiv.style.width = 0 + "%";
-				payoutSplitBar200GreenBoostDiv.style.width = 0 + "%";
-				payoutSplitBar150GreenBoostDiv.style.width = 0 + "%";
-			}
-			
-			updateStatisticsDivs();
-		}
-		
-		function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/) {
-		
-			//Clear Errors
-			clearErrors(errorContainerDiv, errorContentDiv);
-		
-			console.info("stake", stake);
-			console.info("bet", bet);
-			console.info("payoutBoost", payoutBoost);
-			console.info("insuranceRate", insuranceRate);
-			console.info("insuranceBoost", insuranceBoost);
-			
-			var payout = 0;
-			var housePayout = 0;
-			var outcome = "";
-			
-			if (payoutBoost && !insuranceBoost) {
-				payoutBoostRate = boostRate;
-				insuranceBoostRate = 0;
-			} else if (!payoutBoost && insuranceBoost) {
-				payoutBoostRate = 0;
-				insuranceBoostRate = boostRate;
-			} else {
-				payoutBoostRate = 0;
-				insuranceBoostRate = 0;
-			}
-			
-			var stakeDiv = document.getElementById("stake");
-			var betDiv = document.getElementById("bet");			
-			var resultDiv = document.getElementById("result");
-			var payoutDiv = document.getElementById("payout");
-			var resultDescriptionDiv = document.getElementById("result-description");
+button:hover {
+	cursor: pointer;
+}
 
-			if ((bet === "Cola" || bet === "Cherry") && stake !== 0 && (playerCredit - stake >= 0))
-			{
-				resultDiv.style.display = "none";
-				resultDiv.innerHTML = "";
-				resultDiv.classList.remove("win");
-				resultDiv.classList.remove("lose");
-				resultDiv.classList.remove("insurance");
-				
-				resultDescriptionDiv.style.display = "none";
-				resultDescriptionDiv.innerHTML = "";
-				resultDescriptionDiv.classList.remove("win");
-				resultDescriptionDiv.classList.remove("lose");
-				resultDescriptionDiv.classList.remove("insurance");
-				
-				payoutDiv.style.display = "none";
-				payoutDiv.innerHTML = "";
-				payoutDiv.classList.remove("win");
-				payoutDiv.classList.remove("lose");
-				payoutDiv.classList.remove("insurance");
-				
-				stakeDiv.style.display = "flex";
-				stakeDiv.innerHTML = "Stake: " + stake;
-				
-				betDiv.style.display = "flex";
-				betDiv.innerHTML = "Bet: " + bet;
-				
-				outcomeImages.style.display = "none"
-				
-				var delayInMs = 700; //1500 Default (1.5s) seems good...
-				
-				//TODO: At the start of the timer, add a "Betting" overlay...
-				showOverlay();
-				
-				setTimeout(() => {
-					hideOverlay();
-				
-					//Start of Delay...
-					betId++;
-				
-					playerCredit = playerCredit - stake;
-					console.info("Updating player credit", playerCredit);
-				
-					//playerCredit = playerCredit - stake;
-					custCreditDiv.innerHTML = "Credit: " + playerCredit + " Tokens";
-				
-					//Consider how to randomize (or not randomize) the sweets going in. Pattern may be important
-					//Do we make the names even more similar so people maybe think they've won for a sec when they haven't?
-					var sweets = [];
-					
-					for (var i = 0; i < bagSize; i++) {
-						if (((i+1) % 2) != 0) {
-							sweets.push("Cola");
-						} else {
-							sweets.push("Cherry");
-						}
-					}
-					
-					//Pick first sweet
-					var pickIndex1 = Math.floor(Math.random() * sweets.length);
-					var pickElement1 = sweets[pickIndex1];
-					
-					//Remove first sweet
-					sweets.splice(pickIndex1, 1);
-					
-					//Pick first sweet
-					var pickIndex2 = Math.floor(Math.random() * sweets.length);
-					var pickElement2 = sweets[pickIndex2];
-					
-					//Remove second sweet
-					sweets.splice(pickIndex1, 1);
-					
-					//pickedSweets object
-					var pickedSweets = {
-						"Sweet1": pickElement1,
-						"Sweet2": pickElement2
-					}
-					
-					//FORCE CHERRY
-					/*
-					var pickedSweets = {
-						"Sweet1": "Cherry",
-						"Sweet2": "Cherry"
-					};
-					*/
-					
-					//FORCE COLA
-					/*
-					var pickedSweets = {
-						"Sweet1": "Cola",
-						"Sweet2": "Cola"
-					};
-					*/
-					
-					//FORCE MIXED
-					/*
-					var pickedSweets = {
-						"Sweet1": "Cherry",
-						"Sweet2": "Cola"
-					};
-					*/
-					
-					//FORCE CORRECT
-					/*
-					var pickedSweets = {
-						"Sweet1": bet,
-						"Sweet2": bet
-					}
-					*/
-					
-					renderSweets(pickedSweets.Sweet1, pickedSweets.Sweet2);
-					
-					//TODO: Try: 2 and 0 (with the option for the person to change to 1.5 / 0.5 or whatever slider they fancy?)
-					//TODO: Try: 2.0 and 0.1 to 0.2
-					//TODO: Just give them 2.2 in total to play with, they can split it how they want (within reason... win must be higher than insurance)
-					//TODO: Have I misunderstood... it's fine if the customer balance is higher than the house balance because they put ALL the money in...
-					//TODO: ...the problem is when the house balance drops below 0
-					
-					if (pickedSweets.Sweet1 === pickedSweets.Sweet2) {
-						console.info("Matching");
-						if (pickedSweets.Sweet1 === bet) {
-							outcome = "win";
-							payout = stake * (payoutRate + payoutBoostRate), 2;
-							housePayout = stake - payout, 2;
-							winStreak++;
-							console.info("Bet wins!");
-							console.info("payoutRate", payoutRate);
-							console.info("payout", payout);
-							
-							resultDiv.classList.add("win");
-							resultDiv.style.display = "flex";
-							resultDiv.innerHTML = "Won!";
-							
-							resultDescriptionDiv.classList.add("win");
-							resultDescriptionDiv.style.display = "flex";
-							resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you won " + payout + " Tokens this time.";
-							
-							payoutDiv.classList.add("win");
-							payoutDiv.style.display = "flex";
-							payoutDiv.innerHTML = "+" + payout + " Tokens";
-							
-							//Animate Points
-							animatePoints(stake, payoutRate, 100, "white");
-							animatePoints(stake, payoutBoostRate, 100, (boostLevel == 1 ? "yellow" : boostLevel == 2 ? "orange" : boostLevel == 3 ? "red" : "white"));
-							
-						} else {
-							outcome = "loss";
-							housePayout = stake;
-							winStreak = 0;
-							console.info("Bet loses.");
-							console.info("payoutRate", payoutRate);
-							console.info("payout", payout);
-							
-							resultDiv.classList.add("lose");
-							resultDiv.style.display = "flex";
-							resultDiv.innerHTML = "Unlucky";
-							
-							resultDescriptionDiv.classList.add("lose");
-							resultDescriptionDiv.style.display = "flex";
-							resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you didn't win any tokens this time.";
-							
-							payoutDiv.classList.add("lose");
-							payoutDiv.style.display = "flex";
-							payoutDiv.innerHTML = "+" + payout + " Tokens";
-						}
-					} else {	
-							//We don't even display this as a loss... even if they don't have insurance... perhaps they should have done.
-							outcome = "insurance";
-							payout = stake * (insuranceRate + insuranceBoostRate), 2;
-							housePayout = stake - payout, 2;
-							winStreak = boostInsurance ? winStreak : 0;
-							console.info("Bet loses.");
-							console.info("insuranceRate", insuranceRate);
-							console.info("payout", payout);
-							
-							resultDiv.classList.add("insurance");
-							resultDiv.style.display = "flex";
-							resultDiv.innerHTML = insuranceRate != 0 ? "Insurance" : "Insurance*";
-							
-							resultDescriptionDiv.classList.add("insurance");
-							resultDescriptionDiv.style.display = "flex";
-							resultDescriptionDiv.innerHTML = insuranceRate != 0 ? "You backed " + bet + ". Picked sweets were mixed, so insurance paid out " + payout + " Tokens." : "You backed " + bet + ". Picked sweets were mixed. Whilst insurance would have paid here, there was no cover included in the selected payout split.";
-							
-							payoutDiv.classList.add("insurance");
-							payoutDiv.style.display = "flex";
-							payoutDiv.innerHTML = "+" + payout + " Tokens";
-							
-							//Animate Points
-							animatePoints(stake, insuranceRate, 50, "white");
-							animatePoints(stake, insuranceBoostRate, 50, (boostLevel == 1 ? "yellow" : boostLevel == 2 ? "orange" : boostLevel == 3 ? "red" : "white"));
-					}
-					
-					//Statistics
-					var auditObject = {
-						"id": betId,
-						"bet": bet,
-						"stake": stake,
-						"payoutRate": payoutRate,
-						"payoutBoostRate": payoutBoostRate,
-						"insuranceRate": insuranceRate,
-						"insuranceBoostRate": insuranceBoostRate,
-						"pickedSweets": pickedSweets,
-						"outcome": outcome,
-						"payout": payout,
-						"housePayout": housePayout,
-						"boostInsurance": boostInsurance
-					}
-					
-					statistics.audit.push(auditObject);
-					
-					statistics.gamesPlayed++;
-					statistics.totalStake = statistics.totalStake + stake;
-					statistics.houseBalance = statistics.houseBalance + housePayout;
-					statistics.playerWinnings = statistics.playerWinnings + payout;
-					console.info("###### statistics.playerWinnings", statistics.playerWinnings);
-					console.info("###### payout", payout);
-					
-					statistics.playerTotalWinnings = statistics.playerTotalWinnings + payout;
-					statistics.playerBalance = statistics.playerBalance + payout - stake;
-					
-					//Last picks Array
-					var lastPicksMaxSize = 7;
-					var lastPickRecord = JSON.parse(JSON.stringify(pickedSweets));
-					lastPickRecord.Outcome = outcome;
-					
-					if (lastPicks.length >= lastPicksMaxSize) {
-						lastPicks.shift();
-					}
-					lastPicks.push(lastPickRecord);
-					
-					//Console output
-					console.info("auditObject", auditObject);
-					console.info("statistics", statistics);
-					console.info("lastPicks", lastPicks);
-					
-					//Cheeky - unselect their boost each time...
-					applyBoost("both", false);
-					
-					calculateBoost();
-					updateStatisticsDivs();
-					renderLastPicks();
-					
-					return pickedSweets;
-					//End of Delay
-				}, delayInMs);
-			} else {
-			
-				//End of game stats overlay...
-				console.info("playerCredit", playerCredit);
-				console.info("statistics.gamesPlayed", statistics.gamesPlayed);
-				console.info("lastShowOverlayEndOfCreditBetId", lastShowOverlayEndOfCreditBetId);
-				console.info("betId", betId);
-				if (playerCredit <= 0 && statistics.gamesPlayed > 0) {
-					showOverlayEndOfCredit();
-				}
-				
-				var pickSweetsErrors = [];
-				
-				if (bet !== "Cola" && bet !== "Cherry") {
-					pickSweetsErrors.push("Invalid bet, option must be 'Cola' or 'Cherry'...");
-				}
-				
-				if (stake === 0) {
-					pickSweetsErrors.push("No stake provided with bet...");
-				}
-				
-				if (playerCredit - stake < 0) {
-					pickSweetsErrors.push("Insufficient Credit! Please add more to play or choose a lower stake...");
-				}
-				
-				displayErrors(errorContainerDiv, errorContentDiv, "ATTENTION!", pickSweetsErrors, 3000);
-				return false;
-			}
-		}
-		
-		function renderLastPicks() {
-			const container = document.getElementById("last-picks-display");
-			container.innerHTML = ""; // Clear previous content
-			
-			//Reverse the array before rendering
-			//var reversedPicks = [...lastPicks].reverse();
-			
-			lastPicks.forEach((pick, index) => {
-				const isLast = index === lastPicks.length - 1; // Check if it's the last pick
+input[type="checkbox"]:hover {
+	cursor: pointer;
+}
 
-				if (!isLast) {
-					// Previous Sweets
-					const entry = document.createElement("div");
-					entry.classList.add("last-picks-entry");
+h2 {
+	margin: 2px;
+	font-size: 1.1em
+}
 
-					const sweet1 = document.createElement("span");
-					sweet1.classList.add(`last-picks-${pick.Sweet1.toLowerCase()}`);
+/*
+THREE COLUMN TESTING
+*/
 
-					const sweet2 = document.createElement("span");
-					sweet2.classList.add(`last-picks-${pick.Sweet2.toLowerCase()}`);
 
-					// Add outcome-based class to apply highlighting
-					if (pick.Outcome === "win") {
-						entry.classList.add("last-picks-win");
-					} else if (pick.Outcome === "loss") {
-						entry.classList.add("last-picks-loss");
-					} else if (pick.Outcome === "insurance") {
-						entry.classList.add("last-picks-insurance");
-					}
 
-					entry.append(sweet1);
-					entry.append(sweet2);
-					container.appendChild(entry);
-				} else {
-					// Latest Pick (Last Element)
-					const containerLatest = document.getElementById("last-picks-display-latest");
-					containerLatest.innerHTML = ""; // Clear previous content
 
-					const entryLatest = document.createElement("div");
-					entryLatest.classList.add("last-picks-entry", "latest");
+.one-column-container {
+display: grid;
+  grid-template-columns: repeat(1, 1fr); /* 2 equal-width columns */
+  gap: 10px; /* Space between columns */
+}
 
-					const sweet1 = document.createElement("span");
-					sweet1.classList.add(`last-picks-${pick.Sweet1.toLowerCase()}`);
+.three-column-container {
+display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 2 equal-width columns */
+  gap: 10px; /* Space between columns */
+}
 
-					const sweet2 = document.createElement("span");
-					sweet2.classList.add(`last-picks-${pick.Sweet2.toLowerCase()}`);
+.column {
+  padding: 10px;
+  box-sizing: border-box; /* Ensures padding is included in width */
+  padding: 10px; /* Add padding for visual separation */
+  border: 1px solid #ccc; /* Optional border for visualization */
+  background-color: #f9f9f9; /* Light background for columns */
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 
-					// Add outcome-based class to apply highlighting
-					if (pick.Outcome === "win") {
-						entryLatest.classList.add("last-picks-win");
-					} else if (pick.Outcome === "loss") {
-						entryLatest.classList.add("last-picks-loss");
-					} else if (pick.Outcome === "insurance") {
-						entryLatest.classList.add("last-picks-insurance");
-					}
+.column.dark {
+  background-color: #2d2d2d; /* Dark grey background */
+  border: 1px solid #444; /* Subtle dark border */
+  color: #f1f1f1; /* Light text for contrast */
+}
 
-					sweet1.classList.add("latest-entry");
-					sweet2.classList.add("latest-entry");
+.column.vivid {
+	border-color: #d4af37;
+	animation: flash-vivid 1s infinite, pulse-vivid 0.7s infinite; /* Flash yellow to orange */
+}
 
-					entryLatest.appendChild(sweet1);
-					entryLatest.appendChild(sweet2);
-					containerLatest.appendChild(entryLatest);
-				}
-			});
+@keyframes flash-vivid {
+  0% {
+    background-color: #facc15; /* Bright yellow */
+  }
+  50% {
+    background-color: #d4af37; /* Rich gold */
+  }
+  100% {
+    background-color: #facc15; /* Bright yellow */
+  }
+}
 
-		}
-		
-		function renderSweets(sweet1="", sweet2="") {
-			if ((sweet1 === "Cherry" || sweet1 === "Cola") && (sweet2 === "Cherry" || sweet2 === "Cola")) {
-				outcomeImages.style.display = "block"
-				sweetImage1Div.innerHTML = "<div class='sweet-image' style='display: inline-flex' id='sweet-image1'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='80px'></div>";
-				sweetImage2Div.innerHTML = "<div class='sweet-image' style='display: inline-flex' id='sweet-image2'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='80px'></div>";
-			}
-		}
-		
-		function clearErrors(containerDiv=null, contentDiv=null) {
-			console.info("Running clearErrors");
-			//errors = [];
-			contentDiv.innerHTML = "";
-			containerDiv.style.display = "none";
-		}
-		
-		function showOverlayEndOfCredit() {
-			copyDivContent("debug", "overlay-end-of-credit-content");
-			
-			var overlayEndOfCredit = document.getElementById("overlay-end-of-credit");
-			overlayEndOfCredit.style.visibility = "visible";
-		}
-		
-		function hideOverlayDismiss() {
-			console.info("Running hideOverlayDismiss()");
-			
-			var overlayEndOfCredit = document.getElementById("overlay-end-of-credit");
-			overlayEndOfCredit.style.visibility = "hidden";
-		}
+@keyframes pulse-vivid {
+  0%, 100% {
+    transform: scale(1); /* Normal size */
+  }
+  50% {
+    transform: scale(1.01); /* Slightly larger */
+  }
+}
 
-		
-		function showOverlay() {
-			console.info("Running showOverlay()");
-			
-			var overlay = document.getElementById("overlay");
-			var imagesContainer = document.getElementById("overlay-images");
-			var images = ["images/cherry.png", "images/cola.png"];
-			//var totalInstances = bagSize;
-			var totalInstances = 4;
-			var iteration = 0;
-			
-			// Clear any existing images (if this is called multiple times)
-			imagesContainer.innerHTML = "";
-			
-			// Create and append the image elements dynamically
-			for (let i = 0; i < totalInstances; i++) {
-				var img = document.createElement("img");
-				img.src = images[i % images.length]; // Alternate between image1 and image2
-				img.className = "overlay-image";
-				imagesContainer.appendChild(img);
-			}
+/*
+PAYOUT SPLIT TESTING
+*/
+/* Base styling (no flashing) */
+.payout-split-bar {
+  width: 100%; /* Total width */
+  height: 25px; /* Adjust height as needed */
+  background-color: #facc15; /* Base yellow for gaps */
+  display: flex; /* Use flexbox for layout */
+  border: 1px solid #4b5563; /* Dark border for definition */
+  border-radius: 8px; /* Smooth rounded edges */
+  overflow: hidden; /* Ensures child elements stay within rounded edges */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle depth */
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
-			// Show the overlay
-			overlay.style.visibility = "visible";
-			
-			// Start the image update loop
-			var intervalId = setInterval(() => {
-				var imgElements = document.querySelectorAll(".overlay-image");
-				imgElements.forEach((img, index) => {
-					// Alternate images based on the iteration
-					var newIndex = (iteration + index) % images.length;
-					img.src = images[newIndex];
-				});
-				iteration++;
-			}, 150);
+/* Section styles (no flashing) */
+.green-bar {
+  width: 69%; /* Exact width for the green section */
+  height: 100%; /* Match parent height */
+  background-color: #0f6b36; /* Rich dark green */
+}
 
-			// Save the interval ID so we can clear it when hiding the overlay
-			overlay.dataset.intervalId = intervalId;
-		}
-		
-		function hideOverlay() {
-			console.info("Running hideOverlay()");
-			
-			var overlay = document.getElementById("overlay");
-			overlay.style.visibility = "hidden";
-			
-			// Clear the interval for image updates
-			var intervalId = overlay.dataset.intervalId;
-			if (intervalId) {
-				clearInterval(intervalId);
-				delete overlay.dataset.intervalId;
-			}
-		}
-		
-		function copyDivContent(originalId, newParentId) {
-			// Get the original div by its ID
-			const originalDiv = document.getElementById(originalId);
-			if (!originalDiv) {
-				console.error("Original div not found!");
-				return;
-			}
+.green-bar-boost {
+  height: 100%; /* Match parent height */
+  background-color: #67c887; /* Softer light green for boost */
+}
 
-			// Clone the original div, including all child nodes
-			const clonedDiv = originalDiv.cloneNode(true);
+.red-bar {
+  width: 17%; /* Exact width for the red section */
+  height: 100%; /* Match parent height */
+  background-color: #b91c1c; /* Rich dark red */
+}
 
-			// Generate a new ID for the cloned div to prevent duplication of IDs
-			clonedDiv.id = originalId + "-clone"; // You can customize the new ID pattern
+.red-bar-boost {
+  height: 100%; /* Match parent height */
+  background-color: #f87171; /* Softer light red for boost */
+}
 
-			// Get the new parent element where the cloned div will be placed
-			const newParent = document.getElementById(newParentId);
-			if (!newParent) {
-				console.error("New parent div not found!");
-				return;
-			}
+.blue-bar {
+  width: 17%; /* Exact width for the blue section */
+  height: 100%; /* Match parent height */
+  background-color: #1c3db9; /* Rich dark blue */
+}
 
-			// Append the cloned div to the new parent
-			newParent.appendChild(clonedDiv);
-		}
-		
-		function createFlyingText(content, textColor) {
-			const container = document.querySelector('.flying-text-container');
-			const flyingText = document.createElement('div');
-			flyingText.classList.add('flying-text');
-			flyingText.textContent = content;
-			flyingText.style.color = textColor;
+.blue-bar-boost {
+  height: 100%; /* Match parent height */
+  background-color: #71aef8; /* Softer light blue for boost */
+}
 
-			// Randomize the X and Y direction for the flying text
-			const randomX = (Math.random() - 0.5) * 300; // Random X direction (further distance)
-			const randomY = (Math.random() - 0.5) * 300; // Random Y direction (further distance)
+@keyframes flash-blue-split {
+  0% {
+    background-color: #1c3db9; /* Rich dark blue */
+  }
+  50% {
+    background-color: #1430a3; /* Slightly darker blue */
+  }
+  100% {
+    background-color: #1c3db9;
+  }
+}
 
-			// Set the random values to CSS custom properties for animation
-			flyingText.style.setProperty('--x', `${randomX}px`);
-			flyingText.style.setProperty('--y', `${randomY}px`);
+@keyframes flash-blue-boost-split {
+  0% {
+    background-color: #71aef8; /* Soft light blue */
+  }
+  50% {
+    background-color: #5d8fd8; /* More vibrant, stronger blue */
+  }
+  100% {
+    background-color: #71aef8; /* Back to soft light blue */
+  }
+}
 
-			// Append the flying text to the container
-			container.appendChild(flyingText);
 
-			// Remove the element after animation ends
-			flyingText.addEventListener('animationend', () => {
-				flyingText.remove();
-			});
-		}
-		
-		function animatePoints(stake, rate, splitPointsAt, textColor) {
-		
-			//Animate Points
-			var tempPayout = stake * rate;
-			if (tempPayout > 0) {
-				
-				var tempPayoutChunks = ((tempPayout / splitPointsAt).toFixed(0) * 1);
-				console.info(">> tempPayoutChunks", tempPayoutChunks);
-				
-				for (var i = 0; i < tempPayoutChunks; i++) {
-					createFlyingText("+" + splitPointsAt, textColor);
-				}
-				
-				var remainder = ((tempPayout % splitPointsAt).toFixed(0) * 1);
-				if (remainder !== 0) {
-					createFlyingText("+" + remainder, textColor);
-				}
-			}
-		
-		}
-		
-	</script>
-  </body>
-</html>
+/* Flashing animations (only when .selected is added) */
+@keyframes flash-yellow-gold-split {
+  0% {
+    background-color: #facc15; /* Bright yellow */
+  }
+  50% {
+    background-color: #d4af37; /* Rich gold */
+  }
+  100% {
+    background-color: #facc15; /* Bright yellow */
+  }
+}
+
+@keyframes flash-green-split {
+  0% {
+    background-color: #0f6b36; /* Rich dark green */
+  }
+  50% {
+    background-color: #0d5930; /* Slightly darker green */
+  }
+  100% {
+    background-color: #0f6b36;
+  }
+}
+
+@keyframes flash-green-boost-split {
+  0% {
+    background-color: #67c887;
+  }
+  50% {
+    background-color: #33b25c;
+  }
+  100% {
+    background-color: #67c887;
+  }
+}
+
+@keyframes flash-red-split {
+  0% {
+    background-color: #b91c1c; /* Rich dark red */
+  }
+  50% {
+    background-color: #a31414; /* Slightly darker red */
+  }
+  100% {
+    background-color: #b91c1c;
+  }
+}
+
+@keyframes flash-red-boost-split {
+  0% {
+    background-color: #f87171; /* Soft light red */
+  }
+  50% {
+    background-color: #d85d5d; /* More vibrant, stronger red */
+  }
+  100% {
+    background-color: #f87171; /* Back to soft light red */
+  }
+}
+
+/* Flashing styles for .selected */
+.payout-split-bar {
+  animation: flash-yellow-gold-split 0.7s infinite; /* Flash yellow to orange */
+}
+
+.payout-split-bar.selected {
+  border: 4px solid #999999; /* Default border */
+  animation: sweepingGlowGrey 1.5s infinite alternate;
+}
+
+@keyframes sweepingGlowGrey {
+  0% { 
+    box-shadow: 0 0 5px rgba(153, 153, 153, 0.3), 0 0 10px rgba(153, 153, 153, 0.5); 
+  }
+  50% { 
+    box-shadow: 0 0 15px rgba(153, 153, 153, 1), 0 0 20px rgba(153, 153, 153, 0.7); 
+  }
+  100% { 
+    box-shadow: 0 0 5px rgba(153, 153, 153, 0.3), 0 0 10px rgba(153, 153, 153, 0.5); 
+  }
+}
+
+/* Yellow Glow */
+.payout-split-bar.selected.yellow-glow {
+  animation: sweepingGlowYellow 1.5s infinite; /* Add the glow animation */
+}
+
+/* Orange Glow */
+.payout-split-bar.selected.orange-glow {
+  animation: sweepingGlowOrange 1.5s infinite; /* Add the glow animation */
+}
+
+/* Red Glow */
+.payout-split-bar.selected.red-glow {
+  animation: sweepingGlowRed 1.5s infinite; /* Add the glow animation */
+}
+
+/* Sweeping Glow Animations */
+@keyframes sweepingGlowYellow {
+  0% { box-shadow: 0 0 5px rgba(255, 255, 0, 0.3), 0 0 10px rgba(255, 255, 0, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(255, 255, 0, 1), 0 0 15px rgba(255, 255, 0, 0.7); }
+  100% { box-shadow: 0 0 5px rgba(255, 255, 0, 0.3), 0 0 10px rgba(255, 255, 0, 0.5); }
+}
+
+@keyframes sweepingGlowOrange {
+  0% { box-shadow: 0 0 5px rgba(255, 130, 0, 0.3), 0 0 10px rgba(255, 130, 0, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(255, 130, 0, 1), 0 0 30px rgba(255, 130, 0, 0.7); }
+  100% { box-shadow: 0 0 5px rgba(255, 130, 0, 0.3), 0 0 10px rgba(255, 130, 0, 0.5); }
+}
+
+@keyframes sweepingGlowRed {
+  0% { box-shadow: 0 0 5px rgba(255, 40, 0, 0.3), 0 0 10px rgba(255, 40, 0, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(255, 40, 0, 1), 0 0 50px rgba(255, 40, 0, 0.7); }
+  100% { box-shadow: 0 0 5px rgba(255, 40, 0, 0.3), 0 0 10px rgba(255, 40, 0, 0.5); }
+}
+
+
+.payout-split-bar.selected .green-bar {
+  animation: flash-green-split 1s infinite;
+}
+
+.payout-split-bar.selected .green-bar-boost {
+  animation: flash-green-boost-split 1s infinite;
+}
+
+.payout-split-bar.selected .red-bar {
+  animation: flash-red-split 1s infinite;
+}
+
+.payout-split-bar.selected .red-bar-boost {
+  animation: flash-red-boost-split 1s infinite;
+}
+
+.payout-split-bar.selected .blue-bar {
+  animation: flash-blue-split 1s infinite;
+}
+
+.payout-split-bar.selected .blue-bar-boost {
+  animation: flash-blue-boost-split 1s infinite;
+}
+
+.boost-insurance-div {
+  width: 100%;
+  padding: 5px; /* Increased padding for a more spacious look */
+  color: white; /* White text for contrast */
+  background-color: #2d3748; /* Darker, more polished background to match your theme */
+  font-weight: bold; /* Consistent typography */
+  border: 1px solid #4a5568; /* Slightly lighter border for subtle contrast */
+  border-radius: 10px; /* Rounded corners for a more modern, polished look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* A more prominent shadow for depth */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transitions for hover */
+  display: flex; /* Flexbox for content alignment */
+  margin: 0 auto; /* Centers the div horizontally */
+  box-sizing: border-box;
+}
+
+.boost-insurance-div:hover {
+  background-color: #3182ce; /* Blue background on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+  transform: translateY(-3px); /* Slight lift effect on hover for added interactivity */
+}
+
+/* Optional: Add a subtle blue glow effect when focused or interacted */
+.boost-insurance-div:focus, .boost-insurance-div:hover {
+  outline: none;
+  box-shadow: 0 0 10px rgba(56, 161, 255, 0.7); /* Soft blue glow effect */
+}
+
+
+.credit-button-div button {
+	width: 100%;
+	min-height: 40px;
+	font-size: 1.1em;
+	font-family: Verdana;
+	font-weight: bold;
+	padding: 5px;
+	border-radius: 7px;
+	margin-bottom: 10px;
+	background-color: yellow;
+	border-width: 2px;
+	animation: flash-credit 0.7s infinite, pulse-credit 1s infinite;
+	word-wrap: break-word;
+	color: black;
+}
+
+/* Pulse Animation */
+@keyframes pulse-credit {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+}
+
+/* Flashing animation */
+@keyframes flash-credit {
+  0% {
+    background-color: #ffeb3b; /* Bright Yellow */
+  }
+  50% {
+    background-color: #ffb300; /* Deep Golden Orange */
+  }
+  100% {
+    background-color: #ffeb3b;
+  }
+}
+
+.credit-button-div button:hover {
+	background-color: #ff8c00; /* Strong Orange-Gold */
+	color: black !important;
+	border: 2px solid black !important;
+	animation: flash-credit-hover 0.7s infinite, pulse-credit 1s infinite;
+}
+
+/* Hover flashing animation */
+@keyframes flash-credit-hover {
+  0% {
+    background-color: #ffae00; /* Vibrant Gold */
+  }
+  50% {
+    background-color: #ff7b00; /* Bold Amber Orange */
+  }
+  100% {
+    background-color: #ffae00;
+  }
+}
+
+.convert-button-div button {
+	width: 100%;
+	min-height: 40px;
+	font-size: 1.1em;
+	font-family: Verdana;
+	font-weight: bold;
+	padding: 5px;
+	border-radius: 7px;
+	margin-bottom: 10px;
+	background-color: #0f6b36; /* Deep Green */
+	border-width: 2px;
+	animation: flash-convert 0.7s infinite, pulse-convert 1s infinite;
+	word-wrap: break-word;
+	color: white;
+}
+
+/* Pulse Animation */
+@keyframes pulse-convert {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+}
+
+/* Flashing animation */
+@keyframes flash-convert {
+  0% {
+    background-color: #0f6b36; /* Deep Green */
+  }
+  50% {
+    background-color: #149347; /* Brighter Green */
+  }
+  100% {
+    background-color: #0f6b36;
+  }
+}
+
+.convert-button-div button:hover {
+	background-color: #1db954; /* Noticeably Brighter Green */
+	color: black !important;
+	border: 2px solid black !important;
+	animation: flash-convert-hover 0.7s infinite, pulse-convert 1s infinite;
+}
+
+/* Hover flashing animation */
+@keyframes flash-convert-hover {
+  0% {
+    background-color: #1faa5c; /* Vibrant Green */
+  }
+  50% {
+    background-color: #24c96b; /* Bright Fresh Green */
+  }
+  100% {
+    background-color: #1faa5c;
+  }
+}
+
+
+/* ROBOT */
+/* General button styling */
+/* Container for each button (this is where animations and effects are applied) */
+.game-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  position: relative; /* To allow for text overlay */
+  border-radius: 10px;
+  width: 100%;
+}
+
+.game-button-container button {
+  width: 100%; /* Make the button fill the container width */
+  min-width: 150px; /* Prevent the button from shrinking below 150px */
+  height: 40px;
+  font-size: 0.8em;
+  font-family: Verdana, sans-serif;
+  padding: 5px;
+  border-radius: 10px;
+  border-width: 4px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  animation: pulse 2s infinite; /* Pulsing effect */
+  background: linear-gradient(to bottom, #ff586b, #ff8fa6); /* Default Cherry color */
+  color: #a91e1e; /* Bright red text for Cherry */
+  border-color: #ff1e4e; /* Red border for Cherry */
+}
+
+.game-button-container.cherry  {
+  animation: pulse 1.5s infinite, wobble 0.8s infinite, flash-border-cherry 1.5s infinite;
+}
+
+.game-button-container.cola {
+  animation: pulse 2s infinite, wobble 1.5s infinite, flash-border-cola 1.5s infinite;
+}
+
+/* Cherry buttons */
+.game-button-container.cherry button {
+  background: linear-gradient(to bottom, #ff586b, #ff8fa6); /* Rich red to pink */
+  color: #a91e1e; /* Bright red text */
+  border-color: #ff1e4e; /* Vibrant red border */
+}
+
+/* Cola buttons */
+.game-button-container.cola button {
+  background: linear-gradient(to bottom, #5c1717, #8b0000); /* Dark red to brown */
+  color: #ffffff; /* Bright white text */
+  border-color: #772020; /* Dark red border */
+}
+
+/* Large bet buttons */
+.game-button-container.cherry.large-bet button,
+.game-button-container.cola.large-bet button {
+  font-size: 1.6em;
+  height: 80px;
+}
+
+/* Hover Effects */
+.game-button-container.cherry:hover button {
+  background: linear-gradient(to bottom, #ff1e4e, #ff586b); /* Brighter red to pink */
+  box-shadow: 0 6px 8px rgba(255, 30, 78, 0.5); /* Stronger shadow on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  color: white; /* Bright white text */
+}
+
+.game-button-container.cola:hover button {
+  background: linear-gradient(to bottom, #772020, #5c1717); /* Brighter dark red to brown */
+  box-shadow: 0 6px 8px rgba(119, 32, 32, 0.5); /* Stronger shadow on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  color: #d4af37; /* Gold color for Cola */
+}
+
+/* Flashing Border Animations */
+@keyframes flash-border-cherry {
+  0%, 100% {
+    border-color: #ff1e4e; /* Vibrant red */
+  }
+  50% {
+    border-color: #ffc1d1; /* Soft pink */
+  }
+}
+
+@keyframes flash-border-cola {
+  0%, 100% {
+    border-color: #772020; /* Dark red */
+  }
+  50% {
+    border-color: #8b4513; /* Deep brown */
+  }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1); /* Normal size */
+  }
+  50% {
+    transform: scale(1.1); /* Slightly larger */
+  }
+}
+
+/* Wobble Animation */
+@keyframes wobble {
+  0%, 100% {
+    transform: rotate(0deg); /* Neutral */
+  }
+  25% {
+    transform: rotate(1deg); /* Slight tilt right */
+  }
+  75% {
+    transform: rotate(-1deg); /* Slight tilt left */
+  }
+}
+
+/* Disabled Buttons */
+.game-button-container button:disabled {
+  background: linear-gradient(to bottom, #4b5563, #374151); /* Muted gradient */
+  color: #9ca3af; /* Muted text */
+  border-color: #1f2937; /* Muted border */
+  box-shadow: none;
+  cursor: not-allowed;
+  animation: none; /* Disable animations */
+  transform: none; /* No scaling or wobbling */
+}
+
+/* Optional: Add your overlay text inside the container */
+.game-button-container .overlay-text {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: white;
+  font-size: 0.8em;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 3px 6px;
+  border-radius: 5px;
+}
+
+
+/* ROBOT */
+
+.stake-bet-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Adds space between the divs */
+}
+
+.stake-bet-div {
+  background-color: #4b5563; /* Neutral grey */
+  color: white;
+  font-size: 0.8em;
+  text-align: center;
+  border: 1px solid #121a26; /* Dark, consistent border */
+  margin-top: 5px;
+  border-radius: 7px; /* Smaller radius */
+  font-weight: 600;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle depth */
+  transition: background-color 0.5s ease, box-shadow 0.3s ease;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 45%; /* 50% width for each div */
+  box-sizing: border-box; /* Ensures padding is included in width */
+  padding: 3px; /* Adds internal spacing */
+  flex-grow: 1; /* Ensures the divs can grow if content overflows */
+}
+
+.stake-bet-div:hover {
+  background-color: #3b4a58; /* Slightly darker grey when hovered */
+}
+
+.panel {
+  display: inline-block;
+  border: 1px solid #121a26; /* Very dark border for contrast */
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  background-color: #182232; /* Slightly darker blue */
+  color: white;
+  font-weight: 600;
+  font-size: 0.em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-size: 0.8em;
+}
+
+.panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* More pronounced shadow on hover */
+}
+
+.panel.debug {
+  background-color: #3d3d3d; /* Slightly darker grey */
+  color: #e0e0e0; /* Soft grey text for contrast */
+  border: 1px solid #1e1e1e; /* Very dark grey border */
+}
+
+.panel.debug:hover {
+  background-color: #333333; /* Darker grey on hover */
+}
+
+.panel.green {
+  background-color: #0b6f37; /* Deeper green */
+  color: white;
+  font-style: normal;
+  border: 1px solid #094e27; /* Very dark green border */
+}
+
+.panel.green:hover {
+  background-color: #094b26; /* Even darker green on hover */
+}
+
+.panel.red {
+  background-color: #8b1a1a; /* Deeper red */
+  color: white;
+  font-style: normal;
+  border: 1px solid #6f1212; /* Very dark red border */
+}
+
+.panel.red:hover {
+  background-color: #6f0f0f; /* Even darker red on hover */
+}
+
+.result-div {
+  width: 100%;
+  background-color: #4b5563; /* Neutral grey */
+  font-size: 4.2em;
+  text-align: center;
+  color: white;
+  border: 2px solid #121a26; /* Dark, consistent border with .result-div */
+  margin-bottom: 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  display: none;
+  min-height: 10px;
+}
+
+/* Flashing effects */
+@keyframes flash-green {
+  0% {
+    background-color: #16a34a; /* Rich green */
+  }
+  50% {
+    background-color: #d1fae5; /* Light green */
+  }
+  100% {
+    background-color: #16a34a;
+  }
+}
+
+@keyframes flash-red {
+  0% {
+    background-color: #dc2626; /* Strong red */
+  }
+  50% {
+    background-color: #fca5a5; /* Light red */
+  }
+  100% {
+    background-color: #dc2626;
+  }
+}
+
+@keyframes flash-orange {
+  0% {
+    background-color: #ea580c; /* Deep orange */
+  }
+  50% {
+    background-color: #fef08a; /* Soft yellow-orange */
+  }
+  100% {
+    background-color: #ea580c;
+  }
+}
+
+/* Win result */
+.result-div.win {
+  background-color: #16a34a;
+  border-color: #074d24; /* Very dark green border */
+  animation: flash-green 1s infinite, pulse-credit 1s infinite;
+}
+
+/* Lose result */
+.result-div.lose {
+  background-color: #dc2626;
+  border-color: #701414; /* Very dark red border */
+  animation: flash-red 1s infinite, pulse-credit 1s infinite;
+}
+
+/* Insurance result */
+.result-div.insurance {
+  background-color: #ea580c;
+  border-color: #7a2f08; /* Very dark orange border */
+  animation: flash-orange 1s infinite, pulse-credit 1s infinite;
+}
+
+.payout-div {
+  width: 100%;
+  background-color: #4b5563; /* Neutral grey */
+  font-size: 3em;
+  text-align: center;
+  color: white;
+  border: 2px solid #121a26; /* Dark, consistent border with .result-div */
+  border-radius: 12px;
+  font-weight: 600;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  display: none;
+  min-height: 80px;
+}
+
+/* Flashing animations */
+@keyframes flash-green {
+  0% {
+    background-color: #0a6a32; /* Dark green */
+  }
+  50% {
+    background-color: #8fd4ac; /* Light green */
+  }
+  100% {
+    background-color: #0a6a32;
+  }
+}
+
+@keyframes flash-red {
+  0% {
+    background-color: #a91e1e; /* Dark red */
+  }
+  50% {
+    background-color: #f36d6d; /* Light red */
+  }
+  100% {
+    background-color: #a91e1e;
+  }
+}
+
+@keyframes flash-orange {
+  0% {
+    background-color: #b8470c; /* Deep orange */
+  }
+  50% {
+    background-color: #f9a85b; /* Lighter orange */
+  }
+  100% {
+    background-color: #b8470c;
+  }
+}
+
+/* Win payout */
+.payout-div.win {
+  background-color: #0a6a32; /* Rich green */
+  animation: flash-green 1s infinite, pulse-credit 1s infinite;
+  border-color: #074d24; /* Very dark green border */
+}
+
+/* Lose payout */
+.payout-div.lose {
+  background-color: #a91e1e; /* Rich red */
+  animation: flash-red 1s infinite, pulse-credit 1s infinite;
+  border-color: #701414; /* Very dark red border */
+}
+
+/* Insurance payout */
+.payout-div.insurance {
+  background-color: #b8470c; /* Deep orange */
+  animation: flash-orange 1s infinite, pulse-credit 1s infinite;
+  border-color: #7a2f08; /* Very dark orange border */
+}
+
+.boost-small {
+	font-size: 2em;
+	font-weight: bold;
+	-webkit-text-stroke: 1px white; /* White outline */
+	/*animation: flickerText 1.5s infinite alternate;*/
+	/*animation: sweepingTextGlow 3s infinite ease-in-out;*/
+}
+
+.boost-medium {
+	font-size: 3em;
+	font-weight: bold;
+	-webkit-text-stroke: 1px white; /* White outline */
+	/*animation: flickerText 1.5s infinite alternate;*/
+	/*animation: sweepingTextGlow 3s infinite ease-in-out;*/
+}
+
+.boost-large {
+	font-size: 4em;
+	font-weight: bold;
+	-webkit-text-stroke: 1px white; /* White outline */
+	/*animation: flickerText 1.5s infinite alternate;*/
+	/*animation: sweepingTextGlow 3s infinite ease-in-out;*/
+}
+
+.boost-small.selected {
+  background: linear-gradient(to right, green, yellow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent; /* For Safari */
+  animation: sweepingTextGlow 1s infinite ease-in-out;
+}
+
+.boost-medium.selected {
+  background: linear-gradient(to right, yellow, orange);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent; /* For Safari */
+  animation: sweepingTextGlow 1s infinite ease-in-out;
+}
+
+.boost-large.selected {
+  background: linear-gradient(to right, orange, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent; /* For Safari */
+  animation: sweepingTextGlow 1s infinite ease-in-out
+}
+
+@keyframes flickerText {
+  0%, 100% { text-shadow: 0 0 1px rgba(255, 255, 255, 0.5); }
+  20% { text-shadow: 0 0 15px rgba(255, 255, 255, 1); }
+  40% { text-shadow: 0 0 25px rgba(255, 255, 255, 1); }
+  60% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
+  80% { text-shadow: 0 0 30px rgba(255, 255, 255, 1); }
+}
+
+@keyframes sweepingTextGlow {
+  0% { text-shadow: 0 0 5px rgba(255, 255, 0, 0.3); }
+  50% { text-shadow: 0 0 15px rgba(255, 255, 0, 1); }
+  100% { text-shadow: 0 0 5px rgba(255, 255, 0, 0.3); }
+}
+
+/*
+1
+3
+5
+2
+6
+
+*/
+
+
+.grey {
+	color: grey;
+}
+
+.red {
+	color: red;
+}
+
+.orange {
+	color: orange;
+}
+
+.yellow {
+	color: yellow;
+}
+
+.glowing {
+  animation: sweepingTextGlow 1s infinite ease-in-out
+}
+
+/* Main Error Content */
+/* Main Error Content */
+#error-content {
+  color: #f1f1f1; /* Light text for better contrast against the red background */
+  background-color: #8b0000; /* Deep, rich red background */
+  font-weight: bold;
+  font-size: 1em; /* Slightly larger for readability */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners for a polished look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Soft shadow for depth */
+  text-align: center; /* Center the message */
+  max-width: 100%; /* Full width of its parent container */
+  width: 100%; /* Ensure it takes up the full width */
+  height: 100%; /* Ensure it takes up the full height of the cell */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  animation: pulseError 1s ease-in-out infinite; /* Subtle pulsing effect */
+  transition: all 0.3s ease-in-out; /* Smooth transitions for changes */
+  box-sizing: border-box; /* Makes sure padding doesn't affect width/height */
+}
+
+/* Error Heading */
+#error-content h1 {
+  font-size: 1.8em;
+  margin: 0;
+  color: #ff4d41; /* Red-orange color for the heading */
+  text-transform: uppercase; /* Make the heading stand out */
+  letter-spacing: 1px; /* Adds a bit of space between the letters */
+  margin-bottom: 10px;
+}
+
+/* Error Message Text */
+#error-content p {
+  font-size: 1em;
+  color: #f1f1f1; /* Lighter text for better contrast */
+  margin-top: 5px;
+}
+
+/* Pulse Animation for Error */
+@keyframes pulseError {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 77, 65, 0.6), 0 0 15px rgba(255, 77, 65, 0.4); /* Red glow */
+  }
+  50% {
+    transform: scale(0.97); /* Slightly enlarge */
+    box-shadow: 0 0 20px rgba(255, 77, 65, 0.8), 0 0 30px rgba(255, 77, 65, 0.6); /* Brighter red glow */
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 77, 65, 0.6), 0 0 15px rgba(255, 77, 65, 0.4); /* Return to initial */
+  }
+}
+
+
+/* Overlay Style */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.4em;
+  text-align: center;
+  z-index: 9999;
+  visibility: hidden;
+  flex-direction: column;
+}
+
+.overlay-images {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping to multiple rows */
+  gap: 10px; /* Space between images */
+  justify-content: center;
+}
+
+.overlay-image {
+  max-width: 100px;
+  max-height: 100px;
+  transition: opacity 0.5s ease;
+}
+
+#overlay-text {
+  margin-bottom: 20px;
+}
+
+.overlay-dismiss {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.4em;
+  text-align: center;
+  z-index: 9999;
+  visibility: hidden;
+  flex-direction: column;
+}
+
+.overlay-dismiss .dismiss-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #0077cc; /* Blue color */
+  color: white;
+  font-size: 1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.overlay-dismiss .dismiss-button:hover {
+  background-color: #005fa3; /* Slightly darker blue on hover */
+}
+
+.overlay-dismiss.active {
+  visibility: visible;
+}
+
+/* NEW BONUSES */
+/* Slide-In and Swing Animation */
+.slide-in-scale {
+  display: inline-block;
+  transform: translateX(100%); /* Start off-screen */
+  opacity: 0; /* Start transparent */
+  transform-origin: top center; /* Pivot point for swinging */
+  animation: slideIn 1.5s ease-out forwards, growShrink 1.5s ease-in-out 1.5s infinite;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(200%); /* Start far left */
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0); /* End in position */
+    opacity: 1;
+  }
+}
+
+@keyframes growShrink {
+0%, 100% { transform: scale(1); }
+50% { transform: scale(1.2); }
+}
+
+@keyframes swingPendulum {
+  0% { transform: rotate(10deg); }
+  50% { transform: rotate(-10deg); }
+  100% { transform: rotate(10deg); }
+}
+
+.sweet-image {
+  transform-origin: center; /* Animation grows from the center */
+  animation: spin-grow 0.7s ease-out, bounce 1s ease infinite 1s; /* start spinning and growing first, then bounce infinitely */
+  min-width: 70px;
+  min-height: 70px;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; /* Black outline effect for text */
+  font-size: 3em;
+}
+
+
+@keyframes spin-grow {
+  0% {
+    transform: scale(0) rotate(0deg); /* Start with no size and no rotation */
+    opacity: 0; /* Fully transparent */
+  }
+  40% {
+    transform: scale(0.8) rotate(90deg); /* Gradual growth and rotation to 90 degrees */
+    opacity: 0.5; /* Half opacity */
+  }
+  60% {
+    transform: scale(1.2) rotate(180deg); /* Grow past full size, rotate halfway */
+    opacity: 1; /* Fully opaque */
+  }
+  100% {
+    transform: scale(1) rotate(360deg); /* Full size and complete rotation */
+    opacity: 1; /* Fully opaque */
+  }
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0); /* Default position */
+  }
+  50% {
+    transform: translateY(-10px); /* Move up during bounce */
+  }
+}
+.payout-boost-text {
+  position: absolute; /* Position the text absolutely within the parent container */
+  top: 80%; /* Vertically center the text */
+  left: 70%; /* Horizontally center the text */
+  transform: translate(-40%, -30%); /* Adjust the position to exactly center it */
+  color: white; /* Set text color (change as needed) */
+  font-size: 1.5rem; /* Adjust size as needed */
+  font-weight: bold; /* Make the text stand out */
+  z-index: 1; /* Ensure the text is on top of the image */
+	text-shadow: 
+		-1px -1px 0 black,  
+		 1px -1px 0 black,
+		-1px  1px 0 black,
+		 1px  1px 0 black;
+}
+
+.payout-boost-text.small {
+	font-size: 0.8em;
+}
+
+.payout-boost-text.medium {
+	font-size: 1em;
+}
+
+.payout-boost-text.large {
+	font-size: 1.2em;
+}
+
+.strikethrough {
+	text-decoration: line-through;
+	text-decoration-color: red;
+	text-decoration-thickness: 3px;
+}
+
+.cherry-cola-bets {
+	display: inline-block;
+	margin-left: 5px;
+}
+
+.cherry-cola-bets-container {
+	display: inline-block;
+}
+
+.last-picks-container {
+	display: inline-flex;
+	flex-direction: row;
+	gap: 2px;
+	max-width: 100%;
+	display: hidden;
+	vertical-align: middle;
+}
+.last-picks-entry {
+	display: flex;
+	justify-content: space-between;
+	padding: 1px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+.last-picks-cola { background-color: brown; color: white; padding: 10px; border-radius: 3px; margin: 1px; }
+.last-picks-cherry { background-color: pink; color: black; padding: 10px; border-radius: 3px; margin: 1px; }
+
+.last-picks-win {
+	box-shadow: 0px 0px 10px rgba(40, 167, 69, 0.5); /* Green glow effect */
+	border: 2px solid #28a745; /* Green border for win */
+}
+
+.last-picks-loss {
+	box-shadow: 0px 0px 10px rgba(220, 53, 69, 0.5); /* Red glow effect */
+	border: 2px solid #dc3545; /* Red border for loss */
+}
+
+.last-picks-insurance {
+	box-shadow: 0px 0px 10px rgba(253, 126, 20, 0.5); /* Orange glow effect */
+	border: 2px solid #fd7e14; /* Orange border for insurance */
+}
+
+.latest-entry {
+	padding: 12px;
+}
+
+.last-picks-entry.latest {
+	border-width: 3px;
+	animation: slideInLastPick 1.5s ease-out forwards, growShrinkLastPick 1.5s ease-in-out 1.5s infinite;
+}
+
+@keyframes slideInLastPick {
+  0% {
+    transform: translateX(+100%); /* Start far left */
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0); /* End in position */
+    opacity: 1;
+  }
+}
+
+@keyframes growShrinkLastPick {
+0%, 100% { transform: scale(1); }
+50% { transform: scale(1.05); }
+}
+
+
+/* ROBOT GRID */
+/* Grid container */
+/* Dark Theme */
+body {
+  background: #121212;
+  color: #e0e0e0;
+  font-family: Verdana;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+  font-size: 14px;
+}
+
+/* Grid container */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns by default */
+  grid-auto-rows: auto;
+  gap: 8px; /* Reduced gap for a tighter layout */
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Grid item styling */
+.grid-item {
+  background: #1e1e1e;
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border: 1px solid #333;
+}
+
+.full-width {
+  grid-column: span 3; /* Makes these elements take the full width */
+}
+
+/* New grid item that spans 2 columns */
+.two-column-span {
+  grid-column: span 2; /* This makes the item span 2 columns */
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr); /* Keep 3 columns */
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr); /* Keep 3 columns */
+  }
+}
+
+/* Base animation for flashing background */
+@keyframes flashBackgroundGreen {
+  0% { background-color: #008000; } /* Green */
+  50% { background-color: #00FF00; } /* Lighter green */
+  100% { background-color: #008000; } /* Green again */
+}
+
+@keyframes flashBackgroundRed {
+  0% { background-color: #8B0000; } /* Dark Red */
+  50% { background-color: #FF0000; } /* Bright Red */
+  100% { background-color: #8B0000; } /* Dark Red again */
+}
+
+@keyframes flashBackgroundOrange {
+  0% { background-color: #FF4500; } /* Orange-Red */
+  50% { background-color: #FF8C00; } /* Dark Orange */
+  100% { background-color: #FF4500; } /* Orange-Red again */
+}
+
+/* Class for flashing green */
+.flash-green {
+  animation: flashBackgroundGreen 2s infinite;
+}
+
+/* Class for flashing red */
+.flash-red {
+  animation: flashBackgroundRed 2s infinite;
+}
+
+/* Class for flashing orange */
+.flash-orange {
+  animation: flashBackgroundOrange 2s infinite;
+}
+
+
+/* FLYING POINTS */
+.flying-text-container {
+    position: relative;
+    width: 100%;  /* Set width of the container */
+    height: 100px; /* Set height of the container */
+    overflow: hidden; /* Hide any text flying out of the container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.flying-text {
+    position: absolute;
+    font-size: 1.8em;
+    font-weight: bold;
+    opacity: 1;
+    pointer-events: none; /* Ensures no interaction with the flying text */
+    background: transparent; /* Transparent background */
+    color: white; /* Default text color */
+    text-shadow: 1px 1px 0px black, 
+                 -1px -1px 0px black,  
+                 1px -1px 0px black, 
+                 -1px 1px 0px black;
+    animation: flyOut 3s ease-out forwards;
+}
+
+/* Animation to make the text fly out in random directions */
+@keyframes flyOut {
+    0% {
+        transform: translate(0, 0); /* Start from the center of the div */
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x), var(--y)); /* Move in random direction */
+        opacity: 0; /* Fade out as they move away */
+    }
+}
