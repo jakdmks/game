@@ -1296,7 +1296,7 @@ body {
 /* Zoom out on smaller screens instead of stacking */
 @media (max-width: 768px) {
   .grid-container {
-    transform: scale(0.8); /* Zooms out grid */
+    transform: scale(0.9); /* Zooms out grid */
     width: 100vw; /* Ensures it still fills screen */
 	transform-origin: top left;
   }
