@@ -94,22 +94,22 @@
 						<div id="payout-split-bar-200-50" class="payout-split-bar selected">
 							<div class="green-bar"></div>
 							<div id="payout-split-bar-200-50-green-boost" class="green-bar-boost"></div>
-							<div id="payout-split-bar-200-50-red-boost" class="blue-bar-boost"></div>
 							<div class="blue-bar"></div>
+							<div id="payout-split-bar-200-50-red-boost" class="blue-bar-boost"></div>
 						</div>
 					</label>
 					
 					<label class="radio-item">
 					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 1, 'SPLIT03')">-->
-					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 0.9, 'SPLIT03')">
+					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.6, 0.8, 'SPLIT03')">
 						<strong>HIGHER INSURANCE</strong>
 						<!--<div style="font-size: 0.5em;">150% Win Payout Rate (with upto +40% boost!)</div>
 						<div style="font-size: 0.5em;">100% Insurance Payout Rate (with upto +40% boost!)</div>-->
 						<div id="payout-split-bar-150-100" class="payout-split-bar">
 							<div class="green-bar" style="width: 52%;"></div>
 							<div id="payout-split-bar-150-100-green-boost" class="green-bar-boost"></div>
-							<div id="payout-split-bar-150-100-red-boost" class="blue-bar-boost"></div>
 							<div class="blue-bar" style="width: 34%;"></div>
+							<div id="payout-split-bar-150-100-red-boost" class="blue-bar-boost"></div>
 						</div>
 					</label>
 				</div>
@@ -165,9 +165,11 @@
 		  </div>
 		  
 		  <!-- Error Column -->
-		  <div class="grid-item two-column-span">
-			<div id="error-container" style="display: none; text-align: center">
-				<div class="column" id="error-content" style="text-align: center"></div>
+		  <div class="grid-item two-column-span" style="vertical-align: middle">
+			<div id="error-container" style="display: none; text-align: center; margin: 0px;">
+				<div id="error-content" style="text-align: center">
+					ERROR
+				</div>
 			</div>
 		  </div>
 		  
@@ -223,13 +225,13 @@
 		  </div>
 		  <div class="grid-item">  
 			<!--SWEET BAG NEW SPOT-->
-			<div id="outcome-images" class="panel" style="display: none; width: 100%">
-				<div style="display: block">
-					<h2 style="margin-bottom: 10px;">Sweet 1</h2>
+			<div id="outcome-images" class="panel" style="display: none; width: 100%; padding-top: 0px; padding-bottom: 20px;">
+				<div style="display: block; margin-right: 30px; margin-left: 20px;">
+					<div class="sweet-image-text">1</div>
 					<div id="sweet-image1" class="sweet-image" style=""></div>
 				</div>
 				<div style="display: block">
-					<h2 style="margin-bottom: 10px;">Sweet 2</h2>
+					<div class="sweet-image-text">2</div>
 					<div id="sweet-image2" class="sweet-image" style=""></div>
 				</div>
 			</div>
@@ -678,7 +680,7 @@
 			}
 			
 			//Display Container
-			containerDiv.style.display = "block";
+			containerDiv.style.display = "flex";
 			
 			setTimeout(() => {
 				containerDiv.style.display = "none";
@@ -897,12 +899,10 @@
 					*/
 					
 					//FORCE CORRECT
-					/*
 					var pickedSweets = {
 						"Sweet1": bet,
 						"Sweet2": bet
 					}
-					*/
 					
 					renderSweets(pickedSweets.Sweet1, pickedSweets.Sweet2);
 					
