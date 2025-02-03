@@ -614,7 +614,7 @@ PAYOUT SPLIT TESTING
 .stake-bet-div {
   background-color: #4b5563; /* Neutral grey */
   color: white;
-  font-size: 0.8em;
+  font-size: 0.7em;
   text-align: center;
   border: 1px solid #121a26; /* Dark, consistent border */
   margin-top: 5px;
@@ -648,6 +648,7 @@ PAYOUT SPLIT TESTING
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Stronger shadow */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   font-size: 0.8em;
+  box-sizing: border-box;
 }
 
 .panel:hover {
