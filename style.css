@@ -608,13 +608,12 @@ PAYOUT SPLIT TESTING
 .stake-bet-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px; /* Adds space between the divs */
 }
 
 .stake-bet-div {
   background-color: #101824; /* Neutral grey */
   color: white;
-  font-size: 0.7em;
+  font-size: 0.9em;
   text-align: center;
   border: 1px solid black; /* Dark, consistent border */
   margin-top: 5px;
@@ -625,9 +624,9 @@ PAYOUT SPLIT TESTING
   display: none;
   align-items: center;
   justify-content: center;
-  width: 45%; /* 50% width for each div */
+  width: 100%; /* 50% width for each div */
   box-sizing: border-box; /* Ensures padding is included in width */
-  padding: 3px; /* Adds internal spacing */
+  padding: 4px; /* Adds internal spacing */
   flex-grow: 1; /* Ensures the divs can grow if content overflows */
 }
 
@@ -703,7 +702,7 @@ PAYOUT SPLIT TESTING
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
   display: none;
-  min-height: 80px;
+  min-height: 70px;
   vertical-align: middle;
 }
 
@@ -779,7 +778,7 @@ PAYOUT SPLIT TESTING
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
   display: none;
-  min-height: 50px;
+  min-height: 40px;
   vertical-align: middle;
 }
 
@@ -1147,6 +1146,7 @@ PAYOUT SPLIT TESTING
     transform: translateY(-10px); /* Move up during bounce */
   }
 }
+
 .payout-boost-text {
   position: absolute; /* Position the text absolutely within the parent container */
   top: 80%; /* Vertically center the text */
@@ -1347,7 +1347,7 @@ body {
 .flying-text-container {
     position: relative;
     width: 100%;  /* Set width of the container */
-    height: 110px; /* Set height of the container */
+    height: 90px; /* Set height of the container */
     overflow: hidden; /* Hide any text flying out of the container */
     display: flex;
     justify-content: center;
@@ -1380,4 +1380,29 @@ body {
         transform: translate(var(--x), var(--y)); /* Move in random direction */
         opacity: 0; /* Fade out as they move away */
     }
+}
+
+/* FOR STATISTICS OVERLAY */
+.json-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid black;
+}
+
+.json-item-cell {
+    padding: 5px 10px;
+}
+
+.key {
+    font-weight: normal;
+    min-width: 150px; /* Adjust width as needed */
+    text-align: left;
+}
+
+.value {
+	font-weight: bold;
+    text-align: right;
+    flex-grow: 1;
 }
