@@ -1263,15 +1263,14 @@ body {
 }
 
 /* Grid container */
-/* Grid container */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* Ensures columns stay aligned */
   grid-auto-rows: auto; /* Rows will grow independently */
   gap: 8px; /* Reduced gap for a tighter layout */
-  width: 90%;
-  max-width: 1200px;
-  margin: 40px auto; /* Centering */
+  width: 100%;
+  /*max-width: 1200px;*/
+  margin: 10px;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -1299,12 +1298,14 @@ body {
   .grid-container {
     transform: scale(0.8); /* Zooms out grid */
     width: 100vw; /* Ensures it still fills screen */
+	transform-origin: top left;
   }
 }
 
 @media (max-width: 480px) {
   .grid-container {
     transform: scale(0.7); /* Zooms out further */
+	transform-origin: top left;
   }
 }
 
