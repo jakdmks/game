@@ -638,7 +638,7 @@ PAYOUT SPLIT TESTING
   display: inline-block;
   border: 1px solid #121a26; /* Very dark border for contrast */
   border-radius: 8px;
-  padding: 12px 20px;
+  padding: 10px 10px;
   margin-bottom: 10px;
   background-color: #182232; /* Slightly darker blue */
   color: white;
@@ -1096,11 +1096,10 @@ PAYOUT SPLIT TESTING
 }
 
 .sweet-image-text {
+	z-index: 0;
 	transform: scaleY(1.3);
 	font-size: 9em;
 	font-weight: bold;
-	margin-bottom: -100px;
-	margin-left: -70px;
 	color: #101824;
 	text-shadow: 
 		-1px -1px 0 black,  
@@ -1116,8 +1115,37 @@ PAYOUT SPLIT TESTING
   min-height: 70px;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; /* Black outline effect for text */
   font-size: 3em;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
+
+@keyframes spin-grow {
+  0% {
+    transform: scale(0) rotate(0deg); /* Start with no size and no rotation */
+    opacity: 0; /* Fully transparent */
+  }
+  40% {
+    transform: scale(0.8) rotate(90deg); /* Gradual growth and rotation to 90 degrees */
+    opacity: 0.5; /* Half opacity */
+  }
+  60% {
+    transform: scale(1.2) rotate(180deg); /* Grow past full size, rotate halfway */
+    opacity: 1; /* Fully opaque */
+  }
+  100% {
+    transform: scale(1) rotate(360deg); /* Full size and complete rotation */
+    opacity: 1; /* Fully opaque */
+  }
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0); /* Default position */
+  }
+  50% {
+    transform: translateY(-10px); /* Move up during bounce */
+  }
+}
 
 .result-div, .payout-div {
   width: 100%;
@@ -1322,7 +1350,7 @@ body {
   grid-template-columns: repeat(3, 1fr); /* Ensures columns stay aligned */
   grid-auto-rows: auto; /* Rows will grow independently */
   gap: 8px; /* Reduced gap for a tighter layout */
-  width: 100%;
+  width: 98%;
   /*max-width: 1200px;*/
   margin: 10px;
   transition: transform 0.3s ease-in-out;
