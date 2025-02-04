@@ -10,7 +10,6 @@
   </head>
   <body>
     <main>
-	
 		<!--OVERLAY-->
 		<div id="overlay" class="overlay">
 			<div style="width: 700px;">
@@ -73,14 +72,15 @@
 				<div class="radio-group" style="display: block; font-size: 1.5em; text-align: left">
 					<label class="radio-item">
 					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.5, 0, 'SPLIT01')">-->
-					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.4, 0, 'SPLIT01')">
+					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.4, 0.1, 'SPLIT01')">
 						<strong>HIGHER PAYOUT</strong>
 						<!--<div style="font-size: 0.5em;">250% Win Payout Rate (with upto +40% bonus!)</div>
 						<div style="font-size: 0.5em;">0% Insurance Payout Rate</div>-->
 						<div id="payout-split-bar-250-0" class="payout-split-bar">
-							<div class="green-bar" style="width: 86%;"></div>
+							<div class="green-bar" style="width:81%;"></div>
 							<div id="payout-split-bar-250-0-green-boost" class="green-bar-boost"></div>
-							<div class="blue-bar" style="width: 0px;"></div>
+							<div class="blue-bar" style="width: 3px;"></div>
+							<div id="payout-split-bar-250-0-red-boost" class="blue-bar-boost"></div>
 						</div>
 
 					</label>
@@ -101,7 +101,7 @@
 					
 					<label class="radio-item">
 					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 1, 'SPLIT03')">-->
-					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.6, 0.8, 'SPLIT03')">
+					<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.6, 0.7, 'SPLIT03')">
 						<strong>HIGHER INSURANCE</strong>
 						<!--<div style="font-size: 0.5em;">150% Win Payout Rate (with upto +40% boost!)</div>
 						<div style="font-size: 0.5em;">100% Insurance Payout Rate (with upto +40% boost!)</div>-->
@@ -266,6 +266,7 @@
 					<div id="win-streak">Win Streak: X</div>
 					<div id="boost-avail">Boost Available: X</div>
 					<div id="boost-applied">Boost Applied: X</div>
+					<div id="boost-applied-type">Boost Applied Type: X</div>
 					<div id="boost-level">Boost Level: X</div>
 					<div id="boost-pct">Boost Pct: X%</div>
 					<div id="payout-bonus">Last Bet Return Bonus Rate: X%</div>
@@ -289,6 +290,7 @@
 			winStreakDiv.innerHTML = "Win Streak: " + winStreak;
 			boostAvailDiv.innerHTML = "Boost Available: " + boostAvailable;
 			boostAppliedDiv.innerHTML = "Boost Applied: " + boostApplied;
+			boostAppliedTypeDiv.innerHTML = "Boost Applied Type: " + boostAppliedType;
 			boostLevelDiv.innerHTML = "Boost Level: " + boostLevel;
 			boostPctDiv.innerHTML = "Boost Pct: " + (boostRate * 100).toFixed(0) + "%";
 			boostInsuranceDiv.innerHTML = "Boost Insurance: " + boostInsurance;
@@ -430,15 +432,20 @@
 			payoutSplitCode = option;
 			console.info("payoutSplitCode", payoutSplitCode);
 			
+			var totalPayoutCheck = -99;
+			
 			if (option === "SPLIT01") {
+				totalPayoutCheck = 2.5;
 				split01Div.classList.add("selected");
 				split02Div.classList.remove("selected");
 				split03Div.classList.remove("selected");
 			} else if (option === "SPLIT02") {
+				totalPayoutCheck = 2.4;
 				split01Div.classList.remove("selected");
 				split02Div.classList.add("selected");
 				split03Div.classList.remove("selected");
 			} else if (option === "SPLIT03") {
+				totalPayoutCheck = 2.3;
 				split01Div.classList.remove("selected");
 				split02Div.classList.remove("selected");
 				split03Div.classList.add("selected");
@@ -446,7 +453,6 @@
 			
 			setPayoutSplitGlow();
 			
-			var totalPayoutCheck = 2.4;
 			var check = parseFloat((totalPayoutCheck - newPayoutRate - newInsuranceRate).toFixed(2));
 			console.info("Check", check);
 			
@@ -468,12 +474,13 @@
 			console.info("Running calculateBoost()");
 			
 			boostAvailable = false;
-			boostApplied = false;
+			//boostApplied = false; //JW: Seems to be messing up with the payment-split bars
 			boostLevel = 0;
 			boostRate = 0;
 			
 			//FORCE WIN STREAK
-			//winStreak = 99;
+			//winStreak = 1;
+			//winStreak = 1;
 			
 			if (winStreak >= boostStreakLevelOne) {
 				boostRate = boostBonusLevelOne - boostInsuranceRate;
@@ -505,6 +512,7 @@
 		//Boost
 		var boostAvailable = false;
 		var boostApplied = false;
+		var boostAppliedType = "";
 		var boostLevel = 0;
 		var boostRate = 0;
 		var boostInsurance = false;
@@ -563,6 +571,7 @@
 		var winStreakDiv = document.getElementById("win-streak");
 		var boostAvailDiv = document.getElementById("boost-avail");
 		var boostAppliedDiv = document.getElementById("boost-applied");
+		var boostAppliedTypeDiv = document.getElementById("boost-applied-type");
 		var boostLevelDiv = document.getElementById("boost-level");
 		var boostPctDiv = document.getElementById("boost-pct");
 		var boostInsuranceDiv = document.getElementById("boost-insurance");
@@ -698,22 +707,30 @@
 		
 		function insuranceSwitch(checked=true) {
 			//We always want to let them switch it on... but only off if the winstreak is 0
-			if ((winStreak === 0 && !checked) || checked) {
+			if (((winStreak === 0 || winStreak === 1) && !checked) || checked) {
 				boostInsurance = checked;
 				boostInsuranceRate = boostInsurance ? boostInsuranceRate = boostInsuranceRateAvailable : 0;
 				calculateBoost();
 				updateStatisticsDivs();
+				applyBoost(boostAppliedType, boostApplied);
 			} else {
 				console.info("Not allowed...");
 				//Forcing the box back to old state...
 				var boostInsuranceCheckbox = document.getElementById("boost-insurance-checkbox");
 				boostInsuranceCheckbox.checked = !checked;
+				
+				//Display Error to user
+				var insuranceSwitchErrors = [];
+				insuranceSwitchErrors.push("Locked at level 2 and above. Non-bet pair resets...");
+				
+				displayErrors(errorContainerDiv, errorContentDiv, "ATTENTION!", insuranceSwitchErrors, 3000);		
 			}
 		}
 		
 		function applyBoost(type="", outcome=false) {
 		
 			var payoutSplitBar250GreenBoostDiv = document.getElementById("payout-split-bar-250-0-green-boost");
+			var payoutSplitBar250RedBoostDiv = document.getElementById("payout-split-bar-250-0-red-boost");
 			var payoutSplitBar200GreenBoostDiv = document.getElementById("payout-split-bar-200-50-green-boost");
 			var payoutSplitBar200RedBoostDiv = document.getElementById("payout-split-bar-200-50-red-boost");
 			var payoutSplitBar150GreenBoostDiv = document.getElementById("payout-split-bar-150-100-green-boost");
@@ -723,29 +740,34 @@
 				console.info("BOOSTING PAYOUT TO", boostRate);
 				payoutBoost = outcome;
 				boostApplied = true;
+				boostAppliedType = "payout";
 				insuranceBoost = false;
 				
-				payoutSplitBar250GreenBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
+				payoutSplitBar250GreenBoostDiv.style.width = ((((boostRate * 100) / 300) * 100) + 1).toFixed(0) + "%";
 				payoutSplitBar200GreenBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
-				payoutSplitBar150GreenBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
+				payoutSplitBar150GreenBoostDiv.style.width = (((boostRate * 100) / 280) * 100).toFixed(0) + "%";
+				payoutSplitBar250RedBoostDiv.style.width = 0 + "%";
 				payoutSplitBar200RedBoostDiv.style.width = 0 + "%";
 				payoutSplitBar150RedBoostDiv.style.width = 0 + "%";
 				
 			} else if (type === "insurance") {
 				console.info("BOOSTING INSURANCE TO", boostRate);
 				boostApplied = true;
+				boostAppliedType = "insurance";
 				payoutBoost = false;
 				insuranceBoost = outcome;
 				
 				payoutSplitBar250GreenBoostDiv.style.width = 0 + "%";
 				payoutSplitBar200GreenBoostDiv.style.width = 0 + "%";
 				payoutSplitBar150GreenBoostDiv.style.width = 0 + "%";
+				payoutSplitBar250RedBoostDiv.style.width = (((boostRate * 100) / 300) * 100).toFixed(0) + "%";
 				payoutSplitBar200RedBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
-				payoutSplitBar150RedBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
+				payoutSplitBar150RedBoostDiv.style.width = (((boostRate * 100) / 280) * 100).toFixed(0) + "%";
 				
 				
 			} else if (type === "both" && outcome === false) {
 				boostApplied = false;
+				boostAppliedType = "";
 				payoutBoost = outcome;
 				insuranceBoost = outcome;
 				
@@ -754,12 +776,14 @@
 				boostPayoutDivLocal.checked = false;
 				insurancePayoutDivLocal.checked = false;
 				
+				payoutSplitBar250RedBoostDiv.style.width = 0 + "%";
 				payoutSplitBar200RedBoostDiv.style.width = 0 + "%";
 				payoutSplitBar150RedBoostDiv.style.width = 0 + "%";
 				payoutSplitBar250GreenBoostDiv.style.width = 0 + "%";
 				payoutSplitBar200GreenBoostDiv.style.width = 0 + "%";
 				payoutSplitBar150GreenBoostDiv.style.width = 0 + "%";
 			} else {
+				payoutSplitBar250RedBoostDiv.style.width = 0 + "%";
 				payoutSplitBar200RedBoostDiv.style.width = 0 + "%";
 				payoutSplitBar150RedBoostDiv.style.width = 0 + "%";
 				payoutSplitBar250GreenBoostDiv.style.width = 0 + "%";
@@ -956,9 +980,16 @@
 							payoutDiv.style.display = "flex";
 							payoutDiv.innerHTML = "+" + payout.toFixed(0) + " TOKENS";
 							
+							var stakeBasedChunkSize = 0;
+							if (stake === 100) {
+								stakeBasedChunkSize = 25;
+							} else if (stake === 500) {
+								stakeBasedChunkSize = 100;
+							}
+							
 							//Animate Points
-							animatePoints(stake, payoutRate, 100, "white");
-							animatePoints(stake, payoutBoostRate, 100, (boostLevel == 1 ? "yellow" : boostLevel == 2 ? "orange" : boostLevel == 3 ? "red" : "white"), "payout");
+							animatePoints(stake, payoutRate, stakeBasedChunkSize, "green", "", "payout");
+							animatePoints(stake, payoutBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-yellow" : boostLevel == 2 ? "glow-points-orange" : boostLevel == 3 ? "glow-points-red" : ""), "payout");
 							
 						} else {
 							outcome = "loss";
@@ -1002,9 +1033,16 @@
 							payoutDiv.style.display = "flex";
 							payoutDiv.innerHTML = "+" + payout.toFixed(0) + " TOKENS";
 							
+							var stakeBasedChunkSize = 0;
+							if (stake === 100) {
+								stakeBasedChunkSize = 10;
+							} else if (stake === 500) {
+								stakeBasedChunkSize = 50;
+							}
+							
 							//Animate Points
-							animatePoints(stake, insuranceRate, 50, "white");
-							animatePoints(stake, insuranceBoostRate, 50, (boostLevel == 1 ? "yellow" : boostLevel == 2 ? "orange" : boostLevel == 3 ? "red" : "white"), "insurance");
+							animatePoints(stake, insuranceRate, stakeBasedChunkSize, "cyan", "", "insurance");
+							animatePoints(stake, insuranceBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-white" : boostLevel == 2 ? "glow-points-yellow" : boostLevel == 3 ? "glow-points-green" : ""), "insurance");
 					}
 					
 					//Statistics
@@ -1300,10 +1338,15 @@
 			newParent.appendChild(clonedDiv);
 		}
 		
-		function createFlyingText(content, textColor) {
+		function createFlyingText(content, textColor, className="") {
 			const container = document.querySelector(".flying-text-container");
 			const flyingText = document.createElement("div");
 			flyingText.classList.add("flying-text");
+			
+			if (className) {
+				flyingText.classList.add(className);
+			}
+			
 			flyingText.innerHTML = content;
 			flyingText.style.color = textColor;
 
@@ -1324,7 +1367,7 @@
 			});
 		}
 		
-		function animatePoints(stake, rate, splitPointsAt, textColor, boostType="") {
+		function animatePoints(stake, rate, splitPointsAt, textColor, className="", boostType="") {
 		
 			//Animate Points
 			var tempPayout = stake * rate;
@@ -1334,22 +1377,22 @@
 				console.info(">> tempPayoutChunks", tempPayoutChunks);
 				
 				for (var i = 0; i < tempPayoutChunks; i++) {
-					createFlyingText("+" + splitPointsAt, textColor);
+					createFlyingText("+" + splitPointsAt, textColor, className);
 				}
 				
 				//Render Icons too if boostType is set
 				for (var i = 0; i < tempPayoutChunks; i++) {
-					if (boostType === "payout") {
-						createFlyingText("<img src='images/flame-png.png' height='30px' alt='Flame Icon' style='opacity: 0.5'>", textColor);
-					} else if (boostType === "insurance") {
-					createFlyingText("+" + splitPointsAt, textColor);
-						createFlyingText("<img src='images/green-cross-png.png' height='30px' alt='Green Cross Icon' style='opacity: 0.5'>", textColor);
+					if (boostType === "payout" && payoutBoostRate > 0) {
+						createFlyingText("<img src='images/flame-png.png' height='30px' alt='Flame Icon' style='opacity: 0.5'>", textColor, className);
+					} else if (boostType === "insurance" && insuranceBoostRate > 0) {
+					createFlyingText("+" + splitPointsAt, textColor, className);
+						createFlyingText("<img src='images/green-cross-png.png' height='30px' alt='Green Cross Icon' style='opacity: 0.5'>", textColor, className);
 					}
 				}
 				
 				var remainder = ((tempPayout % splitPointsAt).toFixed(0) * 1);
 				if (remainder !== 0) {
-					createFlyingText("+" + remainder, textColor);
+					createFlyingText("+" + remainder, textColor, className);
 				}
 			}
 		
