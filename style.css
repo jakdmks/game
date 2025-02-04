@@ -937,8 +937,7 @@ PAYOUT SPLIT TESTING
 #error-content {
   color: #f1f1f1; /* Light text for better contrast against the red background */
   background-color: #8b0000; /* Deep, rich red background */
-  font-weight: bold;
-  font-size: 1em; /* Slightly larger for readability */
+  font-size: 0.9em; /* Slightly larger for readability */
   padding: 5px;
   border-radius: 8px; /* Rounded corners for a polished look */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Soft shadow for depth */
@@ -958,7 +957,7 @@ PAYOUT SPLIT TESTING
 
 /* Error Heading */
 #error-content h1 {
-  font-size: 1.8em;
+  font-size: 1.5em;
   margin: 0px;
   color: #ff4d41; /* Red-orange color for the heading */
   text-transform: uppercase; /* Make the heading stand out */
@@ -1120,32 +1119,87 @@ PAYOUT SPLIT TESTING
 }
 
 
-@keyframes spin-grow {
-  0% {
-    transform: scale(0) rotate(0deg); /* Start with no size and no rotation */
-    opacity: 0; /* Fully transparent */
-  }
-  40% {
-    transform: scale(0.8) rotate(90deg); /* Gradual growth and rotation to 90 degrees */
-    opacity: 0.5; /* Half opacity */
-  }
-  60% {
-    transform: scale(1.2) rotate(180deg); /* Grow past full size, rotate halfway */
-    opacity: 1; /* Fully opaque */
-  }
-  100% {
-    transform: scale(1) rotate(360deg); /* Full size and complete rotation */
-    opacity: 1; /* Fully opaque */
-  }
+.result-div, .payout-div {
+  width: 100%;
+  background-color: #4b5563; /* Neutral grey */
+  font-size: 1.6em;
+  text-align: center;
+  color: white;
+  border: 2px solid #121a26; /* Dark, consistent border */
+  border-radius: 12px;
+  font-weight: bold;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  min-height: 70px;
+  vertical-align: middle;
+  animation: appear-focus 0.6s ease-out;
 }
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0); /* Default position */
-  }
-  50% {
-    transform: translateY(-10px); /* Move up during bounce */
-  }
+
+.payout-div {
+  font-size: 1.2em;
+  font-weight: 600;
+  min-height: 40px;
 }
+
+/* Flashing animations */
+@keyframes flash-green-new {
+  0%, 100% { background-color: #16a34a; }
+  50% { background-color: #d1fae5; }
+}
+
+@keyframes flash-red-new {
+  0%, 100% { background-color: #dc2626; }
+  50% { background-color: #fca5a5; }
+}
+
+@keyframes flash-blue-new {
+  0%, 100% { background-color: #1c3db9; }
+  50% { background-color: #a5b4fc; }
+}
+
+/* Win result */
+.result-div.win, .payout-div.win {
+  background-color: #16a34a;
+  border-color: #074d24;
+  animation: flash-green-new 1s infinite, pulse-effect 1s infinite;
+}
+
+/* Lose result */
+.result-div.lose, .payout-div.lose {
+  background-color: #dc2626;
+  border-color: #701414;
+  animation: flash-red-new 1s infinite, pulse-effect 1s infinite;
+}
+
+/* Insurance result - Now Blue */
+.result-div.insurance, .payout-div.insurance {
+  background-color: #1c3db9;
+  border-color: #0f255f;
+  animation: flash-blue-new 1s infinite, pulse-effect 1s infinite;
+}
+
+/* Entry animation */
+@keyframes appear-focus {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  40% { transform: scale(0.8) rotate(90deg); opacity: 0.5; }
+  60% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+  100% { transform: scale(1) rotate(360deg); opacity: 1; }
+}
+
+@keyframes pulse-effect {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.boost-small {
+  font-size: 2em;
+  font-weight: bold;
+  -webkit-text-stroke: 1px white;
+}
+
 
 .payout-boost-text {
   position: absolute; /* Position the text absolutely within the parent container */
@@ -1406,4 +1460,28 @@ body {
 	font-weight: bold;
     text-align: right;
     flex-grow: 1;
+}
+
+.glow-points-white {
+    text-shadow: 0 0 2px white, 0 0 4px white;
+}
+
+.glow-points-yellow {
+    text-shadow: 0 0 2px yellow, 0 0 4px gold;
+}
+
+.glow-points-orange {
+    text-shadow: 0 0 2px orange, 0 0 4px darkorange;
+}
+
+.glow-points-red {
+    text-shadow: 0 0 2px red, 0 0 4px darkred;
+}
+
+.glow-points-blue {
+    text-shadow: 0 0 2px cyan, 0 0 4px dodgerblue;
+}
+
+.glow-points-green {
+    text-shadow: 0 0 2px lime, 0 0 4px green;
 }
