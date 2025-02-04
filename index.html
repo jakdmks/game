@@ -183,23 +183,23 @@
 		  </div>
 
 		  <!-- Second Row of 3 Columns -->
-		  <div class="grid-item" style="text-align: right">
-			<div class="cherry-cola-bets-container">
-				<div class="cherry-cola-bets">
-					<div class="game-button-container cherry">
-						<button type="button" onclick="pickSweets(100, 'Cherry')">BET 100 CHERRY</button>
-					</div>
-					<div class="game-button-container cherry large-bet">
-						<button type="button" onclick="pickSweets(500, 'Cherry')">BET 500<br />CHERRY</button>
-					</div>
-					<div class="game-button-container cola">
-						<button type="button" onclick="pickSweets(100, 'Cola')">BET 100 COLA</button>
-					</div>
-					<div class="game-button-container cola large-bet">
-						<button type="button" onclick="pickSweets(500, 'Cola')">BET 500 COLA</button>
-					</div>
+		  <div class="grid-item" style="">
+			<!--SWEET BAG NEW SPOT-->
+			<div id="outcome-images" class="panel" style="display: none; width: 100%;">
+				<div style="display: inline-flex;">
+					<div id="sweet-image1" class="sweet-image" style="">Sweet 1 Here</div>
+					<!--<div class="sweet-image-text" style="margin-left: -20px">1</div>-->
+				</div>
+				<div style="display: inline-flex">
+					<div id="sweet-image2" class="sweet-image" style="">Sweet 2 Here</div>
+					<!--<div class="sweet-image-text" style="margin-left: -20px">2</div>-->
 				</div>
 			</div>
+			
+			<div>
+				<div class="panel" style="display: none" id="result-description"></div>
+			</div>
+			<!--SWEET BAG NEW SPOT-->
 		  </div>
 		  <div class="grid-item">
 			<div style="">
@@ -222,24 +222,23 @@
 				
 			</div>
 		  </div>
-		  <div class="grid-item">  
-			<!--SWEET BAG NEW SPOT-->
-			<div id="outcome-images" class="panel" style="display: none; width: 100%; padding-top: 0px; padding-bottom: 20px;">
-				<div style="display: block; margin-right: 30px; margin-left: 20px;">
-					<div class="sweet-image-text">1</div>
-					<div id="sweet-image1" class="sweet-image" style=""></div>
-				</div>
-				<div style="display: block">
-					<div class="sweet-image-text">2</div>
-					<div id="sweet-image2" class="sweet-image" style=""></div>
+		  <div class="grid-item" style="text-align: left">
+			<div class="cherry-cola-bets-container">
+				<div class="cherry-cola-bets">
+					<div class="game-button-container cherry">
+						<button type="button" onclick="pickSweets(100, 'Cherry')">BET 100 CHERRY</button>
+					</div>
+					<div class="game-button-container cherry large-bet">
+						<button type="button" onclick="pickSweets(500, 'Cherry')">BET 500<br />CHERRY</button>
+					</div>
+					<div class="game-button-container cola large-bet">
+						<button type="button" onclick="pickSweets(500, 'Cola')">BET 500 COLA</button>
+					</div>
+					<div class="game-button-container cola">
+						<button type="button" onclick="pickSweets(100, 'Cola')">BET 100 COLA</button>
+					</div>
 				</div>
 			</div>
-			
-			<div>
-				<div class="panel" style="display: none" id="result-description"></div>
-			</div>
-			
-			<!--SWEET BAG NEW SPOT-->
 		  </div>
 
 			<!-- Single Column Rows -->
@@ -1201,8 +1200,8 @@
 		function renderSweets(sweet1="", sweet2="") {
 			if ((sweet1 === "Cherry" || sweet1 === "Cola") && (sweet2 === "Cherry" || sweet2 === "Cola")) {
 				outcomeImages.style.display = "flex"
-				sweetImage1Div.innerHTML = "<div class='sweet-image' style='display: inline-flex' id='sweet-image1'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='80px'></div>";
-				sweetImage2Div.innerHTML = "<div class='sweet-image' style='display: inline-flex' id='sweet-image2'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='80px'></div>";
+				sweetImage1Div.innerHTML = "<div class='sweet-image' style='display: inline-flex' id='sweet-image1'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='100px'></div>";
+				sweetImage2Div.innerHTML = "<div class='sweet-image' style='display: inline-flex' id='sweet-image2'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='100px'></div>";
 			}
 		}
 		
