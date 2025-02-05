@@ -49,12 +49,7 @@
 			
 			<!--CREDIT-->
 			<div>
-				<!--<h2>Credit</h2>-->
-				<div class="panel green">
-					<div id="cust-credit">Credit: X Tokens</div>
-					<div id="cust-winnings">Winnings: X Tokens</div>
-					<div id="cust-total-winnings">Overall Winnings: X Tokens</div>
-				</div>
+
 			</div>
 			
 			<!--PAYOUT-SPLIT STATS-->
@@ -165,10 +160,12 @@
 		  </div>
 		  
 		  <!-- Error Column -->
-		  <div class="grid-item two-column-span" style="vertical-align: middle">
-		  
-		  	<div>
-				<div class="panel" style="visibility: hidden; margin-bottom: 0px;" id="result-description"></div>
+		  <div class="grid-item two-column-span" style="text-align: left">
+			<!--<h2>Credit</h2>-->
+			<div class="panel green" style="margin-bottom: 0px; height: 100%">
+				<div id="cust-credit">Credit: X Tokens</div>
+				<div id="cust-winnings">Winnings: X Tokens</div>
+				<div id="cust-total-winnings">Overall Winnings: X Tokens</div>
 			</div>
 		  </div>
 		  
@@ -249,6 +246,12 @@
 				<div style="">
 					<div class="last-picks-container" id="last-picks-display"></div>
 					<div class="last-picks-container latest" id="last-picks-display-latest"></div>
+				</div>
+			</div>
+			
+			<div class="grid-item full-width" style="text-align: center">
+				<div>
+					<div class="panel" style="display: none; margin-bottom: 0px;" id="result-description"></div>
 				</div>
 			</div>
 			
@@ -701,7 +704,7 @@
 			//Display Container
 			containerDiv.style.display = "flex";
 			
-			setTimeout(() => {
+			var tempTimeout = setTimeout(() => {
 				containerDiv.style.display = "none";
 			}, displayForMS);
 			
@@ -839,7 +842,7 @@
 				resultDiv.classList.remove("lose");
 				resultDiv.classList.remove("insurance");
 				
-				resultDescriptionDiv.style.visibility = "hidden";
+				resultDescriptionDiv.style.display = "none";	
 				resultDescriptionDiv.innerHTML = "";
 				resultDescriptionDiv.classList.remove("win");
 				resultDescriptionDiv.classList.remove("lose");
@@ -867,7 +870,7 @@
 				
 				showOverlay();
 				
-				setTimeout(() => {
+				var tempTimeout = setTimeout(() => {
 				
 					stakeDiv.style.display = "flex";
 					stakeDiv.innerHTML = "Stake: " + stake;
@@ -976,7 +979,7 @@
 							resultDiv.innerHTML = "WON!";
 							
 							resultDescriptionDiv.classList.add("win");
-							resultDescriptionDiv.style.visibility = "visible";
+							resultDescriptionDiv.style.display = "block";
 							resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you won " + payout + " Tokens this time.";
 							
 							payoutDiv.classList.add("win");
@@ -1007,7 +1010,7 @@
 							resultDiv.innerHTML = "UNLUCKY";
 							
 							resultDescriptionDiv.classList.add("lose");
-							resultDescriptionDiv.style.visibility = "visible";
+							resultDescriptionDiv.style.display = "block";
 							resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you didn't win any tokens this time.";
 							
 							payoutDiv.classList.add("lose");
@@ -1029,7 +1032,7 @@
 							resultDiv.innerHTML = insuranceRate != 0 ? "INSURANCE" : "INSURANCE*";
 							
 							resultDescriptionDiv.classList.add("insurance");
-							resultDescriptionDiv.style.visibility = "visible";
+							resultDescriptionDiv.style.display = "block";
 							resultDescriptionDiv.innerHTML = insuranceRate != 0 ? "You backed " + bet + ". Picked sweets were mixed, so insurance paid out " + payout.toFixed(0) + " Tokens." : "You backed " + bet + ". Picked sweets were mixed. Whilst insurance would have paid here, there was no cover included in the selected payout split.";
 							
 							payoutDiv.classList.add("insurance");
