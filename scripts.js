@@ -1,10 +1,10 @@
 function updateStatisticsDivs() {
 	custCreditDiv.innerHTML = "Credit: " + playerCredit.toFixed(0) + " Tokens";
-	custWinningsDiv.innerHTML = "Winnings: " + statistics.playerWinnings.toFixed(0) + " Tokens";
-	custTotalWinningsDiv.innerHTML = "Overall Winnings: " + statistics.playerTotalWinnings.toFixed(0) + " Tokens";
-	houseBalanceDebugDiv.innerHTML = "House Balance: " + statistics.houseBalance.toFixed(0) + " Tokens";
+	custWinningsDiv.innerHTML = "Winnings: " + statistics.playerWinnings + " Tokens";
+	custTotalWinningsDiv.innerHTML = "Overall Winnings: " + statistics.playerTotalWinnings + " Tokens";
+	houseBalanceDebugDiv.innerHTML = "House Balance: " + statistics.houseBalance + " Tokens";
 	houseCashDebugDiv.innerHTML = "House Balance: " + (statistics.houseBalance / tokenRateToGBP).toFixed(2) + " GBP";
-	custBalanceDebugDiv.innerHTML = "Cust' Balance: " + statistics.playerBalance.toFixed(0) + " Tokens";
+	custBalanceDebugDiv.innerHTML = "Cust' Balance: " + statistics.playerBalance + " Tokens";
 	custCashDebugDiv.innerHTML = "Cust' Balance: " + (statistics.playerBalance / tokenRateToGBP).toFixed(2) + " GBP";
 	
 	winStreakDiv.innerHTML = "Win Streak: " + winStreak;
@@ -199,7 +199,7 @@ function calculateBoost() {
 	boostRate = 0;
 	
 	//FORCE WIN STREAK
-	winStreak = 99;
+	//winStreak = 99;
 	//winStreak = 1;
 	
 	if (winStreak >= boostStreakLevelOne) {
@@ -273,8 +273,17 @@ var statistics = {
 	playerBalanceGBP: 0,
 	playerWinnings: 0,
 	playerWinningsGBP: 0,
+	playerCredit: 0,
+	playerCreditGBP: 0,
 	playerTotalWinnings: 0,
 	playerTotalWinningsGBP: 0,
+	
+	houseHighestBalance: 0,
+	houseLowestBalance: 0,
+	
+	houseHighestBalanceGame: 0,
+	houseLowestBalanceGame: 0,
+	
 	audit: [] 
 }
 
@@ -786,15 +795,25 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			
 			//Statistics
 			statistics.gamesPlayed++;
-			statistics.totalStake = statistics.totalStake + stake;
-			statistics.houseBalance = statistics.houseBalance + housePayout;
-			statistics.houseBalanceGBP = statistics.houseBalance / tokenRateToGBP;
-			statistics.playerBalance = statistics.playerBalance + payout - stake;
-			statistics.playerBalanceGBP = statistics.playerBalance / tokenRateToGBP;
-			statistics.playerWinnings = statistics.playerWinnings + payout;
-			statistics.playerWinningsGBP = statistics.playerWinnings / tokenRateToGBP;
-			statistics.playerTotalWinnings = statistics.playerTotalWinnings + payout;
-			statistics.playerTotalWinningsGBP = statistics.playerTotalWinnings / tokenRateToGBP;
+			statistics.totalStake = ((statistics.totalStake * 1) + stake).toFixed(0);
+			statistics.houseBalance = ((statistics.houseBalance * 1) + housePayout).toFixed(0);
+			statistics.houseBalanceGBP = ((statistics.houseBalance * 1) / tokenRateToGBP).toFixed(2);
+			statistics.playerBalance = ((statistics.playerBalance * 1) + payout - stake).toFixed(0);
+			statistics.playerBalanceGBP = (statistics.playerBalance / tokenRateToGBP).toFixed(2);
+			statistics.playerWinnings = ((statistics.playerWinnings * 1) + payout).toFixed(0);
+			statistics.playerWinningsGBP = (statistics.playerWinnings / tokenRateToGBP).toFixed(2);
+			statistics.playerCredit = playerCredit.toFixed(0);
+			statistics.playerCreditGBP = (playerCredit / tokenRateToGBP).toFixed(2);
+			statistics.playerTotalWinnings = ((statistics.playerTotalWinnings * 1) + payout).toFixed(0);
+			statistics.playerTotalWinningsGBP = (statistics.playerTotalWinnings / tokenRateToGBP).toFixed(2);
+			
+			//Highest/Lowest Point
+			statistics.houseHighestBalanceGame = (statistics.houseBalance * 1) > 0 && (statistics.houseBalance * 1) > (statistics.houseHighestBalance * 1) ? statistics.gamesPlayed : statistics.houseHighestBalanceGame;
+			statistics.houseLowestBalanceGame = (statistics.houseBalance * 1) < 0 && (statistics.houseBalance * 1) < (statistics.houseLowestBalance * 1) ? statistics.gamesPlayed : statistics.houseLowestBalanceGame;
+			
+			//Highest/Lowest Value
+			statistics.houseHighestBalance = (statistics.houseBalance * 1) > 0 && (statistics.houseBalance * 1) > (statistics.houseHighestBalance * 1) ? statistics.houseBalance : statistics.houseHighestBalance;
+			statistics.houseLowestBalance = (statistics.houseBalance * 1) < 0 && (statistics.houseBalance * 1) < (statistics.houseLowestBalance * 1) ? statistics.houseBalance : statistics.houseLowestBalance;
 			
 			//Last picks Array
 			var lastPicksMaxSize = 7;
@@ -973,7 +992,7 @@ function renderJson(jsonData, displayContainerId) {
 }
 
 function showOverlayEndOfCredit() {
-	//copyDivContent("debug", "overlay-end-of-credit-content");
+	
 	var overlayStatistics = JSON.parse(JSON.stringify(statistics));
 	console.info("overlayStatistics", overlayStatistics);
 	
