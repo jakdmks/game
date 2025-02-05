@@ -19,7 +19,7 @@
 	
 	<!--END OF CREDIT OVERLAY-->
 	<div class="overlay-dismiss" id="overlay-end-of-credit">
-		<div class="panel">
+		<div class="panel" style="font-siz: 0.7em">
 			<div id="overlay-end-of-credit-content"></div>
 			<button class="dismiss-button" id="overlay-end-of-credit-dismiss-button" onclick="hideOverlayDismiss()">Dismiss</button>
 		</div>
@@ -38,7 +38,7 @@
 				</div>
 				-->
 				<div id="credit-button" class="credit-button-div">
-					<button type="button" onclick="console.info(addCredit(10000))">Add 10,000 Tokens for only £10</button>
+					<button type="button" onclick="console.info(addCredit(500))">Add 10,000 Tokens for only £10</button>
 				</div>
 				<div id="convert-winnings-to-credit-button" class="convert-button-div">
 					<button type="button"  onclick="console.info(convertWinnings())">Convert Winnings to Credit</button>
@@ -66,7 +66,7 @@
 			<div class="radio-group" style="display: block; font-size: 1.5em; text-align: left">
 				<label class="radio-item">
 				<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.5, 0, 'SPLIT01')">-->
-				<input type="radio" name="payout" style="accent-color: #facc15;" value="option1" onchange="updatePayoutSplit(2.4, 0.1, 'SPLIT01')">
+				<input type="radio" name="payout" style="" value="option1" onchange="updatePayoutSplit(2.4, 0.1, 'SPLIT01')">
 					<strong>HIGHER PAYOUT</strong>
 					<!--<div style="font-size: 0.5em;">250% Win Payout Rate (with upto +40% bonus!)</div>
 					<div style="font-size: 0.5em;">0% Insurance Payout Rate</div>-->
@@ -81,7 +81,7 @@
 				
 				<label class="radio-item">
 				<!--<input type="radio" name="payout" value="option1" checked onchange="updatePayoutSplit(2, 0.5, 'SPLIT02')">-->
-				<input type="radio" name="payout" style="accent-color: #facc15;" value="option1" checked onchange="updatePayoutSplit(1.9, 0.5, 'SPLIT02')">
+				<input type="radio" name="payout" style="" value="option1" checked onchange="updatePayoutSplit(1.9, 0.5, 'SPLIT02')">
 					<strong>VANILLA</strong>
 					<!--<div style="font-size: 0.5em;">200% Win Payout Rate (with upto +40% boost!)</div>
 					<div style="font-size: 0.5em;">50% Insurance Payout Rate (with upto +40% boost!)</div>-->
@@ -95,7 +95,7 @@
 				
 				<label class="radio-item">
 				<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 1, 'SPLIT03')">-->
-				<input type="radio" name="payout" style="accent-color: #facc15;" value="option1" onchange="updatePayoutSplit(1.6, 0.7, 'SPLIT03')">
+				<input type="radio" name="payout" style="" value="option1" onchange="updatePayoutSplit(1.6, 0.7, 'SPLIT03')">
 					<strong>HIGHER INSURANCE</strong>
 					<!--<div style="font-size: 0.5em;">150% Win Payout Rate (with upto +40% boost!)</div>
 					<div style="font-size: 0.5em;">100% Insurance Payout Rate (with upto +40% boost!)</div>-->
@@ -122,7 +122,7 @@
 
 		<!--Payout Boost-->
 		<div style="border: none">
-			<div class="radio-group" id="payout-boost-icons" style="display: none; font-size: 1.5em; text-align: left; accent-color: #0f6b36;">
+			<div class="radio-group" id="payout-boost-icons" style="display: none; font-size: 1.5em; text-align: left; accent-color: #67c887;">
 				<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
 			</div>
 			<div class="slide-in-scale" id="payout-boost-icon-1" style="">
@@ -140,7 +140,7 @@
 		</div>
 		<!--Insurance Boost-->
 		<div style="border: none">
-			<div class="radio-group" id="insurance-boost-icons" style="display: none; font-size: 1.5em; text-align: left; accent-color: #1c3db9;">
+			<div class="radio-group" id="insurance-boost-icons" style="display: none; font-size: 1.5em; text-align: left; accent-color: #71aef8;">
 				<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked)">
 			</div>
 			<div class="slide-in-scale" id="insurance-boost-icon-1" style="">
