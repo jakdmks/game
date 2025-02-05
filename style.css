@@ -644,7 +644,6 @@ PAYOUT SPLIT TESTING
   background-color: #182232; /* Slightly darker blue */
   color: white;
   font-weight: 600;
-  font-size: 0.em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Stronger shadow */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   font-size: 0.8em;
@@ -1411,10 +1410,11 @@ body {
     align-items: center;
     padding: 5px;
     border-bottom: 1px solid black;
+	font-size: 0.8em;
 }
 
 .json-item-cell {
-    padding: 5px 10px;
+    padding: 2px 2px;
 }
 
 .key {
