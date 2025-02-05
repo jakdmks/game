@@ -118,11 +118,11 @@
 		  <div class="grid-item" style="text-align: left">
 			<!--WIN STREAK GRAPHICAL DISPLAY-->
 			<div style="display: inline-block">
-				<span id="win-streak-text" class="boost-medium grey">streak x</span><span id="win-streak-num" class="boost-large grey">X</span>
+				<span id="win-streak-text" class="boost-large grey">streak 
+				<br />x</span><span id="win-streak-num" class="boost-large grey">X</span>
 			</div>
 			<!--BOOST GRAPHICAL DISPLAY-->
 			<div style="display: inline-block">
-				&nbsp;&nbsp;&nbsp;
 				<span id="boost-graphic-1" class="boost-small grey">BO</span><span id="boost-graphic-2" class="boost-medium grey">OS</span><span id="boost-graphic-3" class="boost-large grey">T!!!</span>
 			</div>
 
@@ -131,7 +131,7 @@
 				<div class="radio-group" id="payout-boost-icons" style="display: none; font-size: 1.5em; text-align: left">
 					<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
 				</div>
-				<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-left: 10px;">
+				<div class="slide-in-scale" id="payout-boost-icon-1" style="">
 					<img src="images/flame-png.png" height="30px" alt="Payout Boost 1">
 					<div id="payout-boost-pct-1" class="payout-boost-text small">20%</div>
 				</div>
@@ -149,16 +149,16 @@
 				<div class="radio-group" id="insurance-boost-icons" style="display: none; font-size: 1.5em; text-align: left">
 					<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked)">
 				</div>
-				<div class="slide-in-scale" id="insurance-boost-icon-1" style="margin-left: 10px;">
-					<img src="images/green-cross-png.png" height="30px" alt="Insurance Boost 1">
+				<div class="slide-in-scale" id="insurance-boost-icon-1" style="">
+					<img src="images/green-cross-png.png" height="20px" alt="Insurance Boost 1">
 					<div id="insurance-boost-pct-1" class="payout-boost-text small">20%</div>
 				</div>
 				<div class="slide-in-scale" id="insurance-boost-icon-2" style="margin-left: 10px;">
-					<img src="images/green-cross-png.png" height="40px" alt="Insurance Boost 2">
+					<img src="images/green-cross-png.png" height="30px" alt="Insurance Boost 2">
 					<div id="insurance-boost-pct-2" class="payout-boost-text medium">30%</div>
 				</div>
 				<div class="slide-in-scale" id="insurance-boost-icon-3" style="margin-left: 10px;">
-					<img src="images/green-cross-png.png" height="50px" alt="Insurance Boost 3">
+					<img src="images/green-cross-png.png" height="40px" alt="Insurance Boost 3">
 					<div id="insurance-boost-pct-3" class="payout-boost-text large">40%</div>
 				</div>
 			</div>
@@ -166,10 +166,9 @@
 		  
 		  <!-- Error Column -->
 		  <div class="grid-item two-column-span" style="vertical-align: middle">
-			<div id="error-container" style="display: none; text-align: center; margin: 0px;">
-				<div id="error-content" style="text-align: center">
-					ERROR
-				</div>
+		  
+		  	<div>
+				<div class="panel" style="visibility: hidden; margin-bottom: 0px;" id="result-description"></div>
 			</div>
 		  </div>
 		  
@@ -181,23 +180,27 @@
 				</div>
 				<!--<div style="font-size: 0.8em;"><em>(Can only change once win streak returns to 0)</em></div>-->
 		  </div>
+		  
+		<div class="grid-item full-width">
+			<div id="error-container" style="display: none; text-align: center; margin: 0px;">
+				<div id="error-content" style="text-align: center">
+					ERROR
+				</div>
+			</div>
+		</div>
 
 		  <!-- Second Row of 3 Columns -->
 		  <div class="grid-item" style="">
 			<!--SWEET BAG NEW SPOT-->
-			<div id="outcome-images" class="panel" style="display: none; width: 100%;">
-				<div style="display: inline-flex;">
-					<div id="sweet-image1" class="sweet-image" style="">Sweet 1 Here</div>
+			<div id="outcome-images" class="panel" style="visibility: visible; min-width: 122px; height: 270px; padding-top: 20px; margin-bottom: 0px">
+				<div style="display: inline-flex; width: 100px;">
+					<div id="sweet-image1" class="" style="height: 100px;"></div>
 					<!--<div class="sweet-image-text" style="margin-left: -20px">1</div>-->
 				</div>
-				<div style="display: inline-flex">
-					<div id="sweet-image2" class="sweet-image" style="">Sweet 2 Here</div>
+				<div style="display: inline-flex; width: 100px;">
+					<div id="sweet-image2" class="" style="height: 100px;"></div>
 					<!--<div class="sweet-image-text" style="margin-left: -20px">2</div>-->
 				</div>
-			</div>
-			
-			<div>
-				<div class="panel" style="display: none" id="result-description"></div>
 			</div>
 			<!--SWEET BAG NEW SPOT-->
 		  </div>
@@ -225,7 +228,7 @@
 		  <div class="grid-item" style="text-align: left">
 			<div class="cherry-cola-bets-container">
 				<div class="cherry-cola-bets">
-					<div class="game-button-container cherry">
+					<div class="game-button-container cherry" style="margin-top: 0px;">
 						<button type="button" onclick="pickSweets(100, 'Cherry')">BET 100 CHERRY</button>
 					</div>
 					<div class="game-button-container cherry large-bet">
@@ -234,7 +237,7 @@
 					<div class="game-button-container cola large-bet">
 						<button type="button" onclick="pickSweets(500, 'Cola')">BET 500 COLA</button>
 					</div>
-					<div class="game-button-container cola">
+					<div class="game-button-container cola" style="margin-bottom: 0px;">
 						<button type="button" onclick="pickSweets(100, 'Cola')">BET 100 COLA</button>
 					</div>
 				</div>
@@ -242,8 +245,8 @@
 		  </div>
 
 			<!-- Single Column Rows -->
-			<div class="grid-item full-width">
-				<div>
+			<div class="grid-item full-width" style="text-align: left">
+				<div style="">
 					<div class="last-picks-container" id="last-picks-display"></div>
 					<div class="last-picks-container latest" id="last-picks-display-latest"></div>
 				</div>
@@ -278,13 +281,13 @@
 		//TODO: If Boost Insurance is switched on... it can only be switched off when they're back to 0?
 	
 		function updateStatisticsDivs() {
-			custCreditDiv.innerHTML = "Credit: " + playerCredit + " Tokens";
-			custWinningsDiv.innerHTML = "Winnings: " + statistics.playerWinnings + " Tokens";
-			custTotalWinningsDiv.innerHTML = "Overall Winnings: " + statistics.playerTotalWinnings + " Tokens";
-			houseBalanceDebugDiv.innerHTML = "House Balance: " + statistics.houseBalance + " Tokens";
-			houseCashDebugDiv.innerHTML = "House Balance: " + (statistics.houseBalance / tokenRateToGBP) + " GBP";
-			custBalanceDebugDiv.innerHTML = "Cust' Balance: " + statistics.playerBalance + " Tokens";
-			custCashDebugDiv.innerHTML = "Cust' Balance: " + (statistics.playerBalance / tokenRateToGBP) + " GBP";
+			custCreditDiv.innerHTML = "Credit: " + playerCredit.toFixed(0) + " Tokens";
+			custWinningsDiv.innerHTML = "Winnings: " + statistics.playerWinnings.toFixed(0) + " Tokens";
+			custTotalWinningsDiv.innerHTML = "Overall Winnings: " + statistics.playerTotalWinnings.toFixed(0) + " Tokens";
+			houseBalanceDebugDiv.innerHTML = "House Balance: " + statistics.houseBalance.toFixed(0) + " Tokens";
+			houseCashDebugDiv.innerHTML = "House Balance: " + (statistics.houseBalance / tokenRateToGBP).toFixed(2) + " GBP";
+			custBalanceDebugDiv.innerHTML = "Cust' Balance: " + statistics.playerBalance.toFixed(0) + " Tokens";
+			custCashDebugDiv.innerHTML = "Cust' Balance: " + (statistics.playerBalance / tokenRateToGBP).toFixed(2) + " GBP";
 			
 			winStreakDiv.innerHTML = "Win Streak: " + winStreak;
 			boostAvailDiv.innerHTML = "Boost Available: " + boostAvailable;
@@ -305,7 +308,7 @@
 			
 			//Player Credit Panel Colour (TODO: Re-implement this...)
 			var playerCreditParentDiv = custCreditDiv.parentNode;
-			if (playerCredit <= 0) {
+			if (playerCredit <= 100) {
 				playerCreditParentDiv.classList.remove("green");
 				playerCreditParentDiv.classList.add("red");		
 				creditButtonDiv.style.pointerEvents = "auto";
@@ -478,7 +481,7 @@
 			boostRate = 0;
 			
 			//FORCE WIN STREAK
-			//winStreak = 1;
+			//winStreak = 99;
 			//winStreak = 1;
 			
 			if (winStreak >= boostStreakLevelOne) {
@@ -648,7 +651,7 @@
 			
 			//Setup Messages
 			var creditErrors = [];
-			creditErrors.push("Added " + credit + " Tokens...");
+			creditErrors.push("Added " + credit.toFixed(0) + " Tokens...");
 			
 			displayErrors(errorContainerDiv, errorContentDiv, "DEPOSIT SUCCESS!", creditErrors, 3000);
 			updateStatisticsDivs();
@@ -667,7 +670,7 @@
 			
 			//Setup Messages
 			var convertErrors = [];
-			convertErrors.push("Converted " + additionalCredit + " Tokens to Credits...");
+			convertErrors.push("Converted " + additionalCredit.toFixed(0) + " Tokens to Credits...");
 			
 			displayErrors(errorContainerDiv, errorContentDiv, "CONGRATULATIONS!", convertErrors, 3000);
 			
@@ -836,7 +839,7 @@
 				resultDiv.classList.remove("lose");
 				resultDiv.classList.remove("insurance");
 				
-				resultDescriptionDiv.style.display = "none";
+				resultDescriptionDiv.style.visibility = "hidden";
 				resultDescriptionDiv.innerHTML = "";
 				resultDescriptionDiv.classList.remove("win");
 				resultDescriptionDiv.classList.remove("lose");
@@ -856,11 +859,12 @@
 				flyingPointsDiv.style.display = "none";
 				flyingPointsDiv.innerHTML = "";
 				
-				outcomeImages.style.display = "none"
+				outcomeImages.style.visibility = "hidden"
 				
 				var delayInMs = 700; //1500 Default (1.5s) seems good...
 				
 				//TODO: At the start of the timer, add a "Betting" overlay...
+				
 				showOverlay();
 				
 				setTimeout(() => {
@@ -882,7 +886,7 @@
 					console.info("Updating player credit", playerCredit);
 				
 					//playerCredit = playerCredit - stake;
-					custCreditDiv.innerHTML = "Credit: " + playerCredit + " Tokens";
+					custCreditDiv.innerHTML = "Credit: " + playerCredit.toFixed(0) + " Tokens";
 				
 					//Consider how to randomize (or not randomize) the sweets going in. Pattern may be important
 					//Do we make the names even more similar so people maybe think they've won for a sec when they haven't?
@@ -972,7 +976,7 @@
 							resultDiv.innerHTML = "WON!";
 							
 							resultDescriptionDiv.classList.add("win");
-							resultDescriptionDiv.style.display = "flex";
+							resultDescriptionDiv.style.visibility = "visible";
 							resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you won " + payout + " Tokens this time.";
 							
 							payoutDiv.classList.add("win");
@@ -1003,7 +1007,7 @@
 							resultDiv.innerHTML = "UNLUCKY";
 							
 							resultDescriptionDiv.classList.add("lose");
-							resultDescriptionDiv.style.display = "flex";
+							resultDescriptionDiv.style.visibility = "visible";
 							resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you didn't win any tokens this time.";
 							
 							payoutDiv.classList.add("lose");
@@ -1025,8 +1029,8 @@
 							resultDiv.innerHTML = insuranceRate != 0 ? "INSURANCE" : "INSURANCE*";
 							
 							resultDescriptionDiv.classList.add("insurance");
-							resultDescriptionDiv.style.display = "flex";
-							resultDescriptionDiv.innerHTML = insuranceRate != 0 ? "You backed " + bet + ". Picked sweets were mixed, so insurance paid out " + payout + " Tokens." : "You backed " + bet + ". Picked sweets were mixed. Whilst insurance would have paid here, there was no cover included in the selected payout split.";
+							resultDescriptionDiv.style.visibility = "visible";
+							resultDescriptionDiv.innerHTML = insuranceRate != 0 ? "You backed " + bet + ". Picked sweets were mixed, so insurance paid out " + payout.toFixed(0) + " Tokens." : "You backed " + bet + ". Picked sweets were mixed. Whilst insurance would have paid here, there was no cover included in the selected payout split.";
 							
 							payoutDiv.classList.add("insurance");
 							payoutDiv.style.display = "flex";
@@ -1132,6 +1136,7 @@
 		
 		function renderLastPicks() {
 			const container = document.getElementById("last-picks-display");
+			
 			container.innerHTML = ""; // Clear previous content
 			
 			//Reverse the array before rendering
@@ -1139,7 +1144,11 @@
 			
 			lastPicks.forEach((pick, index) => {
 				const isLast = index === lastPicks.length - 1; // Check if it's the last pick
-
+				const isFirst = index === 0; //Check if it's the first pick
+				
+				console.info("isFirst", isFirst);
+				console.info("isLast", isLast);
+				
 				if (!isLast) {
 					// Previous Sweets
 					const entry = document.createElement("div");
@@ -1163,7 +1172,7 @@
 					entry.append(sweet1);
 					entry.append(sweet2);
 					container.appendChild(entry);
-				} else {
+				} else if (isLast) {
 					// Latest Pick (Last Element)
 					const containerLatest = document.getElementById("last-picks-display-latest");
 					containerLatest.innerHTML = ""; // Clear previous content
@@ -1199,9 +1208,20 @@
 		
 		function renderSweets(sweet1="", sweet2="") {
 			if ((sweet1 === "Cherry" || sweet1 === "Cola") && (sweet2 === "Cherry" || sweet2 === "Cola")) {
-				outcomeImages.style.display = "flex"
-				sweetImage1Div.innerHTML = "<div class='sweet-image' style='display: inline-flex' id='sweet-image1'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='100px'></div>";
-				sweetImage2Div.innerHTML = "<div class='sweet-image' style='display: inline-flex' id='sweet-image2'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='100px'></div>";
+				outcomeImages.style.visibility = "visible"
+				
+				var additionalMarginSweet1 = -5;
+				if (sweet1 === "Cola") {
+					additionalMarginSweet1 = additionalMarginSweet1 + 10;
+				}
+				
+				var additionalMarginSweet2 = 10;
+				if (sweet2 === "Cola") {
+					additionalMarginSweet2 = additionalMarginSweet2 + 10;
+				}
+				
+				sweetImage1Div.innerHTML = "<div class='sweet-image' style='display: block; margin-left: " + additionalMarginSweet1 + "px' id='sweet-image1-image'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='100px'></div>";
+				sweetImage2Div.innerHTML = "<div class='sweet-image' style='display: block; margin-left: " + additionalMarginSweet2 + "px' id='sweet-image2-image'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='100px'></div>";
 			}
 		}
 		
@@ -1376,7 +1396,7 @@
 				console.info(">> tempPayoutChunks", tempPayoutChunks);
 				
 				for (var i = 0; i < tempPayoutChunks; i++) {
-					createFlyingText("+" + splitPointsAt, textColor, className);
+					createFlyingText("+" + splitPointsAt.toFixed(0), textColor, className);
 				}
 				
 				//Render Icons too if boostType is set
@@ -1384,7 +1404,7 @@
 					if (boostType === "payout" && payoutBoostRate > 0) {
 						createFlyingText("<img src='images/flame-png.png' height='30px' alt='Flame Icon' style='opacity: 0.5'>", textColor, className);
 					} else if (boostType === "insurance" && insuranceBoostRate > 0) {
-					createFlyingText("+" + splitPointsAt, textColor, className);
+					createFlyingText("+" + splitPointsAt.toFixed(0), textColor, className);
 						createFlyingText("<img src='images/green-cross-png.png' height='30px' alt='Green Cross Icon' style='opacity: 0.5'>", textColor, className);
 					}
 				}
