@@ -325,6 +325,7 @@ PAYOUT SPLIT TESTING
   display: flex; /* Flexbox for content alignment */
   margin: 0 auto; /* Centers the div horizontally */
   box-sizing: border-box;
+  font-size: 0.9em;
 }
 
 .boost-insurance-div:hover {
@@ -467,7 +468,7 @@ PAYOUT SPLIT TESTING
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
-  margin-top: 5px;
+  margin-top: 10px;
   position: relative; /* To allow for text overlay */
   border-radius: 10px;
   width: 100%;
@@ -616,7 +617,7 @@ PAYOUT SPLIT TESTING
   font-size: 0.9em;
   text-align: center;
   border: 1px solid black; /* Dark, consistent border */
-  margin-top: 5px;
+  margin-top: 0px;
   border-radius: 7px; /* Smaller radius */
   font-weight: 600;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle depth */
@@ -635,7 +636,7 @@ PAYOUT SPLIT TESTING
 }
 
 .panel {
-  display: inline-block;
+  display: block;
   border: 1px solid #121a26; /* Very dark border for contrast */
   border-radius: 8px;
   padding: 10px 10px;
@@ -687,25 +688,6 @@ PAYOUT SPLIT TESTING
   background-color: #6f0f0f; /* Even darker red on hover */
 }
 
-.result-div {
-  width: 100%;
-  background-color: #4b5563; /* Neutral grey */
-  font-size: 1.6em;
-  text-align: center;
-  color: white;
-  border: 2px solid #121a26; /* Dark, consistent border with .result-div */
-  margin-bottom: 10px;
-  border-radius: 12px;
-  font-weight: bold;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  justify-content: center; /* Centers horizontally */
-  align-items: center; /* Centers vertically */
-  display: none;
-  min-height: 70px;
-  vertical-align: middle;
-}
-
 /* Flashing effects */
 @keyframes flash-green {
   0% {
@@ -741,45 +723,6 @@ PAYOUT SPLIT TESTING
   100% {
     background-color: #ea580c;
   }
-}
-
-/* Win result */
-.result-div.win {
-  background-color: #16a34a;
-  border-color: #074d24; /* Very dark green border */
-  animation: flash-green 1s infinite, pulse-credit 1s infinite;
-}
-
-/* Lose result */
-.result-div.lose {
-  background-color: #dc2626;
-  border-color: #701414; /* Very dark red border */
-  animation: flash-red 1s infinite, pulse-credit 1s infinite;
-}
-
-/* Insurance result */
-.result-div.insurance {
-  background-color: #ea580c;
-  border-color: #7a2f08; /* Very dark orange border */
-  animation: flash-orange 1s infinite, pulse-credit 1s infinite;
-}
-
-.payout-div {
-  width: 100%;
-  background-color: #4b5563; /* Neutral grey */
-  font-size: 1.2em;
-  text-align: center;
-  color: white;
-  border: 2px solid #121a26; /* Dark, consistent border with .result-div */
-  border-radius: 12px;
-  font-weight: 600;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  justify-content: center; /* Centers horizontally */
-  align-items: center; /* Centers vertically */
-  display: none;
-  min-height: 40px;
-  vertical-align: middle;
 }
 
 /* Flashing animations */
@@ -819,49 +762,25 @@ PAYOUT SPLIT TESTING
   }
 }
 
-/* Win payout */
-.payout-div.win {
-  background-color: #0a6a32; /* Rich green */
-  animation: flash-green 1s infinite, pulse-credit 1s infinite;
-  border-color: #074d24; /* Very dark green border */
-}
-
-/* Lose payout */
-.payout-div.lose {
-  background-color: #a91e1e; /* Rich red */
-  animation: flash-red 1s infinite, pulse-credit 1s infinite;
-  border-color: #701414; /* Very dark red border */
-}
-
-/* Insurance payout */
-.payout-div.insurance {
-  background-color: #b8470c; /* Deep orange */
-  animation: flash-orange 1s infinite, pulse-credit 1s infinite;
-  border-color: #7a2f08; /* Very dark orange border */
-}
-
 .boost-small {
-	font-size: 2em;
+	font-size: 1.8em;
 	font-weight: bold;
-	-webkit-text-stroke: 1px white; /* White outline */
-	/*animation: flickerText 1.5s infinite alternate;*/
-	/*animation: sweepingTextGlow 3s infinite ease-in-out;*/
+	-webkit-text-stroke: 1px white;
+	letter-spacing: -2px;
 }
 
 .boost-medium {
-	font-size: 3em;
+	font-size: 2.8em;
 	font-weight: bold;
-	-webkit-text-stroke: 1px white; /* White outline */
-	/*animation: flickerText 1.5s infinite alternate;*/
-	/*animation: sweepingTextGlow 3s infinite ease-in-out;*/
+	-webkit-text-stroke: 1px white;
+	letter-spacing: -2px;
 }
 
 .boost-large {
-	font-size: 4em;
+	font-size: 3.8em;
 	font-weight: bold;
-	-webkit-text-stroke: 1px white; /* White outline */
-	/*animation: flickerText 1.5s infinite alternate;*/
-	/*animation: sweepingTextGlow 3s infinite ease-in-out;*/
+	-webkit-text-stroke: 1px white;
+	letter-spacing: -2px;
 }
 
 .boost-small.selected {
@@ -1115,8 +1034,8 @@ PAYOUT SPLIT TESTING
   min-height: 70px;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; /* Black outline effect for text */
   font-size: 3em;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 0px;
 }
 
 
@@ -1150,7 +1069,7 @@ PAYOUT SPLIT TESTING
 .result-div, .payout-div {
   width: 100%;
   background-color: #4b5563; /* Neutral grey */
-  font-size: 1.6em;
+  font-size: 1.4em;
   text-align: center;
   color: white;
   border: 2px solid #121a26; /* Dark, consistent border */
@@ -1164,6 +1083,7 @@ PAYOUT SPLIT TESTING
   min-height: 70px;
   vertical-align: middle;
   animation: appear-focus 0.6s ease-out;
+  margin-bottom: 5px;
 }
 
 .payout-div {
@@ -1275,7 +1195,7 @@ PAYOUT SPLIT TESTING
 .last-picks-container {
 	display: inline-flex;
 	flex-direction: row;
-	gap: 2px;
+	gap: 4px;
 	max-width: 100%;
 	display: hidden;
 	vertical-align: middle;
@@ -1310,13 +1230,31 @@ PAYOUT SPLIT TESTING
 }
 
 .last-picks-entry.latest {
+	margin-right: auto;
 	border-width: 3px;
 	animation: slideInLastPick 1.5s ease-out forwards, growShrinkLastPick 1.5s ease-in-out 1.5s infinite;
 }
 
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+
+.hidden {
+  display: none;
+}
+
 @keyframes slideInLastPick {
   0% {
-    transform: translateX(+100%); /* Start far left */
+    transform: translateX(+400%); /* Start far right */
     opacity: 0;
   }
   100% {
@@ -1342,6 +1280,7 @@ body {
   padding: 0;
   overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
   font-size: 14px;
+
 }
 
 /* Grid container */
@@ -1350,7 +1289,7 @@ body {
   grid-template-columns: repeat(3, 1fr); /* Ensures columns stay aligned */
   grid-auto-rows: auto; /* Rows will grow independently */
   gap: 8px; /* Reduced gap for a tighter layout */
-  width: 98%;
+  /*width: 100%;*/
   /*max-width: 1200px;*/
   margin: 10px;
   transition: transform 0.3s ease-in-out;
