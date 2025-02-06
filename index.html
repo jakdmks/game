@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sweet bro.</title>
+    <title>Twin Sweets.</title>
     <link rel="stylesheet" href="./style.css">
     <!--<link rel="icon" href="./favicon.ico" type="image/x-icon">-->
   </head>
@@ -12,8 +12,8 @@
 	<!--OVERLAY-->
 	<div id="overlay" class="overlay">
 		<div style="width: 700px;">
-			<div id="overlay-text">Picking 2 sweets at random...</div>
-			<div id="overlay-images" class="overlay-images"></div>
+			<div class="overlay-text">Picking 2 sweets at random...</div>
+			<div id="overlay-images" class="overlay-images" class="overlay-images"></div>
 		</div>
 	</div>
 	
@@ -37,6 +37,11 @@
 					<button type="button" onclick="console.info(addCredit(20000))">Add 20,000 Tokens for only £20</button>
 				</div>
 				-->
+				
+				<div class="panel green" style="margin-bottom:10px; height: 100%">
+					<div id="cust-credit">Credit: X Tokens</div>
+				</div>
+				
 				<div id="credit-button" class="credit-button-div">
 					<button type="button" onclick="console.info(addCredit(10000))">Add 10,000 Tokens for only £10</button>
 				</div>
@@ -54,22 +59,20 @@
 		<!--PAYOUT-SPLIT STATS-->
 		<div>
 			<!--<h2>Split</h2>-->
-			<div class="panel">
+			<div class="panel" style="margin-bottom: 0px;">
 				<div id="payout-pct">Return Pct: X%</div>
 				<div id="insurance-pct">Insurance Pct: X%</div>
 			</div>
 		</div>
 	  </div>
 	  <div class="grid-item" style="padding-right: 15px;">
-		<div>
+		<div style="min-width: 142px">
 			<!--<h2>Payout Split</h2>-->
-			<div class="radio-group" style="display: block; font-size: 1.5em; text-align: left">
+			<div class="radio-group" style="display: block; font-size: 1.5em; text-align: left; letter-spacing: -1px;">
 				<label class="radio-item">
 				<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.5, 0, 'SPLIT01')">-->
 				<input type="radio" name="payout" style="" value="option1" onchange="updatePayoutSplit(2.4, 0.1, 'SPLIT01')">
-					<strong>HIGHER PAYOUT</strong>
-					<!--<div style="font-size: 0.5em;">250% Win Payout Rate (with upto +40% bonus!)</div>
-					<div style="font-size: 0.5em;">0% Insurance Payout Rate</div>-->
+					<div style="display: inline; text-align: justify; font-weight: 600">PAIRS +</div>
 					<div id="payout-split-bar-250-0" class="payout-split-bar">
 						<div class="green-bar" style="width:81%;"></div>
 						<div id="payout-split-bar-250-0-green-boost" class="green-bar-boost"></div>
@@ -82,9 +85,7 @@
 				<label class="radio-item">
 				<!--<input type="radio" name="payout" value="option1" checked onchange="updatePayoutSplit(2, 0.5, 'SPLIT02')">-->
 				<input type="radio" name="payout" style="" value="option1" checked onchange="updatePayoutSplit(1.9, 0.5, 'SPLIT02')">
-					<strong>VANILLA</strong>
-					<!--<div style="font-size: 0.5em;">200% Win Payout Rate (with upto +40% boost!)</div>
-					<div style="font-size: 0.5em;">50% Insurance Payout Rate (with upto +40% boost!)</div>-->
+					<div style="display: inline; text-align: justify; font-weight: 600">VANILLA</div>
 					<div id="payout-split-bar-200-50" class="payout-split-bar selected">
 						<div class="green-bar"></div>
 						<div id="payout-split-bar-200-50-green-boost" class="green-bar-boost"></div>
@@ -96,9 +97,7 @@
 				<label class="radio-item">
 				<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 1, 'SPLIT03')">-->
 				<input type="radio" name="payout" style="" value="option1" onchange="updatePayoutSplit(1.6, 0.7, 'SPLIT03')">
-					<strong>HIGHER INSURANCE</strong>
-					<!--<div style="font-size: 0.5em;">150% Win Payout Rate (with upto +40% boost!)</div>
-					<div style="font-size: 0.5em;">100% Insurance Payout Rate (with upto +40% boost!)</div>-->
+					<div style="display: inline; text-align: justify; font-weight: 600">MIX +</div>
 					<div id="payout-split-bar-150-100" class="payout-split-bar">
 						<div class="green-bar" style="width: 52%;"></div>
 						<div id="payout-split-bar-150-100-green-boost" class="green-bar-boost"></div>
@@ -161,10 +160,17 @@
 	  <!-- Error Column -->
 	  <div class="grid-item two-column-span" style="text-align: left">
 		<!--<h2>Credit</h2>-->
-		<div class="panel green" style="margin-bottom: 0px; height: 100%">
-			<div id="cust-credit">Credit: X Tokens</div>
-			<div id="cust-winnings">Winnings: X Tokens</div>
-			<div id="cust-total-winnings">Overall Winnings: X Tokens</div>
+		<div class="panel green" style="margin-bottom: 0px; height: 100%;">
+			<div style="display: flex">
+				<div class="winnings" style="text-align: right; width: 65%">WINNINGS</div>
+				<div class="winnings" id="cust-winnings" style="text-align: right; width: 35%">X Tokens</div>
+			</div>
+			<div style="display: flex">
+				<div class="winnings" style="text-align: right; width: 65%">OVERALL WINNINGS</div>
+				<div class="winnings" id="cust-total-winnings" style="text-align: right; width: 35%">X Tokens</div>
+			</div>
+			<!--<div class="winnings" id="cust-winnings">Winnings: X Tokens</div>
+			<div class="winnings" id="cust-total-winnings">Overall Winnings: X Tokens</div>-->
 		</div>
 	  </div>
 	  
