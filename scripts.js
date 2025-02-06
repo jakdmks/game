@@ -1,7 +1,7 @@
 function updateStatisticsDivs() {
-	custCreditDiv.innerHTML = "Credit: " + playerCredit.toFixed(0) + " Tokens";
-	custWinningsDiv.innerHTML = "Winnings: " + statistics.playerWinnings + " Tokens";
-	custTotalWinningsDiv.innerHTML = "Overall Winnings: " + statistics.playerTotalWinnings + " Tokens";
+	custCreditDiv.innerHTML = "CREDIT<BR />" + playerCredit.toFixed(0);
+	custWinningsDiv.innerHTML = statistics.playerWinnings;
+	custTotalWinningsDiv.innerHTML = statistics.playerTotalWinnings;
 	houseBalanceDebugDiv.innerHTML = "House Balance: " + statistics.houseBalance + " Tokens";
 	houseCashDebugDiv.innerHTML = "House Balance: " + (statistics.houseBalance / tokenRateToGBP).toFixed(2) + " GBP";
 	custBalanceDebugDiv.innerHTML = "Cust' Balance: " + statistics.playerBalance + " Tokens";
@@ -17,7 +17,7 @@ function updateStatisticsDivs() {
 	boostInsuranceMultiplierDiv.innerHTML = "Rate: " + boostInsuranceRate;
 	
 	payoutPctDiv.innerHTML = "Return Pct: " + (payoutRate * 100).toFixed(0) + "%" + (payoutBoost === true ? " (+" + (boostRate * 100).toFixed(0) + "% boost)" : "");
-	insurancePctDiv.innerHTML = "Insurance Pct: " + (insuranceRate * 100).toFixed(0) + "%" + (insuranceBoost === true ? " (+" + (boostRate * 100).toFixed(0) + "% boost)" : "");
+	insurancePctDiv.innerHTML = "Mix Pct: " + (insuranceRate * 100).toFixed(0) + "%" + (insuranceBoost === true ? " (+" + (boostRate * 100).toFixed(0) + "% boost)" : "");
 	payoutMultiplierDiv.innerHTML = "Win Multiplier: " + payoutRate;
 	insuranceMultiplierDiv.innerHTML = "Insurance Multiplier: " + insuranceRate;
 	
@@ -173,7 +173,12 @@ function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="") {
 	
 	setPayoutSplitGlow();
 	
-	var check = parseFloat((totalPayoutCheck - newPayoutRate - newInsuranceRate).toFixed(2));
+	var check = parseFloat(totalPayoutCheck - newPayoutRate - newInsuranceRate);
+	check = check.toFixed(2) * 1;
+	
+	console.info("totalPayoutCheck", totalPayoutCheck);
+	console.info("newPayoutRate", newPayoutRate);
+	console.info("newInsuranceRate", newInsuranceRate);
 	console.info("Check", check);
 	
 	if (check === 0) {
@@ -387,7 +392,7 @@ function addCredit(credit=0) {
 
 function convertWinnings() {
 
-	var additionalCredit = statistics.playerWinnings;;
+	var additionalCredit = statistics.playerWinnings;
 
 	playerCredit = playerCredit + additionalCredit;
 	console.info("increased playerCredit by ", additionalCredit);
@@ -795,25 +800,25 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			
 			//Statistics
 			statistics.gamesPlayed++;
-			statistics.totalStake = ((statistics.totalStake * 1) + stake).toFixed(0);
-			statistics.houseBalance = ((statistics.houseBalance * 1) + housePayout).toFixed(0);
-			statistics.houseBalanceGBP = ((statistics.houseBalance * 1) / tokenRateToGBP).toFixed(2);
-			statistics.playerBalance = ((statistics.playerBalance * 1) + payout - stake).toFixed(0);
-			statistics.playerBalanceGBP = (statistics.playerBalance / tokenRateToGBP).toFixed(2);
-			statistics.playerWinnings = ((statistics.playerWinnings * 1) + payout).toFixed(0);
-			statistics.playerWinningsGBP = (statistics.playerWinnings / tokenRateToGBP).toFixed(2);
-			statistics.playerCredit = playerCredit.toFixed(0);
-			statistics.playerCreditGBP = (playerCredit / tokenRateToGBP).toFixed(2);
-			statistics.playerTotalWinnings = ((statistics.playerTotalWinnings * 1) + payout).toFixed(0);
-			statistics.playerTotalWinningsGBP = (statistics.playerTotalWinnings / tokenRateToGBP).toFixed(2);
+			statistics.totalStake = statistics.totalStake  + stake;
+			statistics.houseBalance = statistics.houseBalance + housePayout;
+			statistics.houseBalanceGBP = statistics.houseBalance / tokenRateToGBP;
+			statistics.playerBalance = statistics.playerBalance + payout - stake;
+			statistics.playerBalanceGBP = statistics.playerBalance / tokenRateToGBP;
+			statistics.playerWinnings = statistics.playerWinnings + payout;
+			statistics.playerWinningsGBP = statistics.playerWinnings / tokenRateToGBP;
+			statistics.playerCredit = playerCredit;
+			statistics.playerCreditGBP = playerCredit / tokenRateToGBP;
+			statistics.playerTotalWinnings = statistics.playerTotalWinnings + payout;
+			statistics.playerTotalWinningsGBP = statistics.playerTotalWinnings / tokenRateToGBP;
 			
 			//Highest/Lowest Point
-			statistics.houseHighestBalanceGame = (statistics.houseBalance * 1) > 0 && (statistics.houseBalance * 1) > (statistics.houseHighestBalance * 1) ? statistics.gamesPlayed : statistics.houseHighestBalanceGame;
-			statistics.houseLowestBalanceGame = (statistics.houseBalance * 1) < 0 && (statistics.houseBalance * 1) < (statistics.houseLowestBalance * 1) ? statistics.gamesPlayed : statistics.houseLowestBalanceGame;
+			statistics.houseHighestBalanceGame = statistics.houseBalance > 0 && statistics.houseBalance > statistics.houseHighestBalance ? statistics.gamesPlayed : statistics.houseHighestBalanceGame;
+			statistics.houseLowestBalanceGame = statistics.houseBalance < 0 && statistics.houseBalance < statistics.houseLowestBalance ? statistics.gamesPlayed : statistics.houseLowestBalanceGame;
 			
 			//Highest/Lowest Value
-			statistics.houseHighestBalance = (statistics.houseBalance * 1) > 0 && (statistics.houseBalance * 1) > (statistics.houseHighestBalance * 1) ? statistics.houseBalance : statistics.houseHighestBalance;
-			statistics.houseLowestBalance = (statistics.houseBalance * 1) < 0 && (statistics.houseBalance * 1) < (statistics.houseLowestBalance * 1) ? statistics.houseBalance : statistics.houseLowestBalance;
+			statistics.houseHighestBalance = statistics.houseBalance > 0 && statistics.houseBalance * 1 > statistics.houseHighestBalance * 1 ? statistics.houseBalance : statistics.houseHighestBalance;
+			statistics.houseLowestBalance = statistics.houseBalance < 0 && statistics.houseBalance * 1 < statistics.houseLowestBalance * 1 ? statistics.houseBalance : statistics.houseLowestBalance;
 			
 			//Last picks Array
 			var lastPicksMaxSize = 7;
