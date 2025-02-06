@@ -16,7 +16,7 @@ function updateStatisticsDivs() {
 	boostInsuranceDiv.innerHTML = "Boost Insurance: " + boostInsurance;
 	boostInsuranceMultiplierDiv.innerHTML = "Rate: " + boostInsuranceRate;
 	
-	payoutPctDiv.innerHTML = "Return Pct: " + (payoutRate * 100).toFixed(0) + "%" + (payoutBoost === true ? " (+" + (boostRate * 100).toFixed(0) + "% boost)" : "");
+	payoutPctDiv.innerHTML = "Pair Pct: " + (payoutRate * 100).toFixed(0) + "%" + (payoutBoost === true ? " (+" + (boostRate * 100).toFixed(0) + "% boost)" : "");
 	insurancePctDiv.innerHTML = "Mix Pct: " + (insuranceRate * 100).toFixed(0) + "%" + (insuranceBoost === true ? " (+" + (boostRate * 100).toFixed(0) + "% boost)" : "");
 	payoutMultiplierDiv.innerHTML = "Win Multiplier: " + payoutRate;
 	insuranceMultiplierDiv.innerHTML = "Insurance Multiplier: " + insuranceRate;
@@ -758,11 +758,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					
 					resultDiv.classList.add("insurance");
 					resultDiv.style.display = "flex";
-					resultDiv.innerHTML = insuranceRate != 0 ? "INSURANCE" : "INSURANCE*";
+					resultDiv.innerHTML = insuranceRate != 0 ? "MIX" : "MIX*";
 					
 					resultDescriptionDiv.classList.add("insurance");
 					resultDescriptionDiv.style.display = "block";
-					resultDescriptionDiv.innerHTML = insuranceRate != 0 ? "You backed " + bet + ". Picked sweets were mixed, so insurance paid out " + payout.toFixed(0) + " Tokens." : "You backed " + bet + ". Picked sweets were mixed. Whilst insurance would have paid here, there was no cover included in the selected payout split.";
+					resultDescriptionDiv.innerHTML = insuranceRate != 0 ? "You backed " + bet + ". Picked sweets were mixed, so mix-insurance paid out " + payout.toFixed(0) + " Tokens." : "You backed " + bet + ". Picked sweets were mixed. Whilst insurance would have paid here, there was no cover included in the selected payout split.";
 					
 					payoutDiv.classList.add("insurance");
 					payoutDiv.style.display = "flex";
