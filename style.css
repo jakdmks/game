@@ -938,8 +938,9 @@ PAYOUT SPLIT TESTING
   transition: opacity 0.5s ease;
 }
 
-#overlay-text {
+.overlay-text {
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .overlay-dismiss {
@@ -1451,4 +1452,17 @@ body {
 
 .glow-points-green {
     text-shadow: 0 0 2px lime, 0 0 4px green;
+}
+
+.winnings {
+	font-size: 1.4em;
+	text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+	padding-top: 2px;
+	box-sizing: border-box;
+	letter-spacing: -1px;
+}
+
+#cust-credit {
+	text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+	font-size: 1.2em;
 }
