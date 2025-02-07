@@ -204,7 +204,7 @@ function calculateBoost() {
 	boostRate = 0;
 	
 	//FORCE WIN STREAK
-	winStreak = 99;
+	//winStreak = 99;
 	//winStreak = 3;
 	
 	if (winStreak >= boostStreakLevelOne) {
