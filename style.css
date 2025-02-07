@@ -359,7 +359,7 @@ PAYOUT SPLIT TESTING
 	margin-bottom: 10px;
 	background-color: yellow;
 	border-width: 2px;
-	animation: flash-credit 0.7s infinite, pulse-credit 1s infinite;
+	/*animation: flash-credit 0.7s infinite, pulse-credit 1s infinite;*/
 	word-wrap: break-word;
 	color: black;
 }
@@ -418,7 +418,7 @@ PAYOUT SPLIT TESTING
 	margin-bottom: 10px;
 	background-color: #0f6b36; /* Deep Green */
 	border-width: 2px;
-	animation: flash-convert 0.7s infinite, pulse-convert 1s infinite;
+	/*animation: flash-convert 0.7s infinite, pulse-convert 1s infinite;*/
 	word-wrap: break-word;
 	color: white;
 }
@@ -493,21 +493,23 @@ PAYOUT SPLIT TESTING
   text-align: center;
   font-weight: bold;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  animation: pulse 2s infinite; /* Pulsing effect */
+  animation: pulse 1.6s infinite;
   background: linear-gradient(to bottom, #ff586b, #ff8fa6); /* Default Cherry color */
   color: #a91e1e; /* Bright red text for Cherry */
   border-color: #ff1e4e; /* Red border for Cherry */
 }
 
+/*
 .game-button-container.cherry  {
-  animation: pulse 1.5s infinite, wobble 0.8s infinite, flash-border-cherry 1.5s infinite;
+  animation: pulse 1.5s infinite, wobble 0.8s infinite, flash-border-cherry 0.8s infinite;
 }
 
 .game-button-container.cola {
-  animation: pulse 2s infinite, wobble 1.5s infinite, flash-border-cola 1.5s infinite;
+  animation: pulse 1.5s infinite, wobble 0.8s infinite, flash-border-cola 0.8s infinite;
 }
+*/
 
 /* Cherry buttons */
 .game-button-container.cherry button {
@@ -884,6 +886,12 @@ PAYOUT SPLIT TESTING
 	background-color: #0f6b36 !important;
 	color: #f1f1f1 !important;
 	animation: pulseErrorGreen 1s ease-in-out infinite !important; /* Subtle pulsing effect */
+}
+
+.red-error {
+	background-color: #8b0000 !important; /* Deep, rich red background */
+	color: #f1f1f1 !important; /* Light text for better contrast against the red background */
+	animation: pulseError 1s ease-in-out infinite !important; /* Subtle pulsing effect */
 }
 
 .green-error h1 {
@@ -1539,7 +1547,7 @@ body {
 	transition: height 0.3s ease-in-out;
 }
 .house {
-	background-color: #0f6b36;
+	background-color: #67c887;
 	transform-origin: bottom;
 }
 .player {
@@ -1572,4 +1580,8 @@ body {
 	transform: scaleY(1.75);
 	margin-top: 3px;
 	
+}
+
+.chart-stake {
+	font-size: 0.7em;
 }
