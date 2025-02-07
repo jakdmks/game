@@ -16,8 +16,8 @@ function updateStatisticsDivs() {
 	boostInsuranceDiv.innerHTML = "Boost Insurance: " + boostInsurance;
 	boostInsuranceMultiplierDiv.innerHTML = "Rate: " + boostInsuranceRate;
 	
-	payoutPctDiv.innerHTML = "Pair Pct: " + (payoutRate * 100).toFixed(0) + "%" + (payoutBoost === true ? " (+" + (boostRate * 100).toFixed(0) + "% boost)" : "");
-	insurancePctDiv.innerHTML = "Mix Pct: " + (insuranceRate * 100).toFixed(0) + "%" + (insuranceBoost === true ? " (+" + (boostRate * 100).toFixed(0) + "% boost)" : "");
+	payoutPctDiv.innerHTML = "Pair: " + (payoutRate * 100).toFixed(0) + "%" + (payoutBoost === true ? " <span style='color: #67c887;'><em>+" + (boostRate * 100).toFixed(0) + "%</em></span>" : "");
+	insurancePctDiv.innerHTML = "Mix: " + (insuranceRate * 100).toFixed(0) + "%" + (insuranceBoost === true ? " <span style='color: #71aef8;'><em>+" + (boostRate * 100).toFixed(0) + "%</em></span>" : "");
 	payoutMultiplierDiv.innerHTML = "Win Multiplier: " + payoutRate;
 	insuranceMultiplierDiv.innerHTML = "Insurance Multiplier: " + insuranceRate;
 	
@@ -205,7 +205,7 @@ function calculateBoost() {
 	
 	//FORCE WIN STREAK
 	//winStreak = 99;
-	//winStreak = 1;
+	//winStreak = 3;
 	
 	if (winStreak >= boostStreakLevelOne) {
 		boostRate = boostBonusLevelOne - boostInsuranceRate;
@@ -266,6 +266,10 @@ var insuranceBoost = false;
 //When did we last show the end of credit message?
 var lastShowOverlayEndOfCreditBetId = 0;
 
+var chartStake = 0;
+var chartHouseValue = 0;
+var chartPlayerValue = 0;
+
 //TESTING
 //boostStreakLevelOne = 0;
 	
@@ -292,6 +296,7 @@ var statistics = {
 	audit: [] 
 }
 
+var chartData = [];
 var lastPicks = [];
 
 var custCreditDiv = document.getElementById("cust-credit");
@@ -386,6 +391,15 @@ function addCredit(credit=0) {
 	creditErrors.push("Added " + credit.toFixed(0) + " Tokens...");
 	
 	displayErrors(errorContainerDiv, errorContentDiv, "DEPOSIT SUCCESS!", creditErrors, 3000);
+	
+	if (playerCredit > statistics.playerCredit) {
+		chartData = [];
+		chartStake = playerCredit + statistics.playerWinnings;
+		chartHouseValue = 0;
+		chartPlayerValue = chartStake;
+	}
+	chartPlayerValue = credit;
+	
 	updateStatisticsDivs();
 	return playerCredit;
 }
@@ -400,11 +414,20 @@ function convertWinnings() {
 	statistics.playerWinnings = 0;
 	console.info("Reset playerWinnings to ", statistics.playerWinnings);
 	
+	chartPlayerValue = playerCredit;
+	
 	//Setup Messages
 	var convertErrors = [];
 	convertErrors.push("Converted " + additionalCredit.toFixed(0) + " Tokens to Credits...");
 	
 	displayErrors(errorContainerDiv, errorContentDiv, "CONGRATULATIONS!", convertErrors, 3000);
+	
+	if (playerCredit > statistics.playerCredit) {
+		chartData = [];
+		chartStake = playerCredit + statistics.playerWinnings;
+		chartHouseValue = 0;
+		chartPlayerValue = chartStake;
+	}
 	
 	updateStatisticsDivs();
 	
@@ -535,6 +558,15 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 
 	//Clear Errors
 	clearErrors(errorContainerDiv, errorContentDiv);
+	
+	//Populate Default Chart Data
+	if (chartData.length === 0) {
+		chartData.push({
+			"Game": 0,
+			"House": 0,
+			"Player": playerCredit
+		});
+	}
 
 	console.info("stake", stake);
 	console.info("bet", bet);
@@ -736,7 +768,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					
 					resultDiv.classList.add("lose");
 					resultDiv.style.display = "flex";
-					resultDiv.innerHTML = "UNLUCKY";
+					resultDiv.innerHTML = "LOSS";
 					
 					resultDescriptionDiv.classList.add("lose");
 					resultDescriptionDiv.style.display = "block";
@@ -819,6 +851,20 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			//Highest/Lowest Value
 			statistics.houseHighestBalance = statistics.houseBalance > 0 && statistics.houseBalance * 1 > statistics.houseHighestBalance * 1 ? statistics.houseBalance : statistics.houseHighestBalance;
 			statistics.houseLowestBalance = statistics.houseBalance < 0 && statistics.houseBalance * 1 < statistics.houseLowestBalance * 1 ? statistics.houseBalance : statistics.houseLowestBalance;
+			
+			
+			//Chart Data Array
+			chartHouseValue = chartHouseValue + stake - payout;
+			console.info("chartHouseValue", chartHouseValue);
+			
+			chartPlayerValue = chartPlayerValue - stake + payout;
+			console.info("chartPlayerValue", chartPlayerValue);
+			
+			chartData.push({
+				"Game": statistics.gamesPlayed,
+				"House": chartHouseValue,
+				"Player": chartPlayerValue
+			});
 			
 			//Last picks Array
 			var lastPicksMaxSize = 7;
@@ -1004,22 +1050,57 @@ function showOverlayEndOfCredit() {
 	delete overlayStatistics.audit;
 	console.info("overlayStatistics", overlayStatistics);
 	
+	overlayStatistics.gamesPlayed = overlayStatistics.gamesPlayed.toFixed(0);
+	overlayStatistics.totalStake = overlayStatistics.totalStake.toFixed(0);
+	overlayStatistics.houseBalance = overlayStatistics.houseBalance.toFixed(0);
+	overlayStatistics.houseBalanceGBP = overlayStatistics.houseBalanceGBP.toFixed(2);
+	overlayStatistics.playerBalance = overlayStatistics.playerBalance.toFixed(0);
+	overlayStatistics.playerBalanceGBP = overlayStatistics.playerBalanceGBP.toFixed(2);
+	overlayStatistics.playerWinnings = overlayStatistics.playerWinnings.toFixed(0);
+	overlayStatistics.playerWinningsGBP = overlayStatistics.playerWinningsGBP;
+	overlayStatistics.playerCredit = overlayStatistics.playerCredit.toFixed(0);
+	overlayStatistics.playerCreditGBP = overlayStatistics.playerCreditGBP.toFixed(2);
+	overlayStatistics.playerTotalWinnings = overlayStatistics.playerTotalWinnings.toFixed(0);
+	overlayStatistics.playerTotalWinningsGBP = overlayStatistics.playerTotalWinningsGBP.toFixed(2);
+	overlayStatistics.houseHighestBalance = overlayStatistics.houseHighestBalance.toFixed(0);
+	overlayStatistics.houseLowestBalance = overlayStatistics.houseLowestBalance.toFixed(0);
+	overlayStatistics.houseHighestBalanceGame = overlayStatistics.houseHighestBalanceGame.toFixed(0);
+	overlayStatistics.houseLowestBalanceGame = overlayStatistics.houseLowestBalanceGame.toFixed(0);
+	
 	renderJson(overlayStatistics, "overlay-end-of-credit-content");
 	
 	var overlayEndOfCredit = document.getElementById("overlay-end-of-credit");
 	overlayEndOfCredit.style.visibility = "visible";
 }
 
-function hideOverlayDismiss() {
-	console.info("Running hideOverlayDismiss()");
+function hideOverlayEndOfCredit() {
+	console.info("Running hideOverlayEndOfCredit()");
 	
 	var overlayEndOfCredit = document.getElementById("overlay-end-of-credit");
 	overlayEndOfCredit.style.visibility = "hidden";
 }
 
+function showOverlayChart() {
+	
+	hideOverlayEndOfCredit()
+	console.info("chartData", chartData);
+	drawChart(chartData);
+	
+	var overlayChart = document.getElementById("overlay-chart");
+	overlayChart.style.visibility = "visible";
+}
+
+function hideOverlayChart() {
+	console.info("Running hideOverlayChart()");
+	
+	var overlayChart = document.getElementById("overlay-chart");
+	overlayChart.style.visibility = "hidden";
+}
 
 function showOverlay() {
 	console.info("Running showOverlay()");
+	
+	document.body.classList.add("blocked");
 	
 	var overlay = document.getElementById("overlay");
 	var imagesContainer = document.getElementById("overlay-images");
@@ -1055,6 +1136,7 @@ function showOverlay() {
 
 	// Save the interval ID so we can clear it when hiding the overlay
 	overlay.dataset.intervalId = intervalId;
+	document.body.classList.remove("blocked");
 }
 
 function hideOverlay() {
@@ -1218,4 +1300,54 @@ function setPayoutSplitGlow() {
 		split03Div.classList.remove("orange-glow");
 		split03Div.classList.remove("red-glow");
 	}
+}
+
+function drawChart(data) {
+	const chart = document.getElementById("chart");
+	const chartStakeDiv = document.getElementById("chart-credit");
+	
+	chart.innerHTML = "";
+	const maxValue = 10000; // Set the absolute max to 10,000
+	
+	var currentMarginBottom = 5;
+
+	var firstBar = true;
+	data.forEach(({ Game, House, Player }) => {
+		const barGroup = document.createElement("div");
+		barGroup.classList.add("bar-group");
+
+		const houseBar = document.createElement("div");
+		houseBar.classList.add("bar", "house");
+		houseBar.style.height = `${(Math.abs(House) / maxValue) * 250}px`;
+		houseBar.style.transform = House >= 0 ? "translateY(0)" : "translateY(100%)";
+		houseBar.style.backgroundColor = House < 0 ? "#8b1a1a" : "#0f6b36";
+		
+		if (House < 0 && parseInt(((Math.abs(House) / maxValue) * 250) + 5) > currentMarginBottom) {
+			currentMarginBottom = parseInt((Math.abs(House) / maxValue) * 250) + 5;
+			console.info("currentMarginBottom", currentMarginBottom);
+		}
+		chart.style.marginBottom = `${currentMarginBottom}px`;
+		
+		const playerBar = document.createElement("div");
+		playerBar.classList.add("bar", "player");
+		playerBar.style.height = `${(Math.abs(Player) / maxValue) * 250}px`;
+		playerBar.style.transform = Player >= 0 ? "translateY(0)" : "translateY(-100%)";
+		playerBar.style.backgroundColor = firstBar ? "#0f277f" : "#1c3db9";
+		
+		if (House >= 0 && Player >= 0) {
+			playerBar.style.bottom = `${parseInt(houseBar.style.height)}px`; // Player bar directly above the House bar
+		}
+
+		const label = document.createElement("div");
+		label.classList.add("label");
+
+		barGroup.appendChild(houseBar);  
+		barGroup.appendChild(playerBar);
+		barGroup.appendChild(label);
+		chart.appendChild(barGroup);
+		
+		chartStakeDiv.innerHTML = chartStake + " Tokens";
+		
+		firstBar = false;
+	});
 }
