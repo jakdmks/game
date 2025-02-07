@@ -1103,7 +1103,7 @@ function showOverlayEndOfCredit() {
 	overlayStatistics.playerBalance = overlayStatistics.playerBalance.toFixed(0);
 	overlayStatistics.playerBalanceGBP = overlayStatistics.playerBalanceGBP.toFixed(2);
 	overlayStatistics.playerWinnings = overlayStatistics.playerWinnings.toFixed(0);
-	overlayStatistics.playerWinningsGBP = overlayStatistics.playerWinningsGBP;
+	overlayStatistics.playerWinningsGBP = overlayStatistics.playerWinningsGBP.toFixed(2);
 	overlayStatistics.playerCredit = overlayStatistics.playerCredit.toFixed(0);
 	overlayStatistics.playerCreditGBP = overlayStatistics.playerCreditGBP.toFixed(2);
 	overlayStatistics.playerTotalWinnings = overlayStatistics.playerTotalWinnings.toFixed(0);
@@ -1395,7 +1395,7 @@ function drawChart(data) {
 		barGroup.appendChild(label);
 		chart.appendChild(barGroup);
 		
-		chartStakeDiv.innerHTML = chartStake + " Tokens staked";
+		chartStakeDiv.innerHTML = chartStake.toFixed(0) + " Tokens staked";
 		
 		firstBar = false;
 	});
