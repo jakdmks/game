@@ -26,7 +26,7 @@ function updateStatisticsDivs() {
 	
 	//Player Credit Panel Colour (TODO: Re-implement this...)
 	var playerCreditParentDiv = custCreditDiv.parentNode;
-	if (playerCredit <= 100) {
+	if (playerCredit < 100) {
 		playerCreditParentDiv.classList.remove("green");
 		playerCreditParentDiv.classList.add("red");		
 		creditButtonDiv.style.pointerEvents = "auto";
