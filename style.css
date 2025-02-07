@@ -880,6 +880,16 @@ PAYOUT SPLIT TESTING
   box-sizing: border-box; /* Makes sure padding doesn't affect width/height */
 }
 
+.green-error {
+	background-color: #0f6b36 !important;
+	color: #f1f1f1 !important;
+	animation: pulseErrorGreen 1s ease-in-out infinite !important; /* Subtle pulsing effect */
+}
+
+.green-error h1 {
+	color: #e1ffe1 !important;
+}
+
 /* Error Heading */
 #error-content h1 {
   font-size: 1.5em;
@@ -911,6 +921,23 @@ PAYOUT SPLIT TESTING
     box-shadow: 0 0 10px rgba(255, 77, 65, 0.6), 0 0 15px rgba(255, 77, 65, 0.4); /* Return to initial */
   }
 }
+
+/* Pulse Animation for Green Error */
+@keyframes pulseErrorGreen {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.6), 0 0 15px rgba(0, 128, 0, 0.4); /* Green glow */
+  }
+  50% {
+    transform: scale(0.97); /* Slightly shrink */
+    box-shadow: 0 0 20px rgba(0, 128, 0, 0.8), 0 0 30px rgba(0, 128, 0, 0.6); /* Brighter green glow */
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.6), 0 0 15px rgba(0, 128, 0, 0.4); /* Return to initial */
+  }
+}
+
 
 
 /* Overlay Style */
@@ -1528,4 +1555,21 @@ body {
 
 .blocked {
 	pointer-events: none;
+	overflow: hidden;
+}
+
+.blocked-scroll {
+	overflow: hidden;
+}
+
+.title-text {
+	font-size: 2em;
+	font-weight: 600;
+	letter-spacing: -4px;
+	background: linear-gradient(to right, #8b1a1a, #b22222, #8b1a1a);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	transform: scaleY(1.75);
+	margin-top: 3px;
+	
 }
