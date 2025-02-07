@@ -204,7 +204,7 @@ function calculateBoost() {
 	boostRate = 0;
 	
 	//FORCE WIN STREAK
-	//winStreak = 99;
+	winStreak = 99;
 	//winStreak = 3;
 	
 	if (winStreak >= boostStreakLevelOne) {
@@ -386,11 +386,14 @@ function addCredit(credit=0) {
 	//Add Credit
 	playerCredit = (playerCredit * 1) + (credit * 1);
 	
+	//Update playerCredit in statistics...
+	statistics.playerCredit = playerCredit;
+	
 	//Setup Messages
 	var creditErrors = [];
 	creditErrors.push("Added " + credit.toFixed(0) + " Tokens...");
 	
-	displayErrors(errorContainerDiv, errorContentDiv, "DEPOSIT SUCCESS!", creditErrors, 3000);
+	displayErrors(errorContainerDiv, errorContentDiv, "DEPOSIT SUCCESS!", creditErrors, 3000, "green-error");
 	
 	if (playerCredit > statistics.playerCredit) {
 		chartData = [];
@@ -414,13 +417,19 @@ function convertWinnings() {
 	statistics.playerWinnings = 0;
 	console.info("Reset playerWinnings to ", statistics.playerWinnings);
 	
+	//Update playerWinnings and playerCredit...
+	statistics.playerWinnings = 0;
+	statistics.playerWinningsGBP = 0;
+	statistics.playerCredit = playerCredit;
+	statistics.playerCreditGBP = playerCredit / tokenRateToGBP;
+	
 	chartPlayerValue = playerCredit;
 	
 	//Setup Messages
 	var convertErrors = [];
 	convertErrors.push("Converted " + additionalCredit.toFixed(0) + " Tokens to Credits...");
 	
-	displayErrors(errorContainerDiv, errorContentDiv, "CONGRATULATIONS!", convertErrors, 3000);
+	displayErrors(errorContainerDiv, errorContentDiv, "TRANSFER SUCCESS!", convertErrors, 3000, "green-error");
 	
 	if (playerCredit > statistics.playerCredit) {
 		chartData = [];
@@ -434,12 +443,19 @@ function convertWinnings() {
 	return statistics.playerWinnings;
 }
 
-function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages, displayForMS) {
+function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages, displayForMS, className="") {
 
 	console.info("Running displayErrors...");
 	console.info("errorHeaderText", errorHeaderText);
 	console.info("errorMessages", errorMessages);
 	console.info("displayForMS", displayForMS);
+	
+	console.info("***className: " + className);
+	
+	//Add class if one is specified...
+	if (className) {
+		contentDiv.classList.add(className);
+	}
 
 	//Set HTML for Header
 	contentDiv.innerHTML = "<h1>" + errorHeaderText + "</h1>";
@@ -507,6 +523,17 @@ function applyBoost(type="", outcome=false) {
 		payoutSplitBar200RedBoostDiv.style.width = 0 + "%";
 		payoutSplitBar150RedBoostDiv.style.width = 0 + "%";
 		
+		//Display Message
+		/*
+		var boostErrors = [];
+		boostErrors.push("Boosted pair payout by " + (boostRate * 100).toFixed(0) + "%");
+		
+		displayErrors(errorContainerDiv, errorContentDiv, "BOOST!", boostErrors, 3000, "green-error");
+		*/
+		
+		//Update playerCredit in statistics...
+		statistics.playerCredit = playerCredit;
+		
 	} else if (type === "insurance") {
 		console.info("BOOSTING INSURANCE TO", boostRate);
 		boostApplied = true;
@@ -520,6 +547,17 @@ function applyBoost(type="", outcome=false) {
 		payoutSplitBar250RedBoostDiv.style.width = (((boostRate * 100) / 300) * 100).toFixed(0) + "%";
 		payoutSplitBar200RedBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
 		payoutSplitBar150RedBoostDiv.style.width = (((boostRate * 100) / 280) * 100).toFixed(0) + "%";
+		
+		//Display Message
+		/*
+		var boostErrors = [];
+		boostErrors.push("Boosted mix insurance by " + (boostRate * 100).toFixed(0) + "%");
+		
+		displayErrors(errorContainerDiv, errorContentDiv, "BOOST!", boostErrors, 3000, "green-error");
+		*/
+		
+		//Update playerCredit in statistics...
+		statistics.playerCredit = playerCredit;
 		
 		
 	} else if (type === "both" && outcome === false) {
@@ -630,6 +668,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		//TODO: At the start of the timer, add a "Betting" overlay...
 		
 		showOverlay();
+		document.body.classList.add("blocked");
 		
 		var tempTimeout = setTimeout(() => {
 		
@@ -737,7 +776,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					
 					resultDiv.classList.add("win");
 					resultDiv.style.display = "flex";
-					resultDiv.innerHTML = "WON!";
+					resultDiv.innerHTML = "WIN!";
 					
 					resultDescriptionDiv.classList.add("win");
 					resultDescriptionDiv.style.display = "block";
@@ -887,6 +926,8 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			calculateBoost();
 			updateStatisticsDivs();
 			renderLastPicks();
+			
+			document.body.classList.remove("blocked");
 			
 			return pickedSweets;
 			//End of Delay
@@ -1044,6 +1085,8 @@ function renderJson(jsonData, displayContainerId) {
 
 function showOverlayEndOfCredit() {
 	
+	document.body.classList.add("blocked-scroll");
+	
 	var overlayStatistics = JSON.parse(JSON.stringify(statistics));
 	console.info("overlayStatistics", overlayStatistics);
 	
@@ -1076,11 +1119,15 @@ function showOverlayEndOfCredit() {
 function hideOverlayEndOfCredit() {
 	console.info("Running hideOverlayEndOfCredit()");
 	
+	document.body.classList.remove("blocked-scroll");
+	
 	var overlayEndOfCredit = document.getElementById("overlay-end-of-credit");
 	overlayEndOfCredit.style.visibility = "hidden";
 }
 
 function showOverlayChart() {
+	
+	document.body.classList.add("blocked-scroll");
 	
 	hideOverlayEndOfCredit()
 	console.info("chartData", chartData);
@@ -1093,14 +1140,14 @@ function showOverlayChart() {
 function hideOverlayChart() {
 	console.info("Running hideOverlayChart()");
 	
+	document.body.classList.remove("blocked-scroll");
+	
 	var overlayChart = document.getElementById("overlay-chart");
 	overlayChart.style.visibility = "hidden";
 }
 
 function showOverlay() {
 	console.info("Running showOverlay()");
-	
-	document.body.classList.add("blocked");
 	
 	var overlay = document.getElementById("overlay");
 	var imagesContainer = document.getElementById("overlay-images");
@@ -1136,7 +1183,6 @@ function showOverlay() {
 
 	// Save the interval ID so we can clear it when hiding the overlay
 	overlay.dataset.intervalId = intervalId;
-	document.body.classList.remove("blocked");
 }
 
 function hideOverlay() {
