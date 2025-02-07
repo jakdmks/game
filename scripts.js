@@ -1,7 +1,7 @@
 function updateStatisticsDivs() {
 	custCreditDiv.innerHTML = "CREDIT<BR />" + playerCredit.toFixed(0);
-	custWinningsDiv.innerHTML = statistics.playerWinnings;
-	custTotalWinningsDiv.innerHTML = statistics.playerTotalWinnings;
+	custWinningsDiv.innerHTML = statistics.playerWinnings.toFixed(0);
+	custTotalWinningsDiv.innerHTML = statistics.playerTotalWinnings.toFixed(0);
 	houseBalanceDebugDiv.innerHTML = "House Balance: " + statistics.houseBalance + " Tokens";
 	houseCashDebugDiv.innerHTML = "House Balance: " + (statistics.houseBalance / tokenRateToGBP).toFixed(2) + " GBP";
 	custBalanceDebugDiv.innerHTML = "Cust' Balance: " + statistics.playerBalance + " Tokens";
@@ -49,11 +49,11 @@ function updateStatisticsDivs() {
 	}
 	
 	//Displaying Bonus Buttons - move to another function?
-	console.info("boostAvailable", boostAvailable);
+	//console.info("boostAvailable", boostAvailable);
 	
 	if (boostAvailable) {
 		
-		console.info("######boostRate", boostRate);
+		//console.info("######boostRate", boostRate);
 		
 		if (boostLevel >= 1) {
 			boostGraphic1Span.classList.add("selected");
@@ -145,12 +145,12 @@ function updateStatisticsDivs() {
 }
 
 function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="") {
-	console.info("Running updatePayoutSplit()");
-	console.info("newPayoutRate", newPayoutRate);
-	console.info("newInsuranceRate", newInsuranceRate);
+	//console.info("Running updatePayoutSplit()");
+	//console.info("newPayoutRate", newPayoutRate);
+	//console.info("newInsuranceRate", newInsuranceRate);
 	
 	payoutSplitCode = option;
-	console.info("payoutSplitCode", payoutSplitCode);
+	//console.info("payoutSplitCode", payoutSplitCode);
 	
 	var totalPayoutCheck = -99;
 	
@@ -176,10 +176,10 @@ function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="") {
 	var check = parseFloat(totalPayoutCheck - newPayoutRate - newInsuranceRate);
 	check = check.toFixed(2) * 1;
 	
-	console.info("totalPayoutCheck", totalPayoutCheck);
-	console.info("newPayoutRate", newPayoutRate);
-	console.info("newInsuranceRate", newInsuranceRate);
-	console.info("Check", check);
+	//console.info("totalPayoutCheck", totalPayoutCheck);
+	//console.info("newPayoutRate", newPayoutRate);
+	//console.info("newInsuranceRate", newInsuranceRate);
+	//console.info("Check", check);
 	
 	if (check === 0) {
 		payoutRate = newPayoutRate;
@@ -188,15 +188,15 @@ function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="") {
 		payoutRate = 0;
 		insuranceRate = 0;
 	}
-	console.info("payoutRate", payoutRate);
-	console.info("insuranceRate", insuranceRate);
+	//console.info("payoutRate", payoutRate);
+	//console.info("insuranceRate", insuranceRate);
 	
 	applyBoost("both", false);
 	updateStatisticsDivs();
 }
 
 function calculateBoost() {
-	console.info("Running calculateBoost()");
+	//console.info("Running calculateBoost()");
 	
 	boostAvailable = false;
 	//boostApplied = false; //JW: Seems to be messing up with the payment-split bars
@@ -224,7 +224,7 @@ function calculateBoost() {
 	} else {
 		boostAvailable = false;
 	}
-	console.info("boostRate", boostRate);
+	//console.info("boostRate", boostRate);
 }
 
 //TODO: Dom Loaded
@@ -275,6 +275,7 @@ var chartPlayerValue = 0;
 	
 var statistics = {
 	gamesPlayed: 0,
+	tokenRateToGBP: 0,
 	totalStake: 0,
 	houseBalance: 0,
 	houseBalanceGBP: 0,
@@ -386,6 +387,14 @@ function addCredit(credit=0) {
 	//Add Credit
 	playerCredit = (playerCredit * 1) + (credit * 1);
 	
+	//Maybe move this above?
+	chartData = [];
+	chartStake = playerCredit;
+	//console.info("SETTING CHART STAKE TO", chartStake);
+	
+	chartHouseValue = 0;
+	chartPlayerValue = chartStake;
+	
 	//Update playerCredit in statistics...
 	statistics.playerCredit = playerCredit;
 	
@@ -394,14 +403,6 @@ function addCredit(credit=0) {
 	creditErrors.push("Added " + credit.toFixed(0) + " Tokens...");
 	
 	displayErrors(errorContainerDiv, errorContentDiv, "DEPOSIT SUCCESS!", creditErrors, 3000, "green-error");
-	
-	if (playerCredit > statistics.playerCredit) {
-		chartData = [];
-		chartStake = playerCredit + statistics.playerWinnings;
-		chartHouseValue = 0;
-		chartPlayerValue = chartStake;
-	}
-	chartPlayerValue = credit;
 	
 	updateStatisticsDivs();
 	return playerCredit;
@@ -412,10 +413,16 @@ function convertWinnings() {
 	var additionalCredit = statistics.playerWinnings;
 
 	playerCredit = playerCredit + additionalCredit;
-	console.info("increased playerCredit by ", additionalCredit);
+	//console.info("increased playerCredit by ", additionalCredit);
+	
+	chartData = [];
+	chartStake = playerCredit;
+	chartHouseValue = 0;
+	chartPlayerValue = chartStake;
+	//console.info("SETTING CHART STAKE TO...", chartStake);
 	
 	statistics.playerWinnings = 0;
-	console.info("Reset playerWinnings to ", statistics.playerWinnings);
+	//console.info("Reset playerWinnings to ", statistics.playerWinnings);
 	
 	//Update playerWinnings and playerCredit...
 	statistics.playerWinnings = 0;
@@ -431,13 +438,6 @@ function convertWinnings() {
 	
 	displayErrors(errorContainerDiv, errorContentDiv, "TRANSFER SUCCESS!", convertErrors, 3000, "green-error");
 	
-	if (playerCredit > statistics.playerCredit) {
-		chartData = [];
-		chartStake = playerCredit + statistics.playerWinnings;
-		chartHouseValue = 0;
-		chartPlayerValue = chartStake;
-	}
-	
 	updateStatisticsDivs();
 	
 	return statistics.playerWinnings;
@@ -445,15 +445,17 @@ function convertWinnings() {
 
 function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages, displayForMS, className="") {
 
-	console.info("Running displayErrors...");
-	console.info("errorHeaderText", errorHeaderText);
-	console.info("errorMessages", errorMessages);
-	console.info("displayForMS", displayForMS);
+	//console.info("Running displayErrors...");
+	//console.info("errorHeaderText", errorHeaderText);
+	//console.info("errorMessages", errorMessages);
+	//console.info("displayForMS", displayForMS);
 	
-	console.info("***className: " + className);
+	//console.info("***className: " + className);
 	
 	//Add class if one is specified...
 	if (className) {
+		contentDiv.className = "";
+		//console.info("adding class", className);
 		contentDiv.classList.add(className);
 	}
 
@@ -487,7 +489,7 @@ function insuranceSwitch(checked=true) {
 		updateStatisticsDivs();
 		applyBoost(boostAppliedType, boostApplied);
 	} else {
-		console.info("Not allowed...");
+		//console.info("Not allowed...");
 		//Forcing the box back to old state...
 		var boostInsuranceCheckbox = document.getElementById("boost-insurance-checkbox");
 		boostInsuranceCheckbox.checked = !checked;
@@ -496,7 +498,7 @@ function insuranceSwitch(checked=true) {
 		var insuranceSwitchErrors = [];
 		insuranceSwitchErrors.push("Locked at level 2 and above. Non-bet pair resets...");
 		
-		displayErrors(errorContainerDiv, errorContentDiv, "ATTENTION!", insuranceSwitchErrors, 3000);		
+		displayErrors(errorContainerDiv, errorContentDiv, "ATTENTION!", insuranceSwitchErrors, 3000, "red-error");		
 	}
 }
 
@@ -510,7 +512,7 @@ function applyBoost(type="", outcome=false) {
 	var payoutSplitBar150RedBoostDiv = document.getElementById("payout-split-bar-150-100-red-boost");
 
 	if (type === "payout") {
-		console.info("BOOSTING PAYOUT TO", boostRate);
+		//console.info("BOOSTING PAYOUT TO", boostRate);
 		payoutBoost = outcome;
 		boostApplied = true;
 		boostAppliedType = "payout";
@@ -535,7 +537,7 @@ function applyBoost(type="", outcome=false) {
 		statistics.playerCredit = playerCredit;
 		
 	} else if (type === "insurance") {
-		console.info("BOOSTING INSURANCE TO", boostRate);
+		//console.info("BOOSTING INSURANCE TO", boostRate);
 		boostApplied = true;
 		boostAppliedType = "insurance";
 		payoutBoost = false;
@@ -606,11 +608,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		});
 	}
 
-	console.info("stake", stake);
-	console.info("bet", bet);
-	console.info("payoutBoost", payoutBoost);
-	console.info("insuranceRate", insuranceRate);
-	console.info("insuranceBoost", insuranceBoost);
+	//console.info("stake", stake);
+	//console.info("bet", bet);
+	//console.info("payoutBoost", payoutBoost);
+	//console.info("insuranceRate", insuranceRate);
+	//console.info("insuranceBoost", insuranceBoost);
 	
 	var payout = 0;
 	var housePayout = 0;
@@ -686,7 +688,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			betId++;
 		
 			playerCredit = playerCredit - stake;
-			console.info("Updating player credit", playerCredit);
+			//console.info("Updating player credit", playerCredit);
 		
 			//playerCredit = playerCredit - stake;
 			custCreditDiv.innerHTML = "Credit: " + playerCredit.toFixed(0) + " Tokens";
@@ -764,15 +766,15 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			//TODO: ...the problem is when the house balance drops below 0
 			
 			if (pickedSweets.Sweet1 === pickedSweets.Sweet2) {
-				console.info("Matching");
+				//console.info("Matching");
 				if (pickedSweets.Sweet1 === bet) {
 					outcome = "win";
 					payout = stake * (payoutRate + payoutBoostRate), 2;
 					housePayout = stake - payout, 2;
 					winStreak++;
-					console.info("Bet wins!");
-					console.info("payoutRate", payoutRate);
-					console.info("payout", payout);
+					//console.info("Bet wins!");
+					//console.info("payoutRate", payoutRate);
+					//console.info("payout", payout);
 					
 					resultDiv.classList.add("win");
 					resultDiv.style.display = "flex";
@@ -780,7 +782,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					
 					resultDescriptionDiv.classList.add("win");
 					resultDescriptionDiv.style.display = "block";
-					resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you won " + payout + " Tokens this time.";
+					resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you won " + payout.toFixed(0) + " Tokens this time.";
 					
 					payoutDiv.classList.add("win");
 					payoutDiv.style.display = "flex";
@@ -801,9 +803,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					outcome = "loss";
 					housePayout = stake;
 					winStreak = 0;
-					console.info("Bet loses.");
-					console.info("payoutRate", payoutRate);
-					console.info("payout", payout);
+					//console.info("Bet loses.");
+					//console.info("payoutRate", payoutRate);
+					//console.info("payout", payout);
 					
 					resultDiv.classList.add("lose");
 					resultDiv.style.display = "flex";
@@ -823,9 +825,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					payout = stake * (insuranceRate + insuranceBoostRate), 2;
 					housePayout = stake - payout, 2;
 					winStreak = boostInsurance ? winStreak : 0;
-					console.info("Bet loses.");
-					console.info("insuranceRate", insuranceRate);
-					console.info("payout", payout);
+					//console.info("Bet loses.");
+					//console.info("insuranceRate", insuranceRate);
+					//console.info("payout", payout);
 					
 					resultDiv.classList.add("insurance");
 					resultDiv.style.display = "flex";
@@ -871,6 +873,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			
 			//Statistics
 			statistics.gamesPlayed++;
+			statistics.tokenRateToGBP = tokenRateToGBP;
 			statistics.totalStake = statistics.totalStake  + stake;
 			statistics.houseBalance = statistics.houseBalance + housePayout;
 			statistics.houseBalanceGBP = statistics.houseBalance / tokenRateToGBP;
@@ -894,10 +897,10 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			
 			//Chart Data Array
 			chartHouseValue = chartHouseValue + stake - payout;
-			console.info("chartHouseValue", chartHouseValue);
+			//console.info("chartHouseValue", chartHouseValue);
 			
 			chartPlayerValue = chartPlayerValue - stake + payout;
-			console.info("chartPlayerValue", chartPlayerValue);
+			//console.info("chartPlayerValue", chartPlayerValue);
 			
 			chartData.push({
 				"Game": statistics.gamesPlayed,
@@ -916,9 +919,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			lastPicks.push(lastPickRecord);
 			
 			//Console output
-			console.info("auditObject", auditObject);
-			console.info("statistics", statistics);
-			console.info("lastPicks", lastPicks);
+			//console.info("auditObject", auditObject);
+			//console.info("statistics", statistics);
+			//console.info("lastPicks", lastPicks);
 			
 			//Cheeky - unselect their boost each time...
 			applyBoost("both", false);
@@ -935,10 +938,10 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 	} else {
 	
 		//End of game stats overlay...
-		console.info("playerCredit", playerCredit);
-		console.info("statistics.gamesPlayed", statistics.gamesPlayed);
-		console.info("lastShowOverlayEndOfCreditBetId", lastShowOverlayEndOfCreditBetId);
-		console.info("betId", betId);
+		//console.info("playerCredit", playerCredit);
+		//console.info("statistics.gamesPlayed", statistics.gamesPlayed);
+		//console.info("lastShowOverlayEndOfCreditBetId", lastShowOverlayEndOfCreditBetId);
+		//console.info("betId", betId);
 		
 		if (playerCredit - stake <= 0 && statistics.gamesPlayed > 0) {
 			showOverlayEndOfCredit();
@@ -958,7 +961,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			pickSweetsErrors.push("Insufficient Credit! Please add more to play or choose a lower stake...");
 		}
 		
-		displayErrors(errorContainerDiv, errorContentDiv, "ATTENTION!", pickSweetsErrors, 3000);
+		displayErrors(errorContainerDiv, errorContentDiv, "ATTENTION!", pickSweetsErrors, 3000, "red-error");
 		return false;
 	}
 }
@@ -975,8 +978,8 @@ function renderLastPicks() {
 		const isLast = index === lastPicks.length - 1; // Check if it's the last pick
 		const isFirst = index === 0; //Check if it's the first pick
 		
-		console.info("isFirst", isFirst);
-		console.info("isLast", isLast);
+		//console.info("isFirst", isFirst);
+		//console.info("isLast", isLast);
 		
 		if (!isLast) {
 			// Previous Sweets
@@ -1055,7 +1058,7 @@ function renderSweets(sweet1="", sweet2="") {
 }
 
 function clearErrors(containerDiv=null, contentDiv=null) {
-	console.info("Running clearErrors");
+	//console.info("Running clearErrors");
 	//errors = [];
 	contentDiv.innerHTML = "";
 	containerDiv.style.display = "none";
@@ -1088,10 +1091,10 @@ function showOverlayEndOfCredit() {
 	document.body.classList.add("blocked-scroll");
 	
 	var overlayStatistics = JSON.parse(JSON.stringify(statistics));
-	console.info("overlayStatistics", overlayStatistics);
+	//console.info("overlayStatistics", overlayStatistics);
 	
 	delete overlayStatistics.audit;
-	console.info("overlayStatistics", overlayStatistics);
+	//console.info("overlayStatistics", overlayStatistics);
 	
 	overlayStatistics.gamesPlayed = overlayStatistics.gamesPlayed.toFixed(0);
 	overlayStatistics.totalStake = overlayStatistics.totalStake.toFixed(0);
@@ -1117,7 +1120,7 @@ function showOverlayEndOfCredit() {
 }
 
 function hideOverlayEndOfCredit() {
-	console.info("Running hideOverlayEndOfCredit()");
+	//console.info("Running hideOverlayEndOfCredit()");
 	
 	document.body.classList.remove("blocked-scroll");
 	
@@ -1130,7 +1133,7 @@ function showOverlayChart() {
 	document.body.classList.add("blocked-scroll");
 	
 	hideOverlayEndOfCredit()
-	console.info("chartData", chartData);
+	//console.info("chartData", chartData);
 	drawChart(chartData);
 	
 	var overlayChart = document.getElementById("overlay-chart");
@@ -1138,7 +1141,7 @@ function showOverlayChart() {
 }
 
 function hideOverlayChart() {
-	console.info("Running hideOverlayChart()");
+	//console.info("Running hideOverlayChart()");
 	
 	document.body.classList.remove("blocked-scroll");
 	
@@ -1147,7 +1150,7 @@ function hideOverlayChart() {
 }
 
 function showOverlay() {
-	console.info("Running showOverlay()");
+	//console.info("Running showOverlay()");
 	
 	var overlay = document.getElementById("overlay");
 	var imagesContainer = document.getElementById("overlay-images");
@@ -1186,7 +1189,7 @@ function showOverlay() {
 }
 
 function hideOverlay() {
-	console.info("Running hideOverlay()");
+	//console.info("Running hideOverlay()");
 	
 	var overlay = document.getElementById("overlay");
 	overlay.style.visibility = "hidden";
@@ -1263,7 +1266,7 @@ function animatePoints(stake, rate, splitPointsAt, textColor, className="", boos
 	if (tempPayout > 0) {
 		
 		var tempPayoutChunks = ((tempPayout / splitPointsAt).toFixed(0) * 1);
-		console.info(">> tempPayoutChunks", tempPayoutChunks);
+		//console.info(">> tempPayoutChunks", tempPayoutChunks);
 		
 		for (var i = 0; i < tempPayoutChunks; i++) {
 			createFlyingText("+" + splitPointsAt.toFixed(0), textColor, className);
@@ -1288,12 +1291,12 @@ function animatePoints(stake, rate, splitPointsAt, textColor, className="", boos
 }
 
 function setPayoutSplitGlow() {
-	console.info("Running setPayoutSplitGlow");
-	console.info("boostRate", boostRate);
-	console.info("payoutBoostRate", payoutBoostRate);
-	console.info("insuranceBoostRate", insuranceBoostRate);
-	console.info("payoutSplitCode", payoutSplitCode);
-	console.info("boostLevel", boostLevel);
+	//console.info("Running setPayoutSplitGlow");
+	//console.info("boostRate", boostRate);
+	//console.info("payoutBoostRate", payoutBoostRate);
+	//console.info("insuranceBoostRate", insuranceBoostRate);
+	//console.info("payoutSplitCode", payoutSplitCode);
+	//console.info("boostLevel", boostLevel);
 	
 	if (boostRate > 0) {
 		if (payoutSplitCode === "SPLIT01") {
@@ -1361,16 +1364,16 @@ function drawChart(data) {
 	data.forEach(({ Game, House, Player }) => {
 		const barGroup = document.createElement("div");
 		barGroup.classList.add("bar-group");
-
+		
 		const houseBar = document.createElement("div");
 		houseBar.classList.add("bar", "house");
 		houseBar.style.height = `${(Math.abs(House) / maxValue) * 250}px`;
 		houseBar.style.transform = House >= 0 ? "translateY(0)" : "translateY(100%)";
-		houseBar.style.backgroundColor = House < 0 ? "#8b1a1a" : "#0f6b36";
+		houseBar.style.backgroundColor = House < 0 ? "#8b1a1a" : "#67c887";
 		
 		if (House < 0 && parseInt(((Math.abs(House) / maxValue) * 250) + 5) > currentMarginBottom) {
 			currentMarginBottom = parseInt((Math.abs(House) / maxValue) * 250) + 5;
-			console.info("currentMarginBottom", currentMarginBottom);
+			//console.info("currentMarginBottom", currentMarginBottom);
 		}
 		chart.style.marginBottom = `${currentMarginBottom}px`;
 		
@@ -1392,7 +1395,7 @@ function drawChart(data) {
 		barGroup.appendChild(label);
 		chart.appendChild(barGroup);
 		
-		chartStakeDiv.innerHTML = chartStake + " Tokens";
+		chartStakeDiv.innerHTML = chartStake + " Tokens staked";
 		
 		firstBar = false;
 	});
