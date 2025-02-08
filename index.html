@@ -22,14 +22,14 @@
 	<div class="overlay-dismiss" id="overlay-end-of-credit">
 		<div class="panel" style="font-siz: 0.7em">
 			<div id="overlay-end-of-credit-content"></div>
-			<button class="dismiss-button" id="overlay-end-of-credit-dismiss-button" onclick="showOverlayEndOfCredit2()">More...</button>
+			<button class="dismiss-button" id="overlay-end-of-credit-dismiss-button" onclick="showOverlayEndOfCredit2()">More</button>
 		</div>
 	</div>
 	
 	<div class="overlay-dismiss" id="overlay-end-of-credit-2">
 		<div class="panel" style="font-siz: 0.7em">
 			<div id="overlay-end-of-credit-content-2"></div>
-			<button class="dismiss-button" id="overlay-end-of-credit-dismiss-button" onclick="showOverlayChart()">Chart...</button>
+			<button class="dismiss-button" id="overlay-end-of-credit-dismiss-button" onclick="showOverlayChart()">Chart</button>
 		</div>
 	</div>
 	
@@ -123,6 +123,11 @@
 		<div style="display: block;">
 			<div class="title-text">TWIN SWEETS</div>
 			<span id="win-streak-text" class="boost-small grey">streak x</span><span id="win-streak-num" class="boost-large grey">X</span>
+			<div style="display: none">
+				<img src="images/lock.png" height="30px" alt="Lives">
+				<div style="" id="boost-insurance-lives">X</div>
+			</div>
+
 		</div>
 		<!--BOOST GRAPHICAL DISPLAY-->
 		<div style="display: block; margin-top: -17px; margin-bottom: -5px;">
@@ -188,7 +193,7 @@
 			<div class="boost-insurance-div" style="display: inline-block">
 				<input type="checkbox" id="boost-insurance-checkbox" name="boost-insurance-checkbox" onchange="insuranceSwitch(this.checked)" />
 				<label for="boost-insurance-checkbox">Streak Protection?</label>
-				<div style="font-size: 0.65em; font-style: italic">Pays out 20% less on boosts but your streak maintains on mixed pair</div>
+				<div style="font-size: 0.65em; font-style: italic">Pays out 20% less on boosts but your streak maintains up to 3 consecutive mixed pairs</div>
 			</div>
 			<!--<div style="font-size: 0.8em;"><em>(Can only change once win streak returns to 0)</em></div>-->
 	  </div>
