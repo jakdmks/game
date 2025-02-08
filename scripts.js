@@ -230,8 +230,8 @@ function calculateBoost() {
 //TODO: Dom Loaded
 var tokenRateToGBP = 1000;
 var playerCredit = 0;
-var payoutRate = 1.9; //2
-var insuranceRate = 0.5;
+var payoutRate = 2;
+var insuranceRate = 0.4;
 var winStreak = 0;
 
 //Boost
@@ -375,7 +375,7 @@ var split03Div = document.getElementById("payout-split-bar-150-100");
 
 var flyingPointsDiv = document.getElementById("flying-points");
 
-updatePayoutSplit(1.9, 0.5, "SPLIT02"); //2, 0.5
+updatePayoutSplit(2, 0.4, "SPLIT02"); //2, 0.5
 insuranceSwitch(false);
 calculateBoost();
 updateStatisticsDivs();
