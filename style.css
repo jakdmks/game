@@ -1459,9 +1459,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
+    padding: 4px;
     border-bottom: 1px solid black;
-	font-size: 0.8em;
+	font-size: 0.7em;
 }
 
 .json-item-cell {
