@@ -276,6 +276,9 @@ var chartPlayerValue = 0;
 var statistics = {
 	gamesPlayed: 0,
 	playerHighestWinStreak: 0,
+	boostProtectInvoked: 0,
+	boostProtectInvokedRun: 0,
+	boostProtectInvokedMax: 0,
 	tokenRateToGBP: 0,
 	totalStake: 0,
 	houseBalance: 0,
@@ -914,6 +917,10 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			
 			statistics.playerHighestWinStreak = winStreak > statistics.playerHighestWinStreak ? winStreak : statistics.playerHighestWinStreak;
 			
+			statistics.boostProtectInvoked = statistics.boostProtectInvoked + ((boostInsurance && outcome === "insurance" && boostLevel >= 1) ? 1 : 0);
+			statistics.boostProtectInvokedRun = (boostInsurance && outcome === "insurance" && boostLevel >= 1) ? statistics.boostProtectInvokedRun + 1 : 0;
+			statistics.boostProtectInvokedMax = (statistics.boostProtectInvokedRun > statistics.boostProtectInvokedMax) ? statistics.boostProtectInvokedRun : statistics.boostProtectInvokedMax;
+			
 			//Chart Data Array
 			chartHouseValue = chartHouseValue + stake - payout;
 			//console.info("chartHouseValue", chartHouseValue);
@@ -1179,12 +1186,17 @@ function showOverlayEndOfCredit() {
 	delete overlayStatistics.houseBalancePerGameGBP;
 	delete overlayStatistics.houseBalancePerGamePct;
 	delete overlayStatistics.tokenRateToGBP;
+	delete overlayStatistics.playerTotalWinnings;
+	delete overlayStatistics.playerTotalWinningsGBP;
 	delete overlayStatistics.totalStake;
 	//console.info("overlayStatistics", overlayStatistics);
 	
 	overlayStatistics.gamesPlayed = overlayStatistics.gamesPlayed.toFixed(0);
 	//overlayStatistics.tokenRateToGBP = overlayStatistics.tokenRateToGBP.toFixed(0);
 	overlayStatistics.playerHighestWinStreak = overlayStatistics.playerHighestWinStreak.toFixed(0);
+	overlayStatistics.boostProtectInvoked = overlayStatistics.boostProtectInvoked.toFixed(0);
+	overlayStatistics.boostProtectInvokedRun = overlayStatistics.boostProtectInvokedRun.toFixed(0);
+	overlayStatistics.boostProtectInvokedMax = overlayStatistics.boostProtectInvokedMax.toFixed(0);
 	//overlayStatistics.totalStake = overlayStatistics.totalStake.toFixed(0);
 	overlayStatistics.houseBalance = overlayStatistics.houseBalance.toFixed(0);
 	overlayStatistics.houseBalanceGBP = overlayStatistics.houseBalanceGBP.toFixed(2);
@@ -1194,8 +1206,8 @@ function showOverlayEndOfCredit() {
 	overlayStatistics.playerWinningsGBP = overlayStatistics.playerWinningsGBP.toFixed(2);
 	overlayStatistics.playerCredit = overlayStatistics.playerCredit.toFixed(0);
 	overlayStatistics.playerCreditGBP = overlayStatistics.playerCreditGBP.toFixed(2);
-	overlayStatistics.playerTotalWinnings = overlayStatistics.playerTotalWinnings.toFixed(0);
-	overlayStatistics.playerTotalWinningsGBP = overlayStatistics.playerTotalWinningsGBP.toFixed(2);
+	//overlayStatistics.playerTotalWinnings = overlayStatistics.playerTotalWinnings.toFixed(0);
+	//overlayStatistics.playerTotalWinningsGBP = overlayStatistics.playerTotalWinningsGBP.toFixed(2);
 	//overlayStatistics.houseHighestBalance = overlayStatistics.houseHighestBalance.toFixed(0);
 	//overlayStatistics.houseLowestBalance = overlayStatistics.houseLowestBalance.toFixed(0);
 	//overlayStatistics.houseHighestBalanceGame = overlayStatistics.houseHighestBalanceGame.toFixed(0);
@@ -1229,12 +1241,17 @@ function showOverlayEndOfCredit2() {
 	delete overlayStatistics.playerWinningsGBP;
 	delete overlayStatistics.playerCredit;
 	delete overlayStatistics.playerCreditGBP;
-	delete overlayStatistics.playerTotalWinnings;
-	delete overlayStatistics.playerTotalWinningsGBP;
+	//delete overlayStatistics.playerTotalWinnings;
+	//delete overlayStatistics.playerTotalWinningsGBP;
 	delete overlayStatistics.playerHighestWinStreak
+	delete overlayStatistics.boostProtectInvoked;
+	delete overlayStatistics.boostProtectInvokedMax;
+	delete overlayStatistics.boostProtectInvokedRun;
 	//console.info("overlayStatistics", overlayStatistics);
 	
 	overlayStatistics.tokenRateToGBP = overlayStatistics.tokenRateToGBP.toFixed(0);
+	overlayStatistics.playerTotalWinnings = overlayStatistics.playerTotalWinnings.toFixed(0);
+	overlayStatistics.playerTotalWinningsGBP = overlayStatistics.playerTotalWinningsGBP.toFixed(2);
 	overlayStatistics.totalStake = overlayStatistics.totalStake.toFixed(0);
 	overlayStatistics.houseHighestBalance = overlayStatistics.houseHighestBalance.toFixed(0);
 	overlayStatistics.houseLowestBalance = overlayStatistics.houseLowestBalance.toFixed(0);
@@ -1247,7 +1264,7 @@ function showOverlayEndOfCredit2() {
 	overlayStatistics.houseBalancePerGamePct = overlayStatistics.houseBalancePerGamePct.toFixed(2) + "%";
 	
 	//Add blanks so the screens line up
-	overlayStatistics._BLANK_1 = "-";
+	//overlayStatistics._BLANK_1 = "-";
 	
 	renderJson(overlayStatistics, "overlay-end-of-credit-content-2");
 	
