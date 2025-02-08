@@ -12,8 +12,8 @@ input[type="radio"] + label {
 }
 
 input[type="checkbox"] {
-  width: 2.2em; /* Increase width for larger size */
-  height: 2.2em; /* Increase height for larger size */
+  width: 2em; /* Increase width for larger size */
+  height: 2em; /* Increase height for larger size */
   vertical-align: middle; /* Align with surrounding text/content */
   cursor: pointer; /* Pointer reflects interactivity */
 }
@@ -1523,7 +1523,7 @@ body {
 .winnings {
 	font-size: 1.4em;
 	text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
-	padding-top: 7px;
+	padding-top: 6px;
 	box-sizing: border-box;
 	letter-spacing: -1px;
 }
