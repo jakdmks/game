@@ -1137,15 +1137,16 @@ function renderJson(jsonData, displayContainerId) {
 	
 	Object.entries(jsonData).forEach(([key, value]) => {
 		
+		colorClass = "";
+		
 		//JW - colours
 		switch (key) {
+			/*
 			case "houseHighestBalanceGame":
-					colorClass = "value-green";
-				break;
-				
 			case "houseLowestBalanceGame":
-					colorClass = "value-red";
+					colorClass = value < 0 ? "value-red" : value > 0 ? "value-green" : "value-white";
 				break;
+			*/
 				
 			case "houseBalance":
 			case "houseBalanceGBP":
