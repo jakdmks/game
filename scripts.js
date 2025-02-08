@@ -1227,6 +1227,7 @@ function showOverlayEndOfCredit() {
 function showOverlayEndOfCredit2() {
 	
 	document.body.classList.add("blocked-scroll");
+	hideOverlayEndOfCredit();
 	
 	var overlayStatistics = JSON.parse(JSON.stringify(statistics));
 	//console.info("overlayStatistics", overlayStatistics);
