@@ -867,7 +867,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					if (boostInsurance && boostLevel >= 1) {
 						boostInsuranceRunCurrent++;
 						
-						if (boostInsuranceRunCurrent > boostInsuranceRunMax) {
+						if (boostInsuranceRunCurrent >= boostInsuranceRunMax) {
 							statistics.boostProtectMaxResetBoostCount = statistics.boostProtectMaxResetBoostCount + 1;
 							boostInsuranceRunCurrent = 0;
 							winStreak = 0;
