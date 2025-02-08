@@ -509,7 +509,7 @@ function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages,
 
 function insuranceSwitch(checked=true) {
 	//We always want to let them switch it on... but only off if the winStreak is 0
-	if (((winStreak === 0 || winStreak === 1) && !checked) || checked) {
+	if (((winStreak === 0) && !checked) || checked) {
 		boostInsurance = checked;
 		boostInsuranceRate = boostInsurance ? boostInsuranceRate = boostInsuranceRateAvailable : 0;
 		calculateBoost();
@@ -523,7 +523,7 @@ function insuranceSwitch(checked=true) {
 		
 		//Display Error to user
 		var insuranceSwitchErrors = [];
-		insuranceSwitchErrors.push("Locked at level 2 and above. Non-bet pair resets...");
+		insuranceSwitchErrors.push("Locked at level 1 and above. Non-bet pair or " + (boostInsuranceRunMax - boostInsuranceRunCurrent) + " consecutive mixed pair" + ((boostInsuranceRunMax - boostInsuranceRunCurrent) > 1 ? "s" : "") + "reset...");
 		
 		displayErrors(errorContainerDiv, errorContentDiv, "ATTENTION!", insuranceSwitchErrors, 3000, "red-error");		
 	}
