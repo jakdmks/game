@@ -275,6 +275,7 @@ var chartPlayerValue = 0;
 	
 var statistics = {
 	gamesPlayed: 0,
+	playerHighestWinStreak: 0,
 	tokenRateToGBP: 0,
 	totalStake: 0,
 	houseBalance: 0,
@@ -300,6 +301,7 @@ var statistics = {
 	houseBalancePerGame: 0,
 	houseBalancePerGameGBP: 0,
 	
+	houseBalancePerGamePct: 0,
 	
 	audit: [] 
 }
@@ -488,7 +490,7 @@ function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages,
 }
 
 function insuranceSwitch(checked=true) {
-	//We always want to let them switch it on... but only off if the winstreak is 0
+	//We always want to let them switch it on... but only off if the winStreak is 0
 	if (((winStreak === 0 || winStreak === 1) && !checked) || checked) {
 		boostInsurance = checked;
 		boostInsuranceRate = boostInsurance ? boostInsuranceRate = boostInsuranceRateAvailable : 0;
@@ -908,7 +910,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			
 			statistics.houseBalancePerGame = statistics.houseBalance / statistics.gamesPlayed;
 			statistics.houseBalancePerGameGBP = statistics.houseBalance / statistics.gamesPlayed / tokenRateToGBP;
+			statistics.houseBalancePerGamePct = statistics.houseBalancePerGame  / tokenRateToGBP * 100;
 			
+			statistics.playerHighestWinStreak = winStreak > statistics.playerHighestWinStreak ? winStreak : statistics.playerHighestWinStreak;
 			
 			//Chart Data Array
 			chartHouseValue = chartHouseValue + stake - payout;
@@ -1083,21 +1087,77 @@ function renderJson(jsonData, displayContainerId) {
 	var displayContainer = document.getElementById(displayContainerId);
 	displayContainer.innerHTML = "";
 	
+	var colorClass = "";
+	
 	Object.entries(jsonData).forEach(([key, value]) => {
+		
+		//JW - colours
+		switch (key) {
+			case "houseHighestBalanceGame":
+					colorClass = "value-green";
+				break;
+				
+			case "houseLowestBalanceGame":
+					colorClass = "value-red";
+				break;
+				
+			case "houseBalance":
+			case "houseBalanceGBP":
+			case "houseHighestBalance":
+			case "houseLowestBalance":
+					colorClass = value < 0 ? "value-red" : value > 0 ? "value-green" : "value-white";
+				break;
+				
+			case "houseBalancePer20Games":
+					colorClass = value < 0 ? "value-red" : value >= 0 && value < 2000 ? "value-orange" : value >= 2000 && value <= 2500 ? "value-white" : value > 2500 ? "value-green" : "value-white";
+				break;
+			case "houseBalancePer20GamesGBP":
+					colorClass = value < 0 ? "value-red" : value >= 0 && value < 2 ? "value-orange" : value >= 2 && value <= 2.5 ? "value-white" : value > 2.5 ? "value-green" : "value-white";
+				break;
+			case "houseBalancePerGame":
+					colorClass = value < 0 ? "value-red" : value >= 0 && value < 100 ? "value-orange" : value >= 100 && value <= 125 ? "value-white" : value > 125 ? "value-green" : "value-white";
+				break;
+			case "houseBalancePerGameGBP":
+					colorClass = value < 0 ? "value-red" : value >= 0 && value < 0.1 ? "value-orange" : value >= 0.1 && value <= 0.125 ? "value-white" : value > 0.125 ? "value-green" : "value-white";
+				break;
+			case "houseBalancePerGamePct":
+					var tempValue = (value.replace("%", "") * 1);
+			
+					colorClass = tempValue < 0 ? "value-red" : tempValue >= 0 && tempValue < 20 ? "value-orange" : tempValue >= 20 && tempValue <= 25 ? "value-white" : tempValue > 25 ? "value-green" : "value-white";
+				break;
+				
+			default:
+				//console.log("Unrecognized key:", key);
+		}
+		
+		//Prefixing a space
+		colorClass = colorClass ? " " + colorClass : "";
+		
 		var item = document.createElement("div");
-		item.className = "json-item";
+		item.className = "json-item" + colorClass;
 		
 		var propKey = document.createElement("div");
+		
+		//Handling BLANK rows
+		if (key.toUpperCase().includes("_BLANK_")) {
+			key = "";
+			item.style.color = "#182232";
+			item.style.borderColor = "#182232";
+		}
+		
 		propKey.innerHTML = key;
 		propKey.className = "json-item-cell key";
 		item.appendChild(propKey);
 		
 		var propValue = document.createElement("div");
 		propValue.innerHTML = value;
-		propValue.className = "json-item-cell value";
+		propValue.className = "json-item-cell value";		
 		item.appendChild(propValue);
 		
 		displayContainer.appendChild(item);
+		
+		//Reset colour class ready for next loop
+		colorClass = "";
 	});
 }
 
@@ -1109,10 +1169,23 @@ function showOverlayEndOfCredit() {
 	//console.info("overlayStatistics", overlayStatistics);
 	
 	delete overlayStatistics.audit;
+	delete overlayStatistics.houseHighestBalance;
+	delete overlayStatistics.houseLowestBalance;
+	delete overlayStatistics.houseHighestBalanceGame;
+	delete overlayStatistics.houseLowestBalanceGame;
+	delete overlayStatistics.houseBalancePer20Games;
+	delete overlayStatistics.houseBalancePer20GamesGBP;
+	delete overlayStatistics.houseBalancePerGame;
+	delete overlayStatistics.houseBalancePerGameGBP;
+	delete overlayStatistics.houseBalancePerGamePct;
+	delete overlayStatistics.tokenRateToGBP;
+	delete overlayStatistics.totalStake;
 	//console.info("overlayStatistics", overlayStatistics);
 	
 	overlayStatistics.gamesPlayed = overlayStatistics.gamesPlayed.toFixed(0);
-	overlayStatistics.totalStake = overlayStatistics.totalStake.toFixed(0);
+	//overlayStatistics.tokenRateToGBP = overlayStatistics.tokenRateToGBP.toFixed(0);
+	overlayStatistics.playerHighestWinStreak = overlayStatistics.playerHighestWinStreak.toFixed(0);
+	//overlayStatistics.totalStake = overlayStatistics.totalStake.toFixed(0);
 	overlayStatistics.houseBalance = overlayStatistics.houseBalance.toFixed(0);
 	overlayStatistics.houseBalanceGBP = overlayStatistics.houseBalanceGBP.toFixed(2);
 	overlayStatistics.playerBalance = overlayStatistics.playerBalance.toFixed(0);
@@ -1123,20 +1196,66 @@ function showOverlayEndOfCredit() {
 	overlayStatistics.playerCreditGBP = overlayStatistics.playerCreditGBP.toFixed(2);
 	overlayStatistics.playerTotalWinnings = overlayStatistics.playerTotalWinnings.toFixed(0);
 	overlayStatistics.playerTotalWinningsGBP = overlayStatistics.playerTotalWinningsGBP.toFixed(2);
-	overlayStatistics.houseHighestBalance = overlayStatistics.houseHighestBalance.toFixed(0);
-	overlayStatistics.houseLowestBalance = overlayStatistics.houseLowestBalance.toFixed(0);
-	overlayStatistics.houseHighestBalanceGame = overlayStatistics.houseHighestBalanceGame.toFixed(0);
-	overlayStatistics.houseLowestBalanceGame = overlayStatistics.houseLowestBalanceGame.toFixed(0);
-	overlayStatistics.houseBalancePer20Games = overlayStatistics.houseBalancePer20Games.toFixed(0);
-	overlayStatistics.houseBalancePer20GamesGBP = overlayStatistics.houseBalancePer20GamesGBP.toFixed(2);
-	overlayStatistics.houseBalancePerGame = overlayStatistics.houseBalancePerGame.toFixed(0);
-	overlayStatistics.houseBalancePerGameGBP = overlayStatistics.houseBalancePerGameGBP.toFixed(2);
+	//overlayStatistics.houseHighestBalance = overlayStatistics.houseHighestBalance.toFixed(0);
+	//overlayStatistics.houseLowestBalance = overlayStatistics.houseLowestBalance.toFixed(0);
+	//overlayStatistics.houseHighestBalanceGame = overlayStatistics.houseHighestBalanceGame.toFixed(0);
+	//overlayStatistics.houseLowestBalanceGame = overlayStatistics.houseLowestBalanceGame.toFixed(0);
+	//overlayStatistics.houseBalancePer20Games = overlayStatistics.houseBalancePer20Games.toFixed(0);
+	//overlayStatistics.houseBalancePer20GamesGBP = overlayStatistics.houseBalancePer20GamesGBP.toFixed(2);
+	//overlayStatistics.houseBalancePerGame = overlayStatistics.houseBalancePerGame.toFixed(0);
+	//overlayStatistics.houseBalancePerGameGBP = overlayStatistics.houseBalancePerGameGBP.toFixed(2);
+	//overlayStatistics.houseBalancePerGamePct = overlayStatistics.houseBalancePerGamePct.toFixed(2);
 	
 	renderJson(overlayStatistics, "overlay-end-of-credit-content");
 	
 	var overlayEndOfCredit = document.getElementById("overlay-end-of-credit");
 	overlayEndOfCredit.style.visibility = "visible";
 }
+
+function showOverlayEndOfCredit2() {
+	
+	document.body.classList.add("blocked-scroll");
+	
+	var overlayStatistics = JSON.parse(JSON.stringify(statistics));
+	//console.info("overlayStatistics", overlayStatistics);
+	
+	delete overlayStatistics.audit;
+	delete overlayStatistics.gamesPlayed;
+	delete overlayStatistics.houseBalance;
+	delete overlayStatistics.houseBalanceGBP;
+	delete overlayStatistics.playerBalance;
+	delete overlayStatistics.playerBalanceGBP;
+	delete overlayStatistics.playerWinnings;
+	delete overlayStatistics.playerWinningsGBP;
+	delete overlayStatistics.playerCredit;
+	delete overlayStatistics.playerCreditGBP;
+	delete overlayStatistics.playerTotalWinnings;
+	delete overlayStatistics.playerTotalWinningsGBP;
+	delete overlayStatistics.playerHighestWinStreak
+	//console.info("overlayStatistics", overlayStatistics);
+	
+	overlayStatistics.tokenRateToGBP = overlayStatistics.tokenRateToGBP.toFixed(0);
+	overlayStatistics.totalStake = overlayStatistics.totalStake.toFixed(0);
+	overlayStatistics.houseHighestBalance = overlayStatistics.houseHighestBalance.toFixed(0);
+	overlayStatistics.houseLowestBalance = overlayStatistics.houseLowestBalance.toFixed(0);
+	overlayStatistics.houseHighestBalanceGame = overlayStatistics.houseHighestBalanceGame.toFixed(0);
+	overlayStatistics.houseLowestBalanceGame = overlayStatistics.houseLowestBalanceGame.toFixed(0);
+	overlayStatistics.houseBalancePer20Games = overlayStatistics.houseBalancePer20Games.toFixed(2);
+	overlayStatistics.houseBalancePer20GamesGBP = overlayStatistics.houseBalancePer20GamesGBP.toFixed(4);
+	overlayStatistics.houseBalancePerGame = overlayStatistics.houseBalancePerGame.toFixed(2);
+	overlayStatistics.houseBalancePerGameGBP = overlayStatistics.houseBalancePerGameGBP.toFixed(4);
+	overlayStatistics.houseBalancePerGamePct = overlayStatistics.houseBalancePerGamePct.toFixed(2) + "%";
+	
+	//Add blanks so the screens line up
+	overlayStatistics._BLANK_1 = "-";
+	
+	renderJson(overlayStatistics, "overlay-end-of-credit-content-2");
+	
+	var overlayEndOfCredit2 = document.getElementById("overlay-end-of-credit-2");
+	overlayEndOfCredit2.style.visibility = "visible";
+}
+
+
 
 function hideOverlayEndOfCredit() {
 	//console.info("Running hideOverlayEndOfCredit()");
@@ -1147,11 +1266,21 @@ function hideOverlayEndOfCredit() {
 	overlayEndOfCredit.style.visibility = "hidden";
 }
 
+function hideOverlayEndOfCredit2() {
+	//console.info("Running hideOverlayEndOfCredit()");
+	
+	document.body.classList.remove("blocked-scroll");
+	
+	var overlayEndOfCredit2 = document.getElementById("overlay-end-of-credit-2");
+	overlayEndOfCredit2.style.visibility = "hidden";
+}
+
 function showOverlayChart() {
 	
 	document.body.classList.add("blocked-scroll");
 	
-	hideOverlayEndOfCredit()
+	hideOverlayEndOfCredit();
+	hideOverlayEndOfCredit2();
 	//console.info("chartData", chartData);
 	drawChart(chartData);
 	
