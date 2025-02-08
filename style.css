@@ -1612,3 +1612,16 @@ body {
 .chart-stake {
 	font-size: 0.7em;
 }
+
+#boost-insurance-lives {
+	color: #facc15;
+	display: inline;
+	font-size: 1.4em;
+	text-shadow: 
+		-1px -1px 0 black,
+		1px -1px 0 black,
+		-1px  1px 0 black,
+		1px  1px 0 black;
+	margin-left: -13px;
+	vertical-align: 10px;
+}
