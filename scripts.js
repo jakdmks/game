@@ -142,6 +142,14 @@ function updateStatisticsDivs() {
 		winStreakNumSpan.classList.remove("orange", "glowing");
 		winStreakNumSpan.classList.remove("yellow", "glowing");
 	}
+	
+	if (winStreak >= 1 && boostInsurance) {
+		boostInsuranceLives.innerHTML = (boostInsuranceRunMax - boostInsuranceRunCurrent).toFixed(0);
+		boostInsuranceLives.parentNode.style.display = "inline"; //PARENT DISPLAY inline...
+	} else {
+		boostInsuranceLives.innerHTML = "";
+		boostInsuranceLives.parentNode.style.display = "none";
+	}
 }
 
 function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="") {
@@ -263,6 +271,9 @@ var errors = [];
 var payoutBoost = false;
 var insuranceBoost = false;
 
+var boostInsuranceRunMax = 3;
+var boostInsuranceRunCurrent = 0;
+
 //When did we last show the end of credit message?
 var lastShowOverlayEndOfCreditBetId = 0;
 
@@ -278,7 +289,9 @@ var statistics = {
 	playerHighestWinStreak: 0,
 	boostProtectInvoked: 0,
 	boostProtectInvokedRun: 0,
-	boostProtectInvokedMax: 0,
+	boostProtectInvokedRunHighest: 0,
+	boostProtectMaxResetBoostCount: 0,
+	
 	tokenRateToGBP: 0,
 	totalStake: 0,
 	houseBalance: 0,
@@ -386,6 +399,8 @@ var split02Div = document.getElementById("payout-split-bar-200-50");
 var split03Div = document.getElementById("payout-split-bar-150-100");
 
 var flyingPointsDiv = document.getElementById("flying-points");
+
+var boostInsuranceLives = document.getElementById("boost-insurance-lives");
 
 updatePayoutSplit(2, 0.4, "SPLIT02"); //2, 0.5
 insuranceSwitch(false);
@@ -784,6 +799,10 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					payout = stake * (payoutRate + payoutBoostRate), 2;
 					housePayout = stake - payout, 2;
 					winStreak++;
+					
+					if (boostInsurance) {
+						boostInsuranceRunCurrent = 0;
+					}
 					//console.info("Bet wins!");
 					//console.info("payoutRate", payoutRate);
 					//console.info("payout", payout);
@@ -815,6 +834,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					outcome = "loss";
 					housePayout = stake;
 					winStreak = 0;
+					
+					if (boostInsurance) {
+						boostInsuranceRunCurrent = 0;
+					}
+					
 					//console.info("Bet loses.");
 					//console.info("payoutRate", payoutRate);
 					//console.info("payout", payout);
@@ -836,7 +860,22 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					outcome = "insurance";
 					payout = stake * (insuranceRate + insuranceBoostRate), 2;
 					housePayout = stake - payout, 2;
+					
+					//JW TODO: Here boostInsuranceRunMax vs boostInsuranceRunCurrent
 					winStreak = boostInsurance ? winStreak : 0;
+					
+					if (boostInsurance && boostLevel >= 1) {
+						boostInsuranceRunCurrent++;
+						
+						if (boostInsuranceRunCurrent > boostInsuranceRunMax) {
+							statistics.boostProtectMaxResetBoostCount = statistics.boostProtectMaxResetBoostCount + 1;
+							boostInsuranceRunCurrent = 0;
+							winStreak = 0;
+						}
+						//console.info("boostInsuranceRunCurrent", boostInsuranceRunCurrent);
+						//console.info("boostInsuranceRunMax", boostInsuranceRunMax);
+					}
+					
 					//console.info("Bet loses.");
 					//console.info("insuranceRate", insuranceRate);
 					//console.info("payout", payout);
@@ -919,7 +958,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			
 			statistics.boostProtectInvoked = statistics.boostProtectInvoked + ((boostInsurance && outcome === "insurance" && boostLevel >= 1) ? 1 : 0);
 			statistics.boostProtectInvokedRun = (boostInsurance && outcome === "insurance" && boostLevel >= 1) ? statistics.boostProtectInvokedRun + 1 : 0;
-			statistics.boostProtectInvokedMax = (statistics.boostProtectInvokedRun > statistics.boostProtectInvokedMax) ? statistics.boostProtectInvokedRun : statistics.boostProtectInvokedMax;
+			statistics.boostProtectInvokedRunHighest = (statistics.boostProtectInvokedRun > statistics.boostProtectInvokedRunHighest) ? statistics.boostProtectInvokedRun : statistics.boostProtectInvokedRunHighest;
 			
 			//Chart Data Array
 			chartHouseValue = chartHouseValue + stake - payout;
@@ -1196,7 +1235,8 @@ function showOverlayEndOfCredit() {
 	overlayStatistics.playerHighestWinStreak = overlayStatistics.playerHighestWinStreak.toFixed(0);
 	overlayStatistics.boostProtectInvoked = overlayStatistics.boostProtectInvoked.toFixed(0);
 	overlayStatistics.boostProtectInvokedRun = overlayStatistics.boostProtectInvokedRun.toFixed(0);
-	overlayStatistics.boostProtectInvokedMax = overlayStatistics.boostProtectInvokedMax.toFixed(0);
+	overlayStatistics.boostProtectInvokedRunHighest = overlayStatistics.boostProtectInvokedRunHighest.toFixed(0);
+	overlayStatistics.boostProtectMaxResetBoostCount = overlayStatistics.boostProtectMaxResetBoostCount.toFixed(0);
 	//overlayStatistics.totalStake = overlayStatistics.totalStake.toFixed(0);
 	overlayStatistics.houseBalance = overlayStatistics.houseBalance.toFixed(0);
 	overlayStatistics.houseBalanceGBP = overlayStatistics.houseBalanceGBP.toFixed(2);
@@ -1246,7 +1286,8 @@ function showOverlayEndOfCredit2() {
 	//delete overlayStatistics.playerTotalWinningsGBP;
 	delete overlayStatistics.playerHighestWinStreak
 	delete overlayStatistics.boostProtectInvoked;
-	delete overlayStatistics.boostProtectInvokedMax;
+	delete overlayStatistics.boostProtectInvokedRunHighest;
+	delete overlayStatistics.boostProtectMaxResetBoostCount
 	delete overlayStatistics.boostProtectInvokedRun;
 	//console.info("overlayStatistics", overlayStatistics);
 	
@@ -1265,7 +1306,7 @@ function showOverlayEndOfCredit2() {
 	overlayStatistics.houseBalancePerGamePct = overlayStatistics.houseBalancePerGamePct.toFixed(2) + "%";
 	
 	//Add blanks so the screens line up
-	//overlayStatistics._BLANK_1 = "-";
+	overlayStatistics._BLANK_1 = "-";
 	
 	renderJson(overlayStatistics, "overlay-end-of-credit-content-2");
 	
