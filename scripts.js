@@ -297,6 +297,10 @@ var statistics = {
 	houseBalancePer20Games: 0, // houseBalance / (gamesPlayed / 20)
 	houseBalancePer20GamesGBP: 0,
 	
+	houseBalancePerGame: 0,
+	houseBalancePerGameGBP: 0,
+	
+	
 	audit: [] 
 }
 
@@ -902,6 +906,10 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			statistics.houseBalancePer20GamesGBP = statistics.houseBalancePer20Games / tokenRateToGBP;
 			
 			
+			statistics.houseBalancePerGame = statistics.houseBalance / statistics.gamesPlayed;
+			statistics.houseBalancePerGameGBP = statistics.houseBalance / statistics.gamesPlayed / tokenRateToGBP;
+			
+			
 			//Chart Data Array
 			chartHouseValue = chartHouseValue + stake - payout;
 			//console.info("chartHouseValue", chartHouseValue);
@@ -1121,6 +1129,8 @@ function showOverlayEndOfCredit() {
 	overlayStatistics.houseLowestBalanceGame = overlayStatistics.houseLowestBalanceGame.toFixed(0);
 	overlayStatistics.houseBalancePer20Games = overlayStatistics.houseBalancePer20Games.toFixed(0);
 	overlayStatistics.houseBalancePer20GamesGBP = overlayStatistics.houseBalancePer20GamesGBP.toFixed(2);
+	overlayStatistics.houseBalancePerGame = overlayStatistics.houseBalancePerGame.toFixed(0);
+	overlayStatistics.houseBalancePerGameGBP = overlayStatistics.houseBalancePerGameGBP.toFixed(2);
 	
 	renderJson(overlayStatistics, "overlay-end-of-credit-content");
 	
