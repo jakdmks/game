@@ -1459,9 +1459,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1px;
+    padding: 4px;
     border-bottom: 1px solid black;
-	font-size: 0.7em;
+	font-size: 0.8em;
 }
 
 .json-item-cell {
@@ -1478,6 +1478,22 @@ body {
 	font-weight: bold;
     text-align: right;
     flex-grow: 1;
+}
+
+.value-red {
+	color: #FF4D4D;
+}
+
+.value-orange {
+	color: #FFA500;
+}
+
+.value-green {
+	color: #32CD32;
+}
+
+.value-white {
+	color: white;
 }
 
 .glow-points-white {
@@ -1558,6 +1574,17 @@ body {
 	position: absolute;
 	bottom: -25px;
 	font-size: 14px;
+	font-weight: bold;
+}
+
+#chart-credit {
+	margin-top: 10px;
+	text-shadow: 
+		-1px -1px 0 black,
+		1px -1px 0 black,
+		-1px  1px 0 black,
+		1px  1px 0 black;
+	font-size: 0.9em;
 	font-weight: bold;
 }
 
