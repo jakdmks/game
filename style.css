@@ -1496,6 +1496,10 @@ body {
 	color: white;
 }
 
+.value-yellow {
+	color: #facc15;
+}
+
 .glow-points-white {
     text-shadow: 0 0 2px white, 0 0 4px white;
 }
