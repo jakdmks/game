@@ -286,6 +286,7 @@ var chartPlayerValue = 0;
 	
 var statistics = {
 	gamesPlayed: 0,
+	playerWinsMixedLosses: "",
 	playerHighestWinStreak: 0,
 	boostProtectInvoked: 0,
 	boostProtectInvokedRun: 0,
@@ -1215,6 +1216,28 @@ function showOverlayEndOfCredit() {
 	var overlayStatistics = JSON.parse(JSON.stringify(statistics));
 	//console.info("overlayStatistics", overlayStatistics);
 	
+	//Extract the audit to count WLM
+	var playerWinsMixedLosses = ""; //e.g. (1-0-3)
+	var wins = 0;
+	var losses = 0;
+	var mixed = 0;
+	
+	//console.info(overlayStatistics.audit);
+	
+	for (var i = 0; i < overlayStatistics.audit.length; i++) {
+		var auditRecord = overlayStatistics.audit[i];
+		
+		if (auditRecord.outcome === "win") {
+			wins++;
+		} else if (auditRecord.outcome === "insurance") {
+			mixed++;
+		} else if (auditRecord.outcome === "loss") {
+			losses++;
+		}
+	}
+	playerWinsMixedLosses = "(" + wins + "-" + mixed + "-" + losses + ")"; //e.g. (1-0-3)
+	overlayStatistics.playerWinsMixedLosses = playerWinsMixedLosses;
+	
 	delete overlayStatistics.audit;
 	delete overlayStatistics.houseHighestBalance;
 	delete overlayStatistics.houseLowestBalance;
@@ -1275,6 +1298,7 @@ function showOverlayEndOfCredit2() {
 	
 	delete overlayStatistics.audit;
 	delete overlayStatistics.gamesPlayed;
+	delete overlayStatistics.playerWinsMixedLosses;
 	delete overlayStatistics.houseBalance;
 	delete overlayStatistics.houseBalanceGBP;
 	delete overlayStatistics.playerBalance;
@@ -1308,6 +1332,7 @@ function showOverlayEndOfCredit2() {
 	
 	//Add blanks so the screens line up
 	overlayStatistics._BLANK_1 = "-";
+	overlayStatistics._BLANK_2 = "-";
 	
 	renderJson(overlayStatistics, "overlay-end-of-credit-content-2");
 	
