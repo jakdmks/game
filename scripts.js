@@ -294,6 +294,7 @@ var statistics = {
 	boostProtectMaxResetBoostCount: 0,
 	
 	tokenRateToGBP: 0,
+	gamesCherryMixedCola: "",
 	totalStake: 0,
 	houseBalance: 0,
 	houseBalanceGBP: 0,
@@ -1249,6 +1250,7 @@ function showOverlayEndOfCredit() {
 	delete overlayStatistics.houseBalancePerGameGBP;
 	delete overlayStatistics.houseBalancePerGamePct;
 	delete overlayStatistics.tokenRateToGBP;
+	delete overlayStatistics.gamesCherryMixedCola;
 	delete overlayStatistics.playerTotalWinnings;
 	delete overlayStatistics.playerTotalWinningsGBP;
 	delete overlayStatistics.totalStake;
@@ -1290,11 +1292,31 @@ function showOverlayEndOfCredit() {
 
 function showOverlayEndOfCredit2() {
 	
+	var cherry = 0;
+	var mixed = 0;
+	var cola = 0;
+	
 	//document.body.classList.add("blocked-scroll");
 	hideOverlayEndOfCredit();
 	
 	var overlayStatistics = JSON.parse(JSON.stringify(statistics));
 	//console.info("overlayStatistics", overlayStatistics);
+	
+	for (var i = 0; i < overlayStatistics.audit.length; i++) {
+		var auditRecord = overlayStatistics.audit[i];
+		
+		if (auditRecord.pickedSweets.Sweet1.toString() === auditRecord.pickedSweets.Sweet2.toString()) {
+			if (auditRecord.pickedSweets.Sweet1.toString() === "Cherry") {
+				cherry++;
+			} else if (auditRecord.pickedSweets.Sweet1.toString() === "Cola") {
+				cola++;
+			}
+		} else {
+			mixed++;
+		}		
+	}
+	gamesCherryMixedCola = "(" + cherry + "-" + mixed + "-" + cola + ")"; //e.g. (1-2-1)
+	overlayStatistics.gamesCherryMixedCola = gamesCherryMixedCola;
 	
 	delete overlayStatistics.audit;
 	delete overlayStatistics.gamesPlayed;
@@ -1332,7 +1354,6 @@ function showOverlayEndOfCredit2() {
 	
 	//Add blanks so the screens line up
 	overlayStatistics._BLANK_1 = "-";
-	overlayStatistics._BLANK_2 = "-";
 	
 	renderJson(overlayStatistics, "overlay-end-of-credit-content-2");
 	
