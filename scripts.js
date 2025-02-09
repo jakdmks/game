@@ -1157,21 +1157,21 @@ function renderJson(jsonData, displayContainerId) {
 				break;
 				
 			case "houseBalancePer20Games":
-					colorClass = value < 0 ? "value-red" : value >= 0 && value < 2000 ? "value-orange" : value >= 2000 && value <= 2500 ? "value-white" : value > 2500 ? "value-green" : "value-white";
+					colorClass = value < 0 ? "value-red" : value >= 0 && value < 2000 ? "value-orange" : value >= 2000 && value <= 2500 ? "value-yellow" : value > 2500 ? "value-green" : "value-white";
 				break;
 			case "houseBalancePer20GamesGBP":
-					colorClass = value < 0 ? "value-red" : value >= 0 && value < 2 ? "value-orange" : value >= 2 && value <= 2.5 ? "value-white" : value > 2.5 ? "value-green" : "value-white";
+					colorClass = value < 0 ? "value-red" : value >= 0 && value < 2 ? "value-orange" : value >= 2 && value <= 2.5 ? "value-yellow" : value > 2.5 ? "value-green" : "value-white";
 				break;
 			case "houseBalancePerGame":
-					colorClass = value < 0 ? "value-red" : value >= 0 && value < 100 ? "value-orange" : value >= 100 && value <= 125 ? "value-white" : value > 125 ? "value-green" : "value-white";
+					colorClass = value < 0 ? "value-red" : value >= 0 && value < 100 ? "value-orange" : value >= 100 && value <= 125 ? "value-yellow" : value > 125 ? "value-green" : "value-white";
 				break;
 			case "houseBalancePerGameGBP":
-					colorClass = value < 0 ? "value-red" : value >= 0 && value < 0.1 ? "value-orange" : value >= 0.1 && value <= 0.125 ? "value-white" : value > 0.125 ? "value-green" : "value-white";
+					colorClass = value < 0 ? "value-red" : value >= 0 && value < 0.1 ? "value-orange" : value >= 0.1 && value <= 0.125 ? "value-yellow" : value > 0.125 ? "value-green" : "value-white";
 				break;
 			case "houseBalancePerGamePct":
 					var tempValue = (value.replace("%", "") * 1);
 			
-					colorClass = tempValue < 0 ? "value-red" : tempValue >= 0 && tempValue < 20 ? "value-orange" : tempValue >= 20 && tempValue <= 25 ? "value-white" : tempValue > 25 ? "value-green" : "value-white";
+					colorClass = tempValue < 0 ? "value-red" : tempValue >= 0 && tempValue < 20 ? "value-orange" : tempValue >= 20 && tempValue <= 25 ? "value-yellow" : tempValue > 25 ? "value-green" : "value-white";;
 				break;
 				
 			default:
@@ -1290,7 +1290,7 @@ function showOverlayEndOfCredit() {
 
 function showOverlayEndOfCredit2() {
 	
-	document.body.classList.add("blocked-scroll");
+	//document.body.classList.add("blocked-scroll");
 	hideOverlayEndOfCredit();
 	
 	var overlayStatistics = JSON.parse(JSON.stringify(statistics));
@@ -1345,7 +1345,7 @@ function showOverlayEndOfCredit2() {
 function hideOverlayEndOfCredit() {
 	//console.info("Running hideOverlayEndOfCredit()");
 	
-	document.body.classList.remove("blocked-scroll");
+	//document.body.classList.remove("blocked-scroll");
 	
 	var overlayEndOfCredit = document.getElementById("overlay-end-of-credit");
 	overlayEndOfCredit.style.visibility = "hidden";
@@ -1353,8 +1353,7 @@ function hideOverlayEndOfCredit() {
 
 function hideOverlayEndOfCredit2() {
 	//console.info("Running hideOverlayEndOfCredit()");
-	
-	document.body.classList.remove("blocked-scroll");
+	//document.body.classList.remove("blocked-scroll");
 	
 	var overlayEndOfCredit2 = document.getElementById("overlay-end-of-credit-2");
 	overlayEndOfCredit2.style.visibility = "hidden";
@@ -1362,7 +1361,7 @@ function hideOverlayEndOfCredit2() {
 
 function showOverlayChart() {
 	
-	document.body.classList.add("blocked-scroll");
+	//document.body.classList.add("blocked-scroll");
 	
 	hideOverlayEndOfCredit();
 	hideOverlayEndOfCredit2();
@@ -1384,6 +1383,8 @@ function hideOverlayChart() {
 
 function showOverlay() {
 	//console.info("Running showOverlay()");
+	
+	document.body.classList.add("blocked-scroll");
 	
 	var overlay = document.getElementById("overlay");
 	var imagesContainer = document.getElementById("overlay-images");
@@ -1423,6 +1424,8 @@ function showOverlay() {
 
 function hideOverlay() {
 	//console.info("Running hideOverlay()");
+	
+	document.body.classList.remove("blocked-scroll");
 	
 	var overlay = document.getElementById("overlay");
 	overlay.style.visibility = "hidden";
