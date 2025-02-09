@@ -952,7 +952,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			
 			statistics.houseBalancePerGame = statistics.houseBalance / statistics.gamesPlayed;
 			statistics.houseBalancePerGameGBP = statistics.houseBalance / statistics.gamesPlayed / tokenRateToGBP;
-			statistics.houseBalancePerGamePct = statistics.houseBalancePerGame  / tokenRateToGBP * 100;
+			statistics.houseBalancePerGamePct = statistics.houseBalance / statistics.totalStake * 100;
 			
 			statistics.playerHighestWinStreak = winStreak > statistics.playerHighestWinStreak ? winStreak : statistics.playerHighestWinStreak;
 			
