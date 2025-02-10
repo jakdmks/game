@@ -78,24 +78,24 @@
 	  <div class="grid-item" style="padding-right: 15px;">
 		<div style="min-width: 142px">
 			<!--<h2>Payout Split</h2>-->
-			<div class="radio-group" style="display: block; font-size: 1.5em; text-align: left; letter-spacing: -1px;">
+			<div class="radio-group" style="display: block; font-size: 1.25em; text-align: left; letter-spacing: -1px;">
 				<label class="radio-item">
 					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.5, 0, 'SPLIT01')">-->
-					<input type="radio" name="payout" style="" value="option1" onchange="updatePayoutSplit(2.3, 0.2, 'SPLIT01')">
+					<input type="radio" name="payout" style="vertical-align: bottom" value="option1" onchange="updatePayoutSplit(2.2, 0.3, 'SPLIT01')">
 				</label>
-				<div class="payout-split-name">PAIRS +</div>
+				<div class="payout-split-name">HIGH RISK</div>
 				<div id="payout-split-bar-250-0" class="payout-split-bar">
-					<div class="green-bar" style="width:81%;"></div>
+					<div class="green-bar" style="width: 73%;"></div>
 					<div id="payout-split-bar-250-0-green-boost" class="green-bar-boost"></div>
-					<div class="blue-bar" style="width: 6%;"></div>
+					<div class="blue-bar" style="width: 10%;"></div>
 					<div id="payout-split-bar-250-0-red-boost" class="blue-bar-boost"></div>
 				</div>
 				
 				<label class="radio-item">
 					<!--<input type="radio" name="payout" value="option1" checked onchange="updatePayoutSplit(2, 0.5, 'SPLIT02')">-->
-					<input type="radio" name="payout" style="" value="option1" checked onchange="updatePayoutSplit(2, 0.4, 'SPLIT02')">
+					<input type="radio" name="payout" style="vertical-align: bottom" value="option1" checked onchange="updatePayoutSplit(1.9, 0.5, 'SPLIT02')">
 				</label>
-				<div class="payout-split-name">VANILLA</div>
+				<div class="payout-split-name">MID RISK</div>
 				<div id="payout-split-bar-200-50" class="payout-split-bar selected">
 					<div class="green-bar"></div>
 					<div id="payout-split-bar-200-50-green-boost" class="green-bar-boost"></div>
@@ -106,13 +106,13 @@
 				
 				<label class="radio-item">
 					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 1, 'SPLIT03')">-->
-					<input type="radio" name="payout" style="" value="option1" onchange="updatePayoutSplit(1.7, 0.6, 'SPLIT03')">
+					<input type="radio" name="payout" style="vertical-align: bottom" value="option1" onchange="updatePayoutSplit(1.6, 0.7, 'SPLIT03')">
 				</label>
-				<div class="payout-split-name">MIX +</div>
+				<div class="payout-split-name">LOW RISK</div>
 				<div id="payout-split-bar-150-100" class="payout-split-bar">
-					<div class="green-bar" style="width: 61%;"></div>
+					<div class="green-bar" style="width: 57%;"></div>
 					<div id="payout-split-bar-150-100-green-boost" class="green-bar-boost"></div>
-					<div class="blue-bar" style="width: 21%;"></div>
+					<div class="blue-bar" style="width: 25%;"></div>
 					<div id="payout-split-bar-150-100-red-boost" class="blue-bar-boost"></div>
 				</div>
 			</div>
@@ -120,10 +120,10 @@
 	  </div>
 	  <div class="grid-item" style="text-align: left">
 		<!--WIN STREAK GRAPHICAL DISPLAY-->
-		<div style="display: block;">
+		<div style="display: block; position: relative; z-index: 1">
 			<div class="title-text">TWIN SWEETS</div>
 			<span id="win-streak-text" class="boost-small grey">streak x</span><span id="win-streak-num" class="boost-large grey">X</span>
-			<div style="display: none">
+			<div style="display: none; position: absolute; left: -7px; top: 44px; z-index: -1;">
 				<img src="images/lock.png" height="30px" alt="Lives">
 				<div style="" id="boost-insurance-lives">X</div>
 			</div>
