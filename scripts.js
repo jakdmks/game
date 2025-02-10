@@ -212,7 +212,7 @@ function calculateBoost() {
 	boostRate = 0;
 	
 	//FORCE WIN STREAK
-	//winStreak = 99;
+	winStreak = 99;
 	//winStreak = 3;
 	
 	if (winStreak >= boostStreakLevelOne) {
@@ -404,7 +404,7 @@ var flyingPointsDiv = document.getElementById("flying-points");
 
 var boostInsuranceLives = document.getElementById("boost-insurance-lives");
 
-updatePayoutSplit(1.9, 0.5, "SPLIT02"); //2, 0.5
+updatePayoutSplit(2, 0.4, "SPLIT02"); //2, 0.5
 insuranceSwitch(false);
 calculateBoost();
 updateStatisticsDivs();
