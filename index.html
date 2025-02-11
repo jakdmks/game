@@ -123,9 +123,13 @@
 		<div style="display: block; position: relative; z-index: 1">
 			<div class="title-text">TWIN SWEETS</div>
 			<span id="win-streak-text" class="boost-small grey">streak x</span><span id="win-streak-num" class="boost-large grey">X</span>
-			<div style="display: none; position: absolute; left: -7px; top: 44px; z-index: -1;">
-				<img src="images/lock.png" height="30px" alt="Lives">
-				<div style="" id="boost-insurance-lives">X</div>
+			<div style="display: none; position: absolute; left: -7px; top: 44px; z-index: -2;">
+				<img id="lock1" src="images/lock.png" height="30px" alt="Lock 1">
+				<!--<div style="" id="boost-insurance-lives">X</div>-->
+			</div>
+			<div style="display: none; position: absolute; left: 6px; top: 40px; z-index: -1;">
+				<img id="lock2" src="images/lock.png" height="30px" alt="Lock 2">
+				<!--<div style="" id="boost-insurance-lives">X</div>-->
 			</div>
 
 		</div>
@@ -193,7 +197,7 @@
 			<div class="boost-insurance-div" style="display: inline-block">
 				<input type="checkbox" id="boost-insurance-checkbox" name="boost-insurance-checkbox" onchange="insuranceSwitch(this.checked)" />
 				<label for="boost-insurance-checkbox"><img src="images/lock.png" height="18px" alt="Streak Protect?">Streak Protect?</label>
-				<div style="font-size: 0.75em; font-style: italic">Pays out 20% less on boosts but your streak maintains for up to 3 consecutive mixed pairs.</div>
+				<div style="font-size: 0.75em; font-style: italic">Pays out 20% less on boosts but your streak maintains for up to 2 consecutive mixed pairs.</div>
 			</div>
 			<!--<div style="font-size: 0.8em;"><em>(Can only change once win streak returns to 0)</em></div>-->
 	  </div>
