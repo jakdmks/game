@@ -163,6 +163,9 @@ function updateStatisticsDivs() {
 		} else if (boostInsuranceRunMax - boostInsuranceRunCurrent === 1) {
 			lock1.parentNode.style.display = "inline"; //PARENT DISPLAY
 			lock2.parentNode.style.display = "none"; //PARENT DISPLAY
+		} else {
+			lock1.parentNode.style.display = "none"; //PARENT DISPLAY
+			lock2.parentNode.style.display = "none"; //PARENT DISPLAY
 		}
 	} else {
 		lock1.parentNode.style.display = "none";
