@@ -143,6 +143,8 @@ function updateStatisticsDivs() {
 		winStreakNumSpan.classList.remove("yellow", "glowing");
 	}
 	
+	//ORIGINAL WITH NUMBERS
+	/*
 	if (winStreak >= 1 && boostInsurance) {
 		boostInsuranceLives.innerHTML = (boostInsuranceRunMax - boostInsuranceRunCurrent).toFixed(0);
 		boostInsuranceLives.parentNode.style.display = "inline"; //PARENT DISPLAY inline...
@@ -150,6 +152,24 @@ function updateStatisticsDivs() {
 		boostInsuranceLives.innerHTML = "";
 		boostInsuranceLives.parentNode.style.display = "none";
 	}
+	*/
+	
+	//CURRENTLY THIS ONLY WORKS FOR 2 LOCKS... CAN ADD MORE LATER I GUESS
+	if (winStreak >= 1 && boostInsurance) {
+		
+		if (boostInsuranceRunMax - boostInsuranceRunCurrent === 2) {
+			lock1.parentNode.style.display = "inline"; //PARENT DISPLAY
+			lock2.parentNode.style.display = "inline"; //PARENT DISPLAY
+		} else if (boostInsuranceRunMax - boostInsuranceRunCurrent === 1) {
+			lock1.parentNode.style.display = "inline"; //PARENT DISPLAY
+			lock2.parentNode.style.display = "none"; //PARENT DISPLAY
+		}
+	} else {
+		lock1.parentNode.style.display = "none";
+		lock2.parentNode.style.display = "none";
+	}
+	
+	//lock2
 }
 
 function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="") {
@@ -264,14 +284,14 @@ var insuranceBoostRate = 0;
 var payoutSplitCode = "SPLIT02";
 
 //Bag size (should be an even number)
-var bagSize = 24;
+var bagSize = 48; //24
 
 var errors = [];
 
 var payoutBoost = false;
 var insuranceBoost = false;
 
-var boostInsuranceRunMax = 3;
+var boostInsuranceRunMax = 2;
 var boostInsuranceRunCurrent = 0;
 
 //When did we last show the end of credit message?
@@ -285,6 +305,7 @@ var chartPlayerValue = 0;
 //boostStreakLevelOne = 0;
 	
 var statistics = {
+	bagSize: bagSize,
 	gamesPlayed: 0,
 	playerWinsMixedLosses: "",
 	playerHighestWinStreak: 0,
@@ -403,6 +424,9 @@ var split03Div = document.getElementById("payout-split-bar-150-100");
 var flyingPointsDiv = document.getElementById("flying-points");
 
 var boostInsuranceLives = document.getElementById("boost-insurance-lives");
+
+var lock1 = document.getElementById("lock1");
+var lock2 = document.getElementById("lock2");
 
 updatePayoutSplit(2, 0.4, "SPLIT02"); //2, 0.5
 insuranceSwitch(false);
@@ -733,6 +757,13 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					sweets.push("Cherry");
 				}
 			}
+			
+			//Shuffle the Bag
+			for (let i = sweets.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1)); // Random index from 0 to i
+				[sweets[i], sweets[j]] = [sweets[j], sweets[i]]; // Swap elements
+			}
+			//console.info("sweets", sweets);
 			
 			//Pick first sweet
 			var pickIndex1 = Math.floor(Math.random() * sweets.length);
@@ -1249,6 +1280,7 @@ function showOverlayEndOfCredit() {
 	delete overlayStatistics.houseBalancePerGame;
 	delete overlayStatistics.houseBalancePerGameGBP;
 	delete overlayStatistics.houseBalancePerGamePct;
+	delete overlayStatistics.bagSize;
 	delete overlayStatistics.tokenRateToGBP;
 	delete overlayStatistics.gamesCherryMixedCola;
 	delete overlayStatistics.playerTotalWinnings;
@@ -1339,6 +1371,7 @@ function showOverlayEndOfCredit2() {
 	//console.info("overlayStatistics", overlayStatistics);
 	
 	overlayStatistics.tokenRateToGBP = overlayStatistics.tokenRateToGBP.toFixed(0);
+	overlayStatistics.bagSize = overlayStatistics.bagSize.toFixed(0);
 	overlayStatistics.playerTotalWinnings = overlayStatistics.playerTotalWinnings.toFixed(0);
 	overlayStatistics.playerTotalWinningsGBP = overlayStatistics.playerTotalWinningsGBP.toFixed(2);
 	overlayStatistics.totalStake = overlayStatistics.totalStake.toFixed(0);
@@ -1353,7 +1386,8 @@ function showOverlayEndOfCredit2() {
 	overlayStatistics.houseBalancePerGamePct = overlayStatistics.houseBalancePerGamePct.toFixed(2) + "%";
 	
 	//Add blanks so the screens line up
-	overlayStatistics._BLANK_1 = "-";
+	//overlayStatistics._BLANK_1 = "-";
+	//overlayStatistics._BLANK_2 = "-";
 	
 	renderJson(overlayStatistics, "overlay-end-of-credit-content-2");
 	
