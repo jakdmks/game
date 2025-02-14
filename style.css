@@ -68,11 +68,6 @@ display: grid;
   color: #f1f1f1; /* Light text for contrast */
 }
 
-.column.vivid {
-	border-color: #d4af37;
-	animation: flash-vivid 1s infinite, pulse-vivid 0.7s infinite; /* Flash yellow to orange */
-}
-
 @keyframes flash-vivid {
   0% {
     background-color: #facc15; /* Bright yellow */
@@ -241,12 +236,12 @@ PAYOUT SPLIT TESTING
 
 /* Flashing styles for .selected */
 .payout-split-bar {
-  animation: flash-yellow-gold-split 0.7s infinite; /* Flash yellow to orange */
+  animation: flash-yellow-gold-split 1.5s 6 forwards; /* Flash yellow to orange */
 }
 
 .payout-split-bar.selected {
   border: 3px solid #facc15; /* Default border */
-  animation: sweepingGlowGrey 1.5s infinite alternate;
+  animation: sweepingGlowGrey 1.5s 6 alternate forwards;
 }
 
 @keyframes sweepingGlowGrey {
@@ -263,17 +258,17 @@ PAYOUT SPLIT TESTING
 
 /* Yellow Glow */
 .payout-split-bar.selected.yellow-glow {
-  animation: sweepingGlowYellow 1.5s infinite; /* Add the glow animation */
+  animation: sweepingGlowYellow 1.5s 10; /* Add the glow animation */
 }
 
 /* Orange Glow */
 .payout-split-bar.selected.orange-glow {
-  animation: sweepingGlowOrange 1.5s infinite; /* Add the glow animation */
+  animation: sweepingGlowOrange 1.5s 10; /* Add the glow animation */
 }
 
 /* Red Glow */
 .payout-split-bar.selected.red-glow {
-  animation: sweepingGlowRed 1.5s infinite; /* Add the glow animation */
+  animation: sweepingGlowRed 1.5s 10; /* Add the glow animation */
 }
 
 /* Sweeping Glow Animations */
@@ -297,27 +292,27 @@ PAYOUT SPLIT TESTING
 
 
 .payout-split-bar.selected .green-bar {
-  animation: flash-green-split 1s infinite;
+  animation: flash-green-split 1s 10;
 }
 
 .payout-split-bar.selected .green-bar-boost {
-  animation: flash-green-boost-split 1s infinite;
+  animation: flash-green-boost-split 1s 10;
 }
 
 .payout-split-bar.selected .red-bar {
-  animation: flash-red-split 1s infinite;
+  animation: flash-red-split 1s 10;
 }
 
 .payout-split-bar.selected .red-bar-boost {
-  animation: flash-red-boost-split 1s infinite;
+  animation: flash-red-boost-split 1s 10;
 }
 
 .payout-split-bar.selected .blue-bar {
-  animation: flash-blue-split 1s infinite;
+  animation: flash-blue-split 1s 10;
 }
 
 .payout-split-bar.selected .blue-bar-boost {
-  animation: flash-blue-boost-split 1s infinite;
+  animation: flash-blue-boost-split 1s 10;
 }
 
 .boost-insurance-div {
@@ -360,7 +355,6 @@ PAYOUT SPLIT TESTING
 	margin-bottom: 10px;
 	background-color: yellow;
 	border-width: 2px;
-	/*animation: flash-credit 0.7s infinite, pulse-credit 1s infinite;*/
 	word-wrap: break-word;
 	color: black;
 }
@@ -392,7 +386,7 @@ PAYOUT SPLIT TESTING
 	background-color: #ff8c00; /* Strong Orange-Gold */
 	color: black !important;
 	border: 2px solid black !important;
-	animation: flash-credit-hover 0.7s infinite, pulse-credit 1s infinite;
+	animation: flash-credit-hover 0.7s 10, pulse-credit 1s 10;
 }
 
 /* Hover flashing animation */
@@ -419,7 +413,6 @@ PAYOUT SPLIT TESTING
 	margin-bottom: 10px;
 	background-color: #0f6b36; /* Deep Green */
 	border-width: 2px;
-	/*animation: flash-convert 0.7s infinite, pulse-convert 1s infinite;*/
 	word-wrap: break-word;
 	color: white;
 }
@@ -451,7 +444,7 @@ PAYOUT SPLIT TESTING
 	background-color: #1db954; /* Noticeably Brighter Green */
 	color: black !important;
 	border: 2px solid black !important;
-	animation: flash-convert-hover 0.7s infinite, pulse-convert 1s infinite;
+	animation: flash-convert-hover 0.7s 10, pulse-convert 1s 10;
 }
 
 /* Hover flashing animation */
@@ -496,21 +489,11 @@ PAYOUT SPLIT TESTING
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  animation: pulse 1.6s infinite;
+  animation: pulse 1.66s infinite;
   background: linear-gradient(to bottom, #ff586b, #ff8fa6); /* Default Cherry color */
   color: #a91e1e; /* Bright red text for Cherry */
   border-color: #ff1e4e; /* Red border for Cherry */
 }
-
-/*
-.game-button-container.cherry  {
-  animation: pulse 1.5s infinite, wobble 0.8s infinite, flash-border-cherry 0.8s infinite;
-}
-
-.game-button-container.cola {
-  animation: pulse 1.5s infinite, wobble 0.8s infinite, flash-border-cola 0.8s infinite;
-}
-*/
 
 /* Cherry buttons */
 .game-button-container.cherry button {
@@ -797,7 +780,7 @@ PAYOUT SPLIT TESTING
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent; /* For Safari */
-  animation: sweepingTextGlow 1s infinite ease-in-out;
+  animation: sweepingTextGlow 1.66s 6 ease-in-out;
 }
 
 .boost-medium.selected {
@@ -805,7 +788,7 @@ PAYOUT SPLIT TESTING
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent; /* For Safari */
-  animation: sweepingTextGlow 1s infinite ease-in-out;
+  animation: sweepingTextGlow 1.66s 6 ease-in-out;
 }
 
 .boost-large.selected {
@@ -813,7 +796,7 @@ PAYOUT SPLIT TESTING
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent; /* For Safari */
-  animation: sweepingTextGlow 1s infinite ease-in-out
+  animation: sweepingTextGlow 1.66s 6 ease-in-out
 }
 
 @keyframes flickerText {
@@ -857,7 +840,7 @@ PAYOUT SPLIT TESTING
 }
 
 .glowing {
-  animation: sweepingTextGlow 1s infinite ease-in-out
+  animation: sweepingTextGlow 1.66s 6 ease-in-out
 }
 
 /* Main Error Content */
@@ -878,7 +861,7 @@ PAYOUT SPLIT TESTING
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  animation: pulseError 1s ease-in-out infinite; /* Subtle pulsing effect */
+  animation: pulseError 1s ease-in-out 10; /* Subtle pulsing effect */
   transition: all 0.3s ease-in-out; /* Smooth transitions for changes */
   box-sizing: border-box; /* Makes sure padding doesn't affect width/height */
 }
@@ -886,13 +869,13 @@ PAYOUT SPLIT TESTING
 .green-error {
 	background-color: #0f6b36 !important;
 	color: #f1f1f1 !important;
-	animation: pulseErrorGreen 1s ease-in-out infinite !important; /* Subtle pulsing effect */
+	animation: pulseErrorGreen 1s ease-in-out 10 !important; /* Subtle pulsing effect */
 }
 
 .red-error {
 	background-color: #8b0000 !important; /* Deep, rich red background */
 	color: #f1f1f1 !important; /* Light text for better contrast against the red background */
-	animation: pulseError 1s ease-in-out infinite !important; /* Subtle pulsing effect */
+	animation: pulseError 1s ease-in-out 10 !important; /* Subtle pulsing effect */
 }
 
 .green-error h1 {
@@ -1032,7 +1015,8 @@ PAYOUT SPLIT TESTING
   transform: translateX(100%); /* Start off-screen */
   opacity: 0; /* Start transparent */
   transform-origin: top center; /* Pivot point for swinging */
-  animation: slideIn 1.5s ease-out forwards, growShrink 1.5s ease-in-out 1.5s infinite;
+  animation: slideIn 1.66s ease-out forwards, growShrink 1.66s ease-in-out 1.66s 6 forwards;
+  vertical-align: middle;
 }
 
 @keyframes slideIn {
@@ -1072,7 +1056,7 @@ PAYOUT SPLIT TESTING
 
 .sweet-image {
   transform-origin: center; /* Animation grows from the center */
-  animation: spin-grow 0.7s ease-out, bounce 1s ease infinite 1s; /* start spinning and growing first, then bounce infinitely */
+  animation: spin-grow 1s ease-out, bounce 1s ease 9 1s forwards; /* start spinning and growing first, then bounce infinitely */
   min-width: 70px;
   min-height: 70px;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; /* Black outline effect for text */
@@ -1159,21 +1143,21 @@ PAYOUT SPLIT TESTING
 .result-div.win, .payout-div.win {
   background-color: #16a34a;
   border-color: #074d24;
-  animation: flash-green-new 1s infinite, pulse-effect 1s infinite;
+  animation: flash-green-new 1s 10, pulse-effect 1s 10;
 }
 
 /* Lose result */
 .result-div.lose, .payout-div.lose {
   background-color: #dc2626;
   border-color: #701414;
-  animation: flash-red-new 1s infinite, pulse-effect 1s infinite;
+  animation: flash-red-new 1s 10, pulse-effect 1s 10;
 }
 
 /* Insurance result - Now Blue */
 .result-div.insurance, .payout-div.insurance {
   background-color: #1c3db9;
   border-color: #0f255f;
-  animation: flash-blue-new 1s infinite, pulse-effect 1s infinite;
+  animation: flash-blue-new 1s 10, pulse-effect 1s 10;
 }
 
 /* Entry animation */
@@ -1283,7 +1267,7 @@ PAYOUT SPLIT TESTING
 .last-picks-entry.latest {
 	margin-right: auto;
 	border-width: 3px;
-	animation: slideInLastPick 1.5s ease-out forwards, growShrinkLastPick 1.5s ease-in-out 1.5s infinite;
+	animation: slideInLastPick 1.5s ease-out forwards, growShrinkLastPick 1.4s ease-in-out 1.4s 6;
 }
 
 @keyframes fadeOut {
@@ -1332,6 +1316,11 @@ body {
   overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
   overflow-y: auto;
   font-size: 14px;
+}
+
+body.overlay-active * {
+    animation-play-state: paused !important;
+    transition: none !important;
 }
 
 /* Grid container */
@@ -1402,17 +1391,17 @@ body {
 
 /* Class for flashing green */
 .flash-green {
-  animation: flashBackgroundGreen 2s infinite;
+  animation: flashBackgroundGreen 2s 10 forwards;
 }
 
 /* Class for flashing red */
 .flash-red {
-  animation: flashBackgroundRed 2s infinite;
+  animation: flashBackgroundRed 2s 10 forwards;
 }
 
 /* Class for flashing orange */
 .flash-orange {
-  animation: flashBackgroundOrange 2s infinite;
+  animation: flashBackgroundOrange 2s 10 forwards;
 }
 
 
@@ -1629,4 +1618,13 @@ body {
 		1px  1px 0 black;
 	margin-left: -13px;
 	vertical-align: 13px;
+}
+
+.radio-group-boost {
+	display: none;
+	font-size: 1.5em;
+	text-align: left;
+	accent-color: #67c887;
+	position: relative;
+	vertical-align: top;
 }
