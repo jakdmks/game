@@ -1491,7 +1491,7 @@ function showOverlay() {
 	var totalInstances = 4;
 	var iteration = 0;
 	
-	// Clear any existing images (if this is called multiple times)
+	// Clear any existing images (if this is called multiple times) 
 	imagesContainer.innerHTML = "";
 	
 	// Create and append the image elements dynamically
