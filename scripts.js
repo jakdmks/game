@@ -70,6 +70,13 @@ function updateStatisticsDivs() {
 				insuranceBoostIcon1Div.style.display = "none";
 			}
 			
+			//Unpause animations (efficiency)
+			payoutBoostIcon1Div.addEventListener("animationiteration", () => {
+				payoutBoostIcon1Div.style.animationPlayState = "running";
+			});
+			insuranceBoostIcon1Div.addEventListener("animationiteration", () => {
+				insuranceBoostIcon1Div.style.animationPlayState = "running";
+			});
 		}
 		if (boostLevel >= 2) {
 			boostGraphic2Span.classList.add("selected");
@@ -84,8 +91,16 @@ function updateStatisticsDivs() {
 			} else {
 				insuranceBoostIcon2Div.style.display = "none";
 			}
+			
+			//Pause animations (efficiency)
+			payoutBoostIcon1Div.addEventListener("animationiteration", () => {
+				payoutBoostIcon1Div.style.animationPlayState = "paused";
+			});
+			insuranceBoostIcon1Div.addEventListener("animationiteration", () => {
+				insuranceBoostIcon1Div.style.animationPlayState = "paused";
+			});
 		}
-		if (boostLevel === 3) {
+		if (boostLevel >= 3) {
 			boostGraphic3Span.classList.add("selected");
 			payoutBoostIcon3Div.style.display = "inline-block";
 			payoutBoostPct3Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop + boostBonusLevelThreeHop - boostInsuranceRate) * 100).toFixed(0) + "%";
@@ -98,6 +113,14 @@ function updateStatisticsDivs() {
 			} else {
 				insuranceBoostIcon3Div.style.display = "none";
 			}
+			
+			//Pause animations (efficiency)
+			payoutBoostIcon2Div.addEventListener("animationiteration", () => {
+				payoutBoostIcon2Div.style.animationPlayState = "paused";
+			});
+			insuranceBoostIcon2Div.addEventListener("animationiteration", () => {
+				insuranceBoostIcon2Div.style.animationPlayState = "paused";
+			});
 		}
 	} else {
 		payoutBoostIconsDiv.style.display = "none";
@@ -118,6 +141,20 @@ function updateStatisticsDivs() {
 		boostGraphic1Span.classList.remove("selected");
 		boostGraphic2Span.classList.remove("selected");
 		boostGraphic3Span.classList.remove("selected");
+		
+		//Unpause animations (efficiency)
+		payoutBoostIcon1Div.addEventListener("animationiteration", () => {
+			payoutBoostIcon1Div.style.animationPlayState = "running";
+		});
+		payoutBoostIcon2Div.addEventListener("animationiteration", () => {
+			payoutBoostIcon2Div.style.animationPlayState = "running";
+		});
+		insuranceBoostIcon1Div.addEventListener("animationiteration", () => {
+			insuranceBoostIcon1Div.style.animationPlayState = "running";
+		});
+		insuranceBoostIcon2Div.addEventListener("animationiteration", () => {
+			insuranceBoostIcon2Div.style.animationPlayState = "running";
+		});
 	}
 	
 	winStreakNumSpan.innerHTML = winStreak;
@@ -1247,6 +1284,7 @@ function renderJson(jsonData, displayContainerId) {
 function showOverlayEndOfCredit() {
 	
 	document.body.classList.add("blocked-scroll");
+	document.body.classList.add("overlay-active");
 	
 	var overlayStatistics = JSON.parse(JSON.stringify(statistics));
 	//console.info("overlayStatistics", overlayStatistics);
@@ -1434,6 +1472,7 @@ function hideOverlayChart() {
 	//console.info("Running hideOverlayChart()");
 	
 	document.body.classList.remove("blocked-scroll");
+	document.body.classList.remove("overlay-active");
 	
 	var overlayChart = document.getElementById("overlay-chart");
 	overlayChart.style.visibility = "hidden";
@@ -1443,6 +1482,7 @@ function showOverlay() {
 	//console.info("Running showOverlay()");
 	
 	document.body.classList.add("blocked-scroll");
+	document.body.classList.add("overlay-active");
 	
 	var overlay = document.getElementById("overlay");
 	var imagesContainer = document.getElementById("overlay-images");
@@ -1484,6 +1524,7 @@ function hideOverlay() {
 	//console.info("Running hideOverlay()");
 	
 	document.body.classList.remove("blocked-scroll");
+	document.body.classList.remove("overlay-active");
 	
 	var overlay = document.getElementById("overlay");
 	overlay.style.visibility = "hidden";
