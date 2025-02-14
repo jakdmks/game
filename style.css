@@ -236,12 +236,12 @@ PAYOUT SPLIT TESTING
 
 /* Flashing styles for .selected */
 .payout-split-bar {
-  animation: flash-yellow-gold-split 1.5s 6 forwards; /* Flash yellow to orange */
+  animation: flash-yellow-gold-split 1.66s 6 forwards; /* Flash yellow to orange */
 }
 
 .payout-split-bar.selected {
   border: 3px solid #facc15; /* Default border */
-  animation: sweepingGlowGrey 1.5s 6 alternate forwards;
+  animation: sweepingGlowGrey 1.66s 6 alternate forwards;
 }
 
 @keyframes sweepingGlowGrey {
@@ -780,7 +780,7 @@ PAYOUT SPLIT TESTING
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent; /* For Safari */
-  animation: sweepingTextGlow 1.66s 6 ease-in-out;
+  animation: sweepingTextGlow 1.66s 6 ease-in-out forwards;
 }
 
 .boost-medium.selected {
@@ -788,7 +788,7 @@ PAYOUT SPLIT TESTING
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent; /* For Safari */
-  animation: sweepingTextGlow 1.66s 6 ease-in-out;
+  animation: sweepingTextGlow 1.66s 6 ease-in-out forwards;
 }
 
 .boost-large.selected {
@@ -796,7 +796,7 @@ PAYOUT SPLIT TESTING
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent; /* For Safari */
-  animation: sweepingTextGlow 1.66s 6 ease-in-out
+  animation: sweepingTextGlow 1.66s 6 ease-in-out forwards;
 }
 
 @keyframes flickerText {
@@ -808,18 +808,15 @@ PAYOUT SPLIT TESTING
 }
 
 @keyframes sweepingTextGlow {
-  0% { text-shadow: 0 0 5px rgba(255, 255, 0, 0.3); }
-  50% { text-shadow: 0 0 15px rgba(255, 255, 0, 1); }
-  100% { text-shadow: 0 0 5px rgba(255, 255, 0, 0.3); }
+  0% { text-shadow: 0 0 15px rgba(255, 255, 0, 1); }
+  50% { text-shadow: 0 0 5px rgba(255, 255, 0, 0.3); }
+  100% { text-shadow: 0 0 15px rgba(255, 255, 0, 1); }
 }
 
 /*
-1
-3
-5
-2
-6
-
+  0% { text-shadow: 0 0 5px rgba(255, 255, 0, 0.3); }
+  50% { text-shadow: 0 0 15px rgba(255, 255, 0, 1); }
+  100% { text-shadow: 0 0 5px rgba(255, 255, 0, 0.3); }
 */
 
 
@@ -840,7 +837,7 @@ PAYOUT SPLIT TESTING
 }
 
 .glowing {
-  animation: sweepingTextGlow 1.66s 6 ease-in-out
+  animation: sweepingTextGlow 1.66s 6 ease-in-out forwards;
 }
 
 /* Main Error Content */
