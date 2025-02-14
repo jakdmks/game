@@ -139,11 +139,11 @@
 		</div>
 
 		<!--Payout Boost-->
-		<div style="border: none">
-			<div class="radio-group" id="payout-boost-icons" style="display: none; font-size: 1.5em; text-align: left; accent-color: #67c887;">
+		<div style="border: none; height: 59px;">
+			<div class="radio-group-boost" id="payout-boost-icons" style="margin-top: 22px;">
 				<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
 			</div>
-			<div class="slide-in-scale" id="payout-boost-icon-1" style="">
+			<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-top: 15px;">
 				<img src="images/flame-png.png" height="30px" alt="Payout Boost 1">
 				<div id="payout-boost-pct-1" class="payout-boost-text small">20%</div>
 			</div>
@@ -157,11 +157,11 @@
 			</div>
 		</div>
 		<!--Insurance Boost-->
-		<div style="border: none">
-			<div class="radio-group" id="insurance-boost-icons" style="display: none; font-size: 1.5em; text-align: left; accent-color: #71aef8;">
+		<div style="border: none; height: 59px;">
+			<div class="radio-group-boost" id="insurance-boost-icons" style="margin-top: 15px;">
 				<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked)">
 			</div>
-			<div class="slide-in-scale" id="insurance-boost-icon-1" style="">
+			<div class="slide-in-scale" id="insurance-boost-icon-1" style="margin-top: 15px;">
 				<img src="images/green-cross-png.png" height="20px" alt="Insurance Boost 1">
 				<div id="insurance-boost-pct-1" class="payout-boost-text small">20%</div>
 			</div>
@@ -205,7 +205,7 @@
 	  <!-- Second Row of 3 Columns -->
 	  <div class="grid-item" style="">
 		<!--SWEET BAG NEW SPOT-->
-		<div id="outcome-images" class="panel" style="visibility: visible; min-width: 122px; height: 270px; padding-top: 20px; margin-bottom: 0px">
+		<div id="outcome-images" class="panel" style="visibility: visible; min-width: 122px; height: 280px; padding-top: 20px; margin-bottom: 0px">
 			<div style="display: inline-flex; width: 100px;">
 				<div id="sweet-image1" class="" style="height: 100px;"></div>
 				<!--<div class="sweet-image-text" style="margin-left: -20px">1</div>-->
@@ -244,7 +244,7 @@
 				<div class="game-button-container cherry" style="margin-top: 0px;">
 					<button type="button" onclick="pickSweets(100, 'Cherry')">BET 100 CHERRY</button>
 				</div>
-				<div class="game-button-container cherry large-bet">
+				<div class="game-button-container cherry large-bet" style="margin-bottom: 20px">
 					<button type="button" onclick="pickSweets(500, 'Cherry')">BET 500 CHERRY</button>
 				</div>
 				<div class="game-button-container cola large-bet">
