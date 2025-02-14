@@ -760,10 +760,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		
 		var delayInMs = 700; //1500 Default (1.5s) seems good...
 		
-		//TODO: At the start of the timer, add a "Betting" overlay...
-		
 		showOverlay();
-		document.body.classList.add("blocked");
 		
 		var tempTimeout = setTimeout(() => {
 		
@@ -1067,8 +1064,6 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			calculateBoost();
 			updateStatisticsDivs();
 			renderLastPicks();
-			
-			document.body.classList.remove("blocked");
 			
 			return pickedSweets;
 			//End of Delay
@@ -1481,8 +1476,9 @@ function hideOverlayChart() {
 function showOverlay() {
 	//console.info("Running showOverlay()");
 	
+	document.body.classList.add("blocked");
 	document.body.classList.add("blocked-scroll");
-	document.body.classList.add("overlay-active");
+	//document.body.classList.add("overlay-active");
 	
 	var overlay = document.getElementById("overlay");
 	var imagesContainer = document.getElementById("overlay-images");
@@ -1523,8 +1519,9 @@ function showOverlay() {
 function hideOverlay() {
 	//console.info("Running hideOverlay()");
 	
+	document.body.classList.remove("blocked");
 	document.body.classList.remove("blocked-scroll");
-	document.body.classList.remove("overlay-active");
+	//document.body.classList.remove("overlay-active");
 	
 	var overlay = document.getElementById("overlay");
 	overlay.style.visibility = "hidden";
