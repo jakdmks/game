@@ -1012,7 +1012,7 @@ PAYOUT SPLIT TESTING
   transform: translateX(100%); /* Start off-screen */
   opacity: 0; /* Start transparent */
   transform-origin: top center; /* Pivot point for swinging */
-  animation: slideIn 1.66s ease-out forwards, growShrink 1.66s ease-in-out 1.66s 6 forwards;
+  animation: slideIn 1.66s ease-out forwards, growShrink 1.66s ease-in-out 1.66s infinite forwards;
   vertical-align: middle;
 }
 
