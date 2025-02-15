@@ -347,7 +347,7 @@ PAYOUT SPLIT TESTING
 .credit-button-div button {
 	width: 100%;
 	min-height: 40px;
-	font-size: 1.1em;
+	font-size: 1em;
 	font-family: Verdana;
 	font-weight: bold;
 	padding: 5px;
@@ -357,6 +357,10 @@ PAYOUT SPLIT TESTING
 	border-width: 2px;
 	word-wrap: break-word;
 	color: black;
+    text-shadow: 1px 1px 0px white, 
+                 -1px -1px 0px white,  
+                 1px -1px 0px white, 
+                 -1px 1px 0px white;
 }
 
 /* Pulse Animation */
@@ -392,20 +396,20 @@ PAYOUT SPLIT TESTING
 /* Hover flashing animation */
 @keyframes flash-credit-hover {
   0% {
-    background-color: #ffae00; /* Vibrant Gold */
+    background-color: yellow; /* Vibrant Gold */
   }
   50% {
     background-color: #ff7b00; /* Bold Amber Orange */
   }
   100% {
-    background-color: #ffae00;
+    background-color: yellow;
   }
 }
 
 .convert-button-div button {
 	width: 100%;
 	min-height: 40px;
-	font-size: 1.1em;
+	font-size: 1em;
 	font-family: Verdana;
 	font-weight: bold;
 	padding: 5px;
@@ -415,6 +419,10 @@ PAYOUT SPLIT TESTING
 	border-width: 2px;
 	word-wrap: break-word;
 	color: white;
+    text-shadow: 1px 1px 0px black, 
+                 -1px -1px 0px black,  
+                 1px -1px 0px black, 
+                 -1px 1px 0px black;
 }
 
 /* Pulse Animation */
@@ -442,7 +450,6 @@ PAYOUT SPLIT TESTING
 
 .convert-button-div button:hover {
 	background-color: #1db954; /* Noticeably Brighter Green */
-	color: black !important;
 	border: 2px solid black !important;
 	animation: flash-convert-hover 0.7s 10, pulse-convert 1s 10;
 }
@@ -519,14 +526,14 @@ PAYOUT SPLIT TESTING
 /* Hover Effects */
 .game-button-container.cherry:hover button {
   background: linear-gradient(to bottom, #ff1e4e, #ff586b); /* Brighter red to pink */
-  box-shadow: 0 6px 8px rgba(255, 30, 78, 0.5); /* Stronger shadow on hover */
+  /*box-shadow: 0 6px 8px rgba(255, 30, 78, 0.5);*/ /* Stronger shadow on hover */
   transform: scale(1.05); /* Slightly enlarge on hover */
   color: white; /* Bright white text */
 }
 
 .game-button-container.cola:hover button {
   background: linear-gradient(to bottom, #772020, #5c1717); /* Brighter dark red to brown */
-  box-shadow: 0 6px 8px rgba(119, 32, 32, 0.5); /* Stronger shadow on hover */
+  /*box-shadow: 0 6px 8px rgba(119, 32, 32, 0.5);*/ /* Stronger shadow on hover */
   transform: scale(1.05); /* Slightly enlarge on hover */
   color: #d4af37; /* Gold color for Cola */
 }
@@ -1053,7 +1060,7 @@ PAYOUT SPLIT TESTING
 
 .sweet-image {
   transform-origin: center; /* Animation grows from the center */
-  animation: spin-grow 0.7s ease-out, bounce 1s ease 9 1s forwards; /* start spinning and growing first, then bounce infinitely */
+  animation: spin-grow 0.7s ease-out, bounce 1s ease 6 1s forwards; /* start spinning and growing first, then bounce infinitely */
   min-width: 70px;
   min-height: 70px;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; /* Black outline effect for text */
@@ -1140,21 +1147,21 @@ PAYOUT SPLIT TESTING
 .result-div.win, .payout-div.win {
   background-color: #16a34a;
   border-color: #074d24;
-  animation: flash-green-new 1s 10, pulse-effect 1s 10;
+  animation: flash-green-new 1s 7, pulse-effect 1s 7;
 }
 
 /* Lose result */
 .result-div.lose, .payout-div.lose {
   background-color: #dc2626;
   border-color: #701414;
-  animation: flash-red-new 1s 10, pulse-effect 1s 10;
+  animation: flash-red-new 1s 7, pulse-effect 1s 7;
 }
 
 /* Insurance result - Now Blue */
 .result-div.insurance, .payout-div.insurance {
   background-color: #1c3db9;
   border-color: #0f255f;
-  animation: flash-blue-new 1s 10, pulse-effect 1s 10;
+  animation: flash-blue-new 1s 7, pulse-effect 1s 7;
 }
 
 /* Entry animation */
@@ -1621,7 +1628,52 @@ body.overlay-active * {
 	display: none;
 	font-size: 1.5em;
 	text-align: left;
-	accent-color: #67c887;
+	accent-color: #0f6b36;
 	position: relative;
 	vertical-align: top;
+}
+
+.radio-group-boost.blue {
+	accent-color: #1c3db9;;
+}
+
+#boost-payout-container, #boost-insurance-container {
+    position: relative; /* Ensures the pseudo-element is positioned inside */
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    z-index: 2; /* Ensures text is above background */
+    width: 100%; /* Adjust based on your layout */
+    overflow: hidden; /* Ensures background stays inside */
+}
+
+#boost-payout-container::before, 
+#boost-insurance-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 30px;
+    width: var(--bg-width, 180px); /* Default to full width */
+    height: 22px;
+    z-index: -1; /* Ensures it stays behind the text */
+    border-radius: 5px;
+	opacity: var(--bg-opacity, 0);
+	border: 1px solid #4b5563;;
+}
+
+#boost-payout-container::before {
+	margin-top: 39px;
+}
+
+#boost-insurance-container::before {
+	margin-top: 32px;
+}
+
+#boost-payout-container::before {
+    background-color: #0f6b36;
+}
+
+#boost-insurance-container::before {
+    background-color: #1c3db9;
 }
