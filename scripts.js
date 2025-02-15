@@ -469,6 +469,7 @@ startTimer();
 var statistics = {
 	bagSize: bagSize,
 	timeElapsed: 0,
+	timePerGame: 0,
 	gamesPlayed: 0,
 	playerWinsMixedLosses: "",
 	playerHighestWinStreak: 0,
@@ -1424,6 +1425,7 @@ function showOverlayEndOfCredit() {
 	
 	pauseTimer();
 	statistics.timeElapsed = timeElapsed;
+	statistics.timePerGame = timeElapsed / (statistics.gamesPlayed ? statistics.gamesPlayed : 1);
 	
 	document.body.classList.add("blocked-scroll");
 	document.body.classList.add("overlay-active");
@@ -1464,6 +1466,7 @@ function showOverlayEndOfCredit() {
 	delete overlayStatistics.houseBalancePerGameGBP;
 	delete overlayStatistics.houseBalancePerGamePct;
 	delete overlayStatistics.bagSize;
+	delete overlayStatistics.timePerGame;
 	delete overlayStatistics.tokenRateToGBP;
 	delete overlayStatistics.gamesCherryMixedCola;
 	delete overlayStatistics.playerTotalWinnings;
@@ -1560,6 +1563,7 @@ function showOverlayEndOfCredit2() {
 	overlayStatistics.tokenRateToGBP = overlayStatistics.tokenRateToGBP.toFixed(0);
 	overlayStatistics.bagSize = overlayStatistics.bagSize.toFixed(0);
 	overlayStatistics.playerTotalWinnings = overlayStatistics.playerTotalWinnings.toFixed(0);
+	overlayStatistics.timePerGame = overlayStatistics.timePerGame.toFixed(2) + "s";
 	overlayStatistics.playerTotalWinningsGBP = overlayStatistics.playerTotalWinningsGBP.toFixed(2);
 	overlayStatistics.totalStake = overlayStatistics.totalStake.toFixed(0);
 	overlayStatistics.houseHighestBalance = overlayStatistics.houseHighestBalance.toFixed(0);
@@ -1574,7 +1578,7 @@ function showOverlayEndOfCredit2() {
 	
 	//Add blanks so the screens line up
 	overlayStatistics._BLANK_1 = "-";
-	overlayStatistics._BLANK_2 = "-";
+	//overlayStatistics._BLANK_2 = "-";
 	
 	renderJson(overlayStatistics, "overlay-end-of-credit-content-2");
 	
