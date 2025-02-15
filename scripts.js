@@ -723,6 +723,9 @@ function insuranceSwitch(checked=true) {
 }
 
 function applyBoost(type="", outcome=false) {
+	
+	boostPayoutContainer.style.setProperty("--bg-color", "#0f6b36");
+	boostInsuranceContainer.style.setProperty("--bg-color", "#1c3db9");
 
 	var payoutSplitBar250GreenBoostDiv = document.getElementById("payout-split-bar-250-0-green-boost");
 	var payoutSplitBar250RedBoostDiv = document.getElementById("payout-split-bar-250-0-red-boost");
@@ -744,6 +747,8 @@ function applyBoost(type="", outcome=false) {
 		payoutSplitBar250RedBoostDiv.style.width = 0 + "%";
 		payoutSplitBar200RedBoostDiv.style.width = 0 + "%";
 		payoutSplitBar150RedBoostDiv.style.width = 0 + "%";
+		
+		boostPayoutContainer.style.setProperty("--bg-color", "#67c887");
 		
 		//Display Message
 		/*
@@ -769,6 +774,8 @@ function applyBoost(type="", outcome=false) {
 		payoutSplitBar250RedBoostDiv.style.width = (((boostRate * 100) / 300) * 100).toFixed(0) + "%";
 		payoutSplitBar200RedBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
 		payoutSplitBar150RedBoostDiv.style.width = (((boostRate * 100) / 280) * 100).toFixed(0) + "%";
+		
+		boostInsuranceContainer.style.setProperty("--bg-color", "#71aef8");
 		
 		//Display Message
 		/*
