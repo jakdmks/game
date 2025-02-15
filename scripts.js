@@ -55,50 +55,70 @@ function updateStatisticsDivs() {
 		
 		//console.info("######boostRate", boostRate);
 		
-		if (boostLevel >= 1) {
+		if (boostLevel === 1) {
 			boostGraphic1Span.classList.add("selected");
 			payoutBoostIconsDiv.style.display = "inline-block";
 			payoutBoostIcon1Div.style.display = "inline-block";
 			payoutBoostPct1Div.innerHTML = "+" + ((boostBonusLevelOne - boostInsuranceRate) * 100).toFixed(0) + "%";
 			
+			if (payoutBoostIcon1Div.style.animationPlayState === "paused") {
+				payoutBoostIcon1Div.style.animationPlayState = "running";
+				payoutBoostIcon1Div.style.animation = "none";
+				payoutBoostIcon1Div.offsetHeight;
+				payoutBoostIcon1Div.style.animation = "";
+			}
+			
 			if (insuranceRate > 0) {
 				insuranceBoostIconsDiv.style.display = "inline-block";
 				insuranceBoostIcon1Div.style.display = "inline-block";
 				insuranceBoostPct1Div.innerHTML = "+" + ((boostBonusLevelOne - boostInsuranceRate) * 100).toFixed(0) + "%";
+				
+				if (insuranceBoostIcon1Div.style.animationPlayState === "paused") {
+					insuranceBoostIcon1Div.style.animationPlayState = "running";
+					insuranceBoostIcon1Div.style.animation = "none";
+					insuranceBoostIcon1Div.offsetHeight;
+					insuranceBoostIcon1Div.style.animation = "";
+				}
 			} else {
 				insuranceBoostIconsDiv.style.display = "none";
 				insuranceBoostIcon1Div.style.display = "none";
 			}
-			
-			//Unpause animations (efficiency)
-			payoutBoostIcon1Div.addEventListener("animationiteration", () => {
-				payoutBoostIcon1Div.style.animationPlayState = "running";
-			});
-			insuranceBoostIcon1Div.addEventListener("animationiteration", () => {
-				insuranceBoostIcon1Div.style.animationPlayState = "running";
-			});
 		}
-		if (boostLevel >= 2) {
+		if (boostLevel === 2) {
 			boostGraphic2Span.classList.add("selected");
 			payoutBoostIcon2Div.style.display = "inline-block";
 			payoutBoostPct2Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop - boostInsuranceRate) * 100).toFixed(0) + "%";
 			payoutBoostPct1Div.classList.add("strikethrough");
 			
+			if (payoutBoostIcon2Div.style.animationPlayState === "paused") {
+				payoutBoostIcon2Div.style.animationPlayState = "running";
+				payoutBoostIcon2Div.style.animation = "none";
+				payoutBoostIcon2Div.offsetHeight;
+				payoutBoostIcon2Div.style.animation = "";
+			}
+			
 			if (insuranceRate > 0) {
 				insuranceBoostIcon2Div.style.display = "inline-block";
 				insuranceBoostPct2Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop - boostInsuranceRate) * 100).toFixed(0) + "%";
 				insuranceBoostPct1Div.classList.add("strikethrough");
+				
+				if (insuranceBoostIcon2Div.style.animationPlayState === "paused") {
+					insuranceBoostIcon2Div.style.animationPlayState = "running";
+					insuranceBoostIcon2Div.style.animation = "none";
+					insuranceBoostIcon2Div.offsetHeight;
+					insuranceBoostIcon2Div.style.animation = "";
+				}
 			} else {
 				insuranceBoostIcon2Div.style.display = "none";
 			}
 			
 			//Pause animations (efficiency)
-			payoutBoostIcon1Div.addEventListener("animationiteration", () => {
+			if (payoutBoostIcon1Div.style.animationPlayState !== "paused") {
 				payoutBoostIcon1Div.style.animationPlayState = "paused";
-			});
-			insuranceBoostIcon1Div.addEventListener("animationiteration", () => {
+			}
+			if (insuranceBoostIcon1Div.style.animationPlayState !== "paused") {
 				insuranceBoostIcon1Div.style.animationPlayState = "paused";
-			});
+			}
 		}
 		if (boostLevel >= 3) {
 			boostGraphic3Span.classList.add("selected");
@@ -114,13 +134,22 @@ function updateStatisticsDivs() {
 				insuranceBoostIcon3Div.style.display = "none";
 			}
 			
-			//Pause animations (efficiency)
-			payoutBoostIcon2Div.addEventListener("animationiteration", () => {
+			/*
+			if (payoutBoostIcon1Div.style.animationPlayState !== "paused") {
+				payoutBoostIcon1Div.style.animationPlayState = "paused";
+			}
+			*/
+			if (payoutBoostIcon2Div.style.animationPlayState !== "paused") {
 				payoutBoostIcon2Div.style.animationPlayState = "paused";
-			});
-			insuranceBoostIcon2Div.addEventListener("animationiteration", () => {
+			}
+			/*
+			if (insuranceBoostIcon1Div.style.animationPlayState !== "paused") {
+				insuranceBoostIcon1Div.style.animationPlayState = "paused";
+			}
+			*/
+			if (insuranceBoostIcon2Div.style.animationPlayState !== "paused") {
 				insuranceBoostIcon2Div.style.animationPlayState = "paused";
-			});
+			}
 		}
 	} else {
 		payoutBoostIconsDiv.style.display = "none";
@@ -143,18 +172,30 @@ function updateStatisticsDivs() {
 		boostGraphic3Span.classList.remove("selected");
 		
 		//Unpause animations (efficiency)
-		payoutBoostIcon1Div.addEventListener("animationiteration", () => {
+		if (payoutBoostIcon1Div.style.animationPlayState === "paused") {
 			payoutBoostIcon1Div.style.animationPlayState = "running";
-		});
-		payoutBoostIcon2Div.addEventListener("animationiteration", () => {
+			payoutBoostIcon1Div.style.animation = "none";
+			payoutBoostIcon1Div.offsetHeight;
+			payoutBoostIcon1Div.style.animation = "";				
+		}
+		if (payoutBoostIcon2Div.style.animationPlayState === "paused") {
 			payoutBoostIcon2Div.style.animationPlayState = "running";
-		});
-		insuranceBoostIcon1Div.addEventListener("animationiteration", () => {
+			payoutBoostIcon2Div.style.animation = "none";
+			payoutBoostIcon2Div.offsetHeight;
+			payoutBoostIcon2Div.style.animation = "";
+		}
+		if (insuranceBoostIcon1Div.style.animationPlayState === "paused") {
 			insuranceBoostIcon1Div.style.animationPlayState = "running";
-		});
-		insuranceBoostIcon2Div.addEventListener("animationiteration", () => {
+			insuranceBoostIcon1Div.style.animation = "none";
+			insuranceBoostIcon1Div.offsetHeight;
+			insuranceBoostIcon1Div.style.animation = "";
+		}
+		if (insuranceBoostIcon2Div.style.animationPlayState === "paused") {
 			insuranceBoostIcon2Div.style.animationPlayState = "running";
-		});
+			insuranceBoostIcon2Div.style.animation = "none";
+			insuranceBoostIcon2Div.offsetHeight;
+			insuranceBoostIcon2Div.style.animation = "";
+		}
 	}
 	
 	winStreakNumSpan.innerHTML = winStreak;
