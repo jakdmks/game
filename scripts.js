@@ -154,7 +154,7 @@ function updateStatisticsDivs() {
 			payoutBoostPct1Div.style.opacity = "0.7";
 			payoutBoostPct2Div.style.opacity = "0.7";
 			
-			boostPayoutContainer.style.setProperty("--bg-width", "155px");
+			boostPayoutContainer.style.setProperty("--bg-width", "165px");
 			
 			if (insuranceRate > 0) {
 				insuranceBoostIconsDiv.style.display = "inline-block";
@@ -167,7 +167,7 @@ function updateStatisticsDivs() {
 				insuranceBoostPct1Div.style.opacity = "0.7";
 				insuranceBoostPct2Div.style.opacity = "0.7";
 				
-				boostInsuranceContainer.style.setProperty("--bg-width", "155px");
+				boostInsuranceContainer.style.setProperty("--bg-width", "165px");
 			} else {
 				insuranceBoostIcon3Div.style.display = "none";
 			}
@@ -360,7 +360,7 @@ function calculateBoost() {
 	
 	//FORCE WIN STREAK
 	//winStreak = 99;
-	//winStreak = 2;
+	//winStreak = 1;
 	
 	if (winStreak >= boostStreakLevelOne) {
 		boostRate = boostBonusLevelOne - boostInsuranceRate;
