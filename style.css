@@ -1654,15 +1654,20 @@ body.overlay-active * {
 	accent-color: #1c3db9;;
 }
 
+#boost-payout-container {
+    z-index: 3; /* Ensures text is above background */
+}
+
+#boost-insurance-container {
+    z-index: 2; /* Ensures text is above background */
+}
+
 #boost-payout-container, #boost-insurance-container {
     position: relative; /* Ensures the pseudo-element is positioned inside */
-    padding: 10px;
     font-size: 16px;
     font-weight: bold;
     color: white;
-    z-index: 2; /* Ensures text is above background */
     width: 100%; /* Adjust based on your layout */
-    overflow: hidden; /* Ensures background stays inside */
 }
 
 #boost-payout-container::before, 
@@ -1670,7 +1675,7 @@ body.overlay-active * {
     content: '';
     position: absolute;
     top: 0;
-    left: 30px;
+    left: 20px;
     width: var(--bg-width, 180px); /* Default to full width */
     height: 22px;
     z-index: -1; /* Ensures it stays behind the text */
@@ -1680,11 +1685,11 @@ body.overlay-active * {
 }
 
 #boost-payout-container::before {
-	margin-top: 39px;
+	margin-top: 29px;
 }
 
 #boost-insurance-container::before {
-	margin-top: 32px;
+	margin-top: 23px;
 }
 
 #boost-payout-container::before {
