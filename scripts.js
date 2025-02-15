@@ -54,12 +54,19 @@ function updateStatisticsDivs() {
 	if (boostAvailable) {
 		
 		//console.info("######boostRate", boostRate);
+		boostPayoutContainer.style.setProperty("--bg-opacity", "0.7");
+		
+		if (insuranceRate > 0) {
+			boostInsuranceContainer.style.setProperty("--bg-opacity", "0.7");
+		}
 		
 		if (boostLevel === 1) {
 			boostGraphic1Span.classList.add("selected");
 			payoutBoostIconsDiv.style.display = "inline-block";
 			payoutBoostIcon1Div.style.display = "inline-block";
 			payoutBoostPct1Div.innerHTML = "+" + ((boostBonusLevelOne - boostInsuranceRate) * 100).toFixed(0) + "%";
+			
+			boostPayoutContainer.style.setProperty("--bg-width", "60px");
 			
 			if (payoutBoostIcon1Div.style.animationPlayState === "paused") {
 				payoutBoostIcon1Div.style.animationPlayState = "running";
@@ -72,6 +79,8 @@ function updateStatisticsDivs() {
 				insuranceBoostIconsDiv.style.display = "inline-block";
 				insuranceBoostIcon1Div.style.display = "inline-block";
 				insuranceBoostPct1Div.innerHTML = "+" + ((boostBonusLevelOne - boostInsuranceRate) * 100).toFixed(0) + "%";
+				
+				boostInsuranceContainer.style.setProperty("--bg-width", "60px");
 				
 				if (insuranceBoostIcon1Div.style.animationPlayState === "paused") {
 					insuranceBoostIcon1Div.style.animationPlayState = "running";
@@ -86,9 +95,14 @@ function updateStatisticsDivs() {
 		}
 		if (boostLevel === 2) {
 			boostGraphic2Span.classList.add("selected");
+			payoutBoostIconsDiv.style.display = "inline-block";
+			payoutBoostIcon1Div.style.display = "inline-block";
 			payoutBoostIcon2Div.style.display = "inline-block";
 			payoutBoostPct2Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop - boostInsuranceRate) * 100).toFixed(0) + "%";
 			payoutBoostPct1Div.classList.add("strikethrough");
+			payoutBoostPct1Div.style.opacity = "0.7";
+			
+			boostPayoutContainer.style.setProperty("--bg-width", "105px");
 			
 			if (payoutBoostIcon2Div.style.animationPlayState === "paused") {
 				payoutBoostIcon2Div.style.animationPlayState = "running";
@@ -98,9 +112,15 @@ function updateStatisticsDivs() {
 			}
 			
 			if (insuranceRate > 0) {
+				insuranceBoostIconsDiv.style.display = "inline-block";
+				insuranceBoostIcon1Div.style.display = "inline-block";
 				insuranceBoostIcon2Div.style.display = "inline-block";
 				insuranceBoostPct2Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop - boostInsuranceRate) * 100).toFixed(0) + "%";
+				insuranceBoostPct1Div.style.display = "inline-block";
 				insuranceBoostPct1Div.classList.add("strikethrough");
+				insuranceBoostPct1Div.style.opacity = "0.7";
+	
+				boostInsuranceContainer.style.setProperty("--bg-width", "105px");
 				
 				if (insuranceBoostIcon2Div.style.animationPlayState === "paused") {
 					insuranceBoostIcon2Div.style.animationPlayState = "running";
@@ -123,35 +143,45 @@ function updateStatisticsDivs() {
 			}
 		}
 		if (boostLevel >= 3) {
+			payoutBoostIconsDiv.style.display = "inline-block";
 			boostGraphic3Span.classList.add("selected");
+			payoutBoostIcon1Div.style.display = "inline-block";
+			payoutBoostIcon2Div.style.display = "inline-block";
 			payoutBoostIcon3Div.style.display = "inline-block";
 			payoutBoostPct3Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop + boostBonusLevelThreeHop - boostInsuranceRate) * 100).toFixed(0) + "%";
+			payoutBoostPct1Div.classList.add("strikethrough");
 			payoutBoostPct2Div.classList.add("strikethrough");
+			payoutBoostPct1Div.style.opacity = "0.7";
+			payoutBoostPct2Div.style.opacity = "0.7";
+			
+			boostPayoutContainer.style.setProperty("--bg-width", "155px");
 			
 			if (insuranceRate > 0) {
+				insuranceBoostIconsDiv.style.display = "inline-block";
+				insuranceBoostIcon1Div.style.display = "inline-block";
+				insuranceBoostIcon2Div.style.display = "inline-block";
 				insuranceBoostIcon3Div.style.display = "inline-block";
 				insuranceBoostPct3Div.innerHTML = "+" + ((boostBonusLevelOne + boostBonusLevelTwoHop + boostBonusLevelThreeHop - boostInsuranceRate) * 100).toFixed(0) + "%";
+				insuranceBoostPct1Div.classList.add("strikethrough");
 				insuranceBoostPct2Div.classList.add("strikethrough");
+				insuranceBoostPct1Div.style.opacity = "0.7";
+				insuranceBoostPct2Div.style.opacity = "0.7";
+				
+				boostInsuranceContainer.style.setProperty("--bg-width", "155px");
 			} else {
 				insuranceBoostIcon3Div.style.display = "none";
 			}
 			
-			/*
 			if (payoutBoostIcon1Div.style.animationPlayState !== "paused") {
-				payoutBoostIcon1Div.style.animationPlayState = "paused";
+				pauseAnimationOnFinish(payoutBoostIcon1Div);
 			}
-			*/
 			if (payoutBoostIcon2Div.style.animationPlayState !== "paused") {
-				//payoutBoostIcon2Div.style.animationPlayState = "paused";
 				pauseAnimationOnFinish(payoutBoostIcon2Div);
 			}
-			/*
 			if (insuranceBoostIcon1Div.style.animationPlayState !== "paused") {
-				insuranceBoostIcon1Div.style.animationPlayState = "paused";
+				pauseAnimationOnFinish(insuranceBoostIcon1Div);
 			}
-			*/
 			if (insuranceBoostIcon2Div.style.animationPlayState !== "paused") {
-				//insuranceBoostIcon2Div.style.animationPlayState = "paused";
 				pauseAnimationOnFinish(insuranceBoostIcon2Div);
 			}
 		}
@@ -200,6 +230,18 @@ function updateStatisticsDivs() {
 			insuranceBoostIcon2Div.offsetHeight;
 			insuranceBoostIcon2Div.style.animation = "";
 		}
+		
+		boostPayoutContainer.style.setProperty("--bg-width", "0px");
+		boostInsuranceContainer.style.setProperty("--bg-width", "0px");
+		
+		boostPayoutContainer.style.setProperty("--bg-opacity", "0");
+		boostInsuranceContainer.style.setProperty("--bg-opacity", "0");
+		
+		
+		payoutBoostPct1Div.style.opacity = "1";
+		payoutBoostPct2Div.style.opacity = "1";
+		insuranceBoostPct1Div.style.opacity = "1";
+		insuranceBoostPct2Div.style.opacity = "1";
 	}
 	
 	winStreakNumSpan.innerHTML = winStreak;
@@ -318,7 +360,7 @@ function calculateBoost() {
 	
 	//FORCE WIN STREAK
 	//winStreak = 99;
-	//winStreak = 3;
+	//winStreak = 2;
 	
 	if (winStreak >= boostStreakLevelOne) {
 		boostRate = boostBonusLevelOne - boostInsuranceRate;
@@ -334,9 +376,33 @@ function calculateBoost() {
 			boostRate = boostRate + boostBonusLevelThreeHop;
 			boostLevel = 3;
 		}
+	} else if (lossStreak >= lossStreakLevelOne) {
+		winStreak = 1;
+		boostLevel = 1;
+		boostAvailable = true;
+		
+		//Reset loss streak
+		lossStreak = 0;
+		
+		//SET ERROR MESSAGE AND EXPLODE POINTS!
+		var creditErrors = [];
+		creditErrors.push("Loss streak! Here's a loss bonus!");
+		
+		displayErrors(errorContainerDiv, errorContentDiv, "LOSS BONUS!", creditErrors, 3000, "green-error");
+		
+		//Explode some messages...
+		for (var i = 0; i < 3; i++) {
+			
+			if (i < 2) {
+				createFlyingText("LOSS BONUS!", "white", "");
+			}
+			createFlyingText("<img src='images/present-png.png' height='30px' alt='Present Icon' style='opacity: 0.5'>", "white", "");
+		}
 	} else {
 		boostAvailable = false;
 	}
+	
+
 	//console.info("boostRate", boostRate);
 }
 
@@ -346,6 +412,7 @@ var playerCredit = 0;
 var payoutRate = 2;
 var insuranceRate = 0.4;
 var winStreak = 0;
+var lossStreak = 0;
 
 //Boost
 var boostAvailable = false;
@@ -362,6 +429,8 @@ var boostStreakLevelTwo = 2;
 var boostBonusLevelTwoHop = 0.1;
 var boostStreakLevelThree = 3;
 var boostBonusLevelThreeHop = 0.1;
+
+var lossStreakLevelOne = 5; //5
 
 var payoutBoostRate = 0;
 var insuranceBoostRate = 0;
@@ -386,14 +455,24 @@ var chartStake = 0;
 var chartHouseValue = 0;
 var chartPlayerValue = 0;
 
+//Timer
+var timerInterval;  // To hold the interval ID
+var timeElapsed = 0;  // Time counter in seconds
+var isRunning = false;  // Track if the timer is running
+
+//Start the timer
+startTimer();
+
 //TESTING
 //boostStreakLevelOne = 0;
 	
 var statistics = {
 	bagSize: bagSize,
+	timeElapsed: 0,
 	gamesPlayed: 0,
 	playerWinsMixedLosses: "",
 	playerHighestWinStreak: 0,
+	playerHighestLossStreak: 0,
 	boostProtectInvoked: 0,
 	boostProtectInvokedRun: 0,
 	boostProtectInvokedRunHighest: 0,
@@ -512,6 +591,9 @@ var boostInsuranceLives = document.getElementById("boost-insurance-lives");
 
 var lock1 = document.getElementById("lock1");
 var lock2 = document.getElementById("lock2");
+
+var boostPayoutContainer = document.getElementById("boost-payout-container");
+var boostInsuranceContainer = document.getElementById("boost-insurance-container");
 
 updatePayoutSplit(2, 0.4, "SPLIT02"); //2, 0.5
 insuranceSwitch(false);
@@ -915,6 +997,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					housePayout = stake - payout, 2;
 					winStreak++;
 					
+					//Reset loss streak
+					lossStreak = 0;
+					
 					if (boostInsurance) {
 						boostInsuranceRunCurrent = 0;
 					}
@@ -949,6 +1034,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					outcome = "loss";
 					housePayout = stake;
 					winStreak = 0;
+					
+					//Increase loss streak
+					lossStreak++;
 					
 					if (boostInsurance) {
 						boostInsuranceRunCurrent = 0;
@@ -990,6 +1078,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						//console.info("boostInsuranceRunCurrent", boostInsuranceRunCurrent);
 						//console.info("boostInsuranceRunMax", boostInsuranceRunMax);
 					}
+					
+					//Subtract 1 from loss streak on insurance
+					lossStreak = lossStreak-- < 0 ? 0 : lossStreak;
 					
 					//console.info("Bet loses.");
 					//console.info("insuranceRate", insuranceRate);
@@ -1070,6 +1161,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			statistics.houseBalancePerGamePct = statistics.houseBalance / statistics.totalStake * 100;
 			
 			statistics.playerHighestWinStreak = winStreak > statistics.playerHighestWinStreak ? winStreak : statistics.playerHighestWinStreak;
+			statistics.playerHighestLossStreak = lossStreak > statistics.playerHighestLossStreak ? lossStreak : statistics.playerHighestLossStreak;
 			
 			statistics.boostProtectInvoked = statistics.boostProtectInvoked + ((boostInsurance && outcome === "insurance" && boostLevel >= 1) ? 1 : 0);
 			statistics.boostProtectInvokedRun = (boostInsurance && outcome === "insurance" && boostLevel >= 1) ? statistics.boostProtectInvokedRun + 1 : 0;
@@ -1323,6 +1415,9 @@ function renderJson(jsonData, displayContainerId) {
 
 function showOverlayEndOfCredit() {
 	
+	pauseTimer();
+	statistics.timeElapsed = timeElapsed;
+	
 	document.body.classList.add("blocked-scroll");
 	document.body.classList.add("overlay-active");
 	
@@ -1370,8 +1465,10 @@ function showOverlayEndOfCredit() {
 	//console.info("overlayStatistics", overlayStatistics);
 	
 	overlayStatistics.gamesPlayed = overlayStatistics.gamesPlayed.toFixed(0);
+	overlayStatistics.timeElapsed = formatTime(overlayStatistics.timeElapsed);
 	//overlayStatistics.tokenRateToGBP = overlayStatistics.tokenRateToGBP.toFixed(0);
 	overlayStatistics.playerHighestWinStreak = overlayStatistics.playerHighestWinStreak.toFixed(0);
+	overlayStatistics.playerHighestLossStreak = overlayStatistics.playerHighestLossStreak.toFixed(0);
 	overlayStatistics.boostProtectInvoked = overlayStatistics.boostProtectInvoked.toFixed(0);
 	overlayStatistics.boostProtectInvokedRun = overlayStatistics.boostProtectInvokedRun.toFixed(0);
 	overlayStatistics.boostProtectInvokedRunHighest = overlayStatistics.boostProtectInvokedRunHighest.toFixed(0);
@@ -1433,6 +1530,7 @@ function showOverlayEndOfCredit2() {
 	
 	delete overlayStatistics.audit;
 	delete overlayStatistics.gamesPlayed;
+	delete overlayStatistics.timeElapsed;
 	delete overlayStatistics.playerWinsMixedLosses;
 	delete overlayStatistics.houseBalance;
 	delete overlayStatistics.houseBalanceGBP;
@@ -1445,6 +1543,7 @@ function showOverlayEndOfCredit2() {
 	//delete overlayStatistics.playerTotalWinnings;
 	//delete overlayStatistics.playerTotalWinningsGBP;
 	delete overlayStatistics.playerHighestWinStreak
+	delete overlayStatistics.playerHighestLossStreak
 	delete overlayStatistics.boostProtectInvoked;
 	delete overlayStatistics.boostProtectInvokedRunHighest;
 	delete overlayStatistics.boostProtectMaxResetBoostCount
@@ -1467,8 +1566,8 @@ function showOverlayEndOfCredit2() {
 	overlayStatistics.houseBalancePerGamePct = overlayStatistics.houseBalancePerGamePct.toFixed(2) + "%";
 	
 	//Add blanks so the screens line up
-	//overlayStatistics._BLANK_1 = "-";
-	//overlayStatistics._BLANK_2 = "-";
+	overlayStatistics._BLANK_1 = "-";
+	overlayStatistics._BLANK_2 = "-";
 	
 	renderJson(overlayStatistics, "overlay-end-of-credit-content-2");
 	
@@ -1510,6 +1609,8 @@ function showOverlayChart() {
 
 function hideOverlayChart() {
 	//console.info("Running hideOverlayChart()");
+	
+	resumeTimer();
 	
 	document.body.classList.remove("blocked-scroll");
 	document.body.classList.remove("overlay-active");
@@ -1798,4 +1899,43 @@ function pauseAnimationOnFinish(element) {
   }
 
   requestAnimationFrame(checkTime);
+}
+
+function startTimer() {
+    if (!isRunning) {
+        timerInterval = setInterval(() => {
+            timeElapsed++;
+        }, 1000);
+        isRunning = true;
+    }
+}
+
+// Function to pause the timer
+function pauseTimer() {
+    if (isRunning) {
+        clearInterval(timerInterval);
+        isRunning = false;
+    }
+}
+
+// Function to resume the timer
+function resumeTimer() {
+    if (!isRunning) {
+        startTimer();  // Start a new interval if it's paused
+    }
+}
+
+// Function to reset the timer
+function resetTimer() {
+    clearInterval(timerInterval);
+    timeElapsed = 0;
+    isRunning = false;
+}
+
+function formatTime(seconds) {
+    const hrs = Math.floor(seconds / 3600).toString().padStart(2, "0");
+    const mins = Math.floor((seconds % 3600) / 60).toString().padStart(2, "0");
+    const secs = (seconds % 60).toString().padStart(2, "0");
+    
+    return hrs + ":" + mins + ":" + secs;
 }
