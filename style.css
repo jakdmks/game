@@ -1053,7 +1053,7 @@ PAYOUT SPLIT TESTING
 
 .sweet-image {
   transform-origin: center; /* Animation grows from the center */
-  animation: spin-grow 1s ease-out, bounce 1s ease 9 1s forwards; /* start spinning and growing first, then bounce infinitely */
+  animation: spin-grow 0.7s ease-out, bounce 1s ease 9 1s forwards; /* start spinning and growing first, then bounce infinitely */
   min-width: 70px;
   min-height: 70px;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; /* Black outline effect for text */
