@@ -619,6 +619,8 @@ function addCredit(credit=0) {
 	//Update playerCredit in statistics...
 	statistics.playerCredit = playerCredit;
 	
+	resumeTimer();
+	
 	//Setup Messages
 	var creditErrors = [];
 	creditErrors.push("Added " + credit.toFixed(0) + " Tokens...");
@@ -652,6 +654,8 @@ function convertWinnings() {
 	statistics.playerCreditGBP = playerCredit / tokenRateToGBP;
 	
 	chartPlayerValue = playerCredit;
+	
+	resumeTimer();
 	
 	//Setup Messages
 	var convertErrors = [];
@@ -865,6 +869,8 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 
 	if ((bet === "Cola" || bet === "Cherry") && stake !== 0 && (playerCredit - stake >= 0))
 	{
+		resumeTimer();
+		
 		resultDiv.style.display = "none";
 		resultDiv.innerHTML = "";
 		resultDiv.classList.remove("win");
@@ -1620,8 +1626,6 @@ function showOverlayChart() {
 
 function hideOverlayChart() {
 	//console.info("Running hideOverlayChart()");
-	
-	resumeTimer();
 	
 	document.body.classList.remove("blocked-scroll");
 	document.body.classList.remove("overlay-active");
