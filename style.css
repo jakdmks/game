@@ -486,7 +486,7 @@ PAYOUT SPLIT TESTING
   width: 100%; /* Make the button fill the container width */
   min-width: 150px; /* Prevent the button from shrinking below 150px */
   height: 40px;
-  font-size: 0.8em;
+  font-size: 1em;
   font-family: Verdana, sans-serif;
   padding: 5px;
   border-radius: 10px;
@@ -504,9 +504,15 @@ PAYOUT SPLIT TESTING
 
 /* Cherry buttons */
 .game-button-container.cherry button {
-  background: linear-gradient(to bottom, #ff586b, #ff8fa6); /* Rich red to pink */
-  color: #a91e1e; /* Bright red text */
+  background: linear-gradient(to bottom, #ff1e4e, #ff586b); /* Brighter red to pink */
+  color: white; /* Bright red text */ #a91e1e
   border-color: #ff1e4e; /* Vibrant red border */
+  
+  text-shadow: 
+	-1px -1px 0 black,  
+	1px -1px 0 black,
+	-1px  1px 0 black,
+	1px  1px 0 black;
 }
 
 /* Cola buttons */
@@ -514,6 +520,11 @@ PAYOUT SPLIT TESTING
   background: linear-gradient(to bottom, #5c1717, #8b0000); /* Dark red to brown */
   color: #ffffff; /* Bright white text */
   border-color: #772020; /* Dark red border */
+  text-shadow: 
+	-1px -1px 0 black,  
+	1px -1px 0 black,
+	-1px  1px 0 black,
+	1px  1px 0 black;
 }
 
 /* Large bet buttons */
@@ -525,10 +536,16 @@ PAYOUT SPLIT TESTING
 
 /* Hover Effects */
 .game-button-container.cherry:hover button {
-  background: linear-gradient(to bottom, #ff1e4e, #ff586b); /* Brighter red to pink */
+  background: linear-gradient(to bottom, #ff586b, #ff8fa6); /* Rich red to pink */
   /*box-shadow: 0 6px 8px rgba(255, 30, 78, 0.5);*/ /* Stronger shadow on hover */
   transform: scale(1.05); /* Slightly enlarge on hover */
-  color: white; /* Bright white text */
+  color: #d4af37; /* Bright white text */
+  
+  text-shadow: 
+	-1px -1px 0 black,  
+	1px -1px 0 black,
+	-1px  1px 0 black,
+	1px  1px 0 black;
 }
 
 .game-button-container.cola:hover button {
