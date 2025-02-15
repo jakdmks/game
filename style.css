@@ -1675,17 +1675,18 @@ body.overlay-active * {
     content: '';
     position: absolute;
     top: 0;
-    left: 20px;
+    left: 10px;
     width: var(--bg-width, 180px); /* Default to full width */
     height: 22px;
     z-index: -1; /* Ensures it stays behind the text */
     border-radius: 5px;
 	opacity: var(--bg-opacity, 0);
-	border: 1px solid #4b5563;;
+	border: 2px solid #facc15;
+	box-sizing: border-box;
 }
 
 #boost-payout-container::before {
-	margin-top: 29px;
+	margin-top: 30px;
 }
 
 #boost-insurance-container::before {
