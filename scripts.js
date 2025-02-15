@@ -114,10 +114,12 @@ function updateStatisticsDivs() {
 			
 			//Pause animations (efficiency)
 			if (payoutBoostIcon1Div.style.animationPlayState !== "paused") {
-				payoutBoostIcon1Div.style.animationPlayState = "paused";
+				//payoutBoostIcon1Div.style.animationPlayState = "paused";
+				pauseAnimationOnFinish(payoutBoostIcon1Div);
 			}
 			if (insuranceBoostIcon1Div.style.animationPlayState !== "paused") {
-				insuranceBoostIcon1Div.style.animationPlayState = "paused";
+				//insuranceBoostIcon1Div.style.animationPlayState = "paused";
+				pauseAnimationOnFinish(insuranceBoostIcon1Div);
 			}
 		}
 		if (boostLevel >= 3) {
@@ -140,7 +142,8 @@ function updateStatisticsDivs() {
 			}
 			*/
 			if (payoutBoostIcon2Div.style.animationPlayState !== "paused") {
-				payoutBoostIcon2Div.style.animationPlayState = "paused";
+				//payoutBoostIcon2Div.style.animationPlayState = "paused";
+				pauseAnimationOnFinish(payoutBoostIcon2Div);
 			}
 			/*
 			if (insuranceBoostIcon1Div.style.animationPlayState !== "paused") {
@@ -148,7 +151,8 @@ function updateStatisticsDivs() {
 			}
 			*/
 			if (insuranceBoostIcon2Div.style.animationPlayState !== "paused") {
-				insuranceBoostIcon2Div.style.animationPlayState = "paused";
+				//insuranceBoostIcon2Div.style.animationPlayState = "paused";
+				pauseAnimationOnFinish(insuranceBoostIcon2Div);
 			}
 		}
 	} else {
@@ -864,12 +868,10 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			}
 			
 			//FORCE CHERRY
-			/*
 			var pickedSweets = {
 				"Sweet1": "Cherry",
 				"Sweet2": "Cherry"
 			};
-			*/
 			
 			//FORCE COLA
 			/*
@@ -1772,4 +1774,26 @@ function drawChart(data) {
 		
 		firstBar = false;
 	});
+}
+
+function pauseAnimationOnFinish(element) {
+  const styles = getComputedStyle(element);
+  const duration = parseFloat(styles.animationDuration) * 1000; // Convert to ms
+  const iterations = styles.animationIterationCount === 'infinite' ? Infinity : parseFloat(styles.animationIterationCount);
+  
+  if (iterations === Infinity) return; // Skip infinite animations
+
+  const totalDuration = duration * iterations;
+  const startTime = performance.now(); // Get precise start time
+
+  function checkTime() {
+    const elapsed = performance.now() - startTime;
+    if (elapsed >= totalDuration) {
+      element.style.animationPlayState = 'paused'; // Pause precisely at the end
+    } else {
+      requestAnimationFrame(checkTime); // Keep checking
+    }
+  }
+
+  requestAnimationFrame(checkTime);
 }
