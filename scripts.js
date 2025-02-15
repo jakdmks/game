@@ -66,7 +66,7 @@ function updateStatisticsDivs() {
 			payoutBoostIcon1Div.style.display = "inline-block";
 			payoutBoostPct1Div.innerHTML = "+" + ((boostBonusLevelOne - boostInsuranceRate) * 100).toFixed(0) + "%";
 			
-			boostPayoutContainer.style.setProperty("--bg-width", "60px");
+			boostPayoutContainer.style.setProperty("--bg-width", "70px");
 			
 			if (payoutBoostIcon1Div.style.animationPlayState === "paused") {
 				payoutBoostIcon1Div.style.animationPlayState = "running";
@@ -80,7 +80,7 @@ function updateStatisticsDivs() {
 				insuranceBoostIcon1Div.style.display = "inline-block";
 				insuranceBoostPct1Div.innerHTML = "+" + ((boostBonusLevelOne - boostInsuranceRate) * 100).toFixed(0) + "%";
 				
-				boostInsuranceContainer.style.setProperty("--bg-width", "60px");
+				boostInsuranceContainer.style.setProperty("--bg-width", "70px");
 				
 				if (insuranceBoostIcon1Div.style.animationPlayState === "paused") {
 					insuranceBoostIcon1Div.style.animationPlayState = "running";
@@ -102,7 +102,7 @@ function updateStatisticsDivs() {
 			payoutBoostPct1Div.classList.add("strikethrough");
 			payoutBoostPct1Div.style.opacity = "0.7";
 			
-			boostPayoutContainer.style.setProperty("--bg-width", "105px");
+			boostPayoutContainer.style.setProperty("--bg-width", "115px");
 			
 			if (payoutBoostIcon2Div.style.animationPlayState === "paused") {
 				payoutBoostIcon2Div.style.animationPlayState = "running";
@@ -120,7 +120,7 @@ function updateStatisticsDivs() {
 				insuranceBoostPct1Div.classList.add("strikethrough");
 				insuranceBoostPct1Div.style.opacity = "0.7";
 	
-				boostInsuranceContainer.style.setProperty("--bg-width", "105px");
+				boostInsuranceContainer.style.setProperty("--bg-width", "115px");
 				
 				if (insuranceBoostIcon2Div.style.animationPlayState === "paused") {
 					insuranceBoostIcon2Div.style.animationPlayState = "running";
@@ -154,7 +154,7 @@ function updateStatisticsDivs() {
 			payoutBoostPct1Div.style.opacity = "0.7";
 			payoutBoostPct2Div.style.opacity = "0.7";
 			
-			boostPayoutContainer.style.setProperty("--bg-width", "165px");
+			boostPayoutContainer.style.setProperty("--bg-width", "175px");
 			
 			if (insuranceRate > 0) {
 				insuranceBoostIconsDiv.style.display = "inline-block";
@@ -167,7 +167,7 @@ function updateStatisticsDivs() {
 				insuranceBoostPct1Div.style.opacity = "0.7";
 				insuranceBoostPct2Div.style.opacity = "0.7";
 				
-				boostInsuranceContainer.style.setProperty("--bg-width", "165px");
+				boostInsuranceContainer.style.setProperty("--bg-width", "175px");
 			} else {
 				insuranceBoostIcon3Div.style.display = "none";
 			}
