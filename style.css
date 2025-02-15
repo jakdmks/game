@@ -1077,7 +1077,7 @@ PAYOUT SPLIT TESTING
 
 .sweet-image {
   transform-origin: center; /* Animation grows from the center */
-  animation: spin-grow 0.7s ease-out, bounce 1s ease 6 1s forwards; /* start spinning and growing first, then bounce infinitely */
+  animation: spin-grow 0.7s ease-out, bounce 1s ease 4 1s forwards; /* start spinning and growing first, then bounce infinitely */
   min-width: 70px;
   min-height: 70px;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; /* Black outline effect for text */
@@ -1164,21 +1164,21 @@ PAYOUT SPLIT TESTING
 .result-div.win, .payout-div.win {
   background-color: #16a34a;
   border-color: #074d24;
-  animation: flash-green-new 1s 7, pulse-effect 1s 7;
+  animation: flash-green-new 1s 7, pulse-effect 1s 5;
 }
 
 /* Lose result */
 .result-div.lose, .payout-div.lose {
   background-color: #dc2626;
   border-color: #701414;
-  animation: flash-red-new 1s 7, pulse-effect 1s 7;
+  animation: flash-red-new 1s 7, pulse-effect 1s 5;
 }
 
 /* Insurance result - Now Blue */
 .result-div.insurance, .payout-div.insurance {
   background-color: #1c3db9;
   border-color: #0f255f;
-  animation: flash-blue-new 1s 7, pulse-effect 1s 7;
+  animation: flash-blue-new 1s 7, pulse-effect 1s 5;
 }
 
 /* Entry animation */
