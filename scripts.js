@@ -868,10 +868,12 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			}
 			
 			//FORCE CHERRY
+			/*
 			var pickedSweets = {
 				"Sweet1": "Cherry",
 				"Sweet2": "Cherry"
 			};
+			*/
 			
 			//FORCE COLA
 			/*
