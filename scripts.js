@@ -430,7 +430,7 @@ var boostBonusLevelTwoHop = 0.1;
 var boostStreakLevelThree = 3;
 var boostBonusLevelThreeHop = 0.1;
 
-var lossStreakLevelOne = 5; //5
+var lossStreakLevelOne = 3; //5
 
 var payoutBoostRate = 0;
 var insuranceBoostRate = 0;
@@ -1094,7 +1094,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					}
 					
 					//Subtract 1 from loss streak on insurance
-					lossStreak = lossStreak-- < 0 ? 0 : lossStreak;
+					//lossStreak = lossStreak-- < 0 ? 0 : lossStreak;
 					
 					//console.info("Bet loses.");
 					//console.info("insuranceRate", insuranceRate);
