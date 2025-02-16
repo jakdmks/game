@@ -823,13 +823,6 @@ PAYOUT SPLIT TESTING
   animation: sweepingTextGlow 1.66s 6 ease-in-out forwards;
 }
 
-@keyframes flickerText {
-  0%, 100% { text-shadow: 0 0 1px rgba(255, 255, 255, 0.5); }
-  20% { text-shadow: 0 0 15px rgba(255, 255, 255, 1); }
-  40% { text-shadow: 0 0 25px rgba(255, 255, 255, 1); }
-  60% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
-  80% { text-shadow: 0 0 30px rgba(255, 255, 255, 1); }
-}
 
 @keyframes sweepingTextGlow {
   0% { text-shadow: 0 0 15px rgba(255, 255, 0, 1); }
@@ -837,12 +830,24 @@ PAYOUT SPLIT TESTING
   100% { text-shadow: 0 0 15px rgba(255, 255, 0, 1); }
 }
 
-/*
-  0% { text-shadow: 0 0 5px rgba(255, 255, 0, 0.3); }
-  50% { text-shadow: 0 0 15px rgba(255, 255, 0, 1); }
-  100% { text-shadow: 0 0 5px rgba(255, 255, 0, 0.3); }
-*/
+.boost-small.selected-blue,
+.boost-medium.selected-blue,
+.boost-large.selected-blue {
+  background: linear-gradient(to right, blue, cyan);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent; /* For Safari */
+  text-shadow: 0 0 10px rgba(0, 162, 255, 0.8), 
+               0 0 20px rgba(0, 162, 255, 0.6), 
+               0 0 30px rgba(0, 162, 255, 0.4);
+  animation: sweepingTextGlowBlue 1.66s 6 ease-in-out forwards;
+}
 
+@keyframes sweepingTextGlowBlue {
+  0% { text-shadow: 0 0 5px rgba(0, 162, 255, 0.5); }
+  50% { text-shadow: 0 0 15px rgba(0, 162, 255, 0.8); }
+  100% { text-shadow: 0 0 5px rgba(0, 162, 255, 0.5); }
+}
 
 .grey {
 	color: grey;
@@ -860,8 +865,16 @@ PAYOUT SPLIT TESTING
 	color: yellow;
 }
 
+.blue {
+	color: cyan;
+}
+
 .glowing {
   animation: sweepingTextGlow 1.66s 6 ease-in-out forwards;
+}
+
+.glowing-blue {
+  animation: sweepingTextGlowBlue 1.66s 6 ease-in-out forwards;
 }
 
 /* Main Error Content */
@@ -893,15 +906,28 @@ PAYOUT SPLIT TESTING
 	animation: pulseErrorGreen 1s ease-in-out 10 !important; /* Subtle pulsing effect */
 }
 
+.green-error h1 {
+	color: #e1ffe1 !important;
+}
+
 .red-error {
 	background-color: #8b0000 !important; /* Deep, rich red background */
 	color: #f1f1f1 !important; /* Light text for better contrast against the red background */
 	animation: pulseError 1s ease-in-out 10 !important; /* Subtle pulsing effect */
 }
 
-.green-error h1 {
-	color: #e1ffe1 !important;
+.blue-error {
+  background-color: #0a3d78 !important;
+  color: #f1f1f1 !important;
+  animation: pulseErrorBlue 1s ease-in-out 10 !important; /* Subtle pulsing effect */
 }
+
+.blue-error h1 {
+  color: #d1e8ff !important;
+}
+
+
+
 
 /* Error Heading */
 #error-content h1 {
@@ -948,6 +974,22 @@ PAYOUT SPLIT TESTING
   100% {
     transform: scale(1);
     box-shadow: 0 0 10px rgba(0, 128, 0, 0.6), 0 0 15px rgba(0, 128, 0, 0.4); /* Return to initial */
+  }
+}
+
+/* Pulse Animation for Green Error */
+@keyframes pulseErrorBlue {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(0, 0, 128, 0.6), 0 0 15px rgba(0, 0, 128, 0.4); /* Green glow */
+  }
+  50% {
+    transform: scale(0.97); /* Slightly shrink */
+    box-shadow: 0 0 20px rgba(0, 0, 128, 0.8), 0 0 30px rgba(0, 0, 128, 0.6); /* Brighter green glow */
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(0, 0, 128, 0.6), 0 0 15px rgba(0, 0, 128, 0.4); /* Return to initial */
   }
 }
 
