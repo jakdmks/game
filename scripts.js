@@ -376,6 +376,9 @@ function calculateBoost() {
 	//winStreak = 99;
 	//winStreak = 1;
 	
+	//FORCE LOSS STREAK
+	//lossStreak = 3;
+	
 	if (winStreak >= boostStreakLevelOne) {
 		boostRate = boostBonusLevelOne - boostInsuranceRate;
 		boostLevel = 1;
