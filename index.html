@@ -18,6 +18,16 @@
 		</div>
 	</div>
 	
+	<!--BONUS GAME OVERLAY-->
+	<!--
+	<div class="overlay-dismiss" id="overlay-bonus-game">
+		<div class="panel" style="font-siz: 0.7em">
+			<div id="overlay-bonus-game-content"></div>
+			<button class="dismiss-button" id="overlay-bonus-game-dismiss-button" onclick="hideOverlayBonusGame()">Play!</button>
+		</div>
+	</div>
+	-->
+	
 	<!--END OF CREDIT OVERLAY-->
 	<div class="overlay-dismiss" id="overlay-end-of-credit">
 		<div class="panel" style="font-siz: 0.7em">
@@ -26,6 +36,7 @@
 		</div>
 	</div>
 	
+	<!--END OF CREDIT OVERLAY 2-->
 	<div class="overlay-dismiss" id="overlay-end-of-credit-2">
 		<div class="panel" style="font-siz: 0.7em">
 			<div id="overlay-end-of-credit-content-2"></div>
@@ -82,39 +93,39 @@
 				<label class="radio-item">
 					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.5, 0, 'SPLIT01')">-->
 					<input type="radio" name="payout" style="vertical-align: bottom" value="option1" onchange="updatePayoutSplit(2.3, 0.2, 'SPLIT01')">
+					<div class="payout-split-name">HIGH RISK</div>
+					<div id="payout-split-bar-250-0" class="payout-split-bar">
+						<div class="green-bar" style="width: 77%;"></div>
+						<div id="payout-split-bar-250-0-green-boost" class="green-bar-boost"></div>
+						<div class="blue-bar" style="width: 7%;"></div>
+						<div id="payout-split-bar-250-0-red-boost" class="blue-bar-boost"></div>
+					</div>
 				</label>
-				<div class="payout-split-name">HIGH RISK</div>
-				<div id="payout-split-bar-250-0" class="payout-split-bar">
-					<div class="green-bar" style="width: 77%;"></div>
-					<div id="payout-split-bar-250-0-green-boost" class="green-bar-boost"></div>
-					<div class="blue-bar" style="width: 7%;"></div>
-					<div id="payout-split-bar-250-0-red-boost" class="blue-bar-boost"></div>
-				</div>
 				
 				<label class="radio-item">
 					<!--<input type="radio" name="payout" value="option1" checked onchange="updatePayoutSplit(2, 0.5, 'SPLIT02')">-->
 					<input type="radio" name="payout" style="vertical-align: bottom" value="option1" checked onchange="updatePayoutSplit(2, 0.4, 'SPLIT02')">
+					<div class="payout-split-name">MID RISK</div>
+					<div id="payout-split-bar-200-50" class="payout-split-bar selected">
+						<div class="green-bar"></div>
+						<div id="payout-split-bar-200-50-green-boost" class="green-bar-boost"></div>
+						<div class="blue-bar"></div>
+						<div id="payout-split-bar-200-50-red-boost" class="blue-bar-boost"></div>
+					</div>
 				</label>
-				<div class="payout-split-name">MID RISK</div>
-				<div id="payout-split-bar-200-50" class="payout-split-bar selected">
-					<div class="green-bar"></div>
-					<div id="payout-split-bar-200-50-green-boost" class="green-bar-boost"></div>
-					<div class="blue-bar"></div>
-					<div id="payout-split-bar-200-50-red-boost" class="blue-bar-boost"></div>
-				</div>
 
 				
 				<label class="radio-item">
 					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 1, 'SPLIT03')">-->
 					<input type="radio" name="payout" style="vertical-align: bottom" value="option1" onchange="updatePayoutSplit(1.6, 0.7, 'SPLIT03')">
+					<div class="payout-split-name">LOW RISK</div>
+					<div id="payout-split-bar-150-100" class="payout-split-bar">
+						<div class="green-bar" style="width: 57%;"></div>
+						<div id="payout-split-bar-150-100-green-boost" class="green-bar-boost"></div>
+						<div class="blue-bar" style="width: 25%;"></div>
+						<div id="payout-split-bar-150-100-red-boost" class="blue-bar-boost"></div>
+					</div>
 				</label>
-				<div class="payout-split-name">LOW RISK</div>
-				<div id="payout-split-bar-150-100" class="payout-split-bar">
-					<div class="green-bar" style="width: 57%;"></div>
-					<div id="payout-split-bar-150-100-green-boost" class="green-bar-boost"></div>
-					<div class="blue-bar" style="width: 25%;"></div>
-					<div id="payout-split-bar-150-100-red-boost" class="blue-bar-boost"></div>
-				</div>
 			</div>
 		</div>
 	  </div>
@@ -139,41 +150,45 @@
 		</div>
 
 		<!--Payout Boost-->
-		<div style="border: none; height: 59px;" id="boost-payout-container">
-			<div class="radio-group-boost" id="payout-boost-icons" style="margin-top: 22px;">
-				<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
+		<label class="radio-item">
+			<div style="border: none; height: 59px;" id="boost-payout-container">
+				<div class="radio-group-boost" id="payout-boost-icons" style="margin-top: 22px;">
+					<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
+				</div>
+				<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-top: 15px;">
+					<img src="images/flame-png.png" height="30px" alt="Payout Boost 1">
+					<div id="payout-boost-pct-1" class="payout-boost-text small">20%</div>
+				</div>
+				<div class="slide-in-scale" id="payout-boost-icon-2" style="margin-left: 10px;">
+					<img src="images/flame-png.png" height="40px" alt="Payout Boost 2">
+					<div id="payout-boost-pct-2" class="payout-boost-text medium">30%</div>
+				</div>
+				<div class="slide-in-scale" id="payout-boost-icon-3" style="margin-left: 10px;">
+					<img src="images/flame-png.png" height="50px" alt="Payout Boost 3">
+					<div id="payout-boost-pct-3" class="payout-boost-text large">40%</div>
+				</div>
 			</div>
-			<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-top: 15px;">
-				<img src="images/flame-png.png" height="30px" alt="Payout Boost 1">
-				<div id="payout-boost-pct-1" class="payout-boost-text small">20%</div>
-			</div>
-			<div class="slide-in-scale" id="payout-boost-icon-2" style="margin-left: 10px;">
-				<img src="images/flame-png.png" height="40px" alt="Payout Boost 2">
-				<div id="payout-boost-pct-2" class="payout-boost-text medium">30%</div>
-			</div>
-			<div class="slide-in-scale" id="payout-boost-icon-3" style="margin-left: 10px;">
-				<img src="images/flame-png.png" height="50px" alt="Payout Boost 3">
-				<div id="payout-boost-pct-3" class="payout-boost-text large">40%</div>
-			</div>
-		</div>
+		</label>
 		<!--Insurance Boost-->
-		<div style="border: none; height: 59px;" id="boost-insurance-container">
-			<div class="radio-group-boost blue" id="insurance-boost-icons" style="margin-top: 15px;">
-				<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked)">
+		<label class="radio-item">
+			<div style="border: none; height: 59px;" id="boost-insurance-container">
+				<div class="radio-group-boost blue" id="insurance-boost-icons" style="margin-top: 15px;">
+					<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked)">
+				</div>
+				<div class="slide-in-scale" id="insurance-boost-icon-1" style="margin-top: 15px;">
+					<img src="images/green-cross-png.png" height="20px" alt="Insurance Boost 1">
+					<div id="insurance-boost-pct-1" class="payout-boost-text small">20%</div>
+				</div>
+				<div class="slide-in-scale" id="insurance-boost-icon-2" style="margin-left: 10px;">
+					<img src="images/green-cross-png.png" height="30px" alt="Insurance Boost 2">
+					<div id="insurance-boost-pct-2" class="payout-boost-text medium">30%</div>
+				</div>
+				<div class="slide-in-scale" id="insurance-boost-icon-3" style="margin-left: 10px;">
+					<img src="images/green-cross-png.png" height="40px" alt="Insurance Boost 3">
+					<div id="insurance-boost-pct-3" class="payout-boost-text large">40%</div>
+				</div>
 			</div>
-			<div class="slide-in-scale" id="insurance-boost-icon-1" style="margin-top: 15px;">
-				<img src="images/green-cross-png.png" height="20px" alt="Insurance Boost 1">
-				<div id="insurance-boost-pct-1" class="payout-boost-text small">20%</div>
-			</div>
-			<div class="slide-in-scale" id="insurance-boost-icon-2" style="margin-left: 10px;">
-				<img src="images/green-cross-png.png" height="30px" alt="Insurance Boost 2">
-				<div id="insurance-boost-pct-2" class="payout-boost-text medium">30%</div>
-			</div>
-			<div class="slide-in-scale" id="insurance-boost-icon-3" style="margin-left: 10px;">
-				<img src="images/green-cross-png.png" height="40px" alt="Insurance Boost 3">
-				<div id="insurance-boost-pct-3" class="payout-boost-text large">40%</div>
-			</div>
-		</div>
+		</label>
 	  </div>
 	  
 	  <!-- Error Column -->
