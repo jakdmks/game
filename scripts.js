@@ -61,7 +61,12 @@ function updateStatisticsDivs() {
 		}
 		
 		if (boostLevel === 1) {
-			boostGraphic1Span.classList.add("selected");
+			if (lossStreak >= lossStreakLevelOne) {
+				boostGraphic1Span.classList.add("selected-blue");
+			} else if (winStreak >= boostStreakLevelOne) {
+				boostGraphic1Span.classList.add("selected");
+			}
+
 			payoutBoostIconsDiv.style.display = "inline-block";
 			payoutBoostIcon1Div.style.display = "inline-block";
 			payoutBoostPct1Div.innerHTML = "+" + ((boostBonusLevelOne - boostInsuranceRate) * 100).toFixed(0) + "%";
@@ -94,6 +99,9 @@ function updateStatisticsDivs() {
 			}
 		}
 		if (boostLevel === 2) {
+			boostGraphic1Span.classList.remove("selected-blue");
+			boostGraphic1Span.classList.add("selected");
+			
 			boostGraphic2Span.classList.add("selected");
 			payoutBoostIconsDiv.style.display = "inline-block";
 			payoutBoostIcon1Div.style.display = "inline-block";
@@ -202,6 +210,7 @@ function updateStatisticsDivs() {
 		insuranceBoostPct2Div.classList.remove("strikethrough");
 		
 		boostGraphic1Span.classList.remove("selected");
+		boostGraphic1Span.classList.remove("selected-blue");
 		boostGraphic2Span.classList.remove("selected");
 		boostGraphic3Span.classList.remove("selected");
 		
@@ -247,24 +256,29 @@ function updateStatisticsDivs() {
 	winStreakNumSpan.innerHTML = winStreak;
 	
 	if (boostLevel >= 3) {
-		winStreakNumSpan.classList.add("red");
-		winStreakNumSpan.classList.add("glowing");
-		winStreakNumSpan.classList.remove("orange");
-		winStreakNumSpan.classList.remove("yellow");
+		winStreakNumSpan.classList.add("red", "glowing");
+		winStreakNumSpan.classList.remove("orange", "yellow", "blue", "glowing-blue");
 	} else if (boostLevel >= 2) {
-		winStreakNumSpan.classList.remove("red");
-		winStreakNumSpan.classList.add("orange");
-		winStreakNumSpan.classList.add("glowing");
-		winStreakNumSpan.classList.remove("yellow");
+		winStreakNumSpan.classList.add("orange", "glowing");
+		winStreakNumSpan.classList.remove("red", "yellow", "blue", "glowing-blue");
 	} else if (boostLevel >= 1) {
-		winStreakNumSpan.classList.remove("red");
-		winStreakNumSpan.classList.remove("orange");
-		winStreakNumSpan.classList.add("yellow");
-		winStreakNumSpan.classList.add("glowing");
+		winStreakNumSpan.classList.remove("red", "orange", "glowing", "glowing-blue");
+		if (lossStreak >= lossStreakLevelOne) {
+			winStreakNumSpan.classList.add("blue", "glowing-blue");
+		} else {
+			winStreakNumSpan.classList.add("yellow", "glowing");
+		}
 	} else {
-		winStreakNumSpan.classList.remove("red", "glowing");
-		winStreakNumSpan.classList.remove("orange", "glowing");
-		winStreakNumSpan.classList.remove("yellow", "glowing");
+		winStreakNumSpan.classList.remove("red", "orange", "yellow", "blue", "glowing", "glowing-blue");
+	}
+	
+	if (boostLevel === 1) {
+		if (lossStreak >= lossStreakLevelOne) {
+			boostGraphic1Span.classList.add("selected-blue");
+			
+			//Reset loss streak
+			lossStreak = 0;
+		}
 	}
 	
 	//ORIGINAL WITH NUMBERS
@@ -382,13 +396,13 @@ function calculateBoost() {
 		boostAvailable = true;
 		
 		//Reset loss streak
-		lossStreak = 0;
+		//lossStreak = 0;
 		
 		//SET ERROR MESSAGE AND EXPLODE POINTS!
 		var creditErrors = [];
 		creditErrors.push("Loss streak! Here's a loss bonus!");
 		
-		displayErrors(errorContainerDiv, errorContentDiv, "LOSS BONUS!", creditErrors, 3000, "green-error");
+		displayErrors(errorContainerDiv, errorContentDiv, "LOSS BONUS!", creditErrors, 3000, "blue-error");
 		
 		//Explode some messages...
 		for (var i = 0; i < 3; i++) {
@@ -449,7 +463,7 @@ var boostInsuranceRunMax = 2;
 var boostInsuranceRunCurrent = 0;
 
 //When did we last show the end of credit message?
-var lastShowOverlayEndOfCreditBetId = 0;
+var lastShowOverlayBonusGameBetId = 0;
 
 var chartStake = 0;
 var chartHouseValue = 0;
@@ -728,6 +742,10 @@ function insuranceSwitch(checked=true) {
 }
 
 function applyBoost(type="", outcome=false) {
+	
+	if (boostRate == 0) {
+		return false;
+	}
 	
 	boostPayoutContainer.style.setProperty("--bg-color", "#0f6b36");
 	boostInsuranceContainer.style.setProperty("--bg-color", "#1c3db9");
@@ -1229,6 +1247,13 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		
 		if (playerCredit - stake <= 0 && statistics.gamesPlayed > 0) {
 			showOverlayEndOfCredit();
+			/*
+			if (lastShowOverlayBonusGameBetId !== betId) {
+				showOverlayBonusGame();
+			} else {
+				showOverlayEndOfCredit();
+			}
+			*/
 		}
 		
 		var pickSweetsErrors = [];
@@ -1427,6 +1452,19 @@ function renderJson(jsonData, displayContainerId) {
 	});
 }
 
+/*
+function showOverlayBonusGame() {
+	
+	document.body.classList.add("blocked-scroll");
+	document.body.classList.add("overlay-active");
+	
+	lastShowOverlayBonusGameBetId = betId;
+	
+	var overlayBonusGame = document.getElementById("overlay-bonus-game");
+	overlayBonusGame.style.visibility = "visible";
+}
+*/
+
 function showOverlayEndOfCredit() {
 	
 	pauseTimer();
@@ -1592,8 +1630,6 @@ function showOverlayEndOfCredit2() {
 	overlayEndOfCredit2.style.visibility = "visible";
 }
 
-
-
 function hideOverlayEndOfCredit() {
 	//console.info("Running hideOverlayEndOfCredit()");
 	
@@ -1610,6 +1646,16 @@ function hideOverlayEndOfCredit2() {
 	var overlayEndOfCredit2 = document.getElementById("overlay-end-of-credit-2");
 	overlayEndOfCredit2.style.visibility = "hidden";
 }
+
+/*
+function hideOverlayBonusGame() {
+	//console.info("Running hideOverlayEndOfCredit()");
+	//document.body.classList.remove("blocked-scroll");
+	
+	var overlayBonusGame = document.getElementById("overlay-bonus-game");
+	overlayBonusGame.style.visibility = "hidden";
+}
+*/
 
 function showOverlayChart() {
 	
