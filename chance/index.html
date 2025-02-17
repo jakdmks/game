@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Twin Sweets.</title>
+    <link rel="stylesheet" href="../style.css">
+    <!--<link rel="icon" href="./favicon.ico" type="image/x-icon">-->
+  </head>
+  <body>
+
+	<!--BONUS GAME OVERLAY-->
+	<div class="overlay-dismiss darker" id="overlay-bonus-game" style="visibility: visible">
+		<div id="overlay-bonus-game-content" style="min-height: 500px">
+			<div style="margin-bottom: 25px;">Find an egg to win 1500 Tokens!<br />Choose a square...</div>
+			<div class="grid-bonus-game" id="grid-bonus-game"></div>
+			<div id="grid-key-bonus-game" style="margin-top: 10px;"></div>
+			<br />
+			<button id="confirm-bonus-game" class="dismiss-button" disabled style="" onclick="confirmSelection()">Confirm Selection</button>
+			<div id="result-message-bonus-game" style=""></div>
+			<button class="dismiss-button" id="overlay-bonus-game-dismiss-button" style="display: none" onclick="resetGame()">Reset Game</button>
+		</div>
+	</div>
+
+  </body>
+  <script>
+		console.info("Running showBonusGame...");
+		showBonusGame();
+		  
+		/* BONUS GAME */
+		function showBonusGame() {
+			console.info("now inside...");
+			bonusGameWins = 10; //Introduce the logic of the odds here...
+			bonusGameGridSize = 5;
+			bonusGameTotalBoxes = bonusGameGridSize * bonusGameGridSize;
+			bonusGameSelected = null;
+			bonusGameResults = null;
+			
+			generateGrid();
+		}
+
+		//Rename some of these to be more specific to the bonus game, could get confusing...
+		function generateGrid() {
+			const grid = document.getElementById("grid-bonus-game");
+			const gridKey = document.getElementById("grid-key-bonus-game");
+			grid.innerHTML = "";
+			//gridKey.innerHTML = "(" + bonusGameWins + " eggs and " + (bonusGameTotalBoxes - bonusGameWins) + " mushrooms)"
+			for (let i = 1; i <= bonusGameTotalBoxes; i++) {
+				const div = document.createElement("div");
+				div.classList.add("box-bonus-game");
+				div.textContent = i;
+				div.addEventListener("click", () => selectBox(div, i));
+				grid.appendChild(div);
+			}
+		}
+
+		function selectBox(div, num) {
+			
+			if (bonusGameResults) return;
+			document.querySelectorAll(".box-bonus-game").forEach(box => box.classList.remove("selected-bonus-game"));
+			div.classList.add("selected-bonus-game");
+			bonusGameSelected = num;
+			document.getElementById("confirm-bonus-game").disabled = false;
+		}
+
+		function confirmSelection() {
+			if (bonusGameSelected === null) return;
+			let shuffled = Array(bonusGameTotalBoxes).fill("../images/mushroom.png");
+			let winIndices = new Set();
+			while (winIndices.size < bonusGameWins) {
+				winIndices.add(Math.floor(Math.random() * bonusGameTotalBoxes));
+			}
+			winIndices.forEach(idx => shuffled[idx] = "../images/egg.png");
+			bonusGameResults = shuffled;
+			document.getElementById("confirm-bonus-game").style.display = "none";
+			revealWinsSequentially(shuffled);
+		}
+
+		function revealWinsSequentially(shuffled) {
+			let winIndices = shuffled.map((val, idx) => val === "../images/egg.png" ? idx : null).filter(val => val !== null);
+			winIndices = winIndices.sort(() => Math.random() - 0.5);
+			let boxes = document.querySelectorAll(".box-bonus-game");
+			let index = 0;
+
+			function revealNextWin() {
+				if (index < winIndices.length) {
+					let idx = winIndices[index++];
+					let img = document.createElement("img");
+					img.src = shuffled[idx];
+					img.width = 50;
+					img.height = 50;
+					boxes[idx].textContent = "";
+					boxes[idx].appendChild(img);
+					boxes[idx].classList.add("hidden-bonus-game");
+					boxes[idx].style.backgroundColor = "#0f6b36";
+					setTimeout(() => boxes[idx].classList.remove("hidden-bonus-game"), 500);
+					setTimeout(revealNextWin, 500);
+				} else {
+					setTimeout(revealAllLosses, 500);
+				}
+			}
+			revealNextWin();
+		}
+
+		function revealAllLosses() {
+			let boxes = document.querySelectorAll(".box-bonus-game");
+			boxes.forEach((box, idx) => {
+				if (bonusGameResults[idx] === "../images/mushroom.png") {
+					let img = document.createElement("img");
+					img.src = "../images/mushroom.png";
+					img.width = 40;
+					img.height = 40;
+					box.textContent = "";
+					box.appendChild(img);
+					box.classList.add("hidden-bonus-game");
+					box.style.backgroundColor = "#8b1a1a";
+					setTimeout(() => box.classList.remove("hidden-bonus-game"), 500);
+				}
+			});
+			document.querySelectorAll(".selected-bonus-game").forEach(box => box.classList.add("selected-highlight-bonus-game"));
+			displayResultMessage();
+		}
+
+		function displayResultMessage() {
+			const message = bonusGameResults[bonusGameSelected - 1] === "../images/egg.png" ? "Good job, you found an egg!<br />+1500 TOKENS" : "Unlucky! You found a mushroom...";
+			
+			//Call Add Credit...
+			if (bonusGameResults[bonusGameSelected - 1] === "../images/egg.png") {
+				addCredit(bonusGamePayout);	
+				statistics.bonusGameWins++;
+				statistics.bonusGamePayout = statistics.bonusGamePayout + bonusGamePayout;
+			}
+			
+			document.getElementById("result-message-bonus-game").innerHTML = message;
+			document.getElementById("overlay-bonus-game-dismiss-button").style.display = "inline-block";
+		}
+
+		function resetGame() {
+			bonusGameSelected = null;
+			bonusGameResults = null;
+			document.getElementById("result-message-bonus-game").textContent = "";
+			document.getElementById("confirm-bonus-game").disabled = true;
+			document.getElementById("confirm-bonus-game").style.display = "inline";
+			document.getElementById("overlay-bonus-game-dismiss-button").style.display = "none";
+			generateGrid();
+		}
+  
+  </script>
+</html>
