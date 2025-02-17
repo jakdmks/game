@@ -19,14 +19,19 @@
 	</div>
 	
 	<!--BONUS GAME OVERLAY-->
-	<!--
 	<div class="overlay-dismiss" id="overlay-bonus-game">
-		<div class="panel" style="font-siz: 0.7em">
-			<div id="overlay-bonus-game-content"></div>
-			<button class="dismiss-button" id="overlay-bonus-game-dismiss-button" onclick="hideOverlayBonusGame()">Play!</button>
+		<div class="panel" style="font-siz: 0.7em; min-height: 500px;">
+			<div id="overlay-bonus-game-content">
+				<div style="margin-bottom: 10px; font-size: 0.8em;">Find an egg...</div>
+				<div class="grid-bonus-game" id="grid-bonus-game"></div>
+				<div id="grid-key-bonus-game" style="margin-top: 10px;"></div>
+				<br />
+				<button id="confirm-bonus-game" class="dismiss-button" disabled style="display: none" onclick="confirmSelection()">Confirm Selection</button>
+				<div id="result-message-bonus-game" style="font-size: 0.8em;"></div>
+				<button class="dismiss-button" id="overlay-bonus-game-dismiss-button" style="display: none" onclick="showOverlayEndOfCredit()">Stats</button>
+			</div>
 		</div>
 	</div>
-	-->
 	
 	<!--END OF CREDIT OVERLAY-->
 	<div class="overlay-dismiss" id="overlay-end-of-credit">
