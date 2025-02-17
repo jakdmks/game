@@ -25,12 +25,10 @@
 
   </body>
   <script>
-		console.info("Running showBonusGame...");
 		showBonusGame();
 		  
 		/* BONUS GAME */
 		function showBonusGame() {
-			console.info("now inside...");
 			bonusGameWins = 10; //Introduce the logic of the odds here...
 			bonusGameGridSize = 5;
 			bonusGameTotalBoxes = bonusGameGridSize * bonusGameGridSize;
@@ -124,14 +122,6 @@
 
 		function displayResultMessage() {
 			const message = bonusGameResults[bonusGameSelected - 1] === "../images/egg.png" ? "Good job, you found an egg!<br />+1500 TOKENS" : "Unlucky! You found a mushroom...";
-			
-			//Call Add Credit...
-			if (bonusGameResults[bonusGameSelected - 1] === "../images/egg.png") {
-				addCredit(bonusGamePayout);	
-				statistics.bonusGameWins++;
-				statistics.bonusGamePayout = statistics.bonusGamePayout + bonusGamePayout;
-			}
-			
 			document.getElementById("result-message-bonus-game").innerHTML = message;
 			document.getElementById("overlay-bonus-game-dismiss-button").style.display = "inline-block";
 		}
