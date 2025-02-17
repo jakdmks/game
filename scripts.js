@@ -2154,9 +2154,12 @@ function displayResultMessage() {
 	
 	//Call Add Credit...
 	if (bonusGameResults[bonusGameSelected - 1] === "images/egg.png") {
-		addCredit(bonusGamePayout);	
+		addCredit(bonusGamePayout);
+		statistics.playerCreditGBP = playerCredit / tokenRateToGBP;
 		statistics.bonusGameWins++;
 		statistics.bonusGamePayout = statistics.bonusGamePayout + bonusGamePayout;
+		
+		updateStatisticsDivs();
 	}
 	
 	document.getElementById("result-message-bonus-game").innerHTML = message;
