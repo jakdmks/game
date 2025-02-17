@@ -1742,3 +1742,55 @@ body.overlay-active * {
 #boost-insurance-container::before {
 	background-color: var(--bg-color, #1c3db9); /* Uses CSS variable */
 }
+
+
+/* BONUS GAME */
+.grid-bonus-game {
+	display: grid;
+	grid-template-columns: repeat(5, 60px);
+	gap: 5px;
+}
+.box-bonus-game {
+	width: 60px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid gray;
+	cursor: pointer;
+	font-weight: bold;
+	position: relative;
+	border-radius: 5px;
+	box-sizing: border-box;
+	background-color: #182232;
+}
+.selected-bonus-game {
+	border-color: #facc15;
+	border-width: 3px;
+	background-color: #0077cc;
+}
+.selected-highlight-bonus-game {
+	border-color: #facc15; !important;
+	border-width: 3px;
+	background-color: #0077cc;
+	animation: pulseBonusGame 1.5s infinite ease-in-out;
+}
+.hidden-bonus-game {
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out;
+}
+
+@keyframes pulseBonusGame {
+  0% {
+	transform: scale(1);
+	opacity: 1;
+  }
+  50% {
+	transform: scale(1.2);
+	opacity: 0.7;
+  }
+  100% {
+	transform: scale(1);
+	opacity: 1;
+  }
+}
