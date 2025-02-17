@@ -95,7 +95,7 @@
 			<div class="radio-group" style="display: block; font-size: 1.25em; text-align: left; letter-spacing: -1px;">
 				<label class="radio-item">
 					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(2.5, 0, 'SPLIT01')">-->
-					<input type="radio" name="payout" style="vertical-align: bottom" value="option1" onchange="updatePayoutSplit(2.3, 0.2, 'SPLIT01')">
+					<input type="radio" name="payout" style="vertical-align: bottom" value="option1" onchange="updatePayoutSplit(2.3, 0.2, 'SPLIT01', true)">
 					<div class="payout-split-name">HIGH RISK</div>
 					<div id="payout-split-bar-250-0" class="payout-split-bar">
 						<div class="green-bar" style="width: 77%;"></div>
@@ -107,7 +107,7 @@
 				
 				<label class="radio-item">
 					<!--<input type="radio" name="payout" value="option1" checked onchange="updatePayoutSplit(2, 0.5, 'SPLIT02')">-->
-					<input type="radio" name="payout" style="vertical-align: bottom" value="option1" checked onchange="updatePayoutSplit(2, 0.4, 'SPLIT02')">
+					<input type="radio" name="payout" style="vertical-align: bottom" value="option1" checked onchange="updatePayoutSplit(2, 0.4, 'SPLIT02', true)">
 					<div class="payout-split-name">MID RISK</div>
 					<div id="payout-split-bar-200-50" class="payout-split-bar selected">
 						<div class="green-bar"></div>
@@ -120,7 +120,7 @@
 				
 				<label class="radio-item">
 					<!--<input type="radio" name="payout" value="option1" onchange="updatePayoutSplit(1.5, 1, 'SPLIT03')">-->
-					<input type="radio" name="payout" style="vertical-align: bottom" value="option1" onchange="updatePayoutSplit(1.6, 0.7, 'SPLIT03')">
+					<input type="radio" name="payout" style="vertical-align: bottom" value="option1" onchange="updatePayoutSplit(1.6, 0.7, 'SPLIT03', true)">
 					<div class="payout-split-name">LOW RISK</div>
 					<div id="payout-split-bar-150-100" class="payout-split-bar">
 						<div class="green-bar" style="width: 57%;"></div>
@@ -156,7 +156,7 @@
 		<label class="radio-item">
 			<div style="border: none; height: 59px;" id="boost-payout-container">
 				<div class="radio-group-boost" id="payout-boost-icons" style="margin-top: 22px;">
-					<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked)">
+					<input type="radio" id="boost-payout" name="boost-type" value="boost-payout" onchange="applyBoost('payout', this.checked, true)">
 				</div>
 				<div class="slide-in-scale" id="payout-boost-icon-1" style="margin-top: 15px;">
 					<img src="images/flame-png.png" height="30px" alt="Payout Boost 1">
@@ -176,7 +176,7 @@
 		<label class="radio-item">
 			<div style="border: none; height: 59px;" id="boost-insurance-container">
 				<div class="radio-group-boost blue" id="insurance-boost-icons" style="margin-top: 15px;">
-					<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked)">
+					<input type="radio" id="insurance-payout" name="boost-type" value="boost-insurance" onchange="applyBoost('insurance', this.checked, true)">
 				</div>
 				<div class="slide-in-scale" id="insurance-boost-icon-1" style="margin-top: 15px;">
 					<img src="images/green-cross-png.png" height="20px" alt="Insurance Boost 1">
@@ -213,7 +213,7 @@
 	  
 	  <div class="grid-item" style="text-align: left">
 			<div class="boost-insurance-div" style="display: inline-block">
-				<input type="checkbox" id="boost-insurance-checkbox" name="boost-insurance-checkbox" onchange="insuranceSwitch(this.checked)" />
+				<input type="checkbox" id="boost-insurance-checkbox" name="boost-insurance-checkbox" onchange="insuranceSwitch(this.checked, true)" />
 				<label for="boost-insurance-checkbox"><img src="images/lock.png" height="18px" alt="Streak Protect?">Streak Protect?</label>
 				<div style="font-size: 0.75em; font-style: italic">Pays out 20% less on boosts but your streak maintains for up to 2 consecutive mixed pairs.</div>
 			</div>
@@ -257,7 +257,7 @@
 		</div>
 	  </div>
 	  <div class="grid-item" style="text-align: left">
-		<div class="cherry-cola-bets-container">
+		<div class="cherry-cola-bets-container" id="cherry-cola-bets-container">
 			<div class="cherry-cola-bets">
 				<div class="game-button-container cherry" style="margin-top: 0px;">
 					<button type="button" onclick="pickSweets(100, 'Cherry')">BET 100 CHERRY</button>
