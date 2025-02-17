@@ -1000,6 +1000,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		audio.volume = 0.3;
 		audio.play();
 		
+		playerCredit = playerCredit - stake;
+		updateStatisticsDivs();
+		
 		var tempTimeout = setTimeout(() => {
 		
 			hideOverlay();
@@ -1011,12 +1014,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		
 			//Start of Delay...
 			betId++;
-		
-			playerCredit = playerCredit - stake;
+			
 			//console.info("Updating player credit", playerCredit);
 		
 			//playerCredit = playerCredit - stake;
-			custCreditDiv.innerHTML = "Credit: " + playerCredit.toFixed(0) + " Tokens";
+			//custCreditDiv.innerHTML = "Credit: " + playerCredit.toFixed(0) + " Tokens";
 		
 			//Consider how to randomize (or not randomize) the sweets going in. Pattern may be important
 			//Do we make the names even more similar so people maybe think they've won for a sec when they haven't?
