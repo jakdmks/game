@@ -315,10 +315,17 @@ function updateStatisticsDivs() {
 	//lock2
 }
 
-function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="") {
+function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="", sfx=false) {
 	//console.info("Running updatePayoutSplit()");
 	//console.info("newPayoutRate", newPayoutRate);
 	//console.info("newInsuranceRate", newInsuranceRate);
+	
+	//SFX
+	if (sfx === true) {
+		const audio = new Audio("sounds/select.mp3");
+		audio.volume = 0.25;
+		audio.play();
+	}
 	
 	payoutSplitCode = option;
 	//console.info("payoutSplitCode", payoutSplitCode);
@@ -634,6 +641,8 @@ var lock2 = document.getElementById("lock2");
 var boostPayoutContainer = document.getElementById("boost-payout-container");
 var boostInsuranceContainer = document.getElementById("boost-insurance-container");
 
+var cherryColaBetsContainer = document.getElementById("cherry-cola-bets-container");
+
 updatePayoutSplit(2, 0.4, "SPLIT02"); //2, 0.5
 insuranceSwitch(false);
 calculateBoost();
@@ -645,6 +654,11 @@ function addCredit(credit=0) {
 
 	//Add Credit
 	playerCredit = (playerCredit * 1) + (credit * 1);
+	
+	//SFX
+	const audio = new Audio("sounds/credit.mp3");
+	audio.volume = 0.2;
+	audio.play();
 	
 	//Maybe move this above?
 	chartData = [];
@@ -675,6 +689,11 @@ function convertWinnings() {
 
 	playerCredit = playerCredit + additionalCredit;
 	//console.info("increased playerCredit by ", additionalCredit);
+	
+	//SFX
+	const audio = new Audio("sounds/clapping.mp3");
+	audio.volume = 0.1;
+	audio.play();
 	
 	chartData = [];
 	chartStake = playerCredit;
@@ -707,6 +726,13 @@ function convertWinnings() {
 }
 
 function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages, displayForMS, className="") {
+	
+	//SFX
+	if (className === "red-error") {
+		const audio = new Audio("sounds/error.mp3");
+		audio.volume = 0.02;
+		audio.play();
+	}
 
 	//console.info("Running displayErrors...");
 	//console.info("errorHeaderText", errorHeaderText);
@@ -738,12 +764,20 @@ function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages,
 	containerDiv.style.display = "flex";
 	
 	var tempTimeout = setTimeout(() => {
-		containerDiv.style.display = "none";
+		//containerDiv.style.display = "none";
 	}, displayForMS);
 	
 }
 
-function insuranceSwitch(checked=true) {
+function insuranceSwitch(checked=true, sfx=false) {
+	
+	//SFX
+	if (sfx === true) {
+		const audio = new Audio("sounds/select.mp3");
+		audio.volume = 0.25;
+		audio.play();
+	}
+	
 	//We always want to let them switch it on... but only off if the winStreak is 0
 	if (((winStreak === 0) && !checked) || checked) {
 		boostInsurance = checked;
@@ -765,7 +799,14 @@ function insuranceSwitch(checked=true) {
 	}
 }
 
-function applyBoost(type="", outcome=false) {
+function applyBoost(type="", outcome=false, sfx=false) {
+	
+	//SFX
+	if (sfx === true) {
+		const audio = new Audio("sounds/boost.mp3");
+		audio.volume = 0.25;
+		audio.play();
+	}
 	
 	boostPayoutContainer.style.setProperty("--bg-color", "#0f6b36");
 	boostInsuranceContainer.style.setProperty("--bg-color", "#1c3db9");
@@ -917,6 +958,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 
 	if ((bet === "Cola" || bet === "Cherry") && stake !== 0 && (playerCredit - stake >= 0))
 	{
+		//Hide Buttons Temporarily
+		cherryColaBetsContainer.style.display = "none";
+		
 		resumeTimer();
 		
 		resultDiv.style.display = "none";
@@ -951,17 +995,19 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		
 		showOverlay();
 		
+		//SFX
+		const audio = new Audio("sounds/bag.mp3");
+		audio.volume = 0.3;
+		audio.play();
+		
 		var tempTimeout = setTimeout(() => {
 		
-			stakeDiv.style.display = "flex";
-			stakeDiv.innerHTML = "Stake: " + stake;
-			
-			betDiv.style.display = "flex";
-			betDiv.innerHTML = "Bet: " + bet;
-			
-			flyingPointsDiv.style.display = "flex";
-		
 			hideOverlay();
+			
+			//SFX
+			const audio = new Audio("sounds/spin.mp3");
+			audio.volume = 0.05;
+			audio.play();
 		
 			//Start of Delay...
 			betId++;
@@ -1051,221 +1097,254 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			//TODO: Have I misunderstood... it's fine if the customer balance is higher than the house balance because they put ALL the money in...
 			//TODO: ...the problem is when the house balance drops below 0
 			
-			if (pickedSweets.Sweet1 === pickedSweets.Sweet2) {
-				//console.info("Matching");
-				if (pickedSweets.Sweet1 === bet) {
-					outcome = "win";
-					payout = stake * (payoutRate + payoutBoostRate), 2;
-					housePayout = stake - payout, 2;
-					winStreak++;
-					
-					//Reset loss streak
-					lossStreak = 0;
-					
-					if (boostInsurance) {
-						boostInsuranceRunCurrent = 0;
-					}
-					//console.info("Bet wins!");
-					//console.info("payoutRate", payoutRate);
-					//console.info("payout", payout);
-					
-					resultDiv.classList.add("win");
-					resultDiv.style.display = "flex";
-					resultDiv.innerHTML = "WIN!";
-					
-					resultDescriptionDiv.classList.add("win");
-					resultDescriptionDiv.style.display = "block";
-					resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you won " + payout.toFixed(0) + " Tokens this time.";
-					
-					payoutDiv.classList.add("win");
-					payoutDiv.style.display = "flex";
-					payoutDiv.innerHTML = "+" + payout.toFixed(0) + " TOKENS";
-					
-					var stakeBasedChunkSize = 0;
-					if (stake === 100) {
-						stakeBasedChunkSize = 25;
-					} else if (stake === 500) {
-						stakeBasedChunkSize = 100;
-					}
-					
-					//Animate Points
-					animatePoints(stake, payoutRate, stakeBasedChunkSize, "green", "", "payout");
-					animatePoints(stake, payoutBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-yellow" : boostLevel == 2 ? "glow-points-orange" : boostLevel == 3 ? "glow-points-red" : ""), "payout");
-					
-				} else {
-					outcome = "loss";
-					housePayout = stake;
-					winStreak = 0;
-					
-					//Increase loss streak
-					lossStreak++;
-					
-					if (boostInsurance) {
-						boostInsuranceRunCurrent = 0;
-					}
-					
-					//console.info("Bet loses.");
-					//console.info("payoutRate", payoutRate);
-					//console.info("payout", payout);
-					
-					resultDiv.classList.add("lose");
-					resultDiv.style.display = "flex";
-					resultDiv.innerHTML = "LOSS";
-					
-					resultDescriptionDiv.classList.add("lose");
-					resultDescriptionDiv.style.display = "block";
-					resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you didn't win any tokens this time.";
-					
-					payoutDiv.classList.add("lose");
-					payoutDiv.style.display = "flex";
-					payoutDiv.innerHTML = "+" + payout.toFixed(0) + " TOKENS";
-				}
-			} else {	
-					//We don't even display this as a loss... even if they don't have insurance... perhaps they should have done.
-					outcome = "insurance";
-					payout = stake * (insuranceRate + insuranceBoostRate), 2;
-					housePayout = stake - payout, 2;
-					
-					//JW TODO: Here boostInsuranceRunMax vs boostInsuranceRunCurrent
-					winStreak = boostInsurance ? winStreak : 0;
-					
-					if (boostInsurance && boostLevel >= 1) {
-						boostInsuranceRunCurrent++;
+			//Delay here??
+			setTimeout(() => {
+				//START OF DELAY
+				
+				//Show Buttons Again
+				cherryColaBetsContainer.style.display = "inline-block";
+				
+				stakeDiv.style.display = "flex";
+				stakeDiv.innerHTML = "Stake: " + stake;
+				
+				betDiv.style.display = "flex";
+				betDiv.innerHTML = "Bet: " + bet;
+				
+				flyingPointsDiv.style.display = "flex";
+				
+				if (pickedSweets.Sweet1 === pickedSweets.Sweet2) {
+					//console.info("Matching");
+					if (pickedSweets.Sweet1 === bet) {
+						outcome = "win";
+						payout = stake * (payoutRate + payoutBoostRate), 2;
+						housePayout = stake - payout, 2;
+						winStreak++;
 						
-						if (boostInsuranceRunCurrent > boostInsuranceRunMax) {
-							statistics.boostProtectMaxResetBoostCount = statistics.boostProtectMaxResetBoostCount + 1;
+						//Reset loss streak
+						lossStreak = 0;
+						
+						if (boostInsurance) {
 							boostInsuranceRunCurrent = 0;
-							winStreak = 0;
 						}
-						//console.info("boostInsuranceRunCurrent", boostInsuranceRunCurrent);
-						//console.info("boostInsuranceRunMax", boostInsuranceRunMax);
+						
+						//SFX
+						const audio = new Audio("sounds/win.mp3");
+						audio.volume = 0.05;
+						audio.play();
+						
+						//console.info("Bet wins!");
+						//console.info("payoutRate", payoutRate);
+						//console.info("payout", payout);
+						
+						resultDiv.classList.add("win");
+						resultDiv.style.display = "flex";
+						resultDiv.innerHTML = "WIN!";
+						
+						resultDescriptionDiv.classList.add("win");
+						resultDescriptionDiv.style.display = "block";
+						resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you won " + payout.toFixed(0) + " Tokens this time.";
+						
+						payoutDiv.classList.add("win");
+						payoutDiv.style.display = "flex";
+						payoutDiv.innerHTML = "+" + payout.toFixed(0) + " TOKENS";
+						
+						var stakeBasedChunkSize = 0;
+						if (stake === 100) {
+							stakeBasedChunkSize = 25;
+						} else if (stake === 500) {
+							stakeBasedChunkSize = 100;
+						}
+						
+						//Animate Points
+						animatePoints(stake, payoutRate, stakeBasedChunkSize, "green", "", "payout");
+						animatePoints(stake, payoutBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-yellow" : boostLevel == 2 ? "glow-points-orange" : boostLevel == 3 ? "glow-points-red" : ""), "payout");
+						
+					} else {
+						outcome = "loss";
+						housePayout = stake;
+						winStreak = 0;
+						
+						//Increase loss streak
+						lossStreak++;
+						
+						if (boostInsurance) {
+							boostInsuranceRunCurrent = 0;
+						}
+						
+						//SFX
+						const audio = new Audio("sounds/loss.mp3");
+						audio.volume = 0.2;
+						audio.play();
+						
+						//console.info("Bet loses.");
+						//console.info("payoutRate", payoutRate);
+						//console.info("payout", payout);
+						
+						resultDiv.classList.add("lose");
+						resultDiv.style.display = "flex";
+						resultDiv.innerHTML = "LOSS";
+						
+						resultDescriptionDiv.classList.add("lose");
+						resultDescriptionDiv.style.display = "block";
+						resultDescriptionDiv.innerHTML = "You backed " + bet + ". Picked sweets were both " + pickedSweets.Sweet1 + ". Therefore you didn't win any tokens this time.";
+						
+						payoutDiv.classList.add("lose");
+						payoutDiv.style.display = "flex";
+						payoutDiv.innerHTML = "+" + payout.toFixed(0) + " TOKENS";
 					}
-					
-					//Subtract 1 from loss streak on insurance
-					//lossStreak = lossStreak-- < 0 ? 0 : lossStreak;
-					
-					//console.info("Bet loses.");
-					//console.info("insuranceRate", insuranceRate);
-					//console.info("payout", payout);
-					
-					resultDiv.classList.add("insurance");
-					resultDiv.style.display = "flex";
-					resultDiv.innerHTML = insuranceRate != 0 ? "MIX" : "MIX*";
-					
-					resultDescriptionDiv.classList.add("insurance");
-					resultDescriptionDiv.style.display = "block";
-					resultDescriptionDiv.innerHTML = insuranceRate != 0 ? "You backed " + bet + ". Picked sweets were mixed, so mix-insurance paid out " + payout.toFixed(0) + " Tokens." : "You backed " + bet + ". Picked sweets were mixed. Whilst insurance would have paid here, there was no cover included in the selected payout split.";
-					
-					payoutDiv.classList.add("insurance");
-					payoutDiv.style.display = "flex";
-					payoutDiv.innerHTML = "+" + payout.toFixed(0) + " TOKENS";
-					
-					var stakeBasedChunkSize = 0;
-					if (stake === 100) {
-						stakeBasedChunkSize = 10;
-					} else if (stake === 500) {
-						stakeBasedChunkSize = 50;
-					}
-					
-					//Animate Points
-					animatePoints(stake, insuranceRate, stakeBasedChunkSize, "cyan", "", "insurance");
-					animatePoints(stake, insuranceBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-white" : boostLevel == 2 ? "glow-points-yellow" : boostLevel == 3 ? "glow-points-green" : ""), "insurance");
-			}
-			
-			//Statistics
-			var auditObject = {
-				"id": betId,
-				"bet": bet,
-				"stake": stake,
-				"payoutRate": payoutRate,
-				"payoutBoostRate": payoutBoostRate,
-				"insuranceRate": insuranceRate,
-				"insuranceBoostRate": insuranceBoostRate,
-				"pickedSweets": pickedSweets,
-				"outcome": outcome,
-				"payout": payout,
-				"housePayout": housePayout,
-				"boostInsurance": boostInsurance
-			}
-			
-			statistics.audit.push(auditObject);
-			
-			//Statistics
-			statistics.gamesPlayed++;
-			statistics.tokenRateToGBP = tokenRateToGBP;
-			statistics.totalStake = statistics.totalStake  + stake;
-			statistics.houseBalance = statistics.houseBalance + housePayout;
-			statistics.houseBalanceGBP = statistics.houseBalance / tokenRateToGBP;
-			statistics.playerBalance = statistics.playerBalance + payout - stake;
-			statistics.playerBalanceGBP = statistics.playerBalance / tokenRateToGBP;
-			statistics.playerWinnings = statistics.playerWinnings + payout;
-			statistics.playerWinningsGBP = statistics.playerWinnings / tokenRateToGBP;
-			statistics.playerCredit = playerCredit;
-			statistics.playerCreditGBP = playerCredit / tokenRateToGBP;
-			statistics.playerTotalWinnings = statistics.playerTotalWinnings + payout;
-			statistics.playerTotalWinningsGBP = statistics.playerTotalWinnings / tokenRateToGBP;
-			
-			//Highest/Lowest Point
-			statistics.houseHighestBalanceGame = statistics.houseBalance > 0 && statistics.houseBalance > statistics.houseHighestBalance ? statistics.gamesPlayed : statistics.houseHighestBalanceGame;
-			statistics.houseLowestBalanceGame = statistics.houseBalance < 0 && statistics.houseBalance < statistics.houseLowestBalance ? statistics.gamesPlayed : statistics.houseLowestBalanceGame;
-			
-			//Highest/Lowest Value
-			statistics.houseHighestBalance = statistics.houseBalance > 0 && statistics.houseBalance * 1 > statistics.houseHighestBalance * 1 ? statistics.houseBalance : statistics.houseHighestBalance;
-			statistics.houseLowestBalance = statistics.houseBalance < 0 && statistics.houseBalance * 1 < statistics.houseLowestBalance * 1 ? statistics.houseBalance : statistics.houseLowestBalance;
-			
-			// houseBalance / (gamesPlayed / 20)
-			statistics.houseBalancePer20Games = statistics.houseBalance / (statistics.gamesPlayed / 20); // houseBalance / (gamesPlayed / 20)
-			statistics.houseBalancePer20GamesGBP = statistics.houseBalancePer20Games / tokenRateToGBP;
-			
-			
-			statistics.houseBalancePerGame = statistics.houseBalance / statistics.gamesPlayed;
-			statistics.houseBalancePerGameGBP = statistics.houseBalance / statistics.gamesPlayed / tokenRateToGBP;
-			statistics.houseBalancePerGamePct = statistics.houseBalance / statistics.totalStake * 100;
-			
-			statistics.playerHighestWinStreak = winStreak > statistics.playerHighestWinStreak ? winStreak : statistics.playerHighestWinStreak;
-			statistics.playerHighestLossStreak = lossStreak > statistics.playerHighestLossStreak ? lossStreak : statistics.playerHighestLossStreak;
-			
-			statistics.boostProtectInvoked = statistics.boostProtectInvoked + ((boostInsurance && outcome === "insurance" && boostLevel >= 1) ? 1 : 0);
-			statistics.boostProtectInvokedRun = (boostInsurance && outcome === "insurance" && boostLevel >= 1) ? statistics.boostProtectInvokedRun + 1 : 0;
-			statistics.boostProtectInvokedRunHighest = (statistics.boostProtectInvokedRun > statistics.boostProtectInvokedRunHighest) ? statistics.boostProtectInvokedRun : statistics.boostProtectInvokedRunHighest;
-			
-			//Chart Data Array
-			chartHouseValue = chartHouseValue + stake - payout;
-			//console.info("chartHouseValue", chartHouseValue);
-			
-			chartPlayerValue = chartPlayerValue - stake + payout;
-			//console.info("chartPlayerValue", chartPlayerValue);
-			
-			chartData.push({
-				"Game": statistics.gamesPlayed,
-				"House": chartHouseValue,
-				"Player": chartPlayerValue
-			});
-			
-			//Last picks Array
-			var lastPicksMaxSize = 7;
-			var lastPickRecord = JSON.parse(JSON.stringify(pickedSweets));
-			lastPickRecord.Outcome = outcome;
-			
-			if (lastPicks.length >= lastPicksMaxSize) {
-				lastPicks.shift();
-			}
-			lastPicks.push(lastPickRecord);
-			
-			//Console output
-			//console.info("auditObject", auditObject);
-			//console.info("statistics", statistics);
-			//console.info("lastPicks", lastPicks);
-			
-			//Cheeky - unselect their boost each time...
-			applyBoost("both", false);
-			
-			calculateBoost();
-			updateStatisticsDivs();
-			renderLastPicks();
-			
-			return pickedSweets;
-			//End of Delay
+				} else {	
+						//We don't even display this as a loss... even if they don't have insurance... perhaps they should have done.
+						outcome = "insurance";
+						payout = stake * (insuranceRate + insuranceBoostRate), 2;
+						housePayout = stake - payout, 2;
+						
+						//JW TODO: Here boostInsuranceRunMax vs boostInsuranceRunCurrent
+						winStreak = boostInsurance ? winStreak : 0;
+						
+						if (boostInsurance && boostLevel >= 1) {
+							boostInsuranceRunCurrent++;
+							
+							if (boostInsuranceRunCurrent > boostInsuranceRunMax) {
+								statistics.boostProtectMaxResetBoostCount = statistics.boostProtectMaxResetBoostCount + 1;
+								boostInsuranceRunCurrent = 0;
+								winStreak = 0;
+							}
+							//console.info("boostInsuranceRunCurrent", boostInsuranceRunCurrent);
+							//console.info("boostInsuranceRunMax", boostInsuranceRunMax);
+						}
+						
+						//SFX
+						const audio = new Audio("sounds/mix.mp3");
+						audio.volume = 0.06;
+						audio.play();
+						
+						//Subtract 1 from loss streak on insurance
+						//lossStreak = lossStreak-- < 0 ? 0 : lossStreak;
+						
+						//console.info("Bet loses.");
+						//console.info("insuranceRate", insuranceRate);
+						//console.info("payout", payout);
+						
+						resultDiv.classList.add("insurance");
+						resultDiv.style.display = "flex";
+						resultDiv.innerHTML = insuranceRate != 0 ? "MIX" : "MIX*";
+						
+						resultDescriptionDiv.classList.add("insurance");
+						resultDescriptionDiv.style.display = "block";
+						resultDescriptionDiv.innerHTML = insuranceRate != 0 ? "You backed " + bet + ". Picked sweets were mixed, so mix-insurance paid out " + payout.toFixed(0) + " Tokens." : "You backed " + bet + ". Picked sweets were mixed. Whilst insurance would have paid here, there was no cover included in the selected payout split.";
+						
+						payoutDiv.classList.add("insurance");
+						payoutDiv.style.display = "flex";
+						payoutDiv.innerHTML = "+" + payout.toFixed(0) + " TOKENS";
+						
+						var stakeBasedChunkSize = 0;
+						if (stake === 100) {
+							stakeBasedChunkSize = 10;
+						} else if (stake === 500) {
+							stakeBasedChunkSize = 50;
+						}
+						
+						//Animate Points
+						animatePoints(stake, insuranceRate, stakeBasedChunkSize, "cyan", "", "insurance");
+						animatePoints(stake, insuranceBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-white" : boostLevel == 2 ? "glow-points-yellow" : boostLevel == 3 ? "glow-points-green" : ""), "insurance");
+				}
+				
+				//Statistics
+				var auditObject = {
+					"id": betId,
+					"bet": bet,
+					"stake": stake,
+					"payoutRate": payoutRate,
+					"payoutBoostRate": payoutBoostRate,
+					"insuranceRate": insuranceRate,
+					"insuranceBoostRate": insuranceBoostRate,
+					"pickedSweets": pickedSweets,
+					"outcome": outcome,
+					"payout": payout,
+					"housePayout": housePayout,
+					"boostInsurance": boostInsurance
+				}
+				
+				statistics.audit.push(auditObject);
+				
+				//Statistics
+				statistics.gamesPlayed++;
+				statistics.tokenRateToGBP = tokenRateToGBP;
+				statistics.totalStake = statistics.totalStake  + stake;
+				statistics.houseBalance = statistics.houseBalance + housePayout;
+				statistics.houseBalanceGBP = statistics.houseBalance / tokenRateToGBP;
+				statistics.playerBalance = statistics.playerBalance + payout - stake;
+				statistics.playerBalanceGBP = statistics.playerBalance / tokenRateToGBP;
+				statistics.playerWinnings = statistics.playerWinnings + payout;
+				statistics.playerWinningsGBP = statistics.playerWinnings / tokenRateToGBP;
+				statistics.playerCredit = playerCredit;
+				statistics.playerCreditGBP = playerCredit / tokenRateToGBP;
+				statistics.playerTotalWinnings = statistics.playerTotalWinnings + payout;
+				statistics.playerTotalWinningsGBP = statistics.playerTotalWinnings / tokenRateToGBP;
+				
+				//Highest/Lowest Point
+				statistics.houseHighestBalanceGame = statistics.houseBalance > 0 && statistics.houseBalance > statistics.houseHighestBalance ? statistics.gamesPlayed : statistics.houseHighestBalanceGame;
+				statistics.houseLowestBalanceGame = statistics.houseBalance < 0 && statistics.houseBalance < statistics.houseLowestBalance ? statistics.gamesPlayed : statistics.houseLowestBalanceGame;
+				
+				//Highest/Lowest Value
+				statistics.houseHighestBalance = statistics.houseBalance > 0 && statistics.houseBalance * 1 > statistics.houseHighestBalance * 1 ? statistics.houseBalance : statistics.houseHighestBalance;
+				statistics.houseLowestBalance = statistics.houseBalance < 0 && statistics.houseBalance * 1 < statistics.houseLowestBalance * 1 ? statistics.houseBalance : statistics.houseLowestBalance;
+				
+				// houseBalance / (gamesPlayed / 20)
+				statistics.houseBalancePer20Games = statistics.houseBalance / (statistics.gamesPlayed / 20); // houseBalance / (gamesPlayed / 20)
+				statistics.houseBalancePer20GamesGBP = statistics.houseBalancePer20Games / tokenRateToGBP;
+				
+				
+				statistics.houseBalancePerGame = statistics.houseBalance / statistics.gamesPlayed;
+				statistics.houseBalancePerGameGBP = statistics.houseBalance / statistics.gamesPlayed / tokenRateToGBP;
+				statistics.houseBalancePerGamePct = statistics.houseBalance / statistics.totalStake * 100;
+				
+				statistics.playerHighestWinStreak = winStreak > statistics.playerHighestWinStreak ? winStreak : statistics.playerHighestWinStreak;
+				statistics.playerHighestLossStreak = lossStreak > statistics.playerHighestLossStreak ? lossStreak : statistics.playerHighestLossStreak;
+				
+				statistics.boostProtectInvoked = statistics.boostProtectInvoked + ((boostInsurance && outcome === "insurance" && boostLevel >= 1) ? 1 : 0);
+				statistics.boostProtectInvokedRun = (boostInsurance && outcome === "insurance" && boostLevel >= 1) ? statistics.boostProtectInvokedRun + 1 : 0;
+				statistics.boostProtectInvokedRunHighest = (statistics.boostProtectInvokedRun > statistics.boostProtectInvokedRunHighest) ? statistics.boostProtectInvokedRun : statistics.boostProtectInvokedRunHighest;
+				
+				//Chart Data Array
+				chartHouseValue = chartHouseValue + stake - payout;
+				//console.info("chartHouseValue", chartHouseValue);
+				
+				chartPlayerValue = chartPlayerValue - stake + payout;
+				//console.info("chartPlayerValue", chartPlayerValue);
+				
+				chartData.push({
+					"Game": statistics.gamesPlayed,
+					"House": chartHouseValue,
+					"Player": chartPlayerValue
+				});
+				
+				//Last picks Array
+				var lastPicksMaxSize = 7;
+				var lastPickRecord = JSON.parse(JSON.stringify(pickedSweets));
+				lastPickRecord.Outcome = outcome;
+				
+				if (lastPicks.length >= lastPicksMaxSize) {
+					lastPicks.shift();
+				}
+				lastPicks.push(lastPickRecord);
+				
+				//Console output
+				//console.info("auditObject", auditObject);
+				//console.info("statistics", statistics);
+				//console.info("lastPicks", lastPicks);
+				
+				//Cheeky - unselect their boost each time...
+				applyBoost("both", false);
+				
+				calculateBoost();
+				updateStatisticsDivs();
+				renderLastPicks();
+				
+				return pickedSweets;
+				//End of Delay
+				//END OF DELAY
+			}, 1100);
 		}, delayInMs);
 	} else {
 	
