@@ -2153,10 +2153,11 @@ function displayResultMessage() {
 	const message = bonusGameResults[bonusGameSelected - 1] === "images/egg.png" ? "Good job, you found an egg!<br />+1500 TOKENS" : "Unlucky! You found a mushroom...";
 	
 	//Call Add Credit...
-	addCredit(bonusGamePayout);
-	
-	statistics.bonusGameWins++;
-	statistics.bonusGamePayout = statistics.bonusGamePayout + bonusGamePayout;
+	if (bonusGameResults[bonusGameSelected - 1] === "images/egg.png") {
+		addCredit(bonusGamePayout);	
+		statistics.bonusGameWins++;
+		statistics.bonusGamePayout = statistics.bonusGamePayout + bonusGamePayout;
+	}
 	
 	document.getElementById("result-message-bonus-game").innerHTML = message;
 	document.getElementById("overlay-bonus-game-dismiss-button").style.display = "inline-block";
