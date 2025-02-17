@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game of Chance</title>
+    <style>
+		body {
+			background: #121212;
+			color: white;
+			font-family: Verdana;
+			font-size: 14px;
+		}
+		
+		.result {
+			font-size: 2em;
+			margin-top: 20px;
+			font-weight: bold;
+		}
+		
+		.general-button {
+		  padding: 10px 20px;
+		  background-color: #0077cc; /* Blue color */
+		  color: white;
+		  font-size: 1em;
+		  font-weight: bold;
+		  border: none;
+		  border-radius: 5px;
+		  cursor: pointer;
+		  transition: background-color 0.3s ease;
+		}
+	
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 60px);
+            gap: 5px;
+        }
+        .box {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid gray;
+            cursor: pointer;
+            font-weight: bold;
+            position: relative;
+			border-radius: 5px;
+			box-sizing: border-box;
+			background-color: #182232;
+        }
+        .selected {
+            border-color: #facc15;
+			border-width: 3px;
+			background-color: #0077cc;
+        }
+        .selected-highlight {
+            border-color: #facc15; !important;
+			border-width: 3px;
+			background-color: #0077cc;
+			animation: pulse 1.5s infinite ease-in-out;
+        }
+        .hidden {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+		
+		@keyframes pulse {
+		  0% {
+			transform: scale(1);
+			opacity: 1;
+		  }
+		  50% {
+			transform: scale(1.2);
+			opacity: 0.7;
+		  }
+		  100% {
+			transform: scale(1);
+			opacity: 1;
+		  }
+		}
+    </style>
+</head>
+<body>
+	<h1>Find an egg...</h1>
+    <div class="grid" id="grid"></div>
+	<div id="grid-key" style="margin-top: 10px;"></div>
+	<br />
+    <button id="confirm" class="general-button" disabled>Confirm Selection</button>
+    <button id="reset" class="general-button" style="display: none;">Reset Game</button>
+    <div id="resultMessage" class="result"></div>
+    <script>
+        const GRID_SIZE = 5;
+        const TOTAL_BOXES = GRID_SIZE * GRID_SIZE;
+        const WINS = 12;
+        let selected = null;
+        let results = null;
+
+        function generateGrid() {
+            const grid = document.getElementById("grid");
+			const gridKey = document.getElementById("grid-key");
+            grid.innerHTML = "";
+			gridKey.innerHTML = "(" + WINS + " eggs and " + (TOTAL_BOXES - WINS) + " mushrooms)"
+            for (let i = 1; i <= TOTAL_BOXES; i++) {
+                const div = document.createElement("div");
+                div.classList.add("box");
+                div.textContent = i;
+                div.addEventListener("click", () => selectBox(div, i));
+                grid.appendChild(div);
+            }
+        }
+
+        function selectBox(div, num) {
+            if (results) return;
+            document.querySelectorAll(".box").forEach(box => box.classList.remove("selected"));
+            div.classList.add("selected");
+            selected = num;
+            document.getElementById("confirm").disabled = false;
+        }
+
+        function confirmSelection() {
+            if (selected === null) return;
+            let shuffled = Array(TOTAL_BOXES).fill("../images/mushroom.png");
+            let winIndices = new Set();
+            while (winIndices.size < WINS) {
+                winIndices.add(Math.floor(Math.random() * TOTAL_BOXES));
+            }
+            winIndices.forEach(idx => shuffled[idx] = "../images/egg.png");
+            results = shuffled;
+            document.getElementById("confirm").style.display = "none";
+            revealWinsSequentially(shuffled);
+        }
+
+        function revealWinsSequentially(shuffled) {
+            let winIndices = shuffled.map((val, idx) => val === "../images/egg.png" ? idx : null).filter(val => val !== null);
+            winIndices = winIndices.sort(() => Math.random() - 0.5);
+            let boxes = document.querySelectorAll(".box");
+            let index = 0;
+
+            function revealNextWin() {
+                if (index < winIndices.length) {
+                    let idx = winIndices[index++];
+                    let img = document.createElement("img");
+                    img.src = shuffled[idx];
+                    img.width = 50;
+                    img.height = 50;
+                    boxes[idx].textContent = "";
+                    boxes[idx].appendChild(img);
+                    boxes[idx].classList.add("hidden");
+					boxes[idx].style.backgroundColor = "#0f6b36";
+                    setTimeout(() => boxes[idx].classList.remove("hidden"), 500);
+                    setTimeout(revealNextWin, 500);
+                } else {
+                    setTimeout(revealAllLosses, 500);
+                }
+            }
+            revealNextWin();
+        }
+
+        function revealAllLosses() {
+            let boxes = document.querySelectorAll(".box");
+            boxes.forEach((box, idx) => {
+                if (results[idx] === "../images/mushroom.png") {
+                    let img = document.createElement("img");
+                    img.src = "../images/mushroom.png";
+                    img.width = 40;
+                    img.height = 40;
+                    box.textContent = "";
+                    box.appendChild(img);
+					box.style.backgroundColor = "#8b1a1a";
+                }
+            });
+            document.querySelectorAll(".selected").forEach(box => box.classList.add("selected-highlight"));
+            displayResultMessage();
+			document.getElementById("reset").style.display = "inline";
+        }
+
+        function displayResultMessage() {
+            const message = results[selected - 1] === "../images/egg.png" ? "Good job, you found an egg!" : "Bad luck, you found a mushroom!";
+            document.getElementById("resultMessage").textContent = message;
+        }
+
+        function resetGame() {
+            selected = null;
+            results = null;
+            document.getElementById("resultMessage").textContent = "";
+            document.getElementById("confirm").disabled = true;
+            document.getElementById("confirm").style.display = "inline";
+            document.getElementById("reset").style.display = "none";
+            generateGrid();
+        }
+
+        document.getElementById("confirm").addEventListener("click", confirmSelection);
+        document.getElementById("reset").addEventListener("click", resetGame);
+        generateGrid();
+    </script>
+</body>
+</html>
