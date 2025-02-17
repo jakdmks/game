@@ -474,6 +474,15 @@ var chartStake = 0;
 var chartHouseValue = 0;
 var chartPlayerValue = 0;
 
+//Bonus Game Variables
+var bonusGamePayout = 1500;
+var bonusGameThreshold = 15000; //15000
+var bonusGameWins = 12;
+var bonusGameGridSize = 5; //x * x square
+var bonusGameTotalBoxes = bonusGameGridSize * bonusGameGridSize;
+var bonusGameSelected = null;
+var bonusGameResults = null;
+
 //Timer
 var timerInterval;  // To hold the interval ID
 var timeElapsed = 0;  // Time counter in seconds
@@ -496,6 +505,11 @@ var statistics = {
 	boostProtectInvokedRun: 0,
 	boostProtectInvokedRunHighest: 0,
 	boostProtectMaxResetBoostCount: 0,
+	
+	bonusGameInvoked: 0,
+	bonusGameWins: 0,
+	bonusGameRecordWinsLosses: "",
+	bonusGamePayout: 0,
 	
 	bagSize: bagSize,
 	tokenRateToGBP: 0,
@@ -1259,14 +1273,13 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		//console.info("betId", betId);
 		
 		if (playerCredit - stake <= 0 && statistics.gamesPlayed > 0) {
-			showOverlayEndOfCredit();
-			/*
-			if (lastShowOverlayBonusGameBetId !== betId) {
+			//showOverlayEndOfCredit();
+			
+			if (lastShowOverlayBonusGameBetId !== betId && ((statistics.totalStake / (statistics.bonusGameInvoked + 1)) > bonusGameThreshold)) {
 				showOverlayBonusGame();
 			} else {
 				showOverlayEndOfCredit();
 			}
-			*/
 		}
 		
 		var pickSweetsErrors = [];
@@ -1465,21 +1478,25 @@ function renderJson(jsonData, displayContainerId) {
 	});
 }
 
-/*
+
 function showOverlayBonusGame() {
 	
 	document.body.classList.add("blocked-scroll");
-	document.body.classList.add("overlay-active");
+	//document.body.classList.add("overlay-active");
+	
+	resetGame();
 	
 	lastShowOverlayBonusGameBetId = betId;
+	showBonusGame();
 	
 	var overlayBonusGame = document.getElementById("overlay-bonus-game");
 	overlayBonusGame.style.visibility = "visible";
 }
-*/
+
 
 function showOverlayEndOfCredit() {
 	
+	hideOverlayBonusGame();
 	pauseTimer();
 	statistics.timeElapsed = timeElapsed;
 	statistics.timePerGame = timeElapsed / (statistics.gamesPlayed ? statistics.gamesPlayed : 1);
@@ -1496,6 +1513,8 @@ function showOverlayEndOfCredit() {
 	var losses = 0;
 	var mixed = 0;
 	
+	var bonusGameRecordWinsLosses = "(0-1)"; //e.g. (1-2);
+	
 	//console.info(overlayStatistics.audit);
 	
 	for (var i = 0; i < overlayStatistics.audit.length; i++) {
@@ -1511,6 +1530,9 @@ function showOverlayEndOfCredit() {
 	}
 	playerWinsMixedLosses = "(" + wins + "-" + mixed + "-" + losses + ")"; //e.g. (1-0-3)
 	overlayStatistics.playerWinsMixedLosses = playerWinsMixedLosses;
+	
+	bonusGameRecordWinsLosses = "(" + overlayStatistics.bonusGameWins.toFixed(0) + "-" + (overlayStatistics.bonusGameInvoked - overlayStatistics.bonusGameWins).toFixed(0) + ")";
+	overlayStatistics.bonusGameRecordWinsLosses = bonusGameRecordWinsLosses;
 	
 	delete overlayStatistics.audit;
 	delete overlayStatistics.houseHighestBalance;
@@ -1530,7 +1552,11 @@ function showOverlayEndOfCredit() {
 	delete overlayStatistics.playerTotalWinnings;
 	delete overlayStatistics.playerTotalWinningsGBP;
 	delete overlayStatistics.totalStake;
+	delete overlayStatistics.playerCredit;
+	delete overlayStatistics.playerCreditGBP;
 	//console.info("overlayStatistics", overlayStatistics);
+	
+	delete overlayStatistics.bonusGameWins;
 	
 	overlayStatistics.gamesPlayed = overlayStatistics.gamesPlayed.toFixed(0);
 	//overlayStatistics.timeElapsed = formatTime(overlayStatistics.timeElapsed);
@@ -1550,8 +1576,8 @@ function showOverlayEndOfCredit() {
 	overlayStatistics.playerBalanceGBP = overlayStatistics.playerBalanceGBP.toFixed(2);
 	overlayStatistics.playerWinnings = overlayStatistics.playerWinnings.toFixed(0);
 	overlayStatistics.playerWinningsGBP = overlayStatistics.playerWinningsGBP.toFixed(2);
-	overlayStatistics.playerCredit = overlayStatistics.playerCredit.toFixed(0);
-	overlayStatistics.playerCreditGBP = overlayStatistics.playerCreditGBP.toFixed(2);
+	//overlayStatistics.playerCredit = overlayStatistics.playerCredit.toFixed(0);
+	//overlayStatistics.playerCreditGBP = overlayStatistics.playerCreditGBP.toFixed(2);
 	//overlayStatistics.playerTotalWinnings = overlayStatistics.playerTotalWinnings.toFixed(0);
 	//overlayStatistics.playerTotalWinningsGBP = overlayStatistics.playerTotalWinningsGBP.toFixed(2);
 	//overlayStatistics.houseHighestBalance = overlayStatistics.houseHighestBalance.toFixed(0);
@@ -1572,6 +1598,7 @@ function showOverlayEndOfCredit() {
 
 function showOverlayEndOfCredit2() {
 	
+	var gamesCherryMixedCola = "";
 	var cherry = 0;
 	var mixed = 0;
 	var cola = 0;
@@ -1607,8 +1634,8 @@ function showOverlayEndOfCredit2() {
 	delete overlayStatistics.playerBalanceGBP;
 	delete overlayStatistics.playerWinnings;
 	delete overlayStatistics.playerWinningsGBP;
-	delete overlayStatistics.playerCredit;
-	delete overlayStatistics.playerCreditGBP;
+	//delete overlayStatistics.playerCredit;
+	//delete overlayStatistics.playerCreditGBP;
 	//delete overlayStatistics.playerTotalWinnings;
 	//delete overlayStatistics.playerTotalWinningsGBP;
 	delete overlayStatistics.playerHighestWinStreak
@@ -1621,6 +1648,11 @@ function showOverlayEndOfCredit2() {
 	delete overlayStatistics.playerLossBonusRewardedWinsLosses;
 	delete overlayStatistics.playerLossBonusRewardedValue;
 	
+	delete overlayStatistics.bonusGameInvoked;
+	delete overlayStatistics.bonusGameWins;
+	delete overlayStatistics.bonusGameRecordWinsLosses;
+	delete overlayStatistics.bonusGamePayout;
+	
 	overlayStatistics.tokenRateToGBP = overlayStatistics.tokenRateToGBP.toFixed(0);
 	overlayStatistics.bagSize = overlayStatistics.bagSize.toFixed(0);
 	overlayStatistics.playerTotalWinnings = overlayStatistics.playerTotalWinnings.toFixed(0);
@@ -1628,6 +1660,8 @@ function showOverlayEndOfCredit2() {
 	overlayStatistics.timePerGame = overlayStatistics.timePerGame.toFixed(2) + "s";
 	overlayStatistics.playerTotalWinningsGBP = overlayStatistics.playerTotalWinningsGBP.toFixed(2);
 	overlayStatistics.totalStake = overlayStatistics.totalStake.toFixed(0);
+	overlayStatistics.playerCredit = overlayStatistics.playerCredit.toFixed(0);
+	overlayStatistics.playerCreditGBP = overlayStatistics.playerCreditGBP.toFixed(2);
 	overlayStatistics.houseHighestBalance = overlayStatistics.houseHighestBalance.toFixed(0);
 	overlayStatistics.houseLowestBalance = overlayStatistics.houseLowestBalance.toFixed(0);
 	overlayStatistics.houseHighestBalanceGame = overlayStatistics.houseHighestBalanceGame.toFixed(0);
@@ -1639,7 +1673,7 @@ function showOverlayEndOfCredit2() {
 	overlayStatistics.houseBalancePerGamePct = overlayStatistics.houseBalancePerGamePct.toFixed(2) + "%";
 	
 	//Add blanks so the screens line up
-	overlayStatistics._BLANK_1 = "-";
+	//overlayStatistics._BLANK_1 = "-";
 	//overlayStatistics._BLANK_2 = "-";
 	
 	renderJson(overlayStatistics, "overlay-end-of-credit-content-2");
@@ -1665,7 +1699,6 @@ function hideOverlayEndOfCredit2() {
 	overlayEndOfCredit2.style.visibility = "hidden";
 }
 
-/*
 function hideOverlayBonusGame() {
 	//console.info("Running hideOverlayEndOfCredit()");
 	//document.body.classList.remove("blocked-scroll");
@@ -1673,7 +1706,6 @@ function hideOverlayBonusGame() {
 	var overlayBonusGame = document.getElementById("overlay-bonus-game");
 	overlayBonusGame.style.visibility = "hidden";
 }
-*/
 
 function showOverlayChart() {
 	
@@ -2017,4 +2049,120 @@ function formatTime(seconds) {
     const secs = (seconds % 60).toString().padStart(2, "0");
     
     return hrs + ":" + mins + ":" + secs;
+}
+
+/* BONUS GAME */
+function showBonusGame() {
+	bonusGameWins = 10; //Introduce the logic of the odds here...
+	bonusGameGridSize = 5;
+	bonusGameTotalBoxes = bonusGameGridSize * bonusGameGridSize;
+	bonusGameSelected = null;
+	bonusGameResults = null;
+	
+	statistics.bonusGameInvoked++;
+	
+	generateGrid();
+}
+
+//Rename some of these to be more specific to the bonus game, could get confusing...
+function generateGrid() {
+	const grid = document.getElementById("grid-bonus-game");
+	const gridKey = document.getElementById("grid-key-bonus-game");
+	grid.innerHTML = "";
+	//gridKey.innerHTML = "(" + bonusGameWins + " eggs and " + (bonusGameTotalBoxes - bonusGameWins) + " mushrooms)"
+	for (let i = 1; i <= bonusGameTotalBoxes; i++) {
+		const div = document.createElement("div");
+		div.classList.add("box-bonus-game");
+		div.textContent = i;
+		div.addEventListener("click", () => selectBox(div, i));
+		grid.appendChild(div);
+	}
+}
+
+function selectBox(div, num) {
+	
+	if (bonusGameResults) return;
+	document.querySelectorAll(".box-bonus-game").forEach(box => box.classList.remove("selected-bonus-game"));
+	div.classList.add("selected-bonus-game");
+	bonusGameSelected = num;
+	document.getElementById("confirm-bonus-game").disabled = false;
+}
+
+function confirmSelection() {
+	if (bonusGameSelected === null) return;
+	let shuffled = Array(bonusGameTotalBoxes).fill("images/mushroom.png");
+	let winIndices = new Set();
+	while (winIndices.size < bonusGameWins) {
+		winIndices.add(Math.floor(Math.random() * bonusGameTotalBoxes));
+	}
+	winIndices.forEach(idx => shuffled[idx] = "images/egg.png");
+	bonusGameResults = shuffled;
+	document.getElementById("confirm-bonus-game").style.display = "none";
+	revealWinsSequentially(shuffled);
+}
+
+function revealWinsSequentially(shuffled) {
+	let winIndices = shuffled.map((val, idx) => val === "images/egg.png" ? idx : null).filter(val => val !== null);
+	winIndices = winIndices.sort(() => Math.random() - 0.5);
+	let boxes = document.querySelectorAll(".box-bonus-game");
+	let index = 0;
+
+	function revealNextWin() {
+		if (index < winIndices.length) {
+			let idx = winIndices[index++];
+			let img = document.createElement("img");
+			img.src = shuffled[idx];
+			img.width = 50;
+			img.height = 50;
+			boxes[idx].textContent = "";
+			boxes[idx].appendChild(img);
+			boxes[idx].classList.add("hidden-bonus-game");
+			boxes[idx].style.backgroundColor = "#0f6b36";
+			setTimeout(() => boxes[idx].classList.remove("hidden-bonus-game"), 500);
+			setTimeout(revealNextWin, 500);
+		} else {
+			setTimeout(revealAllLosses, 500);
+		}
+	}
+	revealNextWin();
+}
+
+function revealAllLosses() {
+	let boxes = document.querySelectorAll(".box-bonus-game");
+	boxes.forEach((box, idx) => {
+		if (bonusGameResults[idx] === "images/mushroom.png") {
+			let img = document.createElement("img");
+			img.src = "images/mushroom.png";
+			img.width = 40;
+			img.height = 40;
+			box.textContent = "";
+			box.appendChild(img);
+			box.style.backgroundColor = "#8b1a1a";
+		}
+	});
+	document.querySelectorAll(".selected-bonus-game").forEach(box => box.classList.add("selected-highlight-bonus-game"));
+	displayResultMessage();
+}
+
+function displayResultMessage() {
+	const message = bonusGameResults[bonusGameSelected - 1] === "images/egg.png" ? "Good job, you found an egg!<br />1500 Tokens added!" : "Bad luck, you found a mushroom!";
+	
+	//Call Add Credit...
+	addCredit(bonusGamePayout);
+	
+	statistics.bonusGameWins++;
+	statistics.bonusGamePayout = statistics.bonusGamePayout + bonusGamePayout;
+	
+	document.getElementById("result-message-bonus-game").innerHTML = message;
+	document.getElementById("overlay-bonus-game-dismiss-button").style.display = "inline-block";
+}
+
+function resetGame() {
+	bonusGameSelected = null;
+	bonusGameResults = null;
+	document.getElementById("result-message-bonus-game").textContent = "";
+	document.getElementById("confirm-bonus-game").disabled = true;
+	document.getElementById("confirm-bonus-game").style.display = "inline";
+	document.getElementById("overlay-bonus-game-dismiss-button").style.display = "none";
+	generateGrid();
 }
