@@ -548,6 +548,9 @@ var statistics = {
 var chartData = [];
 var lastPicks = [];
 
+//TESTING BONUS GAME
+//showOverlayBonusGame();
+
 var custCreditDiv = document.getElementById("cust-credit");
 var custWinningsDiv = document.getElementById("cust-winnings");
 var custTotalWinningsDiv = document.getElementById("cust-total-winnings");
@@ -2137,7 +2140,9 @@ function revealAllLosses() {
 			img.height = 40;
 			box.textContent = "";
 			box.appendChild(img);
+			box.classList.add("hidden-bonus-game");
 			box.style.backgroundColor = "#8b1a1a";
+			setTimeout(() => box.classList.remove("hidden-bonus-game"), 500);
 		}
 	});
 	document.querySelectorAll(".selected-bonus-game").forEach(box => box.classList.add("selected-highlight-bonus-game"));
@@ -2145,7 +2150,7 @@ function revealAllLosses() {
 }
 
 function displayResultMessage() {
-	const message = bonusGameResults[bonusGameSelected - 1] === "images/egg.png" ? "Good job, you found an egg!<br />1500 Tokens added!" : "Bad luck, you found a mushroom!";
+	const message = bonusGameResults[bonusGameSelected - 1] === "images/egg.png" ? "Good job, you found an egg!<br />+1500 TOKENS" : "Unlucky! You found a mushroom...";
 	
 	//Call Add Credit...
 	addCredit(bonusGamePayout);
