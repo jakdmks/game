@@ -276,6 +276,8 @@ function updateStatisticsDivs() {
 		if (lossStreak >= lossStreakLevelOne) {
 			boostGraphic1Span.classList.add("selected-blue");
 			
+			statistics.playerLossBonusRewardedWinsLosses++;
+			
 			//Reset loss streak
 			lossStreak = 0;
 		}
@@ -484,7 +486,6 @@ startTimer();
 //boostStreakLevelOne = 0;
 	
 var statistics = {
-	bagSize: bagSize,
 	timeElapsed: 0,
 	timePerGame: 0,
 	gamesPlayed: 0,
@@ -496,8 +497,11 @@ var statistics = {
 	boostProtectInvokedRunHighest: 0,
 	boostProtectMaxResetBoostCount: 0,
 	
+	bagSize: bagSize,
 	tokenRateToGBP: 0,
 	gamesCherryMixedCola: "",
+	playerLossBonusRewardedWinsLosses: 0,
+	playerLossBonusRewardedValue: 0,
 	totalStake: 0,
 	houseBalance: 0,
 	houseBalanceGBP: 0,
@@ -746,10 +750,6 @@ function insuranceSwitch(checked=true) {
 
 function applyBoost(type="", outcome=false) {
 	
-	if (boostRate == 0) {
-		return false;
-	}
-	
 	boostPayoutContainer.style.setProperty("--bg-color", "#0f6b36");
 	boostInsuranceContainer.style.setProperty("--bg-color", "#1c3db9");
 
@@ -761,6 +761,11 @@ function applyBoost(type="", outcome=false) {
 	var payoutSplitBar150RedBoostDiv = document.getElementById("payout-split-bar-150-100-red-boost");
 
 	if (type === "payout") {
+		
+		if (boostRate == 0) {
+			return false;
+		}
+		
 		//console.info("BOOSTING PAYOUT TO", boostRate);
 		payoutBoost = outcome;
 		boostApplied = true;
@@ -788,6 +793,11 @@ function applyBoost(type="", outcome=false) {
 		statistics.playerCredit = playerCredit;
 		
 	} else if (type === "insurance") {
+		
+		if (boostRate == 0) {
+			return false;
+		}
+		
 		//console.info("BOOSTING INSURANCE TO", boostRate);
 		boostApplied = true;
 		boostAppliedType = "insurance";
@@ -1513,6 +1523,7 @@ function showOverlayEndOfCredit() {
 	delete overlayStatistics.houseBalancePerGameGBP;
 	delete overlayStatistics.houseBalancePerGamePct;
 	delete overlayStatistics.bagSize;
+	delete overlayStatistics.timeElapsed;
 	delete overlayStatistics.timePerGame;
 	delete overlayStatistics.tokenRateToGBP;
 	delete overlayStatistics.gamesCherryMixedCola;
@@ -1522,10 +1533,12 @@ function showOverlayEndOfCredit() {
 	//console.info("overlayStatistics", overlayStatistics);
 	
 	overlayStatistics.gamesPlayed = overlayStatistics.gamesPlayed.toFixed(0);
-	overlayStatistics.timeElapsed = formatTime(overlayStatistics.timeElapsed);
+	//overlayStatistics.timeElapsed = formatTime(overlayStatistics.timeElapsed);
 	//overlayStatistics.tokenRateToGBP = overlayStatistics.tokenRateToGBP.toFixed(0);
 	overlayStatistics.playerHighestWinStreak = overlayStatistics.playerHighestWinStreak.toFixed(0);
 	overlayStatistics.playerHighestLossStreak = overlayStatistics.playerHighestLossStreak.toFixed(0);
+	overlayStatistics.playerLossBonusRewardedWinsLosses = overlayStatistics.playerLossBonusRewardedWinsLosses.toFixed(0);
+	overlayStatistics.playerLossBonusRewardedValue = overlayStatistics.playerLossBonusRewardedValue.toFixed(0);
 	overlayStatistics.boostProtectInvoked = overlayStatistics.boostProtectInvoked.toFixed(0);
 	overlayStatistics.boostProtectInvokedRun = overlayStatistics.boostProtectInvokedRun.toFixed(0);
 	overlayStatistics.boostProtectInvokedRunHighest = overlayStatistics.boostProtectInvokedRunHighest.toFixed(0);
@@ -1587,7 +1600,6 @@ function showOverlayEndOfCredit2() {
 	
 	delete overlayStatistics.audit;
 	delete overlayStatistics.gamesPlayed;
-	delete overlayStatistics.timeElapsed;
 	delete overlayStatistics.playerWinsMixedLosses;
 	delete overlayStatistics.houseBalance;
 	delete overlayStatistics.houseBalanceGBP;
@@ -1606,10 +1618,13 @@ function showOverlayEndOfCredit2() {
 	delete overlayStatistics.boostProtectMaxResetBoostCount
 	delete overlayStatistics.boostProtectInvokedRun;
 	//console.info("overlayStatistics", overlayStatistics);
+	delete overlayStatistics.playerLossBonusRewardedWinsLosses;
+	delete overlayStatistics.playerLossBonusRewardedValue;
 	
 	overlayStatistics.tokenRateToGBP = overlayStatistics.tokenRateToGBP.toFixed(0);
 	overlayStatistics.bagSize = overlayStatistics.bagSize.toFixed(0);
 	overlayStatistics.playerTotalWinnings = overlayStatistics.playerTotalWinnings.toFixed(0);
+	overlayStatistics.timeElapsed = formatTime(overlayStatistics.timeElapsed);
 	overlayStatistics.timePerGame = overlayStatistics.timePerGame.toFixed(2) + "s";
 	overlayStatistics.playerTotalWinningsGBP = overlayStatistics.playerTotalWinningsGBP.toFixed(2);
 	overlayStatistics.totalStake = overlayStatistics.totalStake.toFixed(0);
