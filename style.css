@@ -1050,6 +1050,19 @@ PAYOUT SPLIT TESTING
   flex-direction: column;
 }
 
+.overlay-dismiss.darker {
+  background-color: rgba(0, 0, 0, 0.95);
+}
+
+#overlay-bonus-game {
+	font-size: 1.1em;
+	font-weight: bold;
+	text-shadow: -1px -1px 0 black,
+		1px -1px 0 black,
+		-1px  1px 0 black,
+		1px  1px 0 black;
+}
+
 .overlay-dismiss .dismiss-button {
   margin-top: 20px;
   padding: 10px 20px;
@@ -1756,18 +1769,20 @@ body.overlay-active * {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid gray;
+	border: 2px solid gray;
 	cursor: pointer;
 	font-weight: bold;
 	position: relative;
 	border-radius: 5px;
 	box-sizing: border-box;
 	background-color: #182232;
+	font-size: 1.3em;
 }
 .selected-bonus-game {
 	border-color: #facc15;
 	border-width: 3px;
 	background-color: #0077cc;
+	animation: pulseBonusGame 1.5s infinite ease-in-out;
 }
 .selected-highlight-bonus-game {
 	border-color: #facc15; !important;
