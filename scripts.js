@@ -485,7 +485,7 @@ var chartPlayerValue = 0;
 
 //Bonus Game Variables
 var bonusGamePayout = 1500;
-var bonusGameThreshold = 15000; //15000
+var bonusGameThreshold = 20000; //15000
 var bonusGameWins = 12;
 var bonusGameGridSize = 5; //x * x square
 var bonusGameTotalBoxes = bonusGameGridSize * bonusGameGridSize;
@@ -2272,6 +2272,10 @@ function displayResultMessage() {
 		statistics.playerCreditGBP = playerCredit / tokenRateToGBP;
 		statistics.bonusGameWins++;
 		statistics.bonusGamePayout = statistics.bonusGamePayout + bonusGamePayout;
+		statistics.houseBalance = statistics.houseBalance - bonusGamePayout;
+		statistics.houseBalanceGBP = statistics.houseBalance / tokenRateToGBP;
+	        statistics.playerBalance = statistics.playerBalance - bonusGamePayout;
+		statistics.playerBalanceGBP = statistics.playerBalance / tokenRateToGBP;
 		
 		updateStatisticsDivs();
 	}
