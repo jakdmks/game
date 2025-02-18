@@ -959,7 +959,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 	if ((bet === "Cola" || bet === "Cherry") && stake !== 0 && (playerCredit - stake >= 0))
 	{
 		//Hide Buttons Temporarily
-		cherryColaBetsContainer.style.display = "none";
+		cherryColaBetsContainer.style.visibility = "hidden";
+		boostPayoutContainer.style.visibility = "hidden";
+		boostInsuranceContainer.style.visibility = "hidden";
 		
 		resumeTimer();
 		
@@ -1104,7 +1106,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 				//START OF DELAY
 				
 				//Show Buttons Again
-				cherryColaBetsContainer.style.display = "inline-block";
+				cherryColaBetsContainer.style.visibility = "visible";
+				boostPayoutContainer.style.visibility = "visible";
+				boostInsuranceContainer.style.visibility = "visible";
 				
 				stakeDiv.style.display = "flex";
 				stakeDiv.innerHTML = "Stake: " + stake;
