@@ -485,7 +485,7 @@ var chartPlayerValue = 0;
 
 //Bonus Game Variables
 var bonusGamePayout = 1500;
-var bonusGameThreshold = 20000; //15000
+var bonusGameThreshold = 15000; //15000
 var bonusGameWins = 12;
 var bonusGameGridSize = 5; //x * x square
 var bonusGameTotalBoxes = bonusGameGridSize * bonusGameGridSize;
@@ -558,7 +558,7 @@ var chartData = [];
 var lastPicks = [];
 
 //TESTING BONUS GAME
-//showOverlayBonusGame();
+showOverlayBonusGame();
 
 var custCreditDiv = document.getElementById("cust-credit");
 var custWinningsDiv = document.getElementById("cust-winnings");
@@ -2233,10 +2233,15 @@ function revealWinsSequentially(shuffled) {
 			img.height = 50;
 			boxes[idx].textContent = "";
 			boxes[idx].appendChild(img);
-			boxes[idx].classList.add("hidden-bonus-game");
-			boxes[idx].style.backgroundColor = "#0f6b36";
-			setTimeout(() => boxes[idx].classList.remove("hidden-bonus-game"), 500);
-			setTimeout(revealNextWin, 500);
+			boxes[idx].classList.add("hidden-bonus-game-green");
+			document.querySelectorAll(".selected-bonus-game").forEach(box => box.classList.add("selected-highlight-bonus-game"));
+			setTimeout(() => {
+				boxes[idx].style.opacity = "0";
+				setTimeout(() => { 
+					boxes[idx].style.opacity = "1";			
+					setTimeout(revealNextWin, 300);
+				}, 300);
+			}, 300);
 		} else {
 			setTimeout(revealAllLosses, 500);
 		}
@@ -2255,11 +2260,14 @@ function revealAllLosses() {
 			box.textContent = "";
 			box.appendChild(img);
 			box.classList.add("hidden-bonus-game");
-			box.style.backgroundColor = "#8b1a1a";
-			setTimeout(() => box.classList.remove("hidden-bonus-game"), 500);
+			setTimeout(() => {
+				box.style.opacity = "0";
+				setTimeout(() => {
+					box.style.opacity = "1";
+				}, 500);
+			}, 500);
 		}
 	});
-	document.querySelectorAll(".selected-bonus-game").forEach(box => box.classList.add("selected-highlight-bonus-game"));
 	displayResultMessage();
 }
 
@@ -2272,10 +2280,6 @@ function displayResultMessage() {
 		statistics.playerCreditGBP = playerCredit / tokenRateToGBP;
 		statistics.bonusGameWins++;
 		statistics.bonusGamePayout = statistics.bonusGamePayout + bonusGamePayout;
-		statistics.houseBalance = statistics.houseBalance - bonusGamePayout;
-		statistics.houseBalanceGBP = statistics.houseBalance / tokenRateToGBP;
-	        statistics.playerBalance = statistics.playerBalance - bonusGamePayout;
-		statistics.playerBalanceGBP = statistics.playerBalance / tokenRateToGBP;
 		
 		updateStatisticsDivs();
 	}
