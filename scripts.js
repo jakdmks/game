@@ -642,6 +642,7 @@ var boostPayoutContainer = document.getElementById("boost-payout-container");
 var boostInsuranceContainer = document.getElementById("boost-insurance-container");
 
 var cherryColaBetsContainer = document.getElementById("cherry-cola-bets-container");
+var payoutBoostsDiv = document.getElementById("payout-boosts");
 
 updatePayoutSplit(2, 0.4, "SPLIT02"); //2, 0.5
 insuranceSwitch(false);
@@ -962,6 +963,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		cherryColaBetsContainer.style.visibility = "hidden";
 		boostPayoutContainer.style.visibility = "hidden";
 		boostInsuranceContainer.style.visibility = "hidden";
+		payoutBoostsDiv.style.visibility = "hidden";
 		
 		resumeTimer();
 		
@@ -1109,6 +1111,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 				cherryColaBetsContainer.style.visibility = "visible";
 				boostPayoutContainer.style.visibility = "visible";
 				boostInsuranceContainer.style.visibility = "visible";
+				payoutBoostsDiv.style.visibility = "visible";
 				
 				stakeDiv.style.display = "flex";
 				stakeDiv.innerHTML = "Stake: " + stake;
