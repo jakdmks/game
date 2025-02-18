@@ -321,11 +321,13 @@ function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="", s
 	//console.info("newInsuranceRate", newInsuranceRate);
 	
 	//SFX
+	/*
 	if (sfx === true) {
 		const audio = new Audio("sounds/select.mp3");
 		audio.volume = 0.25;
 		audio.play();
 	}
+	*/
 	
 	payoutSplitCode = option;
 	//console.info("payoutSplitCode", payoutSplitCode);
@@ -657,9 +659,11 @@ function addCredit(credit=0) {
 	playerCredit = (playerCredit * 1) + (credit * 1);
 	
 	//SFX
+	/*
 	const audio = new Audio("sounds/credit.mp3");
 	audio.volume = 0.2;
 	audio.play();
+	*/
 	
 	//Maybe move this above?
 	chartData = [];
@@ -692,9 +696,11 @@ function convertWinnings() {
 	//console.info("increased playerCredit by ", additionalCredit);
 	
 	//SFX
+	/*
 	const audio = new Audio("sounds/clapping.mp3");
 	audio.volume = 0.1;
 	audio.play();
+	*/
 	
 	chartData = [];
 	chartStake = playerCredit;
@@ -729,11 +735,13 @@ function convertWinnings() {
 function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages, displayForMS, className="") {
 	
 	//SFX
+	/*
 	if (className === "red-error") {
 		const audio = new Audio("sounds/error.mp3");
 		audio.volume = 0.02;
 		audio.play();
 	}
+	*/
 
 	//console.info("Running displayErrors...");
 	//console.info("errorHeaderText", errorHeaderText);
@@ -765,7 +773,7 @@ function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages,
 	containerDiv.style.display = "flex";
 	
 	var tempTimeout = setTimeout(() => {
-		//containerDiv.style.display = "none";
+		containerDiv.style.display = "none";
 	}, displayForMS);
 	
 }
@@ -773,11 +781,13 @@ function displayErrors(containerDiv, contentDiv, errorHeaderText, errorMessages,
 function insuranceSwitch(checked=true, sfx=false) {
 	
 	//SFX
+	/*
 	if (sfx === true) {
 		const audio = new Audio("sounds/select.mp3");
 		audio.volume = 0.25;
 		audio.play();
 	}
+	*/
 	
 	//We always want to let them switch it on... but only off if the winStreak is 0
 	if (((winStreak === 0) && !checked) || checked) {
@@ -803,11 +813,13 @@ function insuranceSwitch(checked=true, sfx=false) {
 function applyBoost(type="", outcome=false, sfx=false) {
 	
 	//SFX
+	/*
 	if (sfx === true) {
 		const audio = new Audio("sounds/boost.mp3");
 		audio.volume = 0.25;
 		audio.play();
 	}
+	*/
 	
 	boostPayoutContainer.style.setProperty("--bg-color", "#0f6b36");
 	boostInsuranceContainer.style.setProperty("--bg-color", "#1c3db9");
@@ -951,6 +963,10 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		insuranceBoostRate = 0;
 	}
 	
+	var localPayoutRate = payoutRate; //To prevent late-switching
+	var localInsuranceRate = insuranceRate; //To prevent late-switching
+	var localBoostInsurance = boostInsurance; //To prevent late-switching
+	
 	var stakeDiv = document.getElementById("stake");
 	var betDiv = document.getElementById("bet");			
 	var resultDiv = document.getElementById("result");
@@ -961,9 +977,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 	{
 		//Hide Buttons Temporarily
 		cherryColaBetsContainer.style.visibility = "hidden";
-		boostPayoutContainer.style.visibility = "hidden";
-		boostInsuranceContainer.style.visibility = "hidden";
-		payoutBoostsDiv.style.visibility = "hidden";
+		//boostPayoutContainer.style.visibility = "hidden";
+		//boostInsuranceContainer.style.visibility = "hidden";
+		//payoutBoostsDiv.style.visibility = "hidden";
 		
 		resumeTimer();
 		
@@ -1000,9 +1016,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		showOverlay();
 		
 		//SFX
+		/*
 		const audio = new Audio("sounds/bag.mp3");
 		audio.volume = 0.3;
 		audio.play();
+		*/
 		
 		playerCredit = playerCredit - stake;
 		updateStatisticsDivs();
@@ -1012,9 +1030,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			hideOverlay();
 			
 			//SFX
+			/*
 			const audio = new Audio("sounds/spin.mp3");
 			audio.volume = 0.05;
 			audio.play();
+			*/
 		
 			//Start of Delay...
 			betId++;
@@ -1109,9 +1129,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 				
 				//Show Buttons Again
 				cherryColaBetsContainer.style.visibility = "visible";
-				boostPayoutContainer.style.visibility = "visible";
-				boostInsuranceContainer.style.visibility = "visible";
-				payoutBoostsDiv.style.visibility = "visible";
+				//boostPayoutContainer.style.visibility = "visible";
+				//boostInsuranceContainer.style.visibility = "visible";
+				//payoutBoostsDiv.style.visibility = "visible";
 				
 				stakeDiv.style.display = "flex";
 				stakeDiv.innerHTML = "Stake: " + stake;
@@ -1125,21 +1145,23 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					//console.info("Matching");
 					if (pickedSweets.Sweet1 === bet) {
 						outcome = "win";
-						payout = stake * (payoutRate + payoutBoostRate), 2;
+						payout = stake * (localPayoutRate + payoutBoostRate), 2;
 						housePayout = stake - payout, 2;
 						winStreak++;
 						
 						//Reset loss streak
 						lossStreak = 0;
 						
-						if (boostInsurance) {
+						if (localBoostInsurance) {
 							boostInsuranceRunCurrent = 0;
 						}
 						
 						//SFX
+						/*
 						const audio = new Audio("sounds/win.mp3");
 						audio.volume = 0.05;
 						audio.play();
+						*/
 						
 						//console.info("Bet wins!");
 						//console.info("payoutRate", payoutRate);
@@ -1165,7 +1187,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						}
 						
 						//Animate Points
-						animatePoints(stake, payoutRate, stakeBasedChunkSize, "green", "", "payout");
+						animatePoints(stake, localPayoutRate, stakeBasedChunkSize, "green", "", "payout");
 						animatePoints(stake, payoutBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-yellow" : boostLevel == 2 ? "glow-points-orange" : boostLevel == 3 ? "glow-points-red" : ""), "payout");
 						
 					} else {
@@ -1181,9 +1203,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						}
 						
 						//SFX
+						/*
 						const audio = new Audio("sounds/loss.mp3");
 						audio.volume = 0.2;
 						audio.play();
+						*/
 						
 						//console.info("Bet loses.");
 						//console.info("payoutRate", payoutRate);
@@ -1204,13 +1228,13 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 				} else {	
 						//We don't even display this as a loss... even if they don't have insurance... perhaps they should have done.
 						outcome = "insurance";
-						payout = stake * (insuranceRate + insuranceBoostRate), 2;
+						payout = stake * (localInsuranceRate + insuranceBoostRate), 2;
 						housePayout = stake - payout, 2;
 						
 						//JW TODO: Here boostInsuranceRunMax vs boostInsuranceRunCurrent
-						winStreak = boostInsurance ? winStreak : 0;
+						winStreak = localBoostInsurance ? winStreak : 0;
 						
-						if (boostInsurance && boostLevel >= 1) {
+						if (localBoostInsurance && boostLevel >= 1) {
 							boostInsuranceRunCurrent++;
 							
 							if (boostInsuranceRunCurrent > boostInsuranceRunMax) {
@@ -1223,9 +1247,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						}
 						
 						//SFX
+						/*
 						const audio = new Audio("sounds/mix.mp3");
 						audio.volume = 0.06;
 						audio.play();
+						*/
 						
 						//Subtract 1 from loss streak on insurance
 						//lossStreak = lossStreak-- < 0 ? 0 : lossStreak;
@@ -1236,11 +1262,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						
 						resultDiv.classList.add("insurance");
 						resultDiv.style.display = "flex";
-						resultDiv.innerHTML = insuranceRate != 0 ? "MIX" : "MIX*";
+						resultDiv.innerHTML = localInsuranceRate != 0 ? "MIX" : "MIX*";
 						
 						resultDescriptionDiv.classList.add("insurance");
 						resultDescriptionDiv.style.display = "block";
-						resultDescriptionDiv.innerHTML = insuranceRate != 0 ? "You backed " + bet + ". Picked sweets were mixed, so mix-insurance paid out " + payout.toFixed(0) + " Tokens." : "You backed " + bet + ". Picked sweets were mixed. Whilst insurance would have paid here, there was no cover included in the selected payout split.";
+						resultDescriptionDiv.innerHTML = localInsuranceRate != 0 ? "You backed " + bet + ". Picked sweets were mixed, so mix-insurance paid out " + payout.toFixed(0) + " Tokens." : "You backed " + bet + ". Picked sweets were mixed. Whilst insurance would have paid here, there was no cover included in the selected payout split.";
 						
 						payoutDiv.classList.add("insurance");
 						payoutDiv.style.display = "flex";
@@ -1254,7 +1280,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						}
 						
 						//Animate Points
-						animatePoints(stake, insuranceRate, stakeBasedChunkSize, "cyan", "", "insurance");
+						animatePoints(stake, localInsuranceRate, stakeBasedChunkSize, "cyan", "", "insurance");
 						animatePoints(stake, insuranceBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-white" : boostLevel == 2 ? "glow-points-yellow" : boostLevel == 3 ? "glow-points-green" : ""), "insurance");
 				}
 				
@@ -1263,15 +1289,15 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 					"id": betId,
 					"bet": bet,
 					"stake": stake,
-					"payoutRate": payoutRate,
+					"payoutRate": localPayoutRate,
 					"payoutBoostRate": payoutBoostRate,
-					"insuranceRate": insuranceRate,
+					"insuranceRate": localInsuranceRate,
 					"insuranceBoostRate": insuranceBoostRate,
 					"pickedSweets": pickedSweets,
 					"outcome": outcome,
 					"payout": payout,
 					"housePayout": housePayout,
-					"boostInsurance": boostInsurance
+					"boostInsurance": localBoostInsurance
 				}
 				
 				statistics.audit.push(auditObject);
@@ -1353,7 +1379,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 				return pickedSweets;
 				//End of Delay
 				//END OF DELAY
-			}, 1100);
+			}, 1000);
 		}, delayInMs);
 	} else {
 	
