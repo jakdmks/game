@@ -1051,7 +1051,7 @@ PAYOUT SPLIT TESTING
 }
 
 .overlay-dismiss.darker {
-  background-color: rgba(0, 0, 0, 0.95);
+  background-color: rgba(0, 0, 0, 0.97);
 }
 
 #overlay-bonus-game {
@@ -1775,24 +1775,37 @@ body.overlay-active * {
 	position: relative;
 	border-radius: 5px;
 	box-sizing: border-box;
-	background-color: #182232;
+	/*background-color: #182232;*/
 	font-size: 1.3em;
+	animation: flash-dark-split 1.5s infinite;
 }
 .selected-bonus-game {
 	border-color: #facc15;
 	border-width: 3px;
 	background-color: #0077cc;
-	animation: pulseBonusGame 1.5s infinite ease-in-out;
+	animation: pulseBonusGame 1.5s infinite ease-in-out !important;
 }
-.selected-highlight-bonus-game {
-	border-color: #facc15; !important;
+.hidden-bonus-game-green.selected-highlight-bonus-game {
+	border-color: #facc15;
 	border-width: 3px;
-	background-color: #0077cc;
-	animation: pulseBonusGame 1.5s infinite ease-in-out;
+	/*background-color: #0077cc;*/
+	animation: pulseBonusGame 1.5s infinite ease-in-out, flash-green-split 1.5s infinite ease-in-out !important;	
+}
+
+.hidden-bonus-game.selected-highlight-bonus-game {
+	border-color: #facc15;
+	border-width: 3px;
+	/*background-color: #0077cc;*/
+	animation: pulseBonusGame 1.5s infinite ease-in-out, flash-red-split 1.5s infinite ease-in-out !important;	
+}
+
+.hidden-bonus-game-green {
+	transition: opacity 0.5s ease-in-out;
+	animation: flash-green-split 1.5s infinite ease-in-out !important;
 }
 .hidden-bonus-game {
-	opacity: 0;
 	transition: opacity 0.5s ease-in-out;
+	animation: flash-red-split 1.5s infinite ease-in-out !important;
 }
 
 @keyframes pulseBonusGame {
@@ -1807,5 +1820,18 @@ body.overlay-active * {
   100% {
 	transform: scale(1);
 	opacity: 1;
+  }
+}
+
+
+@keyframes flash-dark-split {
+  0% {
+    background-color: #182232;
+  }
+  50% {
+    background-color: #101624;
+  }
+  100% {
+    background-color: #182232;
   }
 }
