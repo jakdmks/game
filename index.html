@@ -10,6 +10,11 @@
   </head>
   <body>
   
+	<!--POINTS EXPLOSION OVERLAY-->
+	<div id="overlay-points" class="overlay-points" style="position: fixed; left: 0px; top: 200px; height: 300px; width: 220px;">
+			<div id="flying-points-overlay" class="flying-text-container" style="height: 300px"></div>
+	</div>
+  
 	<!--OVERLAY-->
 	<div id="overlay" class="overlay">
 		<div style="width: 700px;">
@@ -223,7 +228,7 @@
 	  <!-- Second Row of 3 Columns -->
 	  <div class="grid-item" style="">
 		<!--SWEET BAG NEW SPOT-->
-		<div id="outcome-images" class="panel" style="visibility: visible; min-width: 122px; height: 280px; padding-top: 20px; margin-bottom: 0px">
+		<div id="outcome-images" class="panel" style="visibility: visible; min-width: 122px; height: 280px; padding-top: 20px; margin-bottom: 2px">
 			<div style="display: inline-flex; width: 100px;">
 				<div id="sweet-image1" class="" style="height: 100px;"></div>
 				<!--<div class="sweet-image-text" style="margin-left: -20px">1</div>-->
@@ -237,22 +242,22 @@
 	  </div>
 	  <div class="grid-item">
 		<div style="">
+			<div class="stake-bet-container">
+				<div class="stake-bet-div" style="margin-bottom: 6px;" id="stake"></div>
+				<div class="stake-bet-div" style="margin-bottom: 10px;" id="bet"></div>
+			</div>
 			<div>
 				<div class="result-div" id="result"></div>
 			</div>
 			<div>
 				<div class="payout-div" id="payout"></div>
 			</div>
-			<div class="stake-bet-container">
-				<div class="stake-bet-div" id="stake"></div>
-				<div class="stake-bet-div" id="bet"></div>
-			</div>
 			
 			<!--FLYING POINTS-->
-			<div>
+			<!--<div>
 				<div id="flying-points" class="flying-text-container">
 				</div>
-			</div>
+			</div>-->
 			
 		</div>
 	  </div>
