@@ -276,7 +276,7 @@ function updateStatisticsDivs() {
 		if (lossStreak >= lossStreakLevelOne) {
 			boostGraphic1Span.classList.add("selected-blue");
 			
-			statistics.playerLossBonusRewardedWinsLosses++;
+			statistics.playerLossBonusRewardedCount++;
 			
 			//Reset loss streak
 			lossStreak = 0;
@@ -419,12 +419,15 @@ function calculateBoost() {
 		displayErrors(errorContainerDiv, errorContentDiv, "LOSS BONUS!", creditErrors, 3000, "blue-error");
 		
 		//Explode some messages...
-		for (var i = 0; i < 3; i++) {
+		showOverlayPoints();
+		for (var i = 0; i < 5; i++) {
 			
-			if (i < 2) {
-				createFlyingText("LOSS BONUS!", "white", "");
+			if (i < 4) {
+				//createFlyingText("LOSS BONUS!", "white", "");
+				createFlyingText("LOSS BONUS!", "white", "", "#flying-points-overlay");
 			}
-			createFlyingText("<img src='images/present-png.png' height='30px' alt='Present Icon' style='opacity: 0.5'>", "white", "");
+			//createFlyingText("<img src='images/present-png.png' height='30px' alt='Present Icon' style='opacity: 0.5'>", "white", "");
+			createFlyingText("<img src='images/present-png.png' height='30px' alt='Present Icon' style='opacity: 0.5'>", "white", "", "#flying-points-overlay");
 		}
 	} else {
 		boostAvailable = false;
@@ -523,8 +526,7 @@ var statistics = {
 	bagSize: bagSize,
 	tokenRateToGBP: 0,
 	gamesCherryMixedCola: "",
-	playerLossBonusRewardedWinsLosses: 0,
-	playerLossBonusRewardedValue: 0,
+	playerLossBonusRewardedCount: 0,
 	totalStake: 0,
 	houseBalance: 0,
 	houseBalanceGBP: 0,
@@ -933,6 +935,8 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 	//Clear Errors
 	clearErrors(errorContainerDiv, errorContentDiv);
 	
+	hideOverlayPoints();
+	
 	//Populate Default Chart Data
 	if (chartData.length === 0) {
 		chartData.push({
@@ -1006,8 +1010,8 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		betDiv.style.display = "none";
 		betDiv.innerHTML = "";
 		
-		flyingPointsDiv.style.display = "none";
-		flyingPointsDiv.innerHTML = "";
+		//flyingPointsDiv.style.display = "none";
+		//flyingPointsDiv.innerHTML = "";
 		
 		outcomeImages.style.visibility = "hidden"
 		
@@ -1115,7 +1119,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			}
 			*/
 			
-			renderSweets(pickedSweets.Sweet1, pickedSweets.Sweet2);
+			renderSweets(pickedSweets.Sweet1, pickedSweets.Sweet2, bet);
 			
 			//TODO: Try: 2 and 0 (with the option for the person to change to 1.5 / 0.5 or whatever slider they fancy?)
 			//TODO: Try: 2.0 and 0.1 to 0.2
@@ -1133,13 +1137,13 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 				//boostInsuranceContainer.style.visibility = "visible";
 				//payoutBoostsDiv.style.visibility = "visible";
 				
-				stakeDiv.style.display = "flex";
+				stakeDiv.style.display = "block";
 				stakeDiv.innerHTML = "Stake: " + stake;
 				
-				betDiv.style.display = "flex";
+				betDiv.style.display = "block";
 				betDiv.innerHTML = "Bet: " + bet;
 				
-				flyingPointsDiv.style.display = "flex";
+				//flyingPointsDiv.style.display = "flex";
 				
 				if (pickedSweets.Sweet1 === pickedSweets.Sweet2) {
 					//console.info("Matching");
@@ -1187,8 +1191,12 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						}
 						
 						//Animate Points
-						animatePoints(stake, localPayoutRate, stakeBasedChunkSize, "green", "", "payout");
-						animatePoints(stake, payoutBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-yellow" : boostLevel == 2 ? "glow-points-orange" : boostLevel == 3 ? "glow-points-red" : ""), "payout");
+						//animatePoints(stake, localPayoutRate, stakeBasedChunkSize, "green", "", "payout");
+						//animatePoints(stake, payoutBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-yellow" : boostLevel == 2 ? "glow-points-orange" : boostLevel == 3 ? "glow-points-red" : ""), "payout");
+						
+						showOverlayPoints();
+						animatePoints(stake, localPayoutRate, stakeBasedChunkSize, "green", "", "payout", "#flying-points-overlay");
+						animatePoints(stake, payoutBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-yellow" : boostLevel == 2 ? "glow-points-orange" : boostLevel == 3 ? "glow-points-red" : ""), "payout", "#flying-points-overlay");
 						
 					} else {
 						outcome = "loss";
@@ -1199,7 +1207,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						lossStreak++;
 						
 						if (boostInsurance) {
-							boostInsuranceRunCurrent = 0;
+							if (lossStreak >= lossStreakLevelOne) {
+								boostInsuranceRunCurrent = 2;
+							} else {
+								boostInsuranceRunCurrent = 0;
+							}
 						}
 						
 						//SFX
@@ -1280,8 +1292,12 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						}
 						
 						//Animate Points
-						animatePoints(stake, localInsuranceRate, stakeBasedChunkSize, "cyan", "", "insurance");
-						animatePoints(stake, insuranceBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-white" : boostLevel == 2 ? "glow-points-yellow" : boostLevel == 3 ? "glow-points-green" : ""), "insurance");
+						//animatePoints(stake, localInsuranceRate, stakeBasedChunkSize, "cyan", "", "insurance");
+						//animatePoints(stake, insuranceBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-white" : boostLevel == 2 ? "glow-points-yellow" : boostLevel == 3 ? "glow-points-green" : ""), "insurance");
+						
+						showOverlayPoints();
+						animatePoints(stake, localInsuranceRate, stakeBasedChunkSize, "cyan", "", "insurance", "#flying-points-overlay");
+						animatePoints(stake, insuranceBoostRate, stakeBasedChunkSize, (boostLevel == 1 ? "white" : boostLevel == 2 ? "white" : boostLevel == 3 ? "white" : "white"), (boostLevel == 1 ? "glow-points-white" : boostLevel == 2 ? "glow-points-yellow" : boostLevel == 3 ? "glow-points-green" : ""), "insurance", "#flying-points-overlay");
 				}
 				
 				//Statistics
@@ -1379,7 +1395,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 				return pickedSweets;
 				//End of Delay
 				//END OF DELAY
-			}, 1000);
+			}, 1250);
 		}, delayInMs);
 	} else {
 	
@@ -1490,8 +1506,12 @@ function renderLastPicks() {
 
 }
 
-function renderSweets(sweet1="", sweet2="") {
+function renderSweets(sweet1="", sweet2="", bet="") {
 	if ((sweet1 === "Cherry" || sweet1 === "Cola") && (sweet2 === "Cherry" || sweet2 === "Cola")) {
+		
+		sweetImage1Div.innerHTML = "";
+		sweetImage2Div.innerHTML = "";
+		
 		outcomeImages.style.visibility = "visible"
 		
 		var additionalMarginSweet1 = -5;
@@ -1504,8 +1524,34 @@ function renderSweets(sweet1="", sweet2="") {
 			additionalMarginSweet2 = additionalMarginSweet2 + 10;
 		}
 		
-		sweetImage1Div.innerHTML = "<div class='sweet-image' style='display: block; margin-left: " + additionalMarginSweet1 + "px' id='sweet-image1-image'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='100px'></div>";
-		sweetImage2Div.innerHTML = "<div class='sweet-image' style='display: block; margin-left: " + additionalMarginSweet2 + "px' id='sweet-image2-image'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='100px'></div>";
+		//Decide at random which sweet to show first... then a slight delay and then the next
+		var reverseOrder = false;
+		var randomNum = 1;
+		
+		//If the sweets match, then pick at random
+		if (sweet1 === sweet2) {
+			randomNum = Math.floor(Math.random() * 2) + 1;
+			reverseOrder = randomNum === 1 ? false : true;
+			//console.info("sweets matched, picking at random... reverseOrder", reverseOrder);
+		//Otherwise, we show their guess first ;)
+		} else if (sweet1 !== bet) {
+			reverseOrder = true;
+			//console.info("sweets didn't match, picking their sweet first... reverseOrder", reverseOrder);
+		}
+		
+		if (reverseOrder === false) {
+			sweetImage1Div.innerHTML = "<div class='sweet-image' style='display: block; margin-left: " + additionalMarginSweet1 + "px' id='sweet-image1-image'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='100px'></div>";
+			setTimeout(() => { 
+				sweetImage2Div.innerHTML = "<div class='sweet-image' style='display: block; margin-left: " + additionalMarginSweet2 + "px' id='sweet-image2-image'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='100px'></div>";
+			}, 400);
+		} else {
+			sweetImage2Div.innerHTML = "<div class='sweet-image' style='display: block; margin-left: " + additionalMarginSweet2 + "px' id='sweet-image2-image'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='100px'></div>";
+			setTimeout(() => { 
+				sweetImage1Div.innerHTML = "<div class='sweet-image' style='display: block; margin-left: " + additionalMarginSweet1 + "px' id='sweet-image1-image'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='100px'></div>";
+			}, 400);
+		}
+		//sweetImage1Div.innerHTML = "<div class='sweet-image' style='display: block; margin-left: " + additionalMarginSweet1 + "px' id='sweet-image1-image'><img src='images/" + sweet1.toLowerCase() + ".png' alt='" + sweet1.toLowerCase() + " Icon' height='100px'></div>";
+		//sweetImage2Div.innerHTML = "<div class='sweet-image' style='display: block; margin-left: " + additionalMarginSweet2 + "px' id='sweet-image2-image'><img src='images/" + sweet2.toLowerCase() + ".png' alt='" + sweet2.toLowerCase() + " Icon' height='100px'></div>";
 	}
 }
 
@@ -1680,8 +1726,7 @@ function showOverlayEndOfCredit() {
 	//overlayStatistics.tokenRateToGBP = overlayStatistics.tokenRateToGBP.toFixed(0);
 	overlayStatistics.playerHighestWinStreak = overlayStatistics.playerHighestWinStreak.toFixed(0);
 	overlayStatistics.playerHighestLossStreak = overlayStatistics.playerHighestLossStreak.toFixed(0);
-	overlayStatistics.playerLossBonusRewardedWinsLosses = overlayStatistics.playerLossBonusRewardedWinsLosses.toFixed(0);
-	overlayStatistics.playerLossBonusRewardedValue = overlayStatistics.playerLossBonusRewardedValue.toFixed(0);
+	overlayStatistics.playerLossBonusRewardedCount = overlayStatistics.playerLossBonusRewardedCount.toFixed(0);
 	overlayStatistics.boostProtectInvoked = overlayStatistics.boostProtectInvoked.toFixed(0);
 	overlayStatistics.boostProtectInvokedRun = overlayStatistics.boostProtectInvokedRun.toFixed(0);
 	overlayStatistics.boostProtectInvokedRunHighest = overlayStatistics.boostProtectInvokedRunHighest.toFixed(0);
@@ -1706,6 +1751,10 @@ function showOverlayEndOfCredit() {
 	//overlayStatistics.houseBalancePerGame = overlayStatistics.houseBalancePerGame.toFixed(0);
 	//overlayStatistics.houseBalancePerGameGBP = overlayStatistics.houseBalancePerGameGBP.toFixed(2);
 	//overlayStatistics.houseBalancePerGamePct = overlayStatistics.houseBalancePerGamePct.toFixed(2);
+	
+	//Add blanks so the screens line up
+	overlayStatistics._BLANK_1 = "-";
+	//overlayStatistics._BLANK_2 = "-";
 	
 	renderJson(overlayStatistics, "overlay-end-of-credit-content");
 	
@@ -1762,8 +1811,7 @@ function showOverlayEndOfCredit2() {
 	delete overlayStatistics.boostProtectMaxResetBoostCount
 	delete overlayStatistics.boostProtectInvokedRun;
 	//console.info("overlayStatistics", overlayStatistics);
-	delete overlayStatistics.playerLossBonusRewardedWinsLosses;
-	delete overlayStatistics.playerLossBonusRewardedValue;
+	delete overlayStatistics.playerLossBonusRewardedCount;
 	
 	delete overlayStatistics.bonusGameInvoked;
 	delete overlayStatistics.bonusGameWins;
@@ -1845,6 +1893,16 @@ function hideOverlayChart() {
 	
 	var overlayChart = document.getElementById("overlay-chart");
 	overlayChart.style.visibility = "hidden";
+}
+
+function showOverlayPoints() {
+	var overlayPoints = document.getElementById("overlay-points");
+	overlayPoints.style.visibility = "visible";
+}
+
+function hideOverlayPoints() {
+	var overlayPoints = document.getElementById("overlay-points");
+	overlayPoints.style.visibility = "hidden";
 }
 
 function showOverlay() {
@@ -1936,8 +1994,8 @@ function copyDivContent(originalId, newParentId) {
 	newParent.appendChild(clonedDiv);
 }
 
-function createFlyingText(content, textColor, className="") {
-	const container = document.querySelector(".flying-text-container");
+function createFlyingText(content, textColor, className="", containerId="#flying-points") {
+	const container = document.querySelector(containerId);
 	const flyingText = document.createElement("div");
 	flyingText.classList.add("flying-text");
 	
@@ -1965,7 +2023,7 @@ function createFlyingText(content, textColor, className="") {
 	});
 }
 
-function animatePoints(stake, rate, splitPointsAt, textColor, className="", boostType="") {
+function animatePoints(stake, rate, splitPointsAt, textColor, className="", boostType="", containerId="#flying-points") {
 
 	//Animate Points
 	var tempPayout = stake * rate;
@@ -1975,22 +2033,22 @@ function animatePoints(stake, rate, splitPointsAt, textColor, className="", boos
 		//console.info(">> tempPayoutChunks", tempPayoutChunks);
 		
 		for (var i = 0; i < tempPayoutChunks; i++) {
-			createFlyingText("+" + splitPointsAt.toFixed(0), textColor, className);
+			createFlyingText("+" + splitPointsAt.toFixed(0), textColor, className, containerId);
 		}
 		
 		//Render Icons too if boostType is set
 		for (var i = 0; i < tempPayoutChunks; i++) {
 			if (boostType === "payout" && payoutBoostRate > 0) {
-				createFlyingText("<img src='images/flame-png.png' height='30px' alt='Flame Icon' style='opacity: 0.5'>", textColor, className);
+				createFlyingText("<img src='images/flame-png.png' height='30px' alt='Flame Icon' style='opacity: 0.5'>", textColor, className, containerId);
 			} else if (boostType === "insurance" && insuranceBoostRate > 0) {
-			createFlyingText("+" + splitPointsAt.toFixed(0), textColor, className);
-				createFlyingText("<img src='images/green-cross-png.png' height='30px' alt='Green Cross Icon' style='opacity: 0.5'>", textColor, className);
+			createFlyingText("+" + splitPointsAt.toFixed(0), textColor, className, containerId);
+				createFlyingText("<img src='images/green-cross-png.png' height='30px' alt='Green Cross Icon' style='opacity: 0.5'>", textColor, className, containerId);
 			}
 		}
 		
 		var remainder = ((tempPayout % splitPointsAt).toFixed(0) * 1);
 		if (remainder !== 0) {
-			createFlyingText("+" + remainder, textColor, className);
+			createFlyingText("+" + remainder, textColor, className, containerId);
 		}
 	}
 
@@ -2221,6 +2279,10 @@ function confirmSelection() {
 function revealWinsSequentially(shuffled) {
 	let winIndices = shuffled.map((val, idx) => val === "images/egg.png" ? idx : null).filter(val => val !== null);
 	winIndices = winIndices.sort(() => Math.random() - 0.5);
+	
+	//Move the winning guess to the end of reveals if it's not in the last 3 already...
+	winIndices.indexOf(bonusGameSelected-1) !== -1 && winIndices.indexOf(bonusGameSelected-1) < winIndices.length - 3 && winIndices.push(winIndices.splice(winIndices.indexOf(bonusGameSelected-1), 1)[0]);
+	
 	let boxes = document.querySelectorAll(".box-bonus-game");
 	let index = 0;
 
@@ -2239,9 +2301,9 @@ function revealWinsSequentially(shuffled) {
 				boxes[idx].style.opacity = "0";
 				setTimeout(() => { 
 					boxes[idx].style.opacity = "1";			
-					setTimeout(revealNextWin, 300);
-				}, 300);
-			}, 300);
+					setTimeout(revealNextWin, 200);
+				}, 200);
+			}, 200);
 		} else {
 			setTimeout(revealAllLosses, 500);
 		}
