@@ -1005,10 +1005,15 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		payoutDiv.classList.remove("lose");
 		payoutDiv.classList.remove("insurance");
 		
-		stakeDiv.style.display = "none";
-		stakeDiv.innerHTML = "";
-		betDiv.style.display = "none";
-		betDiv.innerHTML = "";
+		//stakeDiv.style.display = "none";
+		//stakeDiv.innerHTML = "";
+		//betDiv.style.display = "none";
+		//betDiv.innerHTML = "";
+		
+		stakeDiv.style.display = "block";
+		betDiv.style.display = "block";
+		stakeDiv.innerHTML = "STAKE: " + stake;
+		betDiv.innerHTML = "BET: " + bet.toUpperCase();
 		
 		//flyingPointsDiv.style.display = "none";
 		//flyingPointsDiv.innerHTML = "";
@@ -1137,11 +1142,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 				//boostInsuranceContainer.style.visibility = "visible";
 				//payoutBoostsDiv.style.visibility = "visible";
 				
-				stakeDiv.style.display = "block";
-				stakeDiv.innerHTML = "Stake: " + stake;
+				//stakeDiv.style.display = "block";
+				//stakeDiv.innerHTML = "Stake: " + stake;
 				
-				betDiv.style.display = "block";
-				betDiv.innerHTML = "Bet: " + bet;
+				//betDiv.style.display = "block";
+				//betDiv.innerHTML = "Bet: " + bet;
 				
 				//flyingPointsDiv.style.display = "flex";
 				
