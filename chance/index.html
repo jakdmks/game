@@ -78,6 +78,10 @@
 		function revealWinsSequentially(shuffled) {
 			let winIndices = shuffled.map((val, idx) => val === "../images/egg.png" ? idx : null).filter(val => val !== null);
 			winIndices = winIndices.sort(() => Math.random() - 0.5);
+			
+			//Move the winning guess to the end of reveals if it's not in the last 3 already...
+			winIndices.indexOf(bonusGameSelected-1) !== -1 && winIndices.indexOf(bonusGameSelected-1) < winIndices.length - 3 && winIndices.push(winIndices.splice(winIndices.indexOf(bonusGameSelected-1), 1)[0]);
+			
 			let boxes = document.querySelectorAll(".box-bonus-game");
 			let index = 0;
 
@@ -96,9 +100,9 @@
 						boxes[idx].style.opacity = "0";
 						setTimeout(() => { 
 							boxes[idx].style.opacity = "1";
-							setTimeout(revealNextWin, 300);
-						}, 300);
-					}, 300);
+							setTimeout(revealNextWin, 200);
+						}, 200);
+					}, 200);
 				} else {
 					setTimeout(revealAllLosses, 500);
 				}
