@@ -1009,6 +1009,24 @@ PAYOUT SPLIT TESTING
   color: white;
   font-size: 1.4em;
   text-align: center;
+  z-index: 9998;
+  visibility: hidden;
+  flex-direction: column;
+}
+
+.overlay-points {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.4em;
+  text-align: center;
   z-index: 9999;
   visibility: hidden;
   flex-direction: column;
@@ -1132,13 +1150,19 @@ PAYOUT SPLIT TESTING
 
 .sweet-image {
   transform-origin: center; /* Animation grows from the center */
-  animation: spin-grow 0.7s ease-out, bounce 1s ease 4 1s forwards; /* start spinning and growing first, then bounce infinitely */
+  /*animation: spin-grow 0.7s ease-out, bounce 1s ease 4 1s forwards;*/ /* start spinning and growing first, then bounce infinitely */
+  animation: spin-grow 0.7s ease-out, growShrinkSweetImage 1s ease 4 1s forwards;
   min-width: 70px;
   min-height: 70px;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; /* Black outline effect for text */
   font-size: 3em;
   padding-top: 5px;
   padding-bottom: 0px;
+}
+
+@keyframes growShrinkSweetImage {
+0%, 100% { transform: scale(1); }
+50% { transform: scale(1.15); }
 }
 
 
@@ -1172,7 +1196,7 @@ PAYOUT SPLIT TESTING
 .result-div, .payout-div {
   width: 100%;
   background-color: #4b5563; /* Neutral grey */
-  font-size: 1.4em;
+  font-size: 1.8em;
   text-align: center;
   color: white;
   border: 2px solid #121a26; /* Dark, consistent border */
@@ -1183,7 +1207,7 @@ PAYOUT SPLIT TESTING
   justify-content: center;
   align-items: center;
   display: none;
-  min-height: 70px;
+  min-height: 120px;
   vertical-align: middle;
   animation: appear-focus 0.6s ease-out;
   margin-bottom: 5px;
@@ -1192,11 +1216,22 @@ PAYOUT SPLIT TESTING
 .payout-div {
   font-size: 1.2em;
   font-weight: 600;
-  min-height: 40px;
+  min-height: 70px;
+	text-shadow: 
+		-1px -1px 0 black,  
+		 1px -1px 0 black,
+		-1px  1px 0 black,
+		 1px  1px 0 black;
 }
 
 .result-div {
-	font-size: 3em;
+	font-size: 3.5em;
+    letter-spacing: -3px;
+	text-shadow: 
+		-1px -1px 0 black,  
+		 1px -1px 0 black,
+		-1px  1px 0 black,
+		 1px  1px 0 black;
 }
 
 /* Flashing animations */
@@ -1485,7 +1520,7 @@ body.overlay-active * {
 .flying-text-container {
     position: relative;
     width: 100%;  /* Set width of the container */
-    height: 90px; /* Set height of the container */
+    height: 86px; /* Set height of the container */
     overflow: hidden; /* Hide any text flying out of the container */
     display: flex;
     justify-content: center;
@@ -1800,11 +1835,11 @@ body.overlay-active * {
 }
 
 .hidden-bonus-game-green {
-	transition: opacity 0.5s ease-in-out;
+	transition: opacity 0.5s ease-in-out !important;
 	animation: flash-green-split 1.5s infinite ease-in-out !important;
 }
 .hidden-bonus-game {
-	transition: opacity 0.5s ease-in-out;
+	transition: opacity 0.5s ease-in-out !important;
 	animation: flash-red-split 1.5s infinite ease-in-out !important;
 }
 
