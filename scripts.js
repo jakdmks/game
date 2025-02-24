@@ -254,7 +254,7 @@ function updateStatisticsDivs() {
 		insuranceBoostPct2Div.style.opacity = "1";
 	}
 	
-	winStreakNumSpan.innerHTML = winStreak;
+	winStreakNumSpan.innerHTML = winStreak >= lossStreak ? winStreak : lossStreak >= lossStreakLevelOne ? 1 : 0;
 	
 	if (boostLevel >= 3) {
 		winStreakNumSpan.classList.add("red", "glowing");
@@ -269,6 +269,10 @@ function updateStatisticsDivs() {
 	} else if (boostLevel >= 1) {
 		winStreakNumSpan.classList.remove("red", "orange", "glowing", "glowing-blue");
 		winStreakTextSpan.classList.remove("red", "orange", "glowing", "glowing-blue");
+		
+		//console.info("**lossStreak", lossStreak);
+		//console.info("**lossStreakLevelOne", lossStreakLevelOne);
+		
 		if (lossStreak >= lossStreakLevelOne) {
 			winStreakNumSpan.classList.add("blue", "glowing-blue");
 			winStreakTextSpan.classList.add("blue", "glowing-blue");
@@ -288,7 +292,7 @@ function updateStatisticsDivs() {
 			statistics.playerLossBonusRewardedCount++;
 			
 			//Reset loss streak
-			lossStreak = 0;
+			//lossStreak = 0;
 		}
 	}
 	
@@ -304,7 +308,17 @@ function updateStatisticsDivs() {
 	*/
 	
 	//CURRENTLY THIS ONLY WORKS FOR 2 LOCKS... CAN ADD MORE LATER I GUESS
+	//console.info("drawing the locks?");
+	//console.info("winStreak", winStreak);
+	//console.info("lossStreak", lossStreak);
+	//console.info("lossStreakLevelOne", lossStreakLevelOne);
+	//console.info("boostInsurance", boostInsurance);
+	
 	if ((winStreak >= 1 || lossStreak === lossStreakLevelOne) && boostInsurance) {
+		
+		//console.info("IN HERE...");
+		//console.info("boostInsuranceRunMax", boostInsuranceRunMax);
+		//console.info("boostInsuranceRunCurrent", boostInsuranceRunCurrent);
 		
 		if (boostInsuranceRunMax - boostInsuranceRunCurrent === 2) {
 			lock1.parentNode.style.display = "inline"; //PARENT DISPLAY
@@ -316,12 +330,13 @@ function updateStatisticsDivs() {
 			lock1.parentNode.style.display = "none"; //PARENT DISPLAY
 			lock2.parentNode.style.display = "none"; //PARENT DISPLAY
 		}
+		
+		lossStreak = 0;
+		
 	} else {
 		lock1.parentNode.style.display = "none";
 		lock2.parentNode.style.display = "none";
 	}
-	
-	//lock2
 }
 
 function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="", sfx=false) {
@@ -660,6 +675,7 @@ var payoutBoostsDiv = document.getElementById("payout-boosts");
 updatePayoutSplit(2, 0.4, "SPLIT02"); //2, 0.5
 insuranceSwitch(false);
 calculateBoost();
+//console.info("STATS 2");
 updateStatisticsDivs();
 
 var betId = 0;
@@ -695,6 +711,7 @@ function addCredit(credit=0) {
 	
 	displayErrors(errorContainerDiv, errorContentDiv, "DEPOSIT SUCCESS!", creditErrors, 3000, "green-error");
 	
+	//console.info("STATS 3");
 	updateStatisticsDivs();
 	return playerCredit;
 }
@@ -738,6 +755,7 @@ function convertWinnings() {
 	
 	displayErrors(errorContainerDiv, errorContentDiv, "TRANSFER SUCCESS!", convertErrors, 3000, "green-error");
 	
+	//console.info("STATS 4");
 	updateStatisticsDivs();
 	
 	return statistics.playerWinnings;
@@ -805,8 +823,9 @@ function insuranceSwitch(checked=true, sfx=false) {
 		boostInsurance = checked;
 		boostInsuranceRate = boostInsurance ? boostInsuranceRate = boostInsuranceRateAvailable : 0;
 		calculateBoost();
-		updateStatisticsDivs();
 		applyBoost(boostAppliedType, boostApplied);
+		//console.info("STATS 5");
+		updateStatisticsDivs();
 	} else {
 		//console.info("Not allowed...");
 		//Forcing the box back to old state...
@@ -848,7 +867,7 @@ function applyBoost(type="", outcome=false, sfx=false) {
 
 	if (type === "payout") {
 		
-		console.info("boostRate", boostRate);
+		//console.info("boostRate", boostRate);
 		
 		if (boostRate == 0) {
 			return false;
@@ -942,6 +961,7 @@ function applyBoost(type="", outcome=false, sfx=false) {
 	
 	//HERE do the glowing bits?
 	setPayoutSplitGlow();
+	//console.info("STATS 6");
 	updateStatisticsDivs();
 }
 
@@ -1047,7 +1067,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 		*/
 		
 		playerCredit = playerCredit - stake;
-		updateStatisticsDivs();
+		//updateStatisticsDivs();
 		
 		var tempTimeout = setTimeout(() => {
 		
@@ -1226,12 +1246,8 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						//Increase loss streak
 						lossStreak++;
 						
-						if (boostInsurance) {
-							if (lossStreak >= lossStreakLevelOne) {
-								//boostInsuranceRunCurrent = 2;
-							} else {
-								//boostInsuranceRunCurrent = 0;
-							}
+						if (lossStreak >= lossStreakLevelOne) {
+							winStreak = 1;
 						}
 						
 						//SFX
@@ -1405,11 +1421,13 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 				//console.info("statistics", statistics);
 				//console.info("lastPicks", lastPicks);
 				
+				calculateBoost();
+				
 				//Cheeky - unselect their boost each time...
 				applyBoost("both", false);
 				
-				calculateBoost();
-				updateStatisticsDivs();
+				//console.info("STATS 7");
+				//updateStatisticsDivs();
 				renderLastPicks();
 				
 				return pickedSweets;
@@ -2367,6 +2385,7 @@ function displayResultMessage() {
 		statistics.playerBalance = statistics.playerBalance + bonusGamePayout;
 		statistics.playerBalanceGBP = statistics.playerBalance / tokenRateToGBP;
 		
+		//console.info("STATS 1");
 		updateStatisticsDivs();
 	}
 	
