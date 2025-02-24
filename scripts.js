@@ -101,7 +101,6 @@ function updateStatisticsDivs() {
 		if (boostLevel === 2) {
 			boostGraphic1Span.classList.remove("selected-blue");
 			boostGraphic1Span.classList.add("selected");
-			
 			boostGraphic2Span.classList.add("selected");
 			payoutBoostIconsDiv.style.display = "inline-block";
 			payoutBoostIcon1Div.style.display = "inline-block";
@@ -152,6 +151,8 @@ function updateStatisticsDivs() {
 		}
 		if (boostLevel >= 3) {
 			payoutBoostIconsDiv.style.display = "inline-block";
+			boostGraphic1Span.classList.add("selected");
+			boostGraphic2Span.classList.add("selected");
 			boostGraphic3Span.classList.add("selected");
 			payoutBoostIcon1Div.style.display = "inline-block";
 			payoutBoostIcon2Div.style.display = "inline-block";
@@ -258,18 +259,26 @@ function updateStatisticsDivs() {
 	if (boostLevel >= 3) {
 		winStreakNumSpan.classList.add("red", "glowing");
 		winStreakNumSpan.classList.remove("orange", "yellow", "blue", "glowing-blue");
+		winStreakTextSpan.classList.add("red", "glowing");
+		winStreakTextSpan.classList.remove("orange", "yellow", "blue", "glowing-blue");
 	} else if (boostLevel >= 2) {
 		winStreakNumSpan.classList.add("orange", "glowing");
 		winStreakNumSpan.classList.remove("red", "yellow", "blue", "glowing-blue");
+		winStreakTextSpan.classList.add("orange", "glowing");
+		winStreakTextSpan.classList.remove("red", "yellow", "blue", "glowing-blue");
 	} else if (boostLevel >= 1) {
 		winStreakNumSpan.classList.remove("red", "orange", "glowing", "glowing-blue");
+		winStreakTextSpan.classList.remove("red", "orange", "glowing", "glowing-blue");
 		if (lossStreak >= lossStreakLevelOne) {
 			winStreakNumSpan.classList.add("blue", "glowing-blue");
+			winStreakTextSpan.classList.add("blue", "glowing-blue");
 		} else {
 			winStreakNumSpan.classList.add("yellow", "glowing");
+			winStreakTextSpan.classList.add("yellow", "glowing");
 		}
 	} else {
 		winStreakNumSpan.classList.remove("red", "orange", "yellow", "blue", "glowing", "glowing-blue");
+		winStreakTextSpan.classList.remove("red", "orange", "yellow", "blue", "glowing", "glowing-blue");
 	}
 	
 	if (boostLevel === 1) {
@@ -295,7 +304,7 @@ function updateStatisticsDivs() {
 	*/
 	
 	//CURRENTLY THIS ONLY WORKS FOR 2 LOCKS... CAN ADD MORE LATER I GUESS
-	if (winStreak >= 1 && boostInsurance) {
+	if ((winStreak >= 1 || lossStreak === lossStreakLevelOne) && boostInsurance) {
 		
 		if (boostInsuranceRunMax - boostInsuranceRunCurrent === 2) {
 			lock1.parentNode.style.display = "inline"; //PARENT DISPLAY
@@ -385,12 +394,12 @@ function calculateBoost() {
 	
 	//FORCE WIN STREAK
 	//winStreak = 99;
-	//winStreak = 1;
+	//winStreak = 2;
 	
 	//FORCE LOSS STREAK
 	//lossStreak = 3;
 	
-	if (winStreak >= boostStreakLevelOne) {
+	if (winStreak >= boostStreakLevelOne || lossStreak === lossStreakLevelOne) {
 		boostRate = boostBonusLevelOne - boostInsuranceRate;
 		boostLevel = 1;
 		boostAvailable = true;
@@ -814,6 +823,10 @@ function insuranceSwitch(checked=true, sfx=false) {
 
 function applyBoost(type="", outcome=false, sfx=false) {
 	
+	//console.info("type", type);
+	//console.info("outcome", outcome);
+	//console.info("sfx", sfx);
+	
 	//SFX
 	/*
 	if (sfx === true) {
@@ -834,6 +847,8 @@ function applyBoost(type="", outcome=false, sfx=false) {
 	var payoutSplitBar150RedBoostDiv = document.getElementById("payout-split-bar-150-100-red-boost");
 
 	if (type === "payout") {
+		
+		console.info("boostRate", boostRate);
 		
 		if (boostRate == 0) {
 			return false;
@@ -1213,9 +1228,9 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						
 						if (boostInsurance) {
 							if (lossStreak >= lossStreakLevelOne) {
-								boostInsuranceRunCurrent = 2;
+								//boostInsuranceRunCurrent = 2;
 							} else {
-								boostInsuranceRunCurrent = 0;
+								//boostInsuranceRunCurrent = 0;
 							}
 						}
 						
