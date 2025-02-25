@@ -1260,6 +1260,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						
 						if (lossStreak === lossStreakLevelOne) {
 							winStreak = 1;
+							
+							//Re-enabling both locks on loss-sreak...
+							if (localBoostInsurance) {
+								boostInsuranceRunCurrent = 0;
+							}
 						}
 						
 						if (lossStreak > lossStreakLevelOne) {
