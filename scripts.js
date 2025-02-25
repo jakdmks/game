@@ -270,10 +270,11 @@ function updateStatisticsDivs() {
 		winStreakNumSpan.classList.remove("red", "orange", "yellow", "blue", "glowing", "glowing-blue");
 		winStreakTextSpan.classList.remove("red", "orange", "yellow", "blue", "glowing", "glowing-blue");
 		
-		console.info("**lossStreak", lossStreak);
-		console.info("**lossStreakLevelOne", lossStreakLevelOne);
+		//console.info("**lossStreak", lossStreak);
+		//console.info("**lossStreakLevelOne", lossStreakLevelOne);
 		
-		if (lossStreak >= lossStreakLevelOne) {
+		//HERE, check for the class glowing on the boost to decide??
+		if ((lossStreak >= lossStreakLevelOne) || boostGraphic1Span.classList.contains("selected-blue")) {
 			winStreakNumSpan.classList.add("blue", "glowing-blue");
 			winStreakTextSpan.classList.add("blue", "glowing-blue");
 		} else {
