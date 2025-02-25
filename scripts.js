@@ -1136,10 +1136,12 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			*/
 			
 			//FORCE COLA
+			/*
 			var pickedSweets = {
 				"Sweet1": "Cola",
 				"Sweet2": "Cola"
 			};
+			*/
 			
 			//FORCE MIXED
 			/*
