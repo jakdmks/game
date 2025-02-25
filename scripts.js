@@ -428,7 +428,7 @@ function calculateBoost() {
 			boostRate = boostRate + boostBonusLevelThreeHop;
 			boostLevel = 3;
 		}
-	} else if (lossStreak >= lossStreakLevelOne) {
+	} else if (lossStreak === lossStreakLevelOne) {
 		winStreak = 1;
 		boostLevel = 1;
 		boostAvailable = true;
@@ -455,6 +455,10 @@ function calculateBoost() {
 		}
 	} else {
 		boostAvailable = false;
+	}
+	
+	if (lossStreak > lossStreakLevelOne) {
+		lossStreak = lossStreak - lossStreakLevelOne;
 	}
 	
 
@@ -1159,6 +1163,14 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			}
 			*/
 			
+			//FORCE INCORRECT
+			/*
+			var pickedSweets = {
+				"Sweet1": bet === "Cola" ? "Cherry" : "Cola",
+				"Sweet2": bet === "Cola" ? "Cherry" : "Cola",
+			}
+			*/
+			
 			renderSweets(pickedSweets.Sweet1, pickedSweets.Sweet2, bet);
 			
 			//TODO: Try: 2 and 0 (with the option for the person to change to 1.5 / 0.5 or whatever slider they fancy?)
@@ -1246,8 +1258,12 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						//Increase loss streak
 						lossStreak++;
 						
-						if (lossStreak >= lossStreakLevelOne) {
+						if (lossStreak === lossStreakLevelOne) {
 							winStreak = 1;
+						}
+						
+						if (lossStreak > lossStreakLevelOne) {
+							lossStreak = lossStreak - lossStreakLevelOne;
 						}
 						
 						//SFX
