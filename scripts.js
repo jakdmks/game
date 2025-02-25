@@ -267,11 +267,11 @@ function updateStatisticsDivs() {
 		winStreakTextSpan.classList.add("orange", "glowing");
 		winStreakTextSpan.classList.remove("red", "yellow", "blue", "glowing-blue");
 	} else if (boostLevel >= 1) {
-		winStreakNumSpan.classList.remove("red", "orange", "glowing", "glowing-blue");
-		winStreakTextSpan.classList.remove("red", "orange", "glowing", "glowing-blue");
+		winStreakNumSpan.classList.remove("red", "orange", "yellow", "blue", "glowing", "glowing-blue");
+		winStreakTextSpan.classList.remove("red", "orange", "yellow", "blue", "glowing", "glowing-blue");
 		
-		//console.info("**lossStreak", lossStreak);
-		//console.info("**lossStreakLevelOne", lossStreakLevelOne);
+		console.info("**lossStreak", lossStreak);
+		console.info("**lossStreakLevelOne", lossStreakLevelOne);
 		
 		if (lossStreak >= lossStreakLevelOne) {
 			winStreakNumSpan.classList.add("blue", "glowing-blue");
@@ -1136,12 +1136,10 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 			*/
 			
 			//FORCE COLA
-			/*
 			var pickedSweets = {
 				"Sweet1": "Cola",
 				"Sweet2": "Cola"
 			};
-			*/
 			
 			//FORCE MIXED
 			/*
