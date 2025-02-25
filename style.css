@@ -1530,7 +1530,7 @@ body.overlay-active * {
 
 .flying-text {
     position: absolute;
-    font-size: 1.8em;
+    font-size: 1.4em;
     font-weight: bold;
     opacity: 1;
     pointer-events: none; /* Ensures no interaction with the flying text */
