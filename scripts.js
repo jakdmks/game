@@ -1300,10 +1300,11 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						outcome = "insurance";
 						payout = stake * (localInsuranceRate + insuranceBoostRate), 2;
 						housePayout = stake - payout, 2;
-						
+					
+					        lossStreak = winStreak >= 1 ? 0 : lossStreak;
+					
 						//Resetting the win streak if streak protect isn't switched on...
 						winStreak = localBoostInsurance ? winStreak : 0;
-						lossStreak = winStreak >= 1 ? 0 : lossStreak;
 						
 						if (localBoostInsurance && boostLevel >= 1) {
 							boostInsuranceRunCurrent++;
