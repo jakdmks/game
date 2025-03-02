@@ -1303,7 +1303,7 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						
 						//Resetting the win streak if streak protect isn't switched on...
 						winStreak = localBoostInsurance ? winStreak : 0;
-						lossStreak = winStreak >= 0 ? 0 : lossStreak;
+						lossStreak = winStreak >= 1 ? 0 : lossStreak;
 						
 						if (localBoostInsurance && boostLevel >= 1) {
 							boostInsuranceRunCurrent++;
