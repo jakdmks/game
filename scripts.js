@@ -680,7 +680,7 @@ var boostInsuranceContainer = document.getElementById("boost-insurance-container
 var cherryColaBetsContainer = document.getElementById("cherry-cola-bets-container");
 var payoutBoostsDiv = document.getElementById("payout-boosts");
 
-updatePayoutSplit(2, 0.4, "SPLIT02"); //2, 0.5
+updatePayoutSplit(2, 0.5, "SPLIT02"); //2, 0.5
 insuranceSwitch(false);
 calculateBoost();
 //console.info("STATS 2");
