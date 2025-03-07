@@ -40,7 +40,7 @@ function updateStatisticsDivs() {
 	
 	//Convert Winnings to Credit 
 	//convertWinningsToCreditButtonDiv
-	if (statistics.playerWinnings > 0) {			
+	if (statistics.playerWinnings > 0 && playerCredit < 500) {			
 		convertWinningsToCreditButtonDiv.style.pointerEvents = "auto";
 		convertWinningsToCreditButtonDiv.style.opacity = "1";
 	} else {
@@ -523,6 +523,8 @@ var bonusGameGridSize = 5; //x * x square
 var bonusGameTotalBoxes = bonusGameGridSize * bonusGameGridSize;
 var bonusGameSelected = null;
 var bonusGameResults = null;
+var bonusGameJustPaidOut = false;
+var bonusGameAnimatePoints = false;
 
 //Timer
 var timerInterval;  // To hold the interval ID
@@ -534,6 +536,7 @@ startTimer();
 
 //TESTING
 //boostStreakLevelOne = 0;
+//bonusGameThreshold = 499;
 	
 var statistics = {
 	timeElapsed: 0,
@@ -685,7 +688,7 @@ updateStatisticsDivs();
 
 var betId = 0;
 
-function addCredit(credit=0) {
+function addCredit(credit=0, resetChart=true) {
 
 	//Add Credit
 	playerCredit = (playerCredit * 1) + (credit * 1);
@@ -698,13 +701,15 @@ function addCredit(credit=0) {
 	*/
 	
 	//Maybe move this above?
-	chartData = [];
-	chartStake = playerCredit;
+	if (resetChart === true) {
+		chartData = [];
+		chartStake = playerCredit;
+	
+		chartHouseValue = 0;
+		chartPlayerValue = chartStake;
+	}
 	//console.info("SETTING CHART STAKE TO", chartStake);
-	
-	chartHouseValue = 0;
-	chartPlayerValue = chartStake;
-	
+
 	//Update playerCredit in statistics...
 	statistics.playerCredit = playerCredit;
 	
@@ -715,6 +720,17 @@ function addCredit(credit=0) {
 	creditErrors.push("Added " + credit.toFixed(0) + " Tokens...");
 	
 	displayErrors(errorContainerDiv, errorContentDiv, "DEPOSIT SUCCESS!", creditErrors, 3000, "green-error");
+	
+	//Hacky way of not doing this when they win the bonus game... instead we'll animate that after hiding chart...
+	if (resetChart === true) {
+		var chunkSize = 100;
+		if (credit > 1500) {
+			chunkSize = 500;
+		}
+		
+		showOverlayPoints();
+		animatePoints(1, credit, chunkSize, "green", "", "payout", "#flying-points-overlay");
+	}
 	
 	//console.info("STATS 3");
 	updateStatisticsDivs();
@@ -727,6 +743,15 @@ function convertWinnings() {
 
 	playerCredit = playerCredit + additionalCredit;
 	//console.info("increased playerCredit by ", additionalCredit);
+	
+	
+	var chunkSize = 100;
+	if (additionalCredit > 1500) {
+		chunkSize = 500;
+	}
+	
+	showOverlayPoints();
+	animatePoints(1, additionalCredit, chunkSize, "green", "", "payout", "#flying-points-overlay");
 	
 	//SFX
 	/*
@@ -970,21 +995,12 @@ function applyBoost(type="", outcome=false, sfx=false) {
 	updateStatisticsDivs();
 }
 
-function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/) {
+function pickSweets(stake=0, bet="") {
 
 	//Clear Errors
 	clearErrors(errorContainerDiv, errorContentDiv);
 	
 	hideOverlayPoints();
-	
-	//Populate Default Chart Data
-	if (chartData.length === 0) {
-		chartData.push({
-			"Game": 0,
-			"House": 0,
-			"Player": playerCredit
-		});
-	}
 
 	//console.info("stake", stake);
 	//console.info("bet", bet);
@@ -1019,6 +1035,28 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 
 	if ((bet === "Cola" || bet === "Cherry") && stake !== 0 && (playerCredit - stake >= 0))
 	{
+		custCreditDiv.innerHTML = "CREDIT<BR />" + (playerCredit - stake).toFixed(0);
+		
+		//To stop the charts from messing up after bonus game
+		if (bonusGameJustPaidOut === true) {
+			chartData = [];
+			chartStake = playerCredit;
+		
+			chartHouseValue = 0;
+			chartPlayerValue = chartStake;
+			
+			bonusGameJustPaidOut = false;
+		}
+		
+		//Populate Default Chart Data
+		if (chartData.length === 0) {
+			chartData.push({
+				"Game": 0,
+				"House": 0,
+				"Player": playerCredit
+			});
+		}
+		
 		//Hide Buttons Temporarily
 		cherryColaBetsContainer.style.visibility = "hidden";
 		//boostPayoutContainer.style.visibility = "hidden";
@@ -1300,11 +1338,10 @@ function pickSweets(stake=1, bet=0/*, payoutBoost=false, insuranceBoost=false*/)
 						outcome = "insurance";
 						payout = stake * (localInsuranceRate + insuranceBoostRate), 2;
 						housePayout = stake - payout, 2;
-					
-					        lossStreak = winStreak >= 1 ? 0 : lossStreak;
-					
+						
 						//Resetting the win streak if streak protect isn't switched on...
 						winStreak = localBoostInsurance ? winStreak : 0;
+						lossStreak = winStreak >= 1 ? 0 : lossStreak;
 						
 						if (localBoostInsurance && boostLevel >= 1) {
 							boostInsuranceRunCurrent++;
@@ -1955,6 +1992,17 @@ function hideOverlayChart() {
 	
 	var overlayChart = document.getElementById("overlay-chart");
 	overlayChart.style.visibility = "hidden";
+	
+	if (bonusGameJustPaidOut === true && bonusGameAnimatePoints === true) {
+		//ANIMATE POINTS
+		//bonusGamePayout
+		var chunkSize = 100;
+		if (bonusGamePayout > 1500) {
+			chunkSize = 500;
+		}
+		showOverlayPoints();
+		animatePoints(1, bonusGamePayout, chunkSize, "green", "", "payout", "#flying-points-overlay");
+	}
 }
 
 function showOverlayPoints() {
@@ -2396,11 +2444,13 @@ function revealAllLosses() {
 }
 
 function displayResultMessage() {
-	const message = bonusGameResults[bonusGameSelected - 1] === "images/egg.png" ? "Good job, you found an egg!<br />+1500 TOKENS" : "Unlucky! You found a mushroom...";
+	const message = bonusGameResults[bonusGameSelected - 1] === "images/egg.png" ? "Good job, you found an egg!<br />+1500 CREDIT TOKENS" : "Unlucky! You found a mushroom...";
 	
 	//Call Add Credit...
 	if (bonusGameResults[bonusGameSelected - 1] === "images/egg.png") {
-		addCredit(bonusGamePayout);
+		addCredit(bonusGamePayout, false);
+		bonusGameJustPaidOut = true;
+		bonusGameAnimatePoints = true;
 		statistics.playerCreditGBP = playerCredit / tokenRateToGBP;
 		statistics.bonusGameWins++;
 		statistics.bonusGamePayout = statistics.bonusGamePayout + bonusGamePayout;
