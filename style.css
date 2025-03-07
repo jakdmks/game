@@ -116,7 +116,7 @@ PAYOUT SPLIT TESTING
 
 /* Section styles (no flashing) */
 .green-bar {
-  width: 69%; /* Exact width for the green section */
+  width: 66%; /* Exact width for the green section */
   height: 100%; /* Match parent height */
   background-color: #0f6b36; /* Rich dark green */
 }
@@ -127,7 +127,7 @@ PAYOUT SPLIT TESTING
 }
 
 .red-bar {
-  width: 14%; /* Exact width for the red section */
+  width: 16%; /* Exact width for the red section */
   height: 100%; /* Match parent height */
   background-color: #b91c1c; /* Rich dark red */
 }
@@ -138,7 +138,7 @@ PAYOUT SPLIT TESTING
 }
 
 .blue-bar {
-  width: 14%; /* Exact width for the blue section */
+  width: 16%; /* Exact width for the blue section */
   height: 100%; /* Match parent height */
   background-color: #1c3db9; /* Rich dark blue */
 }
