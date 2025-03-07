@@ -365,12 +365,12 @@ function updatePayoutSplit(newPayoutRate = 0, newInsuranceRate = 0, option="", s
 		split02Div.classList.remove("selected");
 		split03Div.classList.remove("selected");
 	} else if (option === "SPLIT02") {
-		totalPayoutCheck = 2.4;
+		totalPayoutCheck = 2.5;
 		split01Div.classList.remove("selected");
 		split02Div.classList.add("selected");
 		split03Div.classList.remove("selected");
 	} else if (option === "SPLIT03") {
-		totalPayoutCheck = 2.3;
+		totalPayoutCheck = 2.5;
 		split01Div.classList.remove("selected");
 		split02Div.classList.remove("selected");
 		split03Div.classList.add("selected");
@@ -910,8 +910,8 @@ function applyBoost(type="", outcome=false, sfx=false) {
 		insuranceBoost = false;
 		
 		payoutSplitBar250GreenBoostDiv.style.width = ((((boostRate * 100) / 300) * 100) + 1).toFixed(0) + "%";
-		payoutSplitBar200GreenBoostDiv.style.width = (((boostRate * 100) / 290) * 100).toFixed(0) + "%";
-		payoutSplitBar150GreenBoostDiv.style.width = (((boostRate * 100) / 280) * 100).toFixed(0) + "%";
+		payoutSplitBar200GreenBoostDiv.style.width = (((boostRate * 100) / 300) * 100).toFixed(0) + "%";
+		payoutSplitBar150GreenBoostDiv.style.width = (((boostRate * 100) / 300) * 100).toFixed(0) + "%";
 		payoutSplitBar250RedBoostDiv.style.width = 0 + "%";
 		payoutSplitBar200RedBoostDiv.style.width = 0 + "%";
 		payoutSplitBar150RedBoostDiv.style.width = 0 + "%";
