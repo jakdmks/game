@@ -781,21 +781,21 @@ PAYOUT SPLIT TESTING
 .boost-small {
 	font-size: 1.8em;
 	font-weight: bold;
-	-webkit-text-stroke: 1px white;
+	-webkit-text-stroke: 1px #555555;
 	letter-spacing: -2px;
 }
 
 .boost-medium {
 	font-size: 2.8em;
 	font-weight: bold;
-	-webkit-text-stroke: 1px white;
+	-webkit-text-stroke: 1px #555555;
 	letter-spacing: -2px;
 }
 
 .boost-large {
 	font-size: 3.8em;
 	font-weight: bold;
-	-webkit-text-stroke: 1px white;
+	-webkit-text-stroke: 1px #555555;
 	letter-spacing: -2px;
 }
 
@@ -805,6 +805,7 @@ PAYOUT SPLIT TESTING
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent; /* For Safari */
   animation: sweepingTextGlow 1.66s 6 ease-in-out forwards;
+  -webkit-text-stroke: 1px white;
 }
 
 .boost-medium.selected {
@@ -813,6 +814,7 @@ PAYOUT SPLIT TESTING
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent; /* For Safari */
   animation: sweepingTextGlow 1.66s 6 ease-in-out forwards;
+  -webkit-text-stroke: 1px white;
 }
 
 .boost-large.selected {
@@ -821,6 +823,7 @@ PAYOUT SPLIT TESTING
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent; /* For Safari */
   animation: sweepingTextGlow 1.66s 6 ease-in-out forwards;
+  -webkit-text-stroke: 1px white;
 }
 
 
@@ -850,7 +853,7 @@ PAYOUT SPLIT TESTING
 }
 
 .grey {
-	color: grey;
+	color: #333333;
 }
 
 .red {
@@ -871,10 +874,12 @@ PAYOUT SPLIT TESTING
 
 .glowing {
   animation: sweepingTextGlow 1.66s 6 ease-in-out forwards;
+  -webkit-text-stroke: 1px white;
 }
 
 .glowing-blue {
   animation: sweepingTextGlowBlue 1.66s 6 ease-in-out forwards;
+  -webkit-text-stroke: 1px white;
 }
 
 /* Main Error Content */
@@ -1282,12 +1287,6 @@ PAYOUT SPLIT TESTING
 @keyframes pulse-effect {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
-}
-
-.boost-small {
-  font-size: 2em;
-  font-weight: bold;
-  -webkit-text-stroke: 1px white;
 }
 
 
