@@ -729,7 +729,7 @@ function addCredit(credit=0, resetChart=true) {
 		}
 		
 		showOverlayPoints();
-		animatePoints(1, credit, chunkSize, "green", "", "payout", "#flying-points-overlay");
+		animatePoints(1, credit, chunkSize, "green", "", "", "#flying-points-overlay");
 	}
 	
 	//console.info("STATS 3");
@@ -751,7 +751,7 @@ function convertWinnings() {
 	}
 	
 	showOverlayPoints();
-	animatePoints(1, additionalCredit, chunkSize, "green", "", "payout", "#flying-points-overlay");
+	animatePoints(1, additionalCredit, chunkSize, "green", "", "", "#flying-points-overlay");
 	
 	//SFX
 	/*
@@ -2001,7 +2001,7 @@ function hideOverlayChart() {
 			chunkSize = 500;
 		}
 		showOverlayPoints();
-		animatePoints(1, bonusGamePayout, chunkSize, "green", "", "payout", "#flying-points-overlay");
+		animatePoints(1, bonusGamePayout, chunkSize, "green", "", "", "#flying-points-overlay");
 	}
 }
 
